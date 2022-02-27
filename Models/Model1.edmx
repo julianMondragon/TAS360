@@ -1,0 +1,1956 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bd_historicaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="accesos">
+          <Key>
+            <PropertyRef Name="id_acceso" />
+          </Key>
+          <Property Name="id_acceso" Type="int" Nullable="false" />
+          <Property Name="fecha_entrada" Type="date" />
+          <Property Name="hora_entrada" Type="time" Precision="7" />
+          <Property Name="fecha_salida" Type="date" />
+          <Property Name="hora_salida" Type="time" Precision="7" />
+          <Property Name="clave" Type="int" />
+        </EntityType>
+        <EntityType Name="aditivos">
+          <Key>
+            <PropertyRef Name="id_aditivos" />
+          </Key>
+          <Property Name="id_aditivos" Type="int" Nullable="false" />
+          <Property Name="volumen" Type="float" />
+          <Property Name="totalizador_aditivo" Type="float" />
+          <Property Name="ultima_carga" Type="date" />
+          <Property Name="nivel_tq_aditivo" Type="float" />
+          <Property Name="volumen_tq" Type="float" />
+          <Property Name="estado_nivel_tq" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Auditoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="varchar" MaxLength="6" />
+          <Property Name="Hora" Type="varchar" MaxLength="4" />
+          <Property Name="Estado" Type="char" MaxLength="1" />
+          <Property Name="Flujo_datos" Type="char" MaxLength="1" />
+          <Property Name="secuencial" Type="int" />
+          <Property Name="Transaccion" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bomba">
+          <Key>
+            <PropertyRef Name="id_bomba" />
+          </Key>
+          <Property Name="id_bomba" Type="int" Nullable="false" />
+          <Property Name="nombre_bomba" Type="varchar" MaxLength="50" />
+          <Property Name="descripcion_bomba" Type="varchar" MaxLength="250" />
+          <Property Name="arraque_bomba" Type="varchar" MaxLength="50" />
+          <Property Name="paro_bomba" Type="varchar" MaxLength="50" />
+          <Property Name="estatus_bomba" Type="varchar" MaxLength="80" />
+          <Property Name="hrs_trabajo_acum" Type="int" />
+          <Property Name="fecha" Type="date" />
+          <Property Name="id_paro" Type="int" />
+        </EntityType>
+        <EntityType Name="bombas_descargaderas">
+          <Key>
+            <PropertyRef Name="id_bm_des" />
+          </Key>
+          <Property Name="id_bm_des" Type="int" Nullable="false" />
+          <Property Name="id_bomba" Type="int" />
+          <Property Name="id_descarga" Type="int" />
+        </EntityType>
+        <EntityType Name="bombas_llenaderas">
+          <Key>
+            <PropertyRef Name="id_bm_llena" />
+          </Key>
+          <Property Name="id_bm_llena" Type="int" Nullable="false" />
+          <Property Name="id_bomba" Type="int" />
+          <Property Name="id_llenadera" Type="int" />
+        </EntityType>
+        <EntityType Name="cubicacion">
+          <Key>
+            <PropertyRef Name="id_cub" />
+          </Key>
+          <Property Name="id_cub" Type="int" Nullable="false" />
+          <Property Name="nivel" Type="float" />
+          <Property Name="volumen" Type="float" />
+        </EntityType>
+        <EntityType Name="descargaderas">
+          <Key>
+            <PropertyRef Name="id_descarga" />
+          </Key>
+          <Property Name="id_descarga" Type="int" Nullable="false" />
+          <Property Name="nombre_comercializador_producto" Type="varchar" MaxLength="50" />
+          <Property Name="no_orden" Type="int" />
+          <Property Name="numero_tranporte" Type="varchar" MaxLength="50" />
+          <Property Name="numero_posicion_descarga" Type="int" />
+          <Property Name="clave_producto" Type="int" />
+          <Property Name="vol_programado" Type="float" />
+          <Property Name="vol_natural_medido" Type="float" />
+          <Property Name="vol_neto_entregado_corregido" Type="float" />
+          <Property Name="temperatura_promedio_descarga" Type="float" />
+          <Property Name="densidad_descarga" Type="varchar" MaxLength="50" />
+          <Property Name="flujo_promedio_descarga" Type="varchar" MaxLength="50" />
+          <Property Name="factor_medicion_promedio_descarga" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_inicio_descarga" Type="date" />
+          <Property Name="fecha_fin_descarga" Type="date" />
+          <Property Name="hora_inicio_descarga" Type="time" Precision="7" />
+          <Property Name="hora_fin_descarga" Type="time" Precision="7" />
+          <Property Name="estado_permisivo_tierra" Type="varchar" MaxLength="50" />
+          <Property Name="totalizadores_ucls" Type="int" />
+          <Property Name="id_acceso" Type="int" />
+          <Property Name="id_bomba" Type="int" />
+        </EntityType>
+        <EntityType Name="Entradas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Transaccion" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="eventos_alarmas">
+          <Key>
+            <PropertyRef Name="id_ev_al" />
+          </Key>
+          <Property Name="id_ev_al" Type="int" Nullable="false" />
+          <Property Name="descripcion_ev_al" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="eventos_alarmas_descargaderas">
+          <Key>
+            <PropertyRef Name="id_ev_al_des" />
+          </Key>
+          <Property Name="id_ev_al_des" Type="int" Nullable="false" />
+          <Property Name="id_ev_al" Type="int" />
+          <Property Name="id_descarga" Type="int" />
+          <Property Name="fecha_ev" Type="date" />
+          <Property Name="hora_ev" Type="time" Precision="7" />
+          <Property Name="no_orden" Type="int" />
+        </EntityType>
+        <EntityType Name="eventos_alarmas_llenaderas">
+          <Key>
+            <PropertyRef Name="id_ev_al_llen" />
+          </Key>
+          <Property Name="id_ev_al_llen" Type="int" Nullable="false" />
+          <Property Name="id_ev_al" Type="int" />
+          <Property Name="id_llenadera" Type="int" />
+          <Property Name="fecha_ev" Type="date" />
+          <Property Name="hora_ev" Type="time" Precision="7" />
+          <Property Name="no_orden" Type="int" />
+        </EntityType>
+        <EntityType Name="llenaderas">
+          <Key>
+            <PropertyRef Name="id_llenadera" />
+          </Key>
+          <Property Name="id_llenadera" Type="int" Nullable="false" />
+          <Property Name="no_orden" Type="int" />
+          <Property Name="numero_cliente" Type="int" />
+          <Property Name="nombre_comercializador_producto" Type="varchar" MaxLength="50" />
+          <Property Name="numero_autotanque" Type="int" />
+          <Property Name="numero_posicion_carga" Type="int" />
+          <Property Name="clave_producto" Type="int" />
+          <Property Name="vol_carga" Type="float" />
+          <Property Name="vol_programado" Type="float" />
+          <Property Name="vol_natural_medido" Type="float" />
+          <Property Name="vol_neto_entregado_compensado" Type="float" />
+          <Property Name="temperatura_promedio_carga" Type="float" />
+          <Property Name="densidad_carga" Type="int" />
+          <Property Name="flujo_promedio_carga" Type="varchar" MaxLength="50" />
+          <Property Name="factor_medicion_promedio_carga" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_inicio_carga" Type="date" />
+          <Property Name="fecha_fin_carga" Type="date" />
+          <Property Name="hora_inicio_carga" Type="time" Precision="7" />
+          <Property Name="hora_fin_carga" Type="time" Precision="7" />
+          <Property Name="estado_permisivo_tierra" Type="varchar" MaxLength="50" />
+          <Property Name="estado_permisivo_sobrellenado" Type="varchar" MaxLength="50" />
+          <Property Name="total_aditivos" Type="int" />
+          <Property Name="id_aditivos" Type="int" />
+          <Property Name="id_acceso" Type="int" />
+        </EntityType>
+        <EntityType Name="operaciones">
+          <Key>
+            <PropertyRef Name="no_orden" />
+          </Key>
+          <Property Name="no_orden" Type="int" Nullable="false" />
+          <Property Name="nombre_orden" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="paro">
+          <Key>
+            <PropertyRef Name="id_paro" />
+          </Key>
+          <Property Name="id_paro" Type="int" Nullable="false" />
+          <Property Name="fecha_paro" Type="date" />
+          <Property Name="hora_paro" Type="time" Precision="7" />
+          <Property Name="generado" Type="varchar" MaxLength="50" />
+          <Property Name="estado_paro" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="poliducto">
+          <Key>
+            <PropertyRef Name="id_poliducto" />
+          </Key>
+          <Property Name="id_poliducto" Type="int" Nullable="false" />
+          <Property Name="nombre_comercializador" Type="varchar" MaxLength="80" />
+          <Property Name="nombre_poli" Type="varchar" MaxLength="50" />
+          <Property Name="temperatura_medidor" Type="float" />
+        </EntityType>
+        <EntityType Name="proceso_voes">
+          <Key>
+            <PropertyRef Name="id_proc_voe" />
+          </Key>
+          <Property Name="id_proc_voe" Type="int" Nullable="false" />
+          <Property Name="estado_val_entrada" Type="int" />
+          <Property Name="estado_val_entrada_poli" Type="int" />
+          <Property Name="estado_val_salida_tq" Type="int" />
+          <Property Name="control_cierre_val_entrada_poli" Type="int" />
+          <Property Name="control_cierre_val_entrada" Type="int" />
+          <Property Name="control_cierre_val_salida_tq" Type="int" />
+          <Property Name="control_apertura_val_entrada_poli" Type="int" />
+          <Property Name="control_apertura_val_entrada" Type="int" />
+          <Property Name="control_apertura_val_salida_tq" Type="int" />
+          <Property Name="control_paro_val_entrada_poli" Type="int" />
+          <Property Name="control_paro_val_entrada" Type="int" />
+          <Property Name="control_paro_val_salida_tq" Type="int" />
+          <Property Name="id_voe" Type="int" />
+        </EntityType>
+        <EntityType Name="producto">
+          <Key>
+            <PropertyRef Name="clave" />
+          </Key>
+          <Property Name="clave" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Salidas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Transaccion" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tanque">
+          <Key>
+            <PropertyRef Name="id_tanque" />
+          </Key>
+          <Property Name="id_tanque" Type="int" Nullable="false" />
+          <Property Name="nivel_prod" Type="float" />
+          <Property Name="tem_prod" Type="float" />
+          <Property Name="estado_control" Type="varchar" MaxLength="50" />
+          <Property Name="estado_red" Type="varchar" MaxLength="50" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="nom_prod" Type="varchar" MaxLength="50" />
+          <Property Name="densidad_prod" Type="varchar" MaxLength="50" />
+          <Property Name="capacidad" Type="varchar" MaxLength="50" />
+          <Property Name="vol_natural" Type="float" />
+          <Property Name="vol_corregido" Type="float" />
+          <Property Name="vol_bruto" Type="float" />
+          <Property Name="vol_agua" Type="float" />
+          <Property Name="estado_a_nivel" Type="int" />
+          <Property Name="estado_a_a_nivel" Type="int" />
+          <Property Name="estado_b_nivel" Type="int" />
+          <Property Name="estado_b_b_nivel" Type="int" />
+          <Property Name="nivel_inv_comercializador" Type="float" />
+          <Property Name="nivel_critico_comercializador" Type="float" />
+          <Property Name="id_Producto" Type="int" />
+        </EntityType>
+        <EntityType Name="tanque_bomba">
+          <Key>
+            <PropertyRef Name="id_tq_bm" />
+          </Key>
+          <Property Name="id_tq_bm" Type="int" Nullable="false" />
+          <Property Name="id_tanque" Type="int" />
+          <Property Name="id_bomba" Type="int" />
+        </EntityType>
+        <EntityType Name="tanque_cubicacion">
+          <Key>
+            <PropertyRef Name="id_tc" />
+          </Key>
+          <Property Name="id_tc" Type="int" Nullable="false" />
+          <Property Name="id_tanque" Type="int" />
+          <Property Name="id_cub" Type="int" />
+        </EntityType>
+        <EntityType Name="tanque_poliducto">
+          <Key>
+            <PropertyRef Name="id_tq_pd" />
+          </Key>
+          <Property Name="id_tq_pd" Type="int" Nullable="false" />
+          <Property Name="id_tanque" Type="int" />
+          <Property Name="id_poliducto" Type="int" />
+          <Property Name="no_lote" Type="int" />
+          <Property Name="vol_programado" Type="float" />
+          <Property Name="hora_inicio" Type="time" Precision="7" />
+          <Property Name="hora_fin" Type="time" Precision="7" />
+          <Property Name="temperatura_prom_lote" Type="float" />
+          <Property Name="totalizados_lote_actual" Type="int" />
+          <Property Name="masa_total_lote" Type="int" />
+          <Property Name="totalizados_lote_anterior" Type="int" />
+        </EntityType>
+        <EntityType Name="Tanque_Voe">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_tanque" Type="int" Nullable="false" />
+          <Property Name="id_voe" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="voe">
+          <Key>
+            <PropertyRef Name="id_voe" />
+          </Key>
+          <Property Name="id_voe" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="modo" Type="bit" />
+          <Property Name="marcha_paro" Type="int" />
+          <Property Name="control_cierre_val_entrada_poli" Type="int" />
+          <Property Name="control_cierre_val_entrada" Type="int" />
+          <Property Name="control_cierre_val_salida_tq" Type="int" />
+          <Property Name="control_apertura_val_entrada_poli" Type="int" />
+          <Property Name="control_apertura_val_entrada" Type="int" />
+          <Property Name="control_apertura_val_salida_tq" Type="int" />
+          <Property Name="control_paro_val_entrada_poli" Type="int" />
+          <Property Name="control_paro_val_entrada" Type="int" />
+          <Property Name="control_paro_val_salida_tq" Type="int" />
+        </EntityType>
+        <Association Name="FK__bomba__id_paro__45F365D3">
+          <End Role="paro" Type="Self.paro" Multiplicity="0..1" />
+          <End Role="bomba" Type="Self.bomba" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paro">
+              <PropertyRef Name="id_paro" />
+            </Principal>
+            <Dependent Role="bomba">
+              <PropertyRef Name="id_paro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bombas_de__id_bo__60A75C0F">
+          <End Role="bomba" Type="Self.bomba" Multiplicity="0..1" />
+          <End Role="bombas_descargaderas" Type="Self.bombas_descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bomba">
+              <PropertyRef Name="id_bomba" />
+            </Principal>
+            <Dependent Role="bombas_descargaderas">
+              <PropertyRef Name="id_bomba" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bombas_de__id_de__619B8048">
+          <End Role="descargaderas" Type="Self.descargaderas" Multiplicity="0..1" />
+          <End Role="bombas_descargaderas" Type="Self.bombas_descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="descargaderas">
+              <PropertyRef Name="id_descarga" />
+            </Principal>
+            <Dependent Role="bombas_descargaderas">
+              <PropertyRef Name="id_descarga" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bombas_ll__id_bo__4CA06362">
+          <End Role="bomba" Type="Self.bomba" Multiplicity="0..1" />
+          <End Role="bombas_llenaderas" Type="Self.bombas_llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bomba">
+              <PropertyRef Name="id_bomba" />
+            </Principal>
+            <Dependent Role="bombas_llenaderas">
+              <PropertyRef Name="id_bomba" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bombas_ll__id_ll__4D94879B">
+          <End Role="llenaderas" Type="Self.llenaderas" Multiplicity="0..1" />
+          <End Role="bombas_llenaderas" Type="Self.bombas_llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="llenaderas">
+              <PropertyRef Name="id_llenadera" />
+            </Principal>
+            <Dependent Role="bombas_llenaderas">
+              <PropertyRef Name="id_llenadera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__descargad__clave__5165187F">
+          <End Role="producto" Type="Self.producto" Multiplicity="0..1" />
+          <End Role="descargaderas" Type="Self.descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="clave" />
+            </Principal>
+            <Dependent Role="descargaderas">
+              <PropertyRef Name="clave_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__descargad__id_ac__534D60F1">
+          <End Role="accesos" Type="Self.accesos" Multiplicity="0..1" />
+          <End Role="descargaderas" Type="Self.descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accesos">
+              <PropertyRef Name="id_acceso" />
+            </Principal>
+            <Dependent Role="descargaderas">
+              <PropertyRef Name="id_acceso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__descargad__no_or__52593CB8">
+          <End Role="operaciones" Type="Self.operaciones" Multiplicity="0..1" />
+          <End Role="descargaderas" Type="Self.descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operaciones">
+              <PropertyRef Name="no_orden" />
+            </Principal>
+            <Dependent Role="descargaderas">
+              <PropertyRef Name="no_orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__eventos_a__id_de__571DF1D5">
+          <End Role="descargaderas" Type="Self.descargaderas" Multiplicity="0..1" />
+          <End Role="eventos_alarmas_descargaderas" Type="Self.eventos_alarmas_descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="descargaderas">
+              <PropertyRef Name="id_descarga" />
+            </Principal>
+            <Dependent Role="eventos_alarmas_descargaderas">
+              <PropertyRef Name="id_descarga" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__eventos_a__id_ev__4316F928">
+          <End Role="eventos_alarmas" Type="Self.eventos_alarmas" Multiplicity="0..1" />
+          <End Role="eventos_alarmas_llenaderas" Type="Self.eventos_alarmas_llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eventos_alarmas">
+              <PropertyRef Name="id_ev_al" />
+            </Principal>
+            <Dependent Role="eventos_alarmas_llenaderas">
+              <PropertyRef Name="id_ev_al" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__eventos_a__id_ev__5812160E">
+          <End Role="eventos_alarmas" Type="Self.eventos_alarmas" Multiplicity="0..1" />
+          <End Role="eventos_alarmas_descargaderas" Type="Self.eventos_alarmas_descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eventos_alarmas">
+              <PropertyRef Name="id_ev_al" />
+            </Principal>
+            <Dependent Role="eventos_alarmas_descargaderas">
+              <PropertyRef Name="id_ev_al" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__eventos_a__id_ll__4222D4EF">
+          <End Role="llenaderas" Type="Self.llenaderas" Multiplicity="0..1" />
+          <End Role="eventos_alarmas_llenaderas" Type="Self.eventos_alarmas_llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="llenaderas">
+              <PropertyRef Name="id_llenadera" />
+            </Principal>
+            <Dependent Role="eventos_alarmas_llenaderas">
+              <PropertyRef Name="id_llenadera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__llenadera__clave__3A81B327">
+          <End Role="producto" Type="Self.producto" Multiplicity="0..1" />
+          <End Role="llenaderas" Type="Self.llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="clave" />
+            </Principal>
+            <Dependent Role="llenaderas">
+              <PropertyRef Name="clave_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__llenadera__id_ac__3D5E1FD2">
+          <End Role="accesos" Type="Self.accesos" Multiplicity="0..1" />
+          <End Role="llenaderas" Type="Self.llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accesos">
+              <PropertyRef Name="id_acceso" />
+            </Principal>
+            <Dependent Role="llenaderas">
+              <PropertyRef Name="id_acceso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__llenadera__id_ad__3B75D760">
+          <End Role="aditivos" Type="Self.aditivos" Multiplicity="0..1" />
+          <End Role="llenaderas" Type="Self.llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aditivos">
+              <PropertyRef Name="id_aditivos" />
+            </Principal>
+            <Dependent Role="llenaderas">
+              <PropertyRef Name="id_aditivos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__llenadera__no_or__3C69FB99">
+          <End Role="operaciones" Type="Self.operaciones" Multiplicity="0..1" />
+          <End Role="llenaderas" Type="Self.llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operaciones">
+              <PropertyRef Name="no_orden" />
+            </Principal>
+            <Dependent Role="llenaderas">
+              <PropertyRef Name="no_orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__proceso_v__id_vo__33D4B598">
+          <End Role="voe" Type="Self.voe" Multiplicity="0..1" />
+          <End Role="proceso_voes" Type="Self.proceso_voes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="voe">
+              <PropertyRef Name="id_voe" />
+            </Principal>
+            <Dependent Role="proceso_voes">
+              <PropertyRef Name="id_voe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tanque_bo__id_bo__49C3F6B7">
+          <End Role="bomba" Type="Self.bomba" Multiplicity="0..1" />
+          <End Role="tanque_bomba" Type="Self.tanque_bomba" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bomba">
+              <PropertyRef Name="id_bomba" />
+            </Principal>
+            <Dependent Role="tanque_bomba">
+              <PropertyRef Name="id_bomba" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tanque_bo__id_ta__48CFD27E">
+          <End Role="tanque" Type="Self.tanque" Multiplicity="0..1" />
+          <End Role="tanque_bomba" Type="Self.tanque_bomba" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tanque">
+              <PropertyRef Name="id_tanque" />
+            </Principal>
+            <Dependent Role="tanque_bomba">
+              <PropertyRef Name="id_tanque" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tanque_cu__id_cu__2F10007B">
+          <End Role="cubicacion" Type="Self.cubicacion" Multiplicity="0..1" />
+          <End Role="tanque_cubicacion" Type="Self.tanque_cubicacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cubicacion">
+              <PropertyRef Name="id_cub" />
+            </Principal>
+            <Dependent Role="tanque_cubicacion">
+              <PropertyRef Name="id_cub" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tanque_cu__id_ta__2E1BDC42">
+          <End Role="tanque" Type="Self.tanque" Multiplicity="0..1" />
+          <End Role="tanque_cubicacion" Type="Self.tanque_cubicacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tanque">
+              <PropertyRef Name="id_tanque" />
+            </Principal>
+            <Dependent Role="tanque_cubicacion">
+              <PropertyRef Name="id_tanque" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tanque_po__id_po__5DCAEF64">
+          <End Role="poliducto" Type="Self.poliducto" Multiplicity="0..1" />
+          <End Role="tanque_poliducto" Type="Self.tanque_poliducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poliducto">
+              <PropertyRef Name="id_poliducto" />
+            </Principal>
+            <Dependent Role="tanque_poliducto">
+              <PropertyRef Name="id_poliducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tanque_po__id_ta__5CD6CB2B">
+          <End Role="tanque" Type="Self.tanque" Multiplicity="0..1" />
+          <End Role="tanque_poliducto" Type="Self.tanque_poliducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tanque">
+              <PropertyRef Name="id_tanque" />
+            </Principal>
+            <Dependent Role="tanque_poliducto">
+              <PropertyRef Name="id_tanque" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tanque_producto">
+          <End Role="producto" Type="Self.producto" Multiplicity="0..1" />
+          <End Role="tanque" Type="Self.tanque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="clave" />
+            </Principal>
+            <Dependent Role="tanque">
+              <PropertyRef Name="id_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tanque_Voe_tanque">
+          <End Role="tanque" Type="Self.tanque" Multiplicity="1" />
+          <End Role="Tanque_Voe" Type="Self.Tanque_Voe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tanque">
+              <PropertyRef Name="id_tanque" />
+            </Principal>
+            <Dependent Role="Tanque_Voe">
+              <PropertyRef Name="id_tanque" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tanque_Voe_voe">
+          <End Role="voe" Type="Self.voe" Multiplicity="1" />
+          <End Role="Tanque_Voe" Type="Self.Tanque_Voe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="voe">
+              <PropertyRef Name="id_voe" />
+            </Principal>
+            <Dependent Role="Tanque_Voe">
+              <PropertyRef Name="id_voe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bd_historicaModelStoreContainer">
+          <EntitySet Name="accesos" EntityType="Self.accesos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="aditivos" EntityType="Self.aditivos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Auditoria" EntityType="Self.Auditoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bomba" EntityType="Self.bomba" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bombas_descargaderas" EntityType="Self.bombas_descargaderas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bombas_llenaderas" EntityType="Self.bombas_llenaderas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cubicacion" EntityType="Self.cubicacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="descargaderas" EntityType="Self.descargaderas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entradas" EntityType="Self.Entradas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="eventos_alarmas" EntityType="Self.eventos_alarmas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="eventos_alarmas_descargaderas" EntityType="Self.eventos_alarmas_descargaderas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="eventos_alarmas_llenaderas" EntityType="Self.eventos_alarmas_llenaderas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="llenaderas" EntityType="Self.llenaderas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="operaciones" EntityType="Self.operaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="paro" EntityType="Self.paro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="poliducto" EntityType="Self.poliducto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proceso_voes" EntityType="Self.proceso_voes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="producto" EntityType="Self.producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Salidas" EntityType="Self.Salidas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tanque" EntityType="Self.tanque" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tanque_bomba" EntityType="Self.tanque_bomba" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tanque_cubicacion" EntityType="Self.tanque_cubicacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tanque_poliducto" EntityType="Self.tanque_poliducto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tanque_Voe" EntityType="Self.Tanque_Voe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="voe" EntityType="Self.voe" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__bomba__id_paro__45F365D3" Association="Self.FK__bomba__id_paro__45F365D3">
+            <End Role="paro" EntitySet="paro" />
+            <End Role="bomba" EntitySet="bomba" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bombas_de__id_bo__60A75C0F" Association="Self.FK__bombas_de__id_bo__60A75C0F">
+            <End Role="bomba" EntitySet="bomba" />
+            <End Role="bombas_descargaderas" EntitySet="bombas_descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bombas_de__id_de__619B8048" Association="Self.FK__bombas_de__id_de__619B8048">
+            <End Role="descargaderas" EntitySet="descargaderas" />
+            <End Role="bombas_descargaderas" EntitySet="bombas_descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bombas_ll__id_bo__4CA06362" Association="Self.FK__bombas_ll__id_bo__4CA06362">
+            <End Role="bomba" EntitySet="bomba" />
+            <End Role="bombas_llenaderas" EntitySet="bombas_llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bombas_ll__id_ll__4D94879B" Association="Self.FK__bombas_ll__id_ll__4D94879B">
+            <End Role="llenaderas" EntitySet="llenaderas" />
+            <End Role="bombas_llenaderas" EntitySet="bombas_llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__descargad__clave__5165187F" Association="Self.FK__descargad__clave__5165187F">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="descargaderas" EntitySet="descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__descargad__id_ac__534D60F1" Association="Self.FK__descargad__id_ac__534D60F1">
+            <End Role="accesos" EntitySet="accesos" />
+            <End Role="descargaderas" EntitySet="descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__descargad__no_or__52593CB8" Association="Self.FK__descargad__no_or__52593CB8">
+            <End Role="operaciones" EntitySet="operaciones" />
+            <End Role="descargaderas" EntitySet="descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__eventos_a__id_de__571DF1D5" Association="Self.FK__eventos_a__id_de__571DF1D5">
+            <End Role="descargaderas" EntitySet="descargaderas" />
+            <End Role="eventos_alarmas_descargaderas" EntitySet="eventos_alarmas_descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__eventos_a__id_ev__4316F928" Association="Self.FK__eventos_a__id_ev__4316F928">
+            <End Role="eventos_alarmas" EntitySet="eventos_alarmas" />
+            <End Role="eventos_alarmas_llenaderas" EntitySet="eventos_alarmas_llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__eventos_a__id_ev__5812160E" Association="Self.FK__eventos_a__id_ev__5812160E">
+            <End Role="eventos_alarmas" EntitySet="eventos_alarmas" />
+            <End Role="eventos_alarmas_descargaderas" EntitySet="eventos_alarmas_descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__eventos_a__id_ll__4222D4EF" Association="Self.FK__eventos_a__id_ll__4222D4EF">
+            <End Role="llenaderas" EntitySet="llenaderas" />
+            <End Role="eventos_alarmas_llenaderas" EntitySet="eventos_alarmas_llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__llenadera__clave__3A81B327" Association="Self.FK__llenadera__clave__3A81B327">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="llenaderas" EntitySet="llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__llenadera__id_ac__3D5E1FD2" Association="Self.FK__llenadera__id_ac__3D5E1FD2">
+            <End Role="accesos" EntitySet="accesos" />
+            <End Role="llenaderas" EntitySet="llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__llenadera__id_ad__3B75D760" Association="Self.FK__llenadera__id_ad__3B75D760">
+            <End Role="aditivos" EntitySet="aditivos" />
+            <End Role="llenaderas" EntitySet="llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__llenadera__no_or__3C69FB99" Association="Self.FK__llenadera__no_or__3C69FB99">
+            <End Role="operaciones" EntitySet="operaciones" />
+            <End Role="llenaderas" EntitySet="llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__proceso_v__id_vo__33D4B598" Association="Self.FK__proceso_v__id_vo__33D4B598">
+            <End Role="voe" EntitySet="voe" />
+            <End Role="proceso_voes" EntitySet="proceso_voes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tanque_bo__id_bo__49C3F6B7" Association="Self.FK__tanque_bo__id_bo__49C3F6B7">
+            <End Role="bomba" EntitySet="bomba" />
+            <End Role="tanque_bomba" EntitySet="tanque_bomba" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tanque_bo__id_ta__48CFD27E" Association="Self.FK__tanque_bo__id_ta__48CFD27E">
+            <End Role="tanque" EntitySet="tanque" />
+            <End Role="tanque_bomba" EntitySet="tanque_bomba" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tanque_cu__id_cu__2F10007B" Association="Self.FK__tanque_cu__id_cu__2F10007B">
+            <End Role="cubicacion" EntitySet="cubicacion" />
+            <End Role="tanque_cubicacion" EntitySet="tanque_cubicacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tanque_cu__id_ta__2E1BDC42" Association="Self.FK__tanque_cu__id_ta__2E1BDC42">
+            <End Role="tanque" EntitySet="tanque" />
+            <End Role="tanque_cubicacion" EntitySet="tanque_cubicacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tanque_po__id_po__5DCAEF64" Association="Self.FK__tanque_po__id_po__5DCAEF64">
+            <End Role="poliducto" EntitySet="poliducto" />
+            <End Role="tanque_poliducto" EntitySet="tanque_poliducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tanque_po__id_ta__5CD6CB2B" Association="Self.FK__tanque_po__id_ta__5CD6CB2B">
+            <End Role="tanque" EntitySet="tanque" />
+            <End Role="tanque_poliducto" EntitySet="tanque_poliducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tanque_producto" Association="Self.FK_tanque_producto">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="tanque" EntitySet="tanque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tanque_Voe_tanque" Association="Self.FK_Tanque_Voe_tanque">
+            <End Role="tanque" EntitySet="tanque" />
+            <End Role="Tanque_Voe" EntitySet="Tanque_Voe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tanque_Voe_voe" Association="Self.FK_Tanque_Voe_voe">
+            <End Role="voe" EntitySet="voe" />
+            <End Role="Tanque_Voe" EntitySet="Tanque_Voe" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bd_historicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="accesos">
+          <Key>
+            <PropertyRef Name="id_acceso" />
+          </Key>
+          <Property Name="id_acceso" Type="Int32" Nullable="false" />
+          <Property Name="fecha_entrada" Type="DateTime" Precision="0" />
+          <Property Name="hora_entrada" Type="Time" Precision="7" />
+          <Property Name="fecha_salida" Type="DateTime" Precision="0" />
+          <Property Name="hora_salida" Type="Time" Precision="7" />
+          <Property Name="clave" Type="Int32" />
+          <NavigationProperty Name="descargaderas" Relationship="Self.FK__descargad__id_ac__534D60F1" FromRole="accesos" ToRole="descargaderas" />
+          <NavigationProperty Name="llenaderas" Relationship="Self.FK__llenadera__id_ac__3D5E1FD2" FromRole="accesos" ToRole="llenaderas" />
+        </EntityType>
+        <EntityType Name="aditivos">
+          <Key>
+            <PropertyRef Name="id_aditivos" />
+          </Key>
+          <Property Name="id_aditivos" Type="Int32" Nullable="false" />
+          <Property Name="volumen" Type="Double" />
+          <Property Name="totalizador_aditivo" Type="Double" />
+          <Property Name="ultima_carga" Type="DateTime" Precision="0" />
+          <Property Name="nivel_tq_aditivo" Type="Double" />
+          <Property Name="volumen_tq" Type="Double" />
+          <Property Name="estado_nivel_tq" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="llenaderas" Relationship="Self.FK__llenadera__id_ad__3B75D760" FromRole="aditivos" ToRole="llenaderas" />
+        </EntityType>
+        <EntityType Name="Auditoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Hora" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Flujo_datos" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="secuencial" Type="Int32" />
+          <Property Name="Transaccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bomba">
+          <Key>
+            <PropertyRef Name="id_bomba" />
+          </Key>
+          <Property Name="id_bomba" Type="Int32" Nullable="false" />
+          <Property Name="nombre_bomba" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion_bomba" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="arraque_bomba" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="paro_bomba" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estatus_bomba" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="hrs_trabajo_acum" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="id_paro" Type="Int32" />
+          <NavigationProperty Name="paro" Relationship="Self.FK__bomba__id_paro__45F365D3" FromRole="bomba" ToRole="paro" />
+          <NavigationProperty Name="bombas_descargaderas" Relationship="Self.FK__bombas_de__id_bo__60A75C0F" FromRole="bomba" ToRole="bombas_descargaderas" />
+          <NavigationProperty Name="bombas_llenaderas" Relationship="Self.FK__bombas_ll__id_bo__4CA06362" FromRole="bomba" ToRole="bombas_llenaderas" />
+          <NavigationProperty Name="tanque_bomba" Relationship="Self.FK__tanque_bo__id_bo__49C3F6B7" FromRole="bomba" ToRole="tanque_bomba" />
+        </EntityType>
+        <EntityType Name="bombas_descargaderas">
+          <Key>
+            <PropertyRef Name="id_bm_des" />
+          </Key>
+          <Property Name="id_bm_des" Type="Int32" Nullable="false" />
+          <Property Name="id_bomba" Type="Int32" />
+          <Property Name="id_descarga" Type="Int32" />
+          <NavigationProperty Name="bomba" Relationship="Self.FK__bombas_de__id_bo__60A75C0F" FromRole="bombas_descargaderas" ToRole="bomba" />
+          <NavigationProperty Name="descargaderas" Relationship="Self.FK__bombas_de__id_de__619B8048" FromRole="bombas_descargaderas" ToRole="descargaderas" />
+        </EntityType>
+        <EntityType Name="bombas_llenaderas">
+          <Key>
+            <PropertyRef Name="id_bm_llena" />
+          </Key>
+          <Property Name="id_bm_llena" Type="Int32" Nullable="false" />
+          <Property Name="id_bomba" Type="Int32" />
+          <Property Name="id_llenadera" Type="Int32" />
+          <NavigationProperty Name="bomba" Relationship="Self.FK__bombas_ll__id_bo__4CA06362" FromRole="bombas_llenaderas" ToRole="bomba" />
+          <NavigationProperty Name="llenaderas" Relationship="Self.FK__bombas_ll__id_ll__4D94879B" FromRole="bombas_llenaderas" ToRole="llenaderas" />
+        </EntityType>
+        <EntityType Name="cubicacion">
+          <Key>
+            <PropertyRef Name="id_cub" />
+          </Key>
+          <Property Name="id_cub" Type="Int32" Nullable="false" />
+          <Property Name="nivel" Type="Double" />
+          <Property Name="volumen" Type="Double" />
+          <NavigationProperty Name="tanque_cubicacion" Relationship="Self.FK__tanque_cu__id_cu__2F10007B" FromRole="cubicacion" ToRole="tanque_cubicacion" />
+        </EntityType>
+        <EntityType Name="descargaderas">
+          <Key>
+            <PropertyRef Name="id_descarga" />
+          </Key>
+          <Property Name="id_descarga" Type="Int32" Nullable="false" />
+          <Property Name="nombre_comercializador_producto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="no_orden" Type="Int32" />
+          <Property Name="numero_tranporte" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="numero_posicion_descarga" Type="Int32" />
+          <Property Name="clave_producto" Type="Int32" />
+          <Property Name="vol_programado" Type="Double" />
+          <Property Name="vol_natural_medido" Type="Double" />
+          <Property Name="vol_neto_entregado_corregido" Type="Double" />
+          <Property Name="temperatura_promedio_descarga" Type="Double" />
+          <Property Name="densidad_descarga" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="flujo_promedio_descarga" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="factor_medicion_promedio_descarga" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_inicio_descarga" Type="DateTime" Precision="0" />
+          <Property Name="fecha_fin_descarga" Type="DateTime" Precision="0" />
+          <Property Name="hora_inicio_descarga" Type="Time" Precision="7" />
+          <Property Name="hora_fin_descarga" Type="Time" Precision="7" />
+          <Property Name="estado_permisivo_tierra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="totalizadores_ucls" Type="Int32" />
+          <Property Name="id_acceso" Type="Int32" />
+          <Property Name="id_bomba" Type="Int32" />
+          <NavigationProperty Name="accesos" Relationship="Self.FK__descargad__id_ac__534D60F1" FromRole="descargaderas" ToRole="accesos" />
+          <NavigationProperty Name="bombas_descargaderas" Relationship="Self.FK__bombas_de__id_de__619B8048" FromRole="descargaderas" ToRole="bombas_descargaderas" />
+          <NavigationProperty Name="producto" Relationship="Self.FK__descargad__clave__5165187F" FromRole="descargaderas" ToRole="producto" />
+          <NavigationProperty Name="operaciones" Relationship="Self.FK__descargad__no_or__52593CB8" FromRole="descargaderas" ToRole="operaciones" />
+          <NavigationProperty Name="eventos_alarmas_descargaderas" Relationship="Self.FK__eventos_a__id_de__571DF1D5" FromRole="descargaderas" ToRole="eventos_alarmas_descargaderas" />
+        </EntityType>
+        <EntityType Name="Entradas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Transaccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="eventos_alarmas">
+          <Key>
+            <PropertyRef Name="id_ev_al" />
+          </Key>
+          <Property Name="id_ev_al" Type="Int32" Nullable="false" />
+          <Property Name="descripcion_ev_al" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="eventos_alarmas_llenaderas" Relationship="Self.FK__eventos_a__id_ev__4316F928" FromRole="eventos_alarmas" ToRole="eventos_alarmas_llenaderas" />
+          <NavigationProperty Name="eventos_alarmas_descargaderas" Relationship="Self.FK__eventos_a__id_ev__5812160E" FromRole="eventos_alarmas" ToRole="eventos_alarmas_descargaderas" />
+        </EntityType>
+        <EntityType Name="eventos_alarmas_descargaderas">
+          <Key>
+            <PropertyRef Name="id_ev_al_des" />
+          </Key>
+          <Property Name="id_ev_al_des" Type="Int32" Nullable="false" />
+          <Property Name="id_ev_al" Type="Int32" />
+          <Property Name="id_descarga" Type="Int32" />
+          <Property Name="fecha_ev" Type="DateTime" Precision="0" />
+          <Property Name="hora_ev" Type="Time" Precision="7" />
+          <Property Name="no_orden" Type="Int32" />
+          <NavigationProperty Name="descargaderas" Relationship="Self.FK__eventos_a__id_de__571DF1D5" FromRole="eventos_alarmas_descargaderas" ToRole="descargaderas" />
+          <NavigationProperty Name="eventos_alarmas" Relationship="Self.FK__eventos_a__id_ev__5812160E" FromRole="eventos_alarmas_descargaderas" ToRole="eventos_alarmas" />
+        </EntityType>
+        <EntityType Name="eventos_alarmas_llenaderas">
+          <Key>
+            <PropertyRef Name="id_ev_al_llen" />
+          </Key>
+          <Property Name="id_ev_al_llen" Type="Int32" Nullable="false" />
+          <Property Name="id_ev_al" Type="Int32" />
+          <Property Name="id_llenadera" Type="Int32" />
+          <Property Name="fecha_ev" Type="DateTime" Precision="0" />
+          <Property Name="hora_ev" Type="Time" Precision="7" />
+          <Property Name="no_orden" Type="Int32" />
+          <NavigationProperty Name="eventos_alarmas" Relationship="Self.FK__eventos_a__id_ev__4316F928" FromRole="eventos_alarmas_llenaderas" ToRole="eventos_alarmas" />
+          <NavigationProperty Name="llenaderas" Relationship="Self.FK__eventos_a__id_ll__4222D4EF" FromRole="eventos_alarmas_llenaderas" ToRole="llenaderas" />
+        </EntityType>
+        <EntityType Name="llenaderas">
+          <Key>
+            <PropertyRef Name="id_llenadera" />
+          </Key>
+          <Property Name="id_llenadera" Type="Int32" Nullable="false" />
+          <Property Name="no_orden" Type="Int32" />
+          <Property Name="numero_cliente" Type="Int32" />
+          <Property Name="nombre_comercializador_producto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="numero_autotanque" Type="Int32" />
+          <Property Name="numero_posicion_carga" Type="Int32" />
+          <Property Name="clave_producto" Type="Int32" />
+          <Property Name="vol_carga" Type="Double" />
+          <Property Name="vol_programado" Type="Double" />
+          <Property Name="vol_natural_medido" Type="Double" />
+          <Property Name="vol_neto_entregado_compensado" Type="Double" />
+          <Property Name="temperatura_promedio_carga" Type="Double" />
+          <Property Name="densidad_carga" Type="Int32" />
+          <Property Name="flujo_promedio_carga" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="factor_medicion_promedio_carga" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_inicio_carga" Type="DateTime" Precision="0" />
+          <Property Name="fecha_fin_carga" Type="DateTime" Precision="0" />
+          <Property Name="hora_inicio_carga" Type="Time" Precision="7" />
+          <Property Name="hora_fin_carga" Type="Time" Precision="7" />
+          <Property Name="estado_permisivo_tierra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado_permisivo_sobrellenado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="total_aditivos" Type="Int32" />
+          <Property Name="id_aditivos" Type="Int32" />
+          <Property Name="id_acceso" Type="Int32" />
+          <NavigationProperty Name="accesos" Relationship="Self.FK__llenadera__id_ac__3D5E1FD2" FromRole="llenaderas" ToRole="accesos" />
+          <NavigationProperty Name="aditivos" Relationship="Self.FK__llenadera__id_ad__3B75D760" FromRole="llenaderas" ToRole="aditivos" />
+          <NavigationProperty Name="bombas_llenaderas" Relationship="Self.FK__bombas_ll__id_ll__4D94879B" FromRole="llenaderas" ToRole="bombas_llenaderas" />
+          <NavigationProperty Name="eventos_alarmas_llenaderas" Relationship="Self.FK__eventos_a__id_ll__4222D4EF" FromRole="llenaderas" ToRole="eventos_alarmas_llenaderas" />
+          <NavigationProperty Name="producto" Relationship="Self.FK__llenadera__clave__3A81B327" FromRole="llenaderas" ToRole="producto" />
+          <NavigationProperty Name="operaciones" Relationship="Self.FK__llenadera__no_or__3C69FB99" FromRole="llenaderas" ToRole="operaciones" />
+        </EntityType>
+        <EntityType Name="operaciones">
+          <Key>
+            <PropertyRef Name="no_orden" />
+          </Key>
+          <Property Name="no_orden" Type="Int32" Nullable="false" />
+          <Property Name="nombre_orden" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="descargaderas" Relationship="Self.FK__descargad__no_or__52593CB8" FromRole="operaciones" ToRole="descargaderas" />
+          <NavigationProperty Name="llenaderas" Relationship="Self.FK__llenadera__no_or__3C69FB99" FromRole="operaciones" ToRole="llenaderas" />
+        </EntityType>
+        <EntityType Name="paro">
+          <Key>
+            <PropertyRef Name="id_paro" />
+          </Key>
+          <Property Name="id_paro" Type="Int32" Nullable="false" />
+          <Property Name="fecha_paro" Type="DateTime" Precision="0" />
+          <Property Name="hora_paro" Type="Time" Precision="7" />
+          <Property Name="generado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado_paro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="bomba" Relationship="Self.FK__bomba__id_paro__45F365D3" FromRole="paro" ToRole="bomba" />
+        </EntityType>
+        <EntityType Name="poliducto">
+          <Key>
+            <PropertyRef Name="id_poliducto" />
+          </Key>
+          <Property Name="id_poliducto" Type="Int32" Nullable="false" />
+          <Property Name="nombre_comercializador" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="nombre_poli" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="temperatura_medidor" Type="Double" />
+          <NavigationProperty Name="tanque_poliducto" Relationship="Self.FK__tanque_po__id_po__5DCAEF64" FromRole="poliducto" ToRole="tanque_poliducto" />
+        </EntityType>
+        <EntityType Name="proceso_voes">
+          <Key>
+            <PropertyRef Name="id_proc_voe" />
+          </Key>
+          <Property Name="id_proc_voe" Type="Int32" Nullable="false" />
+          <Property Name="estado_val_entrada" Type="Int32" />
+          <Property Name="estado_val_entrada_poli" Type="Int32" />
+          <Property Name="estado_val_salida_tq" Type="Int32" />
+          <Property Name="control_cierre_val_entrada_poli" Type="Int32" />
+          <Property Name="control_cierre_val_entrada" Type="Int32" />
+          <Property Name="control_cierre_val_salida_tq" Type="Int32" />
+          <Property Name="control_apertura_val_entrada_poli" Type="Int32" />
+          <Property Name="control_apertura_val_entrada" Type="Int32" />
+          <Property Name="control_apertura_val_salida_tq" Type="Int32" />
+          <Property Name="control_paro_val_entrada_poli" Type="Int32" />
+          <Property Name="control_paro_val_entrada" Type="Int32" />
+          <Property Name="control_paro_val_salida_tq" Type="Int32" />
+          <Property Name="id_voe" Type="Int32" />
+          <NavigationProperty Name="voe" Relationship="Self.FK__proceso_v__id_vo__33D4B598" FromRole="proceso_voes" ToRole="voe" />
+        </EntityType>
+        <EntityType Name="producto">
+          <Key>
+            <PropertyRef Name="clave" />
+          </Key>
+          <Property Name="clave" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="descargaderas" Relationship="Self.FK__descargad__clave__5165187F" FromRole="producto" ToRole="descargaderas" />
+          <NavigationProperty Name="llenaderas" Relationship="Self.FK__llenadera__clave__3A81B327" FromRole="producto" ToRole="llenaderas" />
+          <NavigationProperty Name="tanque" Relationship="Self.FK_tanque_producto" FromRole="producto" ToRole="tanque" />
+        </EntityType>
+        <EntityType Name="Salidas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Transaccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tanque">
+          <Key>
+            <PropertyRef Name="id_tanque" />
+          </Key>
+          <Property Name="id_tanque" Type="Int32" Nullable="false" />
+          <Property Name="nivel_prod" Type="Double" />
+          <Property Name="tem_prod" Type="Double" />
+          <Property Name="estado_control" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado_red" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nom_prod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="densidad_prod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="capacidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vol_natural" Type="Double" />
+          <Property Name="vol_corregido" Type="Double" />
+          <Property Name="vol_bruto" Type="Double" />
+          <Property Name="vol_agua" Type="Double" />
+          <Property Name="estado_a_nivel" Type="Int32" />
+          <Property Name="estado_a_a_nivel" Type="Int32" />
+          <Property Name="estado_b_nivel" Type="Int32" />
+          <Property Name="estado_b_b_nivel" Type="Int32" />
+          <Property Name="nivel_inv_comercializador" Type="Double" />
+          <Property Name="nivel_critico_comercializador" Type="Double" />
+          <Property Name="id_Producto" Type="Int32" />
+          <NavigationProperty Name="producto" Relationship="Self.FK_tanque_producto" FromRole="tanque" ToRole="producto" />
+          <NavigationProperty Name="tanque_bomba" Relationship="Self.FK__tanque_bo__id_ta__48CFD27E" FromRole="tanque" ToRole="tanque_bomba" />
+          <NavigationProperty Name="tanque_cubicacion" Relationship="Self.FK__tanque_cu__id_ta__2E1BDC42" FromRole="tanque" ToRole="tanque_cubicacion" />
+          <NavigationProperty Name="tanque_poliducto" Relationship="Self.FK__tanque_po__id_ta__5CD6CB2B" FromRole="tanque" ToRole="tanque_poliducto" />
+          <NavigationProperty Name="Tanque_Voe" Relationship="Self.FK_Tanque_Voe_tanque" FromRole="tanque" ToRole="Tanque_Voe" />
+        </EntityType>
+        <EntityType Name="tanque_bomba">
+          <Key>
+            <PropertyRef Name="id_tq_bm" />
+          </Key>
+          <Property Name="id_tq_bm" Type="Int32" Nullable="false" />
+          <Property Name="id_tanque" Type="Int32" />
+          <Property Name="id_bomba" Type="Int32" />
+          <NavigationProperty Name="bomba" Relationship="Self.FK__tanque_bo__id_bo__49C3F6B7" FromRole="tanque_bomba" ToRole="bomba" />
+          <NavigationProperty Name="tanque" Relationship="Self.FK__tanque_bo__id_ta__48CFD27E" FromRole="tanque_bomba" ToRole="tanque" />
+        </EntityType>
+        <EntityType Name="tanque_cubicacion">
+          <Key>
+            <PropertyRef Name="id_tc" />
+          </Key>
+          <Property Name="id_tc" Type="Int32" Nullable="false" />
+          <Property Name="id_tanque" Type="Int32" />
+          <Property Name="id_cub" Type="Int32" />
+          <NavigationProperty Name="cubicacion" Relationship="Self.FK__tanque_cu__id_cu__2F10007B" FromRole="tanque_cubicacion" ToRole="cubicacion" />
+          <NavigationProperty Name="tanque" Relationship="Self.FK__tanque_cu__id_ta__2E1BDC42" FromRole="tanque_cubicacion" ToRole="tanque" />
+        </EntityType>
+        <EntityType Name="tanque_poliducto">
+          <Key>
+            <PropertyRef Name="id_tq_pd" />
+          </Key>
+          <Property Name="id_tq_pd" Type="Int32" Nullable="false" />
+          <Property Name="id_tanque" Type="Int32" />
+          <Property Name="id_poliducto" Type="Int32" />
+          <Property Name="no_lote" Type="Int32" />
+          <Property Name="vol_programado" Type="Double" />
+          <Property Name="hora_inicio" Type="Time" Precision="7" />
+          <Property Name="hora_fin" Type="Time" Precision="7" />
+          <Property Name="temperatura_prom_lote" Type="Double" />
+          <Property Name="totalizados_lote_actual" Type="Int32" />
+          <Property Name="masa_total_lote" Type="Int32" />
+          <Property Name="totalizados_lote_anterior" Type="Int32" />
+          <NavigationProperty Name="poliducto" Relationship="Self.FK__tanque_po__id_po__5DCAEF64" FromRole="tanque_poliducto" ToRole="poliducto" />
+          <NavigationProperty Name="tanque" Relationship="Self.FK__tanque_po__id_ta__5CD6CB2B" FromRole="tanque_poliducto" ToRole="tanque" />
+        </EntityType>
+        <EntityType Name="Tanque_Voe">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_tanque" Type="Int32" Nullable="false" />
+          <Property Name="id_voe" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tanque" Relationship="Self.FK_Tanque_Voe_tanque" FromRole="Tanque_Voe" ToRole="tanque" />
+          <NavigationProperty Name="voe" Relationship="Self.FK_Tanque_Voe_voe" FromRole="Tanque_Voe" ToRole="voe" />
+        </EntityType>
+        <EntityType Name="voe">
+          <Key>
+            <PropertyRef Name="id_voe" />
+          </Key>
+          <Property Name="id_voe" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="modo" Type="Boolean" />
+          <Property Name="marcha_paro" Type="Int32" />
+          <Property Name="control_cierre_val_entrada_poli" Type="Int32" />
+          <Property Name="control_cierre_val_entrada" Type="Int32" />
+          <Property Name="control_cierre_val_salida_tq" Type="Int32" />
+          <Property Name="control_apertura_val_entrada_poli" Type="Int32" />
+          <Property Name="control_apertura_val_entrada" Type="Int32" />
+          <Property Name="control_apertura_val_salida_tq" Type="Int32" />
+          <Property Name="control_paro_val_entrada_poli" Type="Int32" />
+          <Property Name="control_paro_val_entrada" Type="Int32" />
+          <Property Name="control_paro_val_salida_tq" Type="Int32" />
+          <NavigationProperty Name="proceso_voes" Relationship="Self.FK__proceso_v__id_vo__33D4B598" FromRole="voe" ToRole="proceso_voes" />
+          <NavigationProperty Name="Tanque_Voe" Relationship="Self.FK_Tanque_Voe_voe" FromRole="voe" ToRole="Tanque_Voe" />
+        </EntityType>
+        <Association Name="FK__descargad__id_ac__534D60F1">
+          <End Role="accesos" Type="Self.accesos" Multiplicity="0..1" />
+          <End Role="descargaderas" Type="Self.descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accesos">
+              <PropertyRef Name="id_acceso" />
+            </Principal>
+            <Dependent Role="descargaderas">
+              <PropertyRef Name="id_acceso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__llenadera__id_ac__3D5E1FD2">
+          <End Role="accesos" Type="Self.accesos" Multiplicity="0..1" />
+          <End Role="llenaderas" Type="Self.llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accesos">
+              <PropertyRef Name="id_acceso" />
+            </Principal>
+            <Dependent Role="llenaderas">
+              <PropertyRef Name="id_acceso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__llenadera__id_ad__3B75D760">
+          <End Role="aditivos" Type="Self.aditivos" Multiplicity="0..1" />
+          <End Role="llenaderas" Type="Self.llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aditivos">
+              <PropertyRef Name="id_aditivos" />
+            </Principal>
+            <Dependent Role="llenaderas">
+              <PropertyRef Name="id_aditivos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bomba__id_paro__45F365D3">
+          <End Role="paro" Type="Self.paro" Multiplicity="0..1" />
+          <End Role="bomba" Type="Self.bomba" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paro">
+              <PropertyRef Name="id_paro" />
+            </Principal>
+            <Dependent Role="bomba">
+              <PropertyRef Name="id_paro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bombas_de__id_bo__60A75C0F">
+          <End Role="bomba" Type="Self.bomba" Multiplicity="0..1" />
+          <End Role="bombas_descargaderas" Type="Self.bombas_descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bomba">
+              <PropertyRef Name="id_bomba" />
+            </Principal>
+            <Dependent Role="bombas_descargaderas">
+              <PropertyRef Name="id_bomba" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bombas_ll__id_bo__4CA06362">
+          <End Role="bomba" Type="Self.bomba" Multiplicity="0..1" />
+          <End Role="bombas_llenaderas" Type="Self.bombas_llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bomba">
+              <PropertyRef Name="id_bomba" />
+            </Principal>
+            <Dependent Role="bombas_llenaderas">
+              <PropertyRef Name="id_bomba" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tanque_bo__id_bo__49C3F6B7">
+          <End Role="bomba" Type="Self.bomba" Multiplicity="0..1" />
+          <End Role="tanque_bomba" Type="Self.tanque_bomba" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bomba">
+              <PropertyRef Name="id_bomba" />
+            </Principal>
+            <Dependent Role="tanque_bomba">
+              <PropertyRef Name="id_bomba" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bombas_de__id_de__619B8048">
+          <End Role="descargaderas" Type="Self.descargaderas" Multiplicity="0..1" />
+          <End Role="bombas_descargaderas" Type="Self.bombas_descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="descargaderas">
+              <PropertyRef Name="id_descarga" />
+            </Principal>
+            <Dependent Role="bombas_descargaderas">
+              <PropertyRef Name="id_descarga" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bombas_ll__id_ll__4D94879B">
+          <End Role="llenaderas" Type="Self.llenaderas" Multiplicity="0..1" />
+          <End Role="bombas_llenaderas" Type="Self.bombas_llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="llenaderas">
+              <PropertyRef Name="id_llenadera" />
+            </Principal>
+            <Dependent Role="bombas_llenaderas">
+              <PropertyRef Name="id_llenadera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tanque_cu__id_cu__2F10007B">
+          <End Role="cubicacion" Type="Self.cubicacion" Multiplicity="0..1" />
+          <End Role="tanque_cubicacion" Type="Self.tanque_cubicacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cubicacion">
+              <PropertyRef Name="id_cub" />
+            </Principal>
+            <Dependent Role="tanque_cubicacion">
+              <PropertyRef Name="id_cub" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__descargad__clave__5165187F">
+          <End Role="producto" Type="Self.producto" Multiplicity="0..1" />
+          <End Role="descargaderas" Type="Self.descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="clave" />
+            </Principal>
+            <Dependent Role="descargaderas">
+              <PropertyRef Name="clave_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__descargad__no_or__52593CB8">
+          <End Role="operaciones" Type="Self.operaciones" Multiplicity="0..1" />
+          <End Role="descargaderas" Type="Self.descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operaciones">
+              <PropertyRef Name="no_orden" />
+            </Principal>
+            <Dependent Role="descargaderas">
+              <PropertyRef Name="no_orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__eventos_a__id_de__571DF1D5">
+          <End Role="descargaderas" Type="Self.descargaderas" Multiplicity="0..1" />
+          <End Role="eventos_alarmas_descargaderas" Type="Self.eventos_alarmas_descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="descargaderas">
+              <PropertyRef Name="id_descarga" />
+            </Principal>
+            <Dependent Role="eventos_alarmas_descargaderas">
+              <PropertyRef Name="id_descarga" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__eventos_a__id_ev__4316F928">
+          <End Role="eventos_alarmas" Type="Self.eventos_alarmas" Multiplicity="0..1" />
+          <End Role="eventos_alarmas_llenaderas" Type="Self.eventos_alarmas_llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eventos_alarmas">
+              <PropertyRef Name="id_ev_al" />
+            </Principal>
+            <Dependent Role="eventos_alarmas_llenaderas">
+              <PropertyRef Name="id_ev_al" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__eventos_a__id_ev__5812160E">
+          <End Role="eventos_alarmas" Type="Self.eventos_alarmas" Multiplicity="0..1" />
+          <End Role="eventos_alarmas_descargaderas" Type="Self.eventos_alarmas_descargaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eventos_alarmas">
+              <PropertyRef Name="id_ev_al" />
+            </Principal>
+            <Dependent Role="eventos_alarmas_descargaderas">
+              <PropertyRef Name="id_ev_al" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__eventos_a__id_ll__4222D4EF">
+          <End Role="llenaderas" Type="Self.llenaderas" Multiplicity="0..1" />
+          <End Role="eventos_alarmas_llenaderas" Type="Self.eventos_alarmas_llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="llenaderas">
+              <PropertyRef Name="id_llenadera" />
+            </Principal>
+            <Dependent Role="eventos_alarmas_llenaderas">
+              <PropertyRef Name="id_llenadera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__llenadera__clave__3A81B327">
+          <End Role="producto" Type="Self.producto" Multiplicity="0..1" />
+          <End Role="llenaderas" Type="Self.llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="clave" />
+            </Principal>
+            <Dependent Role="llenaderas">
+              <PropertyRef Name="clave_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__llenadera__no_or__3C69FB99">
+          <End Role="operaciones" Type="Self.operaciones" Multiplicity="0..1" />
+          <End Role="llenaderas" Type="Self.llenaderas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="operaciones">
+              <PropertyRef Name="no_orden" />
+            </Principal>
+            <Dependent Role="llenaderas">
+              <PropertyRef Name="no_orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tanque_po__id_po__5DCAEF64">
+          <End Role="poliducto" Type="Self.poliducto" Multiplicity="0..1" />
+          <End Role="tanque_poliducto" Type="Self.tanque_poliducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poliducto">
+              <PropertyRef Name="id_poliducto" />
+            </Principal>
+            <Dependent Role="tanque_poliducto">
+              <PropertyRef Name="id_poliducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__proceso_v__id_vo__33D4B598">
+          <End Role="voe" Type="Self.voe" Multiplicity="0..1" />
+          <End Role="proceso_voes" Type="Self.proceso_voes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="voe">
+              <PropertyRef Name="id_voe" />
+            </Principal>
+            <Dependent Role="proceso_voes">
+              <PropertyRef Name="id_voe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tanque_producto">
+          <End Role="producto" Type="Self.producto" Multiplicity="0..1" />
+          <End Role="tanque" Type="Self.tanque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="clave" />
+            </Principal>
+            <Dependent Role="tanque">
+              <PropertyRef Name="id_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tanque_bo__id_ta__48CFD27E">
+          <End Role="tanque" Type="Self.tanque" Multiplicity="0..1" />
+          <End Role="tanque_bomba" Type="Self.tanque_bomba" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tanque">
+              <PropertyRef Name="id_tanque" />
+            </Principal>
+            <Dependent Role="tanque_bomba">
+              <PropertyRef Name="id_tanque" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tanque_cu__id_ta__2E1BDC42">
+          <End Role="tanque" Type="Self.tanque" Multiplicity="0..1" />
+          <End Role="tanque_cubicacion" Type="Self.tanque_cubicacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tanque">
+              <PropertyRef Name="id_tanque" />
+            </Principal>
+            <Dependent Role="tanque_cubicacion">
+              <PropertyRef Name="id_tanque" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tanque_po__id_ta__5CD6CB2B">
+          <End Role="tanque" Type="Self.tanque" Multiplicity="0..1" />
+          <End Role="tanque_poliducto" Type="Self.tanque_poliducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tanque">
+              <PropertyRef Name="id_tanque" />
+            </Principal>
+            <Dependent Role="tanque_poliducto">
+              <PropertyRef Name="id_tanque" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tanque_Voe_tanque">
+          <End Role="tanque" Type="Self.tanque" Multiplicity="1" />
+          <End Role="Tanque_Voe" Type="Self.Tanque_Voe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tanque">
+              <PropertyRef Name="id_tanque" />
+            </Principal>
+            <Dependent Role="Tanque_Voe">
+              <PropertyRef Name="id_tanque" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tanque_Voe_voe">
+          <End Role="voe" Type="Self.voe" Multiplicity="1" />
+          <End Role="Tanque_Voe" Type="Self.Tanque_Voe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="voe">
+              <PropertyRef Name="id_voe" />
+            </Principal>
+            <Dependent Role="Tanque_Voe">
+              <PropertyRef Name="id_voe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bd_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="accesos" EntityType="Self.accesos" />
+          <EntitySet Name="aditivos" EntityType="Self.aditivos" />
+          <EntitySet Name="Auditoria" EntityType="Self.Auditoria" />
+          <EntitySet Name="bomba" EntityType="Self.bomba" />
+          <EntitySet Name="bombas_descargaderas" EntityType="Self.bombas_descargaderas" />
+          <EntitySet Name="bombas_llenaderas" EntityType="Self.bombas_llenaderas" />
+          <EntitySet Name="cubicacion" EntityType="Self.cubicacion" />
+          <EntitySet Name="descargaderas" EntityType="Self.descargaderas" />
+          <EntitySet Name="Entradas" EntityType="Self.Entradas" />
+          <EntitySet Name="eventos_alarmas" EntityType="Self.eventos_alarmas" />
+          <EntitySet Name="eventos_alarmas_descargaderas" EntityType="Self.eventos_alarmas_descargaderas" />
+          <EntitySet Name="eventos_alarmas_llenaderas" EntityType="Self.eventos_alarmas_llenaderas" />
+          <EntitySet Name="llenaderas" EntityType="Self.llenaderas" />
+          <EntitySet Name="operaciones" EntityType="Self.operaciones" />
+          <EntitySet Name="paro" EntityType="Self.paro" />
+          <EntitySet Name="poliducto" EntityType="Self.poliducto" />
+          <EntitySet Name="proceso_voes" EntityType="Self.proceso_voes" />
+          <EntitySet Name="producto" EntityType="Self.producto" />
+          <EntitySet Name="Salidas" EntityType="Self.Salidas" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tanque" EntityType="Self.tanque" />
+          <EntitySet Name="tanque_bomba" EntityType="Self.tanque_bomba" />
+          <EntitySet Name="tanque_cubicacion" EntityType="Self.tanque_cubicacion" />
+          <EntitySet Name="tanque_poliducto" EntityType="Self.tanque_poliducto" />
+          <EntitySet Name="Tanque_Voe" EntityType="Self.Tanque_Voe" />
+          <EntitySet Name="voe" EntityType="Self.voe" />
+          <AssociationSet Name="FK__descargad__id_ac__534D60F1" Association="Self.FK__descargad__id_ac__534D60F1">
+            <End Role="accesos" EntitySet="accesos" />
+            <End Role="descargaderas" EntitySet="descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__llenadera__id_ac__3D5E1FD2" Association="Self.FK__llenadera__id_ac__3D5E1FD2">
+            <End Role="accesos" EntitySet="accesos" />
+            <End Role="llenaderas" EntitySet="llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__llenadera__id_ad__3B75D760" Association="Self.FK__llenadera__id_ad__3B75D760">
+            <End Role="aditivos" EntitySet="aditivos" />
+            <End Role="llenaderas" EntitySet="llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bomba__id_paro__45F365D3" Association="Self.FK__bomba__id_paro__45F365D3">
+            <End Role="paro" EntitySet="paro" />
+            <End Role="bomba" EntitySet="bomba" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bombas_de__id_bo__60A75C0F" Association="Self.FK__bombas_de__id_bo__60A75C0F">
+            <End Role="bomba" EntitySet="bomba" />
+            <End Role="bombas_descargaderas" EntitySet="bombas_descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bombas_ll__id_bo__4CA06362" Association="Self.FK__bombas_ll__id_bo__4CA06362">
+            <End Role="bomba" EntitySet="bomba" />
+            <End Role="bombas_llenaderas" EntitySet="bombas_llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tanque_bo__id_bo__49C3F6B7" Association="Self.FK__tanque_bo__id_bo__49C3F6B7">
+            <End Role="bomba" EntitySet="bomba" />
+            <End Role="tanque_bomba" EntitySet="tanque_bomba" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bombas_de__id_de__619B8048" Association="Self.FK__bombas_de__id_de__619B8048">
+            <End Role="descargaderas" EntitySet="descargaderas" />
+            <End Role="bombas_descargaderas" EntitySet="bombas_descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bombas_ll__id_ll__4D94879B" Association="Self.FK__bombas_ll__id_ll__4D94879B">
+            <End Role="llenaderas" EntitySet="llenaderas" />
+            <End Role="bombas_llenaderas" EntitySet="bombas_llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tanque_cu__id_cu__2F10007B" Association="Self.FK__tanque_cu__id_cu__2F10007B">
+            <End Role="cubicacion" EntitySet="cubicacion" />
+            <End Role="tanque_cubicacion" EntitySet="tanque_cubicacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__descargad__clave__5165187F" Association="Self.FK__descargad__clave__5165187F">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="descargaderas" EntitySet="descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__descargad__no_or__52593CB8" Association="Self.FK__descargad__no_or__52593CB8">
+            <End Role="operaciones" EntitySet="operaciones" />
+            <End Role="descargaderas" EntitySet="descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__eventos_a__id_de__571DF1D5" Association="Self.FK__eventos_a__id_de__571DF1D5">
+            <End Role="descargaderas" EntitySet="descargaderas" />
+            <End Role="eventos_alarmas_descargaderas" EntitySet="eventos_alarmas_descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__eventos_a__id_ev__4316F928" Association="Self.FK__eventos_a__id_ev__4316F928">
+            <End Role="eventos_alarmas" EntitySet="eventos_alarmas" />
+            <End Role="eventos_alarmas_llenaderas" EntitySet="eventos_alarmas_llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__eventos_a__id_ev__5812160E" Association="Self.FK__eventos_a__id_ev__5812160E">
+            <End Role="eventos_alarmas" EntitySet="eventos_alarmas" />
+            <End Role="eventos_alarmas_descargaderas" EntitySet="eventos_alarmas_descargaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__eventos_a__id_ll__4222D4EF" Association="Self.FK__eventos_a__id_ll__4222D4EF">
+            <End Role="llenaderas" EntitySet="llenaderas" />
+            <End Role="eventos_alarmas_llenaderas" EntitySet="eventos_alarmas_llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__llenadera__clave__3A81B327" Association="Self.FK__llenadera__clave__3A81B327">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="llenaderas" EntitySet="llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__llenadera__no_or__3C69FB99" Association="Self.FK__llenadera__no_or__3C69FB99">
+            <End Role="operaciones" EntitySet="operaciones" />
+            <End Role="llenaderas" EntitySet="llenaderas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tanque_po__id_po__5DCAEF64" Association="Self.FK__tanque_po__id_po__5DCAEF64">
+            <End Role="poliducto" EntitySet="poliducto" />
+            <End Role="tanque_poliducto" EntitySet="tanque_poliducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__proceso_v__id_vo__33D4B598" Association="Self.FK__proceso_v__id_vo__33D4B598">
+            <End Role="voe" EntitySet="voe" />
+            <End Role="proceso_voes" EntitySet="proceso_voes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tanque_producto" Association="Self.FK_tanque_producto">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="tanque" EntitySet="tanque" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tanque_bo__id_ta__48CFD27E" Association="Self.FK__tanque_bo__id_ta__48CFD27E">
+            <End Role="tanque" EntitySet="tanque" />
+            <End Role="tanque_bomba" EntitySet="tanque_bomba" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tanque_cu__id_ta__2E1BDC42" Association="Self.FK__tanque_cu__id_ta__2E1BDC42">
+            <End Role="tanque" EntitySet="tanque" />
+            <End Role="tanque_cubicacion" EntitySet="tanque_cubicacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tanque_po__id_ta__5CD6CB2B" Association="Self.FK__tanque_po__id_ta__5CD6CB2B">
+            <End Role="tanque" EntitySet="tanque" />
+            <End Role="tanque_poliducto" EntitySet="tanque_poliducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tanque_Voe_tanque" Association="Self.FK_Tanque_Voe_tanque">
+            <End Role="tanque" EntitySet="tanque" />
+            <End Role="Tanque_Voe" EntitySet="Tanque_Voe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tanque_Voe_voe" Association="Self.FK_Tanque_Voe_voe">
+            <End Role="voe" EntitySet="voe" />
+            <End Role="Tanque_Voe" EntitySet="Tanque_Voe" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bd_historicaModelStoreContainer" CdmEntityContainer="bd_Entities">
+          <EntitySetMapping Name="accesos">
+            <EntityTypeMapping TypeName="bd_historicaModel.accesos">
+              <MappingFragment StoreEntitySet="accesos">
+                <ScalarProperty Name="id_acceso" ColumnName="id_acceso" />
+                <ScalarProperty Name="fecha_entrada" ColumnName="fecha_entrada" />
+                <ScalarProperty Name="hora_entrada" ColumnName="hora_entrada" />
+                <ScalarProperty Name="fecha_salida" ColumnName="fecha_salida" />
+                <ScalarProperty Name="hora_salida" ColumnName="hora_salida" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="aditivos">
+            <EntityTypeMapping TypeName="bd_historicaModel.aditivos">
+              <MappingFragment StoreEntitySet="aditivos">
+                <ScalarProperty Name="id_aditivos" ColumnName="id_aditivos" />
+                <ScalarProperty Name="volumen" ColumnName="volumen" />
+                <ScalarProperty Name="totalizador_aditivo" ColumnName="totalizador_aditivo" />
+                <ScalarProperty Name="ultima_carga" ColumnName="ultima_carga" />
+                <ScalarProperty Name="nivel_tq_aditivo" ColumnName="nivel_tq_aditivo" />
+                <ScalarProperty Name="volumen_tq" ColumnName="volumen_tq" />
+                <ScalarProperty Name="estado_nivel_tq" ColumnName="estado_nivel_tq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Auditoria">
+            <EntityTypeMapping TypeName="bd_historicaModel.Auditoria">
+              <MappingFragment StoreEntitySet="Auditoria">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Flujo_datos" ColumnName="Flujo_datos" />
+                <ScalarProperty Name="secuencial" ColumnName="secuencial" />
+                <ScalarProperty Name="Transaccion" ColumnName="Transaccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bomba">
+            <EntityTypeMapping TypeName="bd_historicaModel.bomba">
+              <MappingFragment StoreEntitySet="bomba">
+                <ScalarProperty Name="id_bomba" ColumnName="id_bomba" />
+                <ScalarProperty Name="nombre_bomba" ColumnName="nombre_bomba" />
+                <ScalarProperty Name="descripcion_bomba" ColumnName="descripcion_bomba" />
+                <ScalarProperty Name="arraque_bomba" ColumnName="arraque_bomba" />
+                <ScalarProperty Name="paro_bomba" ColumnName="paro_bomba" />
+                <ScalarProperty Name="estatus_bomba" ColumnName="estatus_bomba" />
+                <ScalarProperty Name="hrs_trabajo_acum" ColumnName="hrs_trabajo_acum" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="id_paro" ColumnName="id_paro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bombas_descargaderas">
+            <EntityTypeMapping TypeName="bd_historicaModel.bombas_descargaderas">
+              <MappingFragment StoreEntitySet="bombas_descargaderas">
+                <ScalarProperty Name="id_bm_des" ColumnName="id_bm_des" />
+                <ScalarProperty Name="id_bomba" ColumnName="id_bomba" />
+                <ScalarProperty Name="id_descarga" ColumnName="id_descarga" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bombas_llenaderas">
+            <EntityTypeMapping TypeName="bd_historicaModel.bombas_llenaderas">
+              <MappingFragment StoreEntitySet="bombas_llenaderas">
+                <ScalarProperty Name="id_bm_llena" ColumnName="id_bm_llena" />
+                <ScalarProperty Name="id_bomba" ColumnName="id_bomba" />
+                <ScalarProperty Name="id_llenadera" ColumnName="id_llenadera" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cubicacion">
+            <EntityTypeMapping TypeName="bd_historicaModel.cubicacion">
+              <MappingFragment StoreEntitySet="cubicacion">
+                <ScalarProperty Name="id_cub" ColumnName="id_cub" />
+                <ScalarProperty Name="nivel" ColumnName="nivel" />
+                <ScalarProperty Name="volumen" ColumnName="volumen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="descargaderas">
+            <EntityTypeMapping TypeName="bd_historicaModel.descargaderas">
+              <MappingFragment StoreEntitySet="descargaderas">
+                <ScalarProperty Name="id_descarga" ColumnName="id_descarga" />
+                <ScalarProperty Name="nombre_comercializador_producto" ColumnName="nombre_comercializador_producto" />
+                <ScalarProperty Name="no_orden" ColumnName="no_orden" />
+                <ScalarProperty Name="numero_tranporte" ColumnName="numero_tranporte" />
+                <ScalarProperty Name="numero_posicion_descarga" ColumnName="numero_posicion_descarga" />
+                <ScalarProperty Name="clave_producto" ColumnName="clave_producto" />
+                <ScalarProperty Name="vol_programado" ColumnName="vol_programado" />
+                <ScalarProperty Name="vol_natural_medido" ColumnName="vol_natural_medido" />
+                <ScalarProperty Name="vol_neto_entregado_corregido" ColumnName="vol_neto_entregado_corregido" />
+                <ScalarProperty Name="temperatura_promedio_descarga" ColumnName="temperatura_promedio_descarga" />
+                <ScalarProperty Name="densidad_descarga" ColumnName="densidad_descarga" />
+                <ScalarProperty Name="flujo_promedio_descarga" ColumnName="flujo_promedio_descarga" />
+                <ScalarProperty Name="factor_medicion_promedio_descarga" ColumnName="factor_medicion_promedio_descarga" />
+                <ScalarProperty Name="fecha_inicio_descarga" ColumnName="fecha_inicio_descarga" />
+                <ScalarProperty Name="fecha_fin_descarga" ColumnName="fecha_fin_descarga" />
+                <ScalarProperty Name="hora_inicio_descarga" ColumnName="hora_inicio_descarga" />
+                <ScalarProperty Name="hora_fin_descarga" ColumnName="hora_fin_descarga" />
+                <ScalarProperty Name="estado_permisivo_tierra" ColumnName="estado_permisivo_tierra" />
+                <ScalarProperty Name="totalizadores_ucls" ColumnName="totalizadores_ucls" />
+                <ScalarProperty Name="id_acceso" ColumnName="id_acceso" />
+                <ScalarProperty Name="id_bomba" ColumnName="id_bomba" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entradas">
+            <EntityTypeMapping TypeName="bd_historicaModel.Entradas">
+              <MappingFragment StoreEntitySet="Entradas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Transaccion" ColumnName="Transaccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="eventos_alarmas">
+            <EntityTypeMapping TypeName="bd_historicaModel.eventos_alarmas">
+              <MappingFragment StoreEntitySet="eventos_alarmas">
+                <ScalarProperty Name="id_ev_al" ColumnName="id_ev_al" />
+                <ScalarProperty Name="descripcion_ev_al" ColumnName="descripcion_ev_al" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="eventos_alarmas_descargaderas">
+            <EntityTypeMapping TypeName="bd_historicaModel.eventos_alarmas_descargaderas">
+              <MappingFragment StoreEntitySet="eventos_alarmas_descargaderas">
+                <ScalarProperty Name="id_ev_al_des" ColumnName="id_ev_al_des" />
+                <ScalarProperty Name="id_ev_al" ColumnName="id_ev_al" />
+                <ScalarProperty Name="id_descarga" ColumnName="id_descarga" />
+                <ScalarProperty Name="fecha_ev" ColumnName="fecha_ev" />
+                <ScalarProperty Name="hora_ev" ColumnName="hora_ev" />
+                <ScalarProperty Name="no_orden" ColumnName="no_orden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="eventos_alarmas_llenaderas">
+            <EntityTypeMapping TypeName="bd_historicaModel.eventos_alarmas_llenaderas">
+              <MappingFragment StoreEntitySet="eventos_alarmas_llenaderas">
+                <ScalarProperty Name="id_ev_al_llen" ColumnName="id_ev_al_llen" />
+                <ScalarProperty Name="id_ev_al" ColumnName="id_ev_al" />
+                <ScalarProperty Name="id_llenadera" ColumnName="id_llenadera" />
+                <ScalarProperty Name="fecha_ev" ColumnName="fecha_ev" />
+                <ScalarProperty Name="hora_ev" ColumnName="hora_ev" />
+                <ScalarProperty Name="no_orden" ColumnName="no_orden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="llenaderas">
+            <EntityTypeMapping TypeName="bd_historicaModel.llenaderas">
+              <MappingFragment StoreEntitySet="llenaderas">
+                <ScalarProperty Name="id_llenadera" ColumnName="id_llenadera" />
+                <ScalarProperty Name="no_orden" ColumnName="no_orden" />
+                <ScalarProperty Name="numero_cliente" ColumnName="numero_cliente" />
+                <ScalarProperty Name="nombre_comercializador_producto" ColumnName="nombre_comercializador_producto" />
+                <ScalarProperty Name="numero_autotanque" ColumnName="numero_autotanque" />
+                <ScalarProperty Name="numero_posicion_carga" ColumnName="numero_posicion_carga" />
+                <ScalarProperty Name="clave_producto" ColumnName="clave_producto" />
+                <ScalarProperty Name="vol_carga" ColumnName="vol_carga" />
+                <ScalarProperty Name="vol_programado" ColumnName="vol_programado" />
+                <ScalarProperty Name="vol_natural_medido" ColumnName="vol_natural_medido" />
+                <ScalarProperty Name="vol_neto_entregado_compensado" ColumnName="vol_neto_entregado_compensado" />
+                <ScalarProperty Name="temperatura_promedio_carga" ColumnName="temperatura_promedio_carga" />
+                <ScalarProperty Name="densidad_carga" ColumnName="densidad_carga" />
+                <ScalarProperty Name="flujo_promedio_carga" ColumnName="flujo_promedio_carga" />
+                <ScalarProperty Name="factor_medicion_promedio_carga" ColumnName="factor_medicion_promedio_carga" />
+                <ScalarProperty Name="fecha_inicio_carga" ColumnName="fecha_inicio_carga" />
+                <ScalarProperty Name="fecha_fin_carga" ColumnName="fecha_fin_carga" />
+                <ScalarProperty Name="hora_inicio_carga" ColumnName="hora_inicio_carga" />
+                <ScalarProperty Name="hora_fin_carga" ColumnName="hora_fin_carga" />
+                <ScalarProperty Name="estado_permisivo_tierra" ColumnName="estado_permisivo_tierra" />
+                <ScalarProperty Name="estado_permisivo_sobrellenado" ColumnName="estado_permisivo_sobrellenado" />
+                <ScalarProperty Name="total_aditivos" ColumnName="total_aditivos" />
+                <ScalarProperty Name="id_aditivos" ColumnName="id_aditivos" />
+                <ScalarProperty Name="id_acceso" ColumnName="id_acceso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="operaciones">
+            <EntityTypeMapping TypeName="bd_historicaModel.operaciones">
+              <MappingFragment StoreEntitySet="operaciones">
+                <ScalarProperty Name="no_orden" ColumnName="no_orden" />
+                <ScalarProperty Name="nombre_orden" ColumnName="nombre_orden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="paro">
+            <EntityTypeMapping TypeName="bd_historicaModel.paro">
+              <MappingFragment StoreEntitySet="paro">
+                <ScalarProperty Name="id_paro" ColumnName="id_paro" />
+                <ScalarProperty Name="fecha_paro" ColumnName="fecha_paro" />
+                <ScalarProperty Name="hora_paro" ColumnName="hora_paro" />
+                <ScalarProperty Name="generado" ColumnName="generado" />
+                <ScalarProperty Name="estado_paro" ColumnName="estado_paro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="poliducto">
+            <EntityTypeMapping TypeName="bd_historicaModel.poliducto">
+              <MappingFragment StoreEntitySet="poliducto">
+                <ScalarProperty Name="id_poliducto" ColumnName="id_poliducto" />
+                <ScalarProperty Name="nombre_comercializador" ColumnName="nombre_comercializador" />
+                <ScalarProperty Name="nombre_poli" ColumnName="nombre_poli" />
+                <ScalarProperty Name="temperatura_medidor" ColumnName="temperatura_medidor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proceso_voes">
+            <EntityTypeMapping TypeName="bd_historicaModel.proceso_voes">
+              <MappingFragment StoreEntitySet="proceso_voes">
+                <ScalarProperty Name="id_proc_voe" ColumnName="id_proc_voe" />
+                <ScalarProperty Name="estado_val_entrada" ColumnName="estado_val_entrada" />
+                <ScalarProperty Name="estado_val_entrada_poli" ColumnName="estado_val_entrada_poli" />
+                <ScalarProperty Name="estado_val_salida_tq" ColumnName="estado_val_salida_tq" />
+                <ScalarProperty Name="control_cierre_val_entrada_poli" ColumnName="control_cierre_val_entrada_poli" />
+                <ScalarProperty Name="control_cierre_val_entrada" ColumnName="control_cierre_val_entrada" />
+                <ScalarProperty Name="control_cierre_val_salida_tq" ColumnName="control_cierre_val_salida_tq" />
+                <ScalarProperty Name="control_apertura_val_entrada_poli" ColumnName="control_apertura_val_entrada_poli" />
+                <ScalarProperty Name="control_apertura_val_entrada" ColumnName="control_apertura_val_entrada" />
+                <ScalarProperty Name="control_apertura_val_salida_tq" ColumnName="control_apertura_val_salida_tq" />
+                <ScalarProperty Name="control_paro_val_entrada_poli" ColumnName="control_paro_val_entrada_poli" />
+                <ScalarProperty Name="control_paro_val_entrada" ColumnName="control_paro_val_entrada" />
+                <ScalarProperty Name="control_paro_val_salida_tq" ColumnName="control_paro_val_salida_tq" />
+                <ScalarProperty Name="id_voe" ColumnName="id_voe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="producto">
+            <EntityTypeMapping TypeName="bd_historicaModel.producto">
+              <MappingFragment StoreEntitySet="producto">
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Salidas">
+            <EntityTypeMapping TypeName="bd_historicaModel.Salidas">
+              <MappingFragment StoreEntitySet="Salidas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Transaccion" ColumnName="Transaccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="bd_historicaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tanque">
+            <EntityTypeMapping TypeName="bd_historicaModel.tanque">
+              <MappingFragment StoreEntitySet="tanque">
+                <ScalarProperty Name="id_tanque" ColumnName="id_tanque" />
+                <ScalarProperty Name="nivel_prod" ColumnName="nivel_prod" />
+                <ScalarProperty Name="tem_prod" ColumnName="tem_prod" />
+                <ScalarProperty Name="estado_control" ColumnName="estado_control" />
+                <ScalarProperty Name="estado_red" ColumnName="estado_red" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="nom_prod" ColumnName="nom_prod" />
+                <ScalarProperty Name="densidad_prod" ColumnName="densidad_prod" />
+                <ScalarProperty Name="capacidad" ColumnName="capacidad" />
+                <ScalarProperty Name="vol_natural" ColumnName="vol_natural" />
+                <ScalarProperty Name="vol_corregido" ColumnName="vol_corregido" />
+                <ScalarProperty Name="vol_bruto" ColumnName="vol_bruto" />
+                <ScalarProperty Name="vol_agua" ColumnName="vol_agua" />
+                <ScalarProperty Name="estado_a_nivel" ColumnName="estado_a_nivel" />
+                <ScalarProperty Name="estado_a_a_nivel" ColumnName="estado_a_a_nivel" />
+                <ScalarProperty Name="estado_b_nivel" ColumnName="estado_b_nivel" />
+                <ScalarProperty Name="estado_b_b_nivel" ColumnName="estado_b_b_nivel" />
+                <ScalarProperty Name="nivel_inv_comercializador" ColumnName="nivel_inv_comercializador" />
+                <ScalarProperty Name="nivel_critico_comercializador" ColumnName="nivel_critico_comercializador" />
+                <ScalarProperty Name="id_Producto" ColumnName="id_Producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tanque_bomba">
+            <EntityTypeMapping TypeName="bd_historicaModel.tanque_bomba">
+              <MappingFragment StoreEntitySet="tanque_bomba">
+                <ScalarProperty Name="id_tq_bm" ColumnName="id_tq_bm" />
+                <ScalarProperty Name="id_tanque" ColumnName="id_tanque" />
+                <ScalarProperty Name="id_bomba" ColumnName="id_bomba" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tanque_cubicacion">
+            <EntityTypeMapping TypeName="bd_historicaModel.tanque_cubicacion">
+              <MappingFragment StoreEntitySet="tanque_cubicacion">
+                <ScalarProperty Name="id_tc" ColumnName="id_tc" />
+                <ScalarProperty Name="id_tanque" ColumnName="id_tanque" />
+                <ScalarProperty Name="id_cub" ColumnName="id_cub" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tanque_poliducto">
+            <EntityTypeMapping TypeName="bd_historicaModel.tanque_poliducto">
+              <MappingFragment StoreEntitySet="tanque_poliducto">
+                <ScalarProperty Name="id_tq_pd" ColumnName="id_tq_pd" />
+                <ScalarProperty Name="id_tanque" ColumnName="id_tanque" />
+                <ScalarProperty Name="id_poliducto" ColumnName="id_poliducto" />
+                <ScalarProperty Name="no_lote" ColumnName="no_lote" />
+                <ScalarProperty Name="vol_programado" ColumnName="vol_programado" />
+                <ScalarProperty Name="hora_inicio" ColumnName="hora_inicio" />
+                <ScalarProperty Name="hora_fin" ColumnName="hora_fin" />
+                <ScalarProperty Name="temperatura_prom_lote" ColumnName="temperatura_prom_lote" />
+                <ScalarProperty Name="totalizados_lote_actual" ColumnName="totalizados_lote_actual" />
+                <ScalarProperty Name="masa_total_lote" ColumnName="masa_total_lote" />
+                <ScalarProperty Name="totalizados_lote_anterior" ColumnName="totalizados_lote_anterior" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tanque_Voe">
+            <EntityTypeMapping TypeName="bd_historicaModel.Tanque_Voe">
+              <MappingFragment StoreEntitySet="Tanque_Voe">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_tanque" ColumnName="id_tanque" />
+                <ScalarProperty Name="id_voe" ColumnName="id_voe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="voe">
+            <EntityTypeMapping TypeName="bd_historicaModel.voe">
+              <MappingFragment StoreEntitySet="voe">
+                <ScalarProperty Name="id_voe" ColumnName="id_voe" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="modo" ColumnName="modo" />
+                <ScalarProperty Name="marcha_paro" ColumnName="marcha_paro" />
+                <ScalarProperty Name="control_cierre_val_entrada_poli" ColumnName="control_cierre_val_entrada_poli" />
+                <ScalarProperty Name="control_cierre_val_entrada" ColumnName="control_cierre_val_entrada" />
+                <ScalarProperty Name="control_cierre_val_salida_tq" ColumnName="control_cierre_val_salida_tq" />
+                <ScalarProperty Name="control_apertura_val_entrada_poli" ColumnName="control_apertura_val_entrada_poli" />
+                <ScalarProperty Name="control_apertura_val_entrada" ColumnName="control_apertura_val_entrada" />
+                <ScalarProperty Name="control_apertura_val_salida_tq" ColumnName="control_apertura_val_salida_tq" />
+                <ScalarProperty Name="control_paro_val_entrada_poli" ColumnName="control_paro_val_entrada_poli" />
+                <ScalarProperty Name="control_paro_val_entrada" ColumnName="control_paro_val_entrada" />
+                <ScalarProperty Name="control_paro_val_salida_tq" ColumnName="control_paro_val_salida_tq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
