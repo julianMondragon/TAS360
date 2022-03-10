@@ -1,7 +1,43 @@
-﻿@{
-    ViewBag.Title = "About";
+﻿@model TAS360.Models.ViewModel.entradasViewModel
+@{
+    ViewBag.Title = "Test PTS";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<div class="jumbotron">
+    <h1>Entradas</h1>
+    <p class="lead">Tabla donde llegan los registros generados del SIMCOT para ser enviados a SIIC </p>
+    <p><a onclick="document.location.href = '@Url.Content("~/home/GenerarTrama/")'" class="btn btn-primary btn-lg">Generar Trama &raquo;</a></p>
+</div>
+<section class="page-section cta">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <div class="cta-inner bg-faded text-center rounded">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Identificador</th>
+                                    <th>Transacción (TRAMA)</th>
+                                    <th>Operación</th>
+                                </tr>
+                                @foreach (var usr in Model.entradas)
+                                {
+                                    <tr>
+                                        <td>@usr.Id</td>
+                                        <td>@usr.Transaccion</td>
+                                        <td>
+                                            <input type="button" class="btn btn-default" onclick="document.location.href = '@Url.Content("~/home/InterpretarTrama/" + usr.Id)'" value="Interpretar" />
+                                            <input type="button" class="btn btn-danger" value="Eliminar" />
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
