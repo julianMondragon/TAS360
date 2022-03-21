@@ -1,10 +1,10 @@
-﻿@model TAS360.Models.ViewModel.salidasViewModel
+﻿@model TAS360.Models.ViewModel.entradasViewModel
 @{
     ViewBag.Title = "Test PTS";
 }
 
 <div class="jumbotron">
-    <h1>Salidas</h1>
+    <h1>Entradas</h1>
     <p class="lead">Tabla donde llegan los registros del SIIC - SIMCOT </p>
     @*<p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
 </div>
@@ -21,7 +21,7 @@
                                     <th>Transacción (TRAMA)</th>
                                     <th>Operación</th>
                                 </tr>
-                                @foreach (var usr in Model.salidas)
+                                @foreach (var usr in Model.entradas)
                                 {
                                     <tr>
                                         <td>@usr.Id</td>

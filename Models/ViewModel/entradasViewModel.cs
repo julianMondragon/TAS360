@@ -10,13 +10,13 @@ namespace TAS360.Models.ViewModel
         public entradasViewModel()
         {
             entradas = new List<Entradas>();
-            Trama = new ConfOrdenCargaDescarga();
+            Trama = new OrdenCargaDescarga();
         }
         public List<Entradas> entradas { get; set; }
-        public ConfOrdenCargaDescarga Trama { get; set; }
+        public OrdenCargaDescarga Trama { get; set; }
     }
 
-    public class ConfOrdenCargaDescarga
+    public class OrdenCargaDescarga
     {
         public string TipoTransaccion { get; set; }
         public string NumeroOperacion { get; set; }

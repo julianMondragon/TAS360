@@ -12,13 +12,13 @@ namespace TAS360.Controllers
     {
         public ActionResult Index()
         {
-           salidasViewModel salidasVM = new salidasViewModel();
+            entradasViewModel salidasVM = new entradasViewModel();
            using (bd_Entities db = new bd_Entities())
             {
-                var aux = (from s in db.Salidas select s);
+                var aux = (from s in db.Entradas select s);
                 foreach (var a in aux)
                 {
-                    salidasVM.salidas.Add(a);
+                    salidasVM.entradas.Add(a);
                 }
             }
             return View(salidasVM);
@@ -26,15 +26,15 @@ namespace TAS360.Controllers
 
         public ActionResult About()
         {
-            entradasViewModel salidasVM = new entradasViewModel();
+            salidasViewModel salidasVM = new salidasViewModel();
             using (bd_Entities db = new bd_Entities())
             {
-                var aux = (from s in db.Entradas select s);
+                var aux = (from s in db.Salidas select s);
                 if (aux != null && aux.Any())
                 {
                     foreach (var a in aux)
                     {
-                        salidasVM.entradas.Add(a);
+                        salidasVM.salidas.Add(a);
                     }
                 }                
             }
@@ -50,29 +50,29 @@ namespace TAS360.Controllers
 
         public ActionResult InterpretarTrama(string id)
         {
-            salidasViewModel salidasVM = new salidasViewModel();
+            entradasViewModel salidasVM = new entradasViewModel();
             string trama = null;
             using (bd_Entities db = new bd_Entities())
             {
                 int Id = int.Parse(id);
-                var aux = from s in db.Salidas where  s.Id == Id select s;
+                var aux = from s in db.Entradas where  s.Id == Id select s;
                 foreach (var a in aux)
                 {
-                    salidasVM.salidas.Add(a);
+                    salidasVM.entradas.Add(a);
                 }
-                trama = db.Salidas.Find(int.Parse(id)).Transaccion;
+                trama = db.Entradas.Find(int.Parse(id)).Transaccion;
             }
 
-            salidasVM.Trama = new ordenCargaDescarga();
+            salidasVM.Trama = new OrdenCargaDescarga();
             salidasVM.Trama = leertrama(trama);
 
 
             return View(salidasVM);
         }
 
-        public ordenCargaDescarga leertrama( string trama )
+        public OrdenCargaDescarga leertrama( string trama )
         {
-            ordenCargaDescarga ordenCarga = new ordenCargaDescarga();
+            OrdenCargaDescarga ordenCarga = new OrdenCargaDescarga();
 
             //Tipo de  transaccion
             string tipotransaccion = trama.Substring(0, 2);
