@@ -329,6 +329,7 @@
       <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModel\aditivoViewModel.cs" />
+    <Compile Include="Models\ViewModel\auditoriaViewModel.cs" />
     <Compile Include="Models\ViewModel\entradasViewModel.cs" />
     <Compile Include="Models\ViewModel\RepTotalizadoViewModel.cs" />
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
