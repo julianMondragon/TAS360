@@ -222,6 +222,7 @@
     <Compile Include="Models\Tanque_Voe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModel\auditoriaViewModel.cs" />
     <Compile Include="Models\ViewModel\entradasViewModel.cs" />
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
     <Compile Include="Models\ViewModel\TramaViewModel.cs" />
@@ -285,6 +286,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\InterpretarTrama.cshtml" />
     <Content Include="Views\Home\GenerarTrama.cshtml" />
+    <Content Include="Views\Home\TramaConfirmacionO.cshtml" />
+    <Content Include="Views\Home\TramaVolumenTanques.cshtml" />
+    <Content Include="Views\Home\InterpretarTramaS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,100 @@
+﻿@model TAS360.Models.ViewModel.TramaVolumenesTanquesViewModel
+@{
+    ViewBag.Title = "Generar Trama";
+    List<SelectListItem> ListTrancc = (List<SelectListItem>)ViewBag.ListTipoTrancc2;
+    List<SelectListItem> ListPro = (List<SelectListItem>)ViewBag.ListProducto;
+}
+<br />
+<br />
+<section class="page-section about-heading">
+    <div class="container">
+        @*<img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="assets/img/about.jpg" alt="..." />*@
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <h2 class="section-heading mb-4">
+                            @*<span class="section-heading-upper">Strong Coffee, Strong Roots</span>*@
+                            <span class="section-heading-lower">Generar Trama</span>
+                        </h2>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @using (Html.BeginForm("TramaVolumenTanques", "Home", FormMethod.Post, new { role = "form", @class = "" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <br />
+
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Tipo_Transaccion)
+                                                @Html.DropDownListFor(model => model.Tipo_Transaccion, ListTrancc, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.numero_tanque)
+                                                @Html.TextBoxFor(f => f.numero_tanque, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.numero_tanque, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.codigo_Anterior_producto)
+                                                @Html.DropDownListFor(model => model.codigo_Anterior_producto, ListPro, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.volumen_total_neto)
+                                                @Html.TextBoxFor(f => f.volumen_total_neto, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.volumen_total_neto, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.volumen_neto)
+                                                @Html.TextBoxFor(f => f.volumen_neto, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.volumen_neto, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.volumen_natural)
+                                                @Html.TextBoxFor(f => f.volumen_natural, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.volumen_natural, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.temperatura_promedio)
+                                                @Html.TextBoxFor(f => f.temperatura_promedio, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.temperatura_promedio, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.fecha)
+                                                @Html.TextBoxFor(f => f.fecha, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Hora)
+                                                @Html.TextBoxFor(f => f.Hora, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.codigo_nuevo_producto)
+                                                @Html.DropDownListFor(model => model.codigo_nuevo_producto, ListPro, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div style="text-align:right">
+                                            <input type="submit" class="btn btn-success" value="Generar Trama" />
+                                        </div>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -19,17 +19,17 @@
                                 <tr>
                                     <th>Identificador</th>
                                     <th>Transacción (TRAMA)</th>
-                                    @*<th>Operación</th>*@
+                                    <th>Operación</th>
                                 </tr>
                                 @foreach (var usr in Model.salidas)
                                 {
                                     <tr>
                                         <td>@usr.Id</td>
                                         <td>@usr.Transaccion</td>
-                                        @*<td>
-                                            <input type="button" class="btn btn-default" onclick="document.location.href = '@Url.Content("~/home/InterpretarTrama/" + usr.Id)'" value="Interpretar" />
+                                        <td>
+                                            <input type="button" class="btn btn-default" onclick="document.location.href = '@Url.Content("~/home/InterpretarTramaS/" + usr.Id)'" value="Interpretar" />
                                             <input type="button" class="btn btn-danger" value="Eliminar" />
-                                        </td>*@
+                                        </td>
                                     </tr>
                                 }
                             </table>
