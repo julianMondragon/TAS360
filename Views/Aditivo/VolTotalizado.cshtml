@@ -1,0 +1,34 @@
+﻿@model TAS360.Models.ViewModel.RepTotalizadoViewModel
+@{
+    ViewBag.Title = "Reporte de Totalizado";
+}
+
+<div class="jumbotron">
+    <h1>Volumen Totalizado</h1>
+    <p class="lead">Reporte de volumen totalizado por islas en la TAD del ultimo día</p>
+</div>
+<div class="row">
+    <div class="col-md-6" style="align-content:center">
+        <table class="table table-success table-striped">
+            <tr>
+                <th class="alert-warning">Fecha y Hora</th>
+                <th class="alert-warning">Isla 9</th>
+                <th class="alert-warning">Isla 8</th>
+                <th class="alert-warning">Isla 7</th>
+            </tr>
+            @if (Model != null)
+            {
+                for(int i = 0; i < Model.Ucls.Ucl1.Count; i++ )
+                {
+                    <tr>
+                        <td>@Model.Ucls.Ucl1[i].Fecha_y_Hora</td>
+                        <td>@Model.Ucls.Ucl1[i].Isla_9_Totalizador_de_Aditivo</td>
+                        <td>@Model.Ucls.Ucl2[i].Isla_8_Totalizador_de_Aditivo</td>
+                        <td>@Model.Ucls.Ucl3[i].Isla_7_Totalizador_de_Aditivo</td>
+                    </tr>
+                }
+            }
+
+        </table>
+    </div>
+</div>

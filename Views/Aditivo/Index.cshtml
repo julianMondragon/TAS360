@@ -1,0 +1,67 @@
+﻿@model TAS360.Models.ViewModel.aditivoViewModel
+@{
+    ViewBag.Title = "Aditivo";
+}
+
+<div class="jumbotron">
+    <h1>Aditivo</h1>
+    <p class="lead">Inventario de aditivo en la TAD </p>
+</div>
+
+
+<div class="row">
+    <img src="~/Content/img/TanqueAditivo.jpg" class="card-img-top" alt="...">
+    <div class="col-md-4">
+        <table class="table table-success table-striped">
+            <tr>
+                <th class="alert-success">Dato</th>
+                <th class="alert-success">Valor</th>
+            </tr>
+            <tr>
+                <td>TAG</td>
+                <td>@Model.Tag</td>
+
+            </tr>
+            <tr>
+                <td>Nombre de Aditivo</td>
+                @if (Model != null)
+                {
+                    <td>@Model.NombreAditivo</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            </tr>
+            <tr>
+                <td>Volumen</td>
+                @if (Model != null && Model.Volumen != 0)
+                {
+                    <td>@Model.Volumen</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            </tr>
+            <tr>
+                <td>Nivel</td>
+                @if (Model != null && Model.Nivel != 0)
+                {
+                    <td>@Model.Nivel</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            </tr>
+        </table>        
+    </div>
+</div>
+<div class="row">
+    <p>
+        <a onclick="document.location.href = '@Url.Content("~/Aditivo/ActualizarDatos")'" class="btn btn-primary btn-lg">Test - Movimiento de producto &raquo;</a>
+        <a onclick="document.location.href = '@Url.Content("~/Aditivo/VolTotalizado")'" class="btn btn-warning btn-lg">Reporte Volumen Totalizado &raquo;</a>
+        @*<a onclick="document.location.href = '@Url.Content("~/Aditivo/RepPosicion")'" class="btn btn-warning btn-lg">Reporte por posición &raquo;</a>*@
+    </p>
+</div>

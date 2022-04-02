@@ -128,6 +128,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AditivoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -135,8 +136,56 @@
     <Compile Include="Models\accesos.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AditivoBD.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AditivoBD.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AditivoBD.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AditivoBD.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AditivoBD.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\aditivos.cs">
       <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny10.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny11.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny12.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny13.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny14.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny6.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny7.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny8.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny9.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlNiv.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlSkid.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Auditoria.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -186,6 +235,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\NivTanq.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\operaciones.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -205,7 +257,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tanque.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -222,11 +274,70 @@
     <Compile Include="Models\Tanque_Voe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TotIny10.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TotIny11.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TotIny12.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TotIny13.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TotIny14.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TotIny6.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TotIny7.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TotIny8.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TotIny9.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny10.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny11.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny12.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny13.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny14.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny6.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny7.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny8.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny9.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModel\aditivoViewModel.cs" />
     <Compile Include="Models\ViewModel\entradasViewModel.cs" />
+    <Compile Include="Models\ViewModel\RepTotalizadoViewModel.cs" />
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
     <Compile Include="Models\ViewModel\TramaViewModel.cs" />
     <Compile Include="Models\voe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VolTanq.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -235,10 +346,21 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\TanqueAditivo.JPG" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\AditivoBD.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AditivoBD.edmx</DependentUpon>
+      <LastGenOutput>AditivoBD.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\AditivoBD.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AditivoBD.edmx</DependentUpon>
+      <LastGenOutput>AditivoBD.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
@@ -257,6 +379,13 @@
     </EntityDeploy>
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\AditivoBD.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AditivoBD.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\AditivoBD.edmx.diagram">
+      <DependentUpon>AditivoBD.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -285,6 +414,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\InterpretarTrama.cshtml" />
     <Content Include="Views\Home\GenerarTrama.cshtml" />
+    <Content Include="Views\Aditivo\Index.cshtml" />
+    <Content Include="Views\Aditivo\VolTotalizado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

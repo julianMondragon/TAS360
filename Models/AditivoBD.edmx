@@ -1,0 +1,1040 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="IMPDG15Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.AlIny10' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AlIny10">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_10_Alarma_Principal" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.AlIny11' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AlIny11">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_11_Alarma_Principal" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.AlIny12' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AlIny12">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_12_Alarma_Principal" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.AlIny13' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AlIny13">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_13_Alarma_Principal" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.AlIny14' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AlIny14">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_14_Alarma_Principal" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.AlIny6' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AlIny6">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_6_Alarma_Principal" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.AlIny7' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AlIny7">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_7_Alarma_Principal" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.AlIny8' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AlIny8">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_8_Alarma_Principal" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.AlIny9' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AlIny9">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_9_Alarma_Principal" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.AlNiv' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AlNiv">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Nivel_Alarma_Principal" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.AlSkid' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="AlSkid">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Skid_Alarma_Principal" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.NivTanq' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="NivTanq">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Nivel_Tanque_Nivel_Value" Type="float" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.TotIny10' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="TotIny10">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_10_Totalizador_de_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.TotIny11' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="TotIny11">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_11_Totalizador_de_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.TotIny12' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="TotIny12">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_12_Totalizador_de_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.TotIny13' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="TotIny13">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_13_Totalizador_de_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.TotIny14' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="TotIny14">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_14_Totalizador_de_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.TotIny6' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="TotIny6">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_6_Totalizador_de_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.TotIny7' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="TotIny7">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_7_Totalizador_de_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.TotIny8' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="TotIny8">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_8_Totalizador_de_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.TotIny9' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="TotIny9">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_9_Totalizador_de_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.UCIny10' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="UCIny10">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_10_Ultima_Carga_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.UCIny11' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="UCIny11">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_11_Ultima_Carga_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.UCIny12' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="UCIny12">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_12_Ultima_Carga_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.UCIny13' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="UCIny13">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_13_Ultima_Carga_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.UCIny14' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="UCIny14">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_14_Ultima_Carga_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.UCIny6' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="UCIny6">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_6_Ultima_Carga_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.UCIny7' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="UCIny7">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_7_Ultima_Carga_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.UCIny8' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="UCIny8">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_8_Ultima_Carga_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.UCIny9' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="UCIny9">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Isla_9_Ultima_Carga_Aditivo" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IMPDG15.dbo.VolTanq' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VolTanq">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="datetime" Nullable="false" />
+          <Property Name="Nivel_Volumetrico" Type="float" />
+        </EntityType>
+        <EntityContainer Name="IMPDG15ModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlIny10" EntityType="Self.AlIny10" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AlIny10].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [AlIny10].[Isla_10_Alarma_Principal] AS [Isla_10_Alarma_Principal]
+    FROM [dbo].[AlIny10] AS [AlIny10]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AlIny11" EntityType="Self.AlIny11" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AlIny11].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [AlIny11].[Isla_11_Alarma_Principal] AS [Isla_11_Alarma_Principal]
+    FROM [dbo].[AlIny11] AS [AlIny11]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AlIny12" EntityType="Self.AlIny12" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AlIny12].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [AlIny12].[Isla_12_Alarma_Principal] AS [Isla_12_Alarma_Principal]
+    FROM [dbo].[AlIny12] AS [AlIny12]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AlIny13" EntityType="Self.AlIny13" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AlIny13].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [AlIny13].[Isla_13_Alarma_Principal] AS [Isla_13_Alarma_Principal]
+    FROM [dbo].[AlIny13] AS [AlIny13]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AlIny14" EntityType="Self.AlIny14" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AlIny14].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [AlIny14].[Isla_14_Alarma_Principal] AS [Isla_14_Alarma_Principal]
+    FROM [dbo].[AlIny14] AS [AlIny14]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AlIny6" EntityType="Self.AlIny6" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AlIny6].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [AlIny6].[Isla_6_Alarma_Principal] AS [Isla_6_Alarma_Principal]
+    FROM [dbo].[AlIny6] AS [AlIny6]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AlIny7" EntityType="Self.AlIny7" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AlIny7].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [AlIny7].[Isla_7_Alarma_Principal] AS [Isla_7_Alarma_Principal]
+    FROM [dbo].[AlIny7] AS [AlIny7]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AlIny8" EntityType="Self.AlIny8" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AlIny8].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [AlIny8].[Isla_8_Alarma_Principal] AS [Isla_8_Alarma_Principal]
+    FROM [dbo].[AlIny8] AS [AlIny8]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AlIny9" EntityType="Self.AlIny9" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AlIny9].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [AlIny9].[Isla_9_Alarma_Principal] AS [Isla_9_Alarma_Principal]
+    FROM [dbo].[AlIny9] AS [AlIny9]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AlNiv" EntityType="Self.AlNiv" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AlNiv].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [AlNiv].[Nivel_Alarma_Principal] AS [Nivel_Alarma_Principal]
+    FROM [dbo].[AlNiv] AS [AlNiv]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AlSkid" EntityType="Self.AlSkid" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AlSkid].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [AlSkid].[Skid_Alarma_Principal] AS [Skid_Alarma_Principal]
+    FROM [dbo].[AlSkid] AS [AlSkid]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="NivTanq" EntityType="Self.NivTanq" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [NivTanq].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [NivTanq].[Nivel_Tanque_Nivel_Value] AS [Nivel_Tanque_Nivel_Value]
+    FROM [dbo].[NivTanq] AS [NivTanq]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TotIny10" EntityType="Self.TotIny10" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TotIny10].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [TotIny10].[Isla_10_Totalizador_de_Aditivo] AS [Isla_10_Totalizador_de_Aditivo]
+    FROM [dbo].[TotIny10] AS [TotIny10]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TotIny11" EntityType="Self.TotIny11" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TotIny11].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [TotIny11].[Isla_11_Totalizador_de_Aditivo] AS [Isla_11_Totalizador_de_Aditivo]
+    FROM [dbo].[TotIny11] AS [TotIny11]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TotIny12" EntityType="Self.TotIny12" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TotIny12].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [TotIny12].[Isla_12_Totalizador_de_Aditivo] AS [Isla_12_Totalizador_de_Aditivo]
+    FROM [dbo].[TotIny12] AS [TotIny12]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TotIny13" EntityType="Self.TotIny13" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TotIny13].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [TotIny13].[Isla_13_Totalizador_de_Aditivo] AS [Isla_13_Totalizador_de_Aditivo]
+    FROM [dbo].[TotIny13] AS [TotIny13]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TotIny14" EntityType="Self.TotIny14" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TotIny14].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [TotIny14].[Isla_14_Totalizador_de_Aditivo] AS [Isla_14_Totalizador_de_Aditivo]
+    FROM [dbo].[TotIny14] AS [TotIny14]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TotIny6" EntityType="Self.TotIny6" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TotIny6].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [TotIny6].[Isla_6_Totalizador_de_Aditivo] AS [Isla_6_Totalizador_de_Aditivo]
+    FROM [dbo].[TotIny6] AS [TotIny6]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TotIny7" EntityType="Self.TotIny7" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TotIny7].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [TotIny7].[Isla_7_Totalizador_de_Aditivo] AS [Isla_7_Totalizador_de_Aditivo]
+    FROM [dbo].[TotIny7] AS [TotIny7]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TotIny8" EntityType="Self.TotIny8" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TotIny8].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [TotIny8].[Isla_8_Totalizador_de_Aditivo] AS [Isla_8_Totalizador_de_Aditivo]
+    FROM [dbo].[TotIny8] AS [TotIny8]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TotIny9" EntityType="Self.TotIny9" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TotIny9].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [TotIny9].[Isla_9_Totalizador_de_Aditivo] AS [Isla_9_Totalizador_de_Aditivo]
+    FROM [dbo].[TotIny9] AS [TotIny9]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UCIny10" EntityType="Self.UCIny10" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UCIny10].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [UCIny10].[Isla_10_Ultima_Carga_Aditivo] AS [Isla_10_Ultima_Carga_Aditivo]
+    FROM [dbo].[UCIny10] AS [UCIny10]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UCIny11" EntityType="Self.UCIny11" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UCIny11].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [UCIny11].[Isla_11_Ultima_Carga_Aditivo] AS [Isla_11_Ultima_Carga_Aditivo]
+    FROM [dbo].[UCIny11] AS [UCIny11]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UCIny12" EntityType="Self.UCIny12" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UCIny12].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [UCIny12].[Isla_12_Ultima_Carga_Aditivo] AS [Isla_12_Ultima_Carga_Aditivo]
+    FROM [dbo].[UCIny12] AS [UCIny12]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UCIny13" EntityType="Self.UCIny13" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UCIny13].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [UCIny13].[Isla_13_Ultima_Carga_Aditivo] AS [Isla_13_Ultima_Carga_Aditivo]
+    FROM [dbo].[UCIny13] AS [UCIny13]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UCIny14" EntityType="Self.UCIny14" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UCIny14].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [UCIny14].[Isla_14_Ultima_Carga_Aditivo] AS [Isla_14_Ultima_Carga_Aditivo]
+    FROM [dbo].[UCIny14] AS [UCIny14]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UCIny6" EntityType="Self.UCIny6" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UCIny6].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [UCIny6].[Isla_6_Ultima_Carga_Aditivo] AS [Isla_6_Ultima_Carga_Aditivo]
+    FROM [dbo].[UCIny6] AS [UCIny6]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UCIny7" EntityType="Self.UCIny7" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UCIny7].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [UCIny7].[Isla_7_Ultima_Carga_Aditivo] AS [Isla_7_Ultima_Carga_Aditivo]
+    FROM [dbo].[UCIny7] AS [UCIny7]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UCIny8" EntityType="Self.UCIny8" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UCIny8].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [UCIny8].[Isla_8_Ultima_Carga_Aditivo] AS [Isla_8_Ultima_Carga_Aditivo]
+    FROM [dbo].[UCIny8] AS [UCIny8]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UCIny9" EntityType="Self.UCIny9" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UCIny9].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [UCIny9].[Isla_9_Ultima_Carga_Aditivo] AS [Isla_9_Ultima_Carga_Aditivo]
+    FROM [dbo].[UCIny9] AS [UCIny9]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VolTanq" EntityType="Self.VolTanq" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VolTanq].[Fecha_y_Hora] AS [Fecha_y_Hora], 
+    [VolTanq].[Nivel_Volumetrico] AS [Nivel_Volumetrico]
+    FROM [dbo].[VolTanq] AS [VolTanq]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IMPDG15Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="AlIny10">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_10_Alarma_Principal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AlIny11">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_11_Alarma_Principal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AlIny12">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_12_Alarma_Principal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AlIny13">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_13_Alarma_Principal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AlIny14">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_14_Alarma_Principal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AlIny6">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_6_Alarma_Principal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AlIny7">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_7_Alarma_Principal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AlIny8">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_8_Alarma_Principal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AlIny9">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_9_Alarma_Principal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AlNiv">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Nivel_Alarma_Principal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AlSkid">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Skid_Alarma_Principal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="NivTanq">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Nivel_Tanque_Nivel_Value" Type="Double" />
+        </EntityType>
+        <EntityType Name="TotIny10">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_10_Totalizador_de_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="TotIny11">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_11_Totalizador_de_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="TotIny12">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_12_Totalizador_de_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="TotIny13">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_13_Totalizador_de_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="TotIny14">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_14_Totalizador_de_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="TotIny6">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_6_Totalizador_de_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="TotIny7">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_7_Totalizador_de_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="TotIny8">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_8_Totalizador_de_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="TotIny9">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_9_Totalizador_de_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="UCIny10">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_10_Ultima_Carga_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="UCIny11">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_11_Ultima_Carga_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="UCIny12">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_12_Ultima_Carga_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="UCIny13">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_13_Ultima_Carga_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="UCIny14">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_14_Ultima_Carga_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="UCIny6">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_6_Ultima_Carga_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="UCIny7">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_7_Ultima_Carga_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="UCIny8">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_8_Ultima_Carga_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="UCIny9">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isla_9_Ultima_Carga_Aditivo" Type="Double" />
+        </EntityType>
+        <EntityType Name="VolTanq">
+          <Key>
+            <PropertyRef Name="Fecha_y_Hora" />
+          </Key>
+          <Property Name="Fecha_y_Hora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Nivel_Volumetrico" Type="Double" />
+        </EntityType>
+        <EntityContainer Name="Aditivo_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="AlIny10" EntityType="Self.AlIny10" />
+          <EntitySet Name="AlIny11" EntityType="Self.AlIny11" />
+          <EntitySet Name="AlIny12" EntityType="Self.AlIny12" />
+          <EntitySet Name="AlIny13" EntityType="Self.AlIny13" />
+          <EntitySet Name="AlIny14" EntityType="Self.AlIny14" />
+          <EntitySet Name="AlIny6" EntityType="Self.AlIny6" />
+          <EntitySet Name="AlIny7" EntityType="Self.AlIny7" />
+          <EntitySet Name="AlIny8" EntityType="Self.AlIny8" />
+          <EntitySet Name="AlIny9" EntityType="Self.AlIny9" />
+          <EntitySet Name="AlNiv" EntityType="Self.AlNiv" />
+          <EntitySet Name="AlSkid" EntityType="Self.AlSkid" />
+          <EntitySet Name="NivTanq" EntityType="Self.NivTanq" />
+          <EntitySet Name="TotIny10" EntityType="Self.TotIny10" />
+          <EntitySet Name="TotIny11" EntityType="Self.TotIny11" />
+          <EntitySet Name="TotIny12" EntityType="Self.TotIny12" />
+          <EntitySet Name="TotIny13" EntityType="Self.TotIny13" />
+          <EntitySet Name="TotIny14" EntityType="Self.TotIny14" />
+          <EntitySet Name="TotIny6" EntityType="Self.TotIny6" />
+          <EntitySet Name="TotIny7" EntityType="Self.TotIny7" />
+          <EntitySet Name="TotIny8" EntityType="Self.TotIny8" />
+          <EntitySet Name="TotIny9" EntityType="Self.TotIny9" />
+          <EntitySet Name="UCIny10" EntityType="Self.UCIny10" />
+          <EntitySet Name="UCIny11" EntityType="Self.UCIny11" />
+          <EntitySet Name="UCIny12" EntityType="Self.UCIny12" />
+          <EntitySet Name="UCIny13" EntityType="Self.UCIny13" />
+          <EntitySet Name="UCIny14" EntityType="Self.UCIny14" />
+          <EntitySet Name="UCIny6" EntityType="Self.UCIny6" />
+          <EntitySet Name="UCIny7" EntityType="Self.UCIny7" />
+          <EntitySet Name="UCIny8" EntityType="Self.UCIny8" />
+          <EntitySet Name="UCIny9" EntityType="Self.UCIny9" />
+          <EntitySet Name="VolTanq" EntityType="Self.VolTanq" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IMPDG15ModelStoreContainer" CdmEntityContainer="Aditivo_Entities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="IMPDG15Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlIny10">
+            <EntityTypeMapping TypeName="IMPDG15Model.AlIny10">
+              <MappingFragment StoreEntitySet="AlIny10">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_10_Alarma_Principal" ColumnName="Isla_10_Alarma_Principal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlIny11">
+            <EntityTypeMapping TypeName="IMPDG15Model.AlIny11">
+              <MappingFragment StoreEntitySet="AlIny11">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_11_Alarma_Principal" ColumnName="Isla_11_Alarma_Principal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlIny12">
+            <EntityTypeMapping TypeName="IMPDG15Model.AlIny12">
+              <MappingFragment StoreEntitySet="AlIny12">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_12_Alarma_Principal" ColumnName="Isla_12_Alarma_Principal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlIny13">
+            <EntityTypeMapping TypeName="IMPDG15Model.AlIny13">
+              <MappingFragment StoreEntitySet="AlIny13">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_13_Alarma_Principal" ColumnName="Isla_13_Alarma_Principal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlIny14">
+            <EntityTypeMapping TypeName="IMPDG15Model.AlIny14">
+              <MappingFragment StoreEntitySet="AlIny14">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_14_Alarma_Principal" ColumnName="Isla_14_Alarma_Principal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlIny6">
+            <EntityTypeMapping TypeName="IMPDG15Model.AlIny6">
+              <MappingFragment StoreEntitySet="AlIny6">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_6_Alarma_Principal" ColumnName="Isla_6_Alarma_Principal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlIny7">
+            <EntityTypeMapping TypeName="IMPDG15Model.AlIny7">
+              <MappingFragment StoreEntitySet="AlIny7">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_7_Alarma_Principal" ColumnName="Isla_7_Alarma_Principal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlIny8">
+            <EntityTypeMapping TypeName="IMPDG15Model.AlIny8">
+              <MappingFragment StoreEntitySet="AlIny8">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_8_Alarma_Principal" ColumnName="Isla_8_Alarma_Principal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlIny9">
+            <EntityTypeMapping TypeName="IMPDG15Model.AlIny9">
+              <MappingFragment StoreEntitySet="AlIny9">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_9_Alarma_Principal" ColumnName="Isla_9_Alarma_Principal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlNiv">
+            <EntityTypeMapping TypeName="IMPDG15Model.AlNiv">
+              <MappingFragment StoreEntitySet="AlNiv">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Nivel_Alarma_Principal" ColumnName="Nivel_Alarma_Principal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlSkid">
+            <EntityTypeMapping TypeName="IMPDG15Model.AlSkid">
+              <MappingFragment StoreEntitySet="AlSkid">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Skid_Alarma_Principal" ColumnName="Skid_Alarma_Principal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NivTanq">
+            <EntityTypeMapping TypeName="IMPDG15Model.NivTanq">
+              <MappingFragment StoreEntitySet="NivTanq">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Nivel_Tanque_Nivel_Value" ColumnName="Nivel_Tanque_Nivel_Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TotIny10">
+            <EntityTypeMapping TypeName="IMPDG15Model.TotIny10">
+              <MappingFragment StoreEntitySet="TotIny10">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_10_Totalizador_de_Aditivo" ColumnName="Isla_10_Totalizador_de_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TotIny11">
+            <EntityTypeMapping TypeName="IMPDG15Model.TotIny11">
+              <MappingFragment StoreEntitySet="TotIny11">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_11_Totalizador_de_Aditivo" ColumnName="Isla_11_Totalizador_de_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TotIny12">
+            <EntityTypeMapping TypeName="IMPDG15Model.TotIny12">
+              <MappingFragment StoreEntitySet="TotIny12">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_12_Totalizador_de_Aditivo" ColumnName="Isla_12_Totalizador_de_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TotIny13">
+            <EntityTypeMapping TypeName="IMPDG15Model.TotIny13">
+              <MappingFragment StoreEntitySet="TotIny13">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_13_Totalizador_de_Aditivo" ColumnName="Isla_13_Totalizador_de_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TotIny14">
+            <EntityTypeMapping TypeName="IMPDG15Model.TotIny14">
+              <MappingFragment StoreEntitySet="TotIny14">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_14_Totalizador_de_Aditivo" ColumnName="Isla_14_Totalizador_de_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TotIny6">
+            <EntityTypeMapping TypeName="IMPDG15Model.TotIny6">
+              <MappingFragment StoreEntitySet="TotIny6">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_6_Totalizador_de_Aditivo" ColumnName="Isla_6_Totalizador_de_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TotIny7">
+            <EntityTypeMapping TypeName="IMPDG15Model.TotIny7">
+              <MappingFragment StoreEntitySet="TotIny7">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_7_Totalizador_de_Aditivo" ColumnName="Isla_7_Totalizador_de_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TotIny8">
+            <EntityTypeMapping TypeName="IMPDG15Model.TotIny8">
+              <MappingFragment StoreEntitySet="TotIny8">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_8_Totalizador_de_Aditivo" ColumnName="Isla_8_Totalizador_de_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TotIny9">
+            <EntityTypeMapping TypeName="IMPDG15Model.TotIny9">
+              <MappingFragment StoreEntitySet="TotIny9">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_9_Totalizador_de_Aditivo" ColumnName="Isla_9_Totalizador_de_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UCIny10">
+            <EntityTypeMapping TypeName="IMPDG15Model.UCIny10">
+              <MappingFragment StoreEntitySet="UCIny10">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_10_Ultima_Carga_Aditivo" ColumnName="Isla_10_Ultima_Carga_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UCIny11">
+            <EntityTypeMapping TypeName="IMPDG15Model.UCIny11">
+              <MappingFragment StoreEntitySet="UCIny11">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_11_Ultima_Carga_Aditivo" ColumnName="Isla_11_Ultima_Carga_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UCIny12">
+            <EntityTypeMapping TypeName="IMPDG15Model.UCIny12">
+              <MappingFragment StoreEntitySet="UCIny12">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_12_Ultima_Carga_Aditivo" ColumnName="Isla_12_Ultima_Carga_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UCIny13">
+            <EntityTypeMapping TypeName="IMPDG15Model.UCIny13">
+              <MappingFragment StoreEntitySet="UCIny13">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_13_Ultima_Carga_Aditivo" ColumnName="Isla_13_Ultima_Carga_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UCIny14">
+            <EntityTypeMapping TypeName="IMPDG15Model.UCIny14">
+              <MappingFragment StoreEntitySet="UCIny14">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_14_Ultima_Carga_Aditivo" ColumnName="Isla_14_Ultima_Carga_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UCIny6">
+            <EntityTypeMapping TypeName="IMPDG15Model.UCIny6">
+              <MappingFragment StoreEntitySet="UCIny6">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_6_Ultima_Carga_Aditivo" ColumnName="Isla_6_Ultima_Carga_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UCIny7">
+            <EntityTypeMapping TypeName="IMPDG15Model.UCIny7">
+              <MappingFragment StoreEntitySet="UCIny7">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_7_Ultima_Carga_Aditivo" ColumnName="Isla_7_Ultima_Carga_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UCIny8">
+            <EntityTypeMapping TypeName="IMPDG15Model.UCIny8">
+              <MappingFragment StoreEntitySet="UCIny8">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_8_Ultima_Carga_Aditivo" ColumnName="Isla_8_Ultima_Carga_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UCIny9">
+            <EntityTypeMapping TypeName="IMPDG15Model.UCIny9">
+              <MappingFragment StoreEntitySet="UCIny9">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Isla_9_Ultima_Carga_Aditivo" ColumnName="Isla_9_Ultima_Carga_Aditivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VolTanq">
+            <EntityTypeMapping TypeName="IMPDG15Model.VolTanq">
+              <MappingFragment StoreEntitySet="VolTanq">
+                <ScalarProperty Name="Fecha_y_Hora" ColumnName="Fecha_y_Hora" />
+                <ScalarProperty Name="Nivel_Volumetrico" ColumnName="Nivel_Volumetrico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
