@@ -1,10 +1,4 @@
-﻿@model TAS360.Models.ViewModel.TramaConfOrdenCargaDescViewModel
-@{
-    ViewBag.Title = "Generar Trama";
-    List<SelectListItem> ListTrancc = (List<SelectListItem>)ViewBag.ListTipoTrancc;
-}
-<br />
-<section class="page-section about-heading">
+﻿<section class="page-section about-heading">
     <div class="container">
         @*<img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="assets/img/about.jpg" alt="..." />*@
         <div class="about-heading-content">
@@ -16,26 +10,15 @@
                             <span class="section-heading-lower">Generar Trama</span>
                         </h2>
                         <div class="row">
-                            <div class="col-md-12">
-                                @using (Html.BeginForm("Add", "User", FormMethod.Post, new { role = "form", @class = "" }))
-                                {
-                                    @Html.AntiForgeryToken()
+                            <div class="col-md-12">                                                                   
 
+                                    <div class="row">
 
+                                        <p><a onclick="document.location.href = '@Url.Content("~/home/TramaConfirmacionO/")'" class="btn btn-primary btn-lg">Confirmacion de Carga/Descarga &raquo;</a></p>
+                                        <p><a onclick="document.location.href = '@Url.Content("~/home/TramaVolumenTanques/")'" class="btn btn-primary btn-lg">Volumen de tanques &raquo;</a></p>
 
-                                    @Html.LabelFor(f => f.Tipo_Transaccion)
-                                    @Html.DropDownListFor(model => model.Tipo_Transaccion, ListTrancc, new { @class = "form-control" })
-
-                                    @Html.LabelFor(f => f.Numero_Operacion)
-                                    @Html.TextBoxFor(f => f.Numero_Operacion, new { @class = "form-control" })
-                                    @Html.ValidationMessage("name", new { @class = "text-danger" })
-                                    <br />
-
-
-                                    <div style="text-align:right">
-                                        <input type="submit" class="btn btn-success" value="Generar Trama" />
                                     </div>
-                                }
+                                 
                             </div>
                         </div>
                     </div>

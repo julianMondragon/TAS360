@@ -1,0 +1,147 @@
+﻿@model TAS360.Models.ViewModel.TramaConfOrdenCargaDescViewModel
+@{
+    ViewBag.Title = "Registrar";
+    List<SelectListItem> ListTrancc     = (List<SelectListItem>)ViewBag.ListTipoTrancc;
+    List<SelectListItem> ListComport    = (List<SelectListItem>)ViewBag.ListComport;
+    List<SelectListItem> ListEstadoTran = (List<SelectListItem>)ViewBag.ListEstadoTran;
+    List<SelectListItem> ListModulos    = (List<SelectListItem>)ViewBag.ListModulos;
+    List<SelectListItem> ListPro        = (List<SelectListItem>)ViewBag.ListProducto;
+}
+<br />
+<br />
+<section class="page-section about-heading">
+    <div class="container">
+        @*<img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="assets/img/about.jpg" alt="..." />*@
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <h2 class="section-heading mb-4">
+                            @*<span class="section-heading-upper">Strong Coffee, Strong Roots</span>*@
+                            <span class="section-heading-lower">Generar Trama</span>
+                        </h2>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @using (Html.BeginForm("TramaConfirmacionO", "Home", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <br />
+
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Tipo_Transaccion)
+                                                @Html.DropDownListFor(model => model.Tipo_Transaccion, ListTrancc, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Numero_Operacion)
+                                                @Html.TextBoxFor(f => f.Numero_Operacion, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.Numero_Operacion, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Numero_Compartimiento)
+                                                @Html.DropDownListFor(model => model.Numero_Compartimiento, ListComport, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Estado_Transaccion)
+                                                @Html.DropDownListFor(model => model.Estado_Transaccion, ListEstadoTran, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Razones)
+                                                @Html.TextBoxFor(f => f.Razones, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.Razones, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Modulo_Operacion)
+                                                @Html.DropDownListFor(model => model.Modulo_Operacion, ListModulos, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.volumen_natural)
+                                                @Html.TextBoxFor(f => f.volumen_natural, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.volumen_natural, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.volumen_neto)
+                                                @Html.TextBoxFor(f => f.volumen_neto, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.volumen_neto, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.temperatura)
+                                                @Html.TextBoxFor(f => f.temperatura, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.temperatura, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Codigo_Anterior_producto)
+                                                @Html.DropDownListFor(model => model.Codigo_Anterior_producto, ListPro, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Fecha_inicio)
+                                                @Html.TextBoxFor(f => f.Fecha_inicio, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.hora_inicio)
+                                                @Html.TextBoxFor(f => f.hora_inicio, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Fecha_fin)
+                                                @Html.TextBoxFor(f => f.Fecha_fin, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.hora_fin)
+                                                @Html.TextBoxFor(f => f.hora_fin, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.posicion_carga)
+                                                @Html.TextBoxFor(f => f.posicion_carga, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.posicion_carga, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.flujo_promedio)
+                                                @Html.TextBoxFor(f => f.flujo_promedio, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.flujo_promedio, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.factor_medicion)
+                                                @Html.TextBoxFor(f => f.factor_medicion, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.factor_medicion, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Codigo_nuevo_producto)
+                                                @Html.DropDownListFor(model => model.Codigo_nuevo_producto, ListPro, new { @class = "form-control" })
+                                            </div>
+
+                                        </div>
+
+                                        <div style="text-align:right">
+                                            <input type="submit" class="btn btn-success" value="Registrar" />
+                                        </div>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

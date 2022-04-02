@@ -1,0 +1,245 @@
+﻿@model TAS360.Models.ViewModel.salidasViewModel
+@{
+    ViewBag.Title = "Test PTS";
+}
+
+<div class="jumbotron">
+    <h1>Salidas</h1>
+    <p class="lead">Tabla donde llegan los registros generados del SIMCOT para ser enviados a SIIC </p>
+    @*<p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+</div>
+<section class="page-section cta">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <div class="cta-inner bg-faded text-center rounded">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table class="table table-success">
+                                <tr>
+                                    <th>Identificador</th>
+                                    <th>Transacción (TRAMA)</th>
+
+                                </tr>
+                                @foreach (var usr in Model.salidas)
+                                {
+                                    <tr>
+                                        <td>@usr.Id</td>
+                                        <td>@usr.Transaccion</td>
+                                        <!--<td>-->
+                                        @*<input type="button" class="btn btn-default" onclick="document.location.href = '@Url.Content("~/home/InterpretarTrama/" + usr.Id)'" value="Interpretar" />*@
+                                        @*<input type="button" class="btn btn-danger" value="Eliminar" />*@
+                                        <!--</td>-->
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div style="display:box" id="divone" class="row">
+
+    <h2>Valores de la Trama</h2>
+
+    <div class="col-md-4">
+        <table class="table table-bordered">
+            <tr>
+                <th class="alert-success">Dato</th>
+                <th class="alert-success">Valor</th>
+            </tr>
+            <tr>
+                <td>Tipo de transaccion</td>
+                <td>@Model.Trama.TipoTransaccion</td>
+            </tr>
+            <tr>
+                <td>Numero de Operacion</td>
+                <td>@Model.Trama.NumeroOperacion</td>
+            </tr>
+            <tr>
+                <td>Numero de compartimiento</td>
+                <td>@Model.Trama.NumeroCopartimiento</td>
+            </tr>
+            <tr>
+                <td>Estado de transaccion</td>
+                <td>@Model.Trama.EstadoTransaccion</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <table class="table table-bordered">
+            <tr>
+                <th class="alert-info">Dato</th>
+                <th class="alert-info">Valor</th>
+            </tr>
+            <tr>
+                <td>Reazones</td>
+                <td>@Model.Trama.Razon</td>
+            </tr>
+            <tr>
+                <td>Modulo de Operacion</td>
+                <td>@Model.Trama.ModuloOperacion</td>
+            </tr>
+            <tr>
+                <td>Volumen Natural</td>
+                <td>@Model.Trama.VolumenNatural</td>
+            </tr>
+            <tr>
+                <td>Volumen Neto</td>
+                <td>@Model.Trama.VolumenNeto</td>
+            </tr>
+            <tr>
+                <td>Temperatura promedio</td>
+                <td>@Model.Trama.Temperatura</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <table class="table table-bordered">
+            <tr>
+                <th class="alert-warning">Dato</th>
+                <th class="alert-warning">Valor</th>
+            </tr>
+            <tr>
+                <td>Producto anterior</td>
+                <td>@Model.Trama.CodigoProductoAnterior</td>
+            </tr>
+            <tr>
+                <td>Fecha de inicio</td>
+                <td>@Model.Trama.FechaInicio</td>
+            </tr>
+            <tr>
+                <td>Fecha de inicio</td>
+                <td>@Model.Trama.FechaInicio</td>
+            </tr>
+            <tr>
+                <td>Hora de inicio</td>
+                <td>@Model.Trama.HoraInicio</td>
+            </tr>
+            <tr>
+                <td>Fecha de termino</td>
+                <td>@Model.Trama.FechaTermino</td>
+            </tr>
+            <tr>
+                <td>Hora de termino</td>
+                <td>@Model.Trama.HoraTermino</td>
+            </tr>
+            <tr>
+                <td>Posicion de carga</td>
+                <td>@Model.Trama.PosicionCarga</td>
+            </tr>
+            <tr>
+                <td>Flujo promedio</td>
+                <td>@Model.Trama.FlujoPromedio</td>
+            </tr>
+            <tr>
+                <td>Factor de medicion</td>
+                <td>@Model.Trama.FactorMedicion</td>
+            </tr>
+            <tr>
+                <td>Producto nuevo</td>
+                <td>@Model.Trama.CodigoProductoNuevo</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<div style="display:box" id="divtwo" class="row">
+
+    <h2>Valores de la Trama</h2>
+
+    <div class="col-md-4">
+        <table class="table table-bordered">
+            <tr>
+                <th class="alert-success">Dato</th>
+                <th class="alert-success">Valor</th>
+            </tr>
+            <tr>
+                <td>Tipo de transaccion</td>
+                <td>@Model.Trama2.TipoTransaccion</td>
+            </tr>
+            <tr>
+                <td>Numero de Tanque</td>
+                <td>@Model.Trama2.NumeroTanque</td>
+            </tr>
+            <tr>
+                <td>Producto Anterior</td>
+                <td>@Model.Trama2.CodigoProductoAnterior</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <table class="table table-bordered">
+            <tr>
+                <th class="alert-info">Dato</th>
+                <th class="alert-info">Valor</th>
+            </tr>
+            <tr>
+                <td>Volumen Total Neto</td>
+                <td>@Model.Trama2.VolumenTotalNeto</td>
+            </tr>
+            <tr>
+                <td>Volumen Neto</td>
+                <td>@Model.Trama2.VolumenNeto</td>
+            </tr>
+            <tr>
+                <td>Volumen Natural</td>
+                <td>@Model.Trama2.VolumenNatural</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <table class="table table-bordered">
+            <tr>
+                <th class="alert-warning">Dato</th>
+                <th class="alert-warning">Valor</th>
+            </tr>
+            <tr>
+                <td>Temperatura Promedio</td>
+                <td>@Model.Trama2.TemperaturaPromedio</td>
+            </tr>
+            <tr>
+                <td>Fecha</td>
+                <td>@Model.Trama2.Fecha</td>
+            </tr>
+            <tr>
+                <td>Hora</td>
+                <td>@Model.Trama2.Hora</td>
+            </tr>
+            <tr>
+                <td>Producto Nuevo</td>
+                <td>@Model.Trama2.CodigoProductoNuevo</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    let trama1 = '@Model.Trama.TipoTransaccion'
+    let trama2 = '@Model.Trama2.TipoTransaccion'
+    let divone = document.getElementById("divone")
+    let divtwo = document.getElementById("divtwo")
+
+    if (trama1 == "Confirmacion de carga / descarga" && trama2 == "")
+    {
+        divtwo.setAttribute("style", "display:none")
+        divone.setAttribute("style", "display:box")
+    }
+
+    if (trama2 === "Volumen de Tanques" && trama1 == "")
+    {
+        divone.setAttribute("style", "display:none")
+        divtwo.setAttribute("style", "display:box")
+    }
+
+</script>
