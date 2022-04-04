@@ -12,16 +12,15 @@ namespace TAS360.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class eventos_alarmas_llenaderas
+    public partial class Recetas
     {
-        public int id_ev_al_llen { get; set; }
-        public Nullable<int> id_ev_al { get; set; }
-        public Nullable<int> id_llenadera { get; set; }
-        public Nullable<System.DateTime> fecha_ev { get; set; }
-        public Nullable<System.TimeSpan> hora_ev { get; set; }
-        public Nullable<int> no_orden { get; set; }
-    
-        public virtual eventos_alarmas eventos_alarmas { get; set; }
-        public virtual llenaderas llenaderas { get; set; }
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Producto { get; set; }
+        public Nullable<double> Porcentaje_producto { get; set; }
+        public Nullable<int> Brazo { get; set; }
+        public Nullable<double> Cantidad_aditivo { get; set; }
+        public Nullable<double> Razon_flujo { get; set; }
+        public Nullable<double> Prod_usando_iny { get; set; }
     }
 }

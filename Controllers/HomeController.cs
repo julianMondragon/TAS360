@@ -13,7 +13,7 @@ namespace TAS360.Controllers
         public ActionResult Index()
         {
             entradasViewModel entradasVM = new entradasViewModel();
-            using (bd_Entities db = new bd_Entities())
+            using (bdSimcot_Entities db = new bdSimcot_Entities())
             {
                 var aux = (from s in db.Entradas select s);
                 foreach (var a in aux)
@@ -26,7 +26,7 @@ namespace TAS360.Controllers
         public ActionResult About()
         {
             salidasViewModel salidasVM = new salidasViewModel();
-            using (bd_Entities db = new bd_Entities())
+            using (bdSimcot_Entities db = new bdSimcot_Entities())
             {
                 var aux = (from s in db.Salidas select s);
                 if (aux != null && aux.Any())
@@ -42,7 +42,7 @@ namespace TAS360.Controllers
         public ActionResult Contact()
         {
             auditoriaViewModel auditoriaVM = new auditoriaViewModel();
-            using (bd_Entities db = new bd_Entities())
+            using (bdSimcot_Entities db = new bdSimcot_Entities())
             {
                 var aux = (from s in db.Auditoria select s);
                 if (aux != null && aux.Any())
@@ -59,7 +59,7 @@ namespace TAS360.Controllers
         {
             entradasViewModel entradasVM = new entradasViewModel();
             string trama = null;
-            using (bd_Entities db = new bd_Entities())
+            using (bdSimcot_Entities db = new bdSimcot_Entities())
             {
                 int Id = int.Parse(id);
                 var aux = from s in db.Entradas where s.Id == Id select s;
@@ -393,7 +393,7 @@ namespace TAS360.Controllers
             {
                 if (ModelState.IsValid)
                 { 
-                    using (bd_Entities db = new bd_Entities())
+                    using (bdSimcot_Entities db = new bdSimcot_Entities())
                     {
                         var tabla = new Salidas();
                         tabla.Id = 2 ;
@@ -446,7 +446,7 @@ namespace TAS360.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    using (bd_Entities db = new bd_Entities())
+                    using (bdSimcot_Entities db = new bdSimcot_Entities())
                     {
                         var tabla = new Salidas();
                         tabla.Id = 3;
@@ -486,7 +486,7 @@ namespace TAS360.Controllers
         {
             salidasViewModel salidasVM = new salidasViewModel();
             string trama = null;
-            using (bd_Entities db = new bd_Entities())
+            using (bdSimcot_Entities db = new bdSimcot_Entities())
             {
                 int Id = int.Parse(id);
                 var aux = from s in db.Salidas where s.Id == Id select s;

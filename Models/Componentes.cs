@@ -12,13 +12,9 @@ namespace TAS360.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Tanque_Voe
+    public partial class Componentes
     {
-        public int id { get; set; }
-        public int id_tanque { get; set; }
-        public int id_voe { get; set; }
-    
-        public virtual tanque tanque { get; set; }
-        public virtual voe voe { get; set; }
+        public int Id { get; set; }
+        public string Nombre { get; set; }
     }
 }

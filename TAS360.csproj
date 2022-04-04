@@ -133,9 +133,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\accesos.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\AditivoBD.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -151,8 +148,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AditivoBD.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\aditivos.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Aditivos.cs">
+      <DependentUpon>Simcot_db.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AlIny10.cs">
       <DependentUpon>AditivoBD.tt</DependentUpon>
@@ -188,91 +185,40 @@
       <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Auditoria.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Simcot_db.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\bomba.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\bombas_descargaderas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\bombas_llenaderas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\cubicacion.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\descargaderas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Componentes.cs">
+      <DependentUpon>Simcot_db.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entradas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\eventos_alarmas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\eventos_alarmas_descargaderas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\eventos_alarmas_llenaderas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\llenaderas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>Simcot_db.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\NivTanq.cs">
       <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\operaciones.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\paro.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\poliducto.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\proceso_voes.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\producto.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Recetas.cs">
+      <DependentUpon>Simcot_db.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Salidas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Simcot_db.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Simcot_db.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Simcot_db.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Simcot_db.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Simcot_db.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Simcot_db.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Simcot_db.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>AditivoBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tanque.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tanque_bomba.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tanque_cubicacion.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tanque_poliducto.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Tanque_Voe.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TotIny10.cs">
       <DependentUpon>AditivoBD.tt</DependentUpon>
@@ -334,9 +280,6 @@
     <Compile Include="Models\ViewModel\RepTotalizadoViewModel.cs" />
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
     <Compile Include="Models\ViewModel\TramaViewModel.cs" />
-    <Compile Include="Models\voe.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\VolTanq.cs">
       <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
@@ -362,31 +305,31 @@
       <DependentUpon>AditivoBD.edmx</DependentUpon>
       <LastGenOutput>AditivoBD.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Model1.Context.tt">
+    <Content Include="Models\Simcot_db.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>Simcot_db.edmx</DependentUpon>
+      <LastGenOutput>Simcot_db.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Model1.tt">
+    <Content Include="Models\Simcot_db.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>Simcot_db.edmx</DependentUpon>
+      <LastGenOutput>Simcot_db.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <EntityDeploy Include="Models\AditivoBD.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>AditivoBD.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\AditivoBD.edmx.diagram">
       <DependentUpon>AditivoBD.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Simcot_db.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Simcot_db.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Simcot_db.edmx.diagram">
+      <DependentUpon>Simcot_db.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -417,6 +360,7 @@
     <Content Include="Views\Home\GenerarTrama.cshtml" />
     <Content Include="Views\Aditivo\Index.cshtml" />
     <Content Include="Views\Aditivo\VolTotalizado.cshtml" />
+    <Content Include="Views\Aditivo\ListarRecetas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

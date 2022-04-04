@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Listado de Recetas";
+}
+
+<div class="jumbotron">
+    <h1>Listado de recetas</h1>
+    <p class="lead">Inventario de recetas en la TAD </p>
+    <a onclick="document.location.href = '@Url.Content("~/Aditivo/AgregarReceta")'" class="btn btn-warning btn-lg">Agregar receta &raquo;</a>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h3>Recetas</h3>
+        <table class="table table-success table-striped">
+            <tr>
+                <th class="alert-success">Id</th>
+                <th class="alert-success">Nombre</th>
+                <th class="alert-success">Producto</th>
+                <th class="alert-success">% de Producto</th>
+                <th class="alert-success">Brazo</th>
+                <th class="alert-success">Cantidad Aditivo</th>
+                <th class="alert-success">Razon de flujo</th>
+                <th class="alert-success">Prod Usando Inyector</th>
+
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Regular</td>
+                <td>Regular</td>
+                <td>100.0</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Productos</h3>
+        <table class="table table-success table-striped">
+            <tr>
+                <th class="alert-info">Id</th>
+                <th class="alert-info">Nombre</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Regular</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h3>Aditivos</h3>
+        <table class="table table-success table-striped">
+            <tr>
+                <th class="alert-warning">Id</th>
+                <th class="alert-warning">Nombre</th>
+            </tr>
+            <tr>
+                <td>Aditivo 1</td>
+                <td>TESORO</td>
+            </tr>
+        </table>
+    </div>
+</div>
+

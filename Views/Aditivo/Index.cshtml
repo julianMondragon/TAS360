@@ -6,6 +6,10 @@
 <div class="jumbotron">
     <h1>Aditivo</h1>
     <p class="lead">Inventario de aditivo en la TAD </p>
+    <a onclick="document.location.href = '@Url.Content("~/Aditivo/ListarRecetas")'" class="btn btn-success btn-lg">Listado de recetas &raquo;</a>
+    <a onclick="document.location.href = '@Url.Content("~/Aditivo/VolTotalizado")'" class="btn btn-warning btn-lg">Reporte Volumen Totalizado &raquo;</a>
+    <a onclick="document.location.href = '@Url.Content("~/Aditivo/ActualizarDatos")'" class="btn btn-primary btn-lg">Test - Movimiento de producto &raquo;</a>
+    @*<a onclick="document.location.href = '@Url.Content("~/Aditivo/RepPosicion")'" class="btn btn-warning btn-lg">Reporte por posición &raquo;</a>*@
 </div>
 
 
@@ -57,11 +61,4 @@
             </tr>
         </table>        
     </div>
-</div>
-<div class="row">
-    <p>
-        <a onclick="document.location.href = '@Url.Content("~/Aditivo/ActualizarDatos")'" class="btn btn-primary btn-lg">Test - Movimiento de producto &raquo;</a>
-        <a onclick="document.location.href = '@Url.Content("~/Aditivo/VolTotalizado")'" class="btn btn-warning btn-lg">Reporte Volumen Totalizado &raquo;</a>
-        @*<a onclick="document.location.href = '@Url.Content("~/Aditivo/RepPosicion")'" class="btn btn-warning btn-lg">Reporte por posición &raquo;</a>*@
-    </p>
 </div>

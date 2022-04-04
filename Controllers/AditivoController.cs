@@ -108,6 +108,10 @@ namespace TAS360.Controllers
             return View(model); 
         }
 
+        public ActionResult ListarRecetas()
+        {
+            return View();
+        }
         private void CreateCommand(string queryString,string connectionString)
         {
             try
