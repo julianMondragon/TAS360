@@ -110,7 +110,163 @@ namespace TAS360.Controllers
 
         public ActionResult ListarRecetas()
         {
+            List<RecetasViewModel> recetas = new List<RecetasViewModel>();
+            using(bdSimcot_Entities db = new bdSimcot_Entities())
+            {
+                var aux = db.Recetas;
+                if(aux != null && aux.Any())
+                {
+                    foreach (var u in aux)
+                    {
+                        RecetasViewModel receta = new RecetasViewModel()
+                        {
+                            Id = u.Id,
+                            Name = u.Nombre,
+                            Producto = u.Producto,
+                            Porc_producto = u.Porcentaje_producto,
+                            Brazo = u.Brazo,
+                            Cantidad_Aditivo = u.Cantidad_aditivo,
+                            Razon_flujo = u.Razon_flujo,
+                            Prod_Usando_iny = u.Prod_usando_iny
+                        };
+                        recetas.Add(receta);
+                    }
+                }
+                else
+                {
+                    recetas.Add(new RecetasViewModel()
+                    {
+                        Name = "No exiten ",
+                        Producto = "recetas actualmente",
+                        Porc_producto = 0,
+                        Brazo = 0,
+                        Cantidad_Aditivo = 0,
+                        Razon_flujo = 0,
+                        Prod_Usando_iny = 0
+                     });
+                }
+            }
+
+            return View(recetas);
+        }
+        
+        [HttpGet]
+        public ActionResult AgregarReceta()
+        {
+            GetCatalogos();
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult AgregarReceta(RecetasViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            //if (model.Prod_Usando_iny)
+            //{
+            //    ViewBag.Errormessage = "El campo debe ser numerico";
+            //    return View(model);
+            //}
+            using (bdSimcot_Entities db = new bdSimcot_Entities())
+            {
+                var cont = db.Recetas.OrderByDescending(x=> x.Id).FirstOrDefault().Id;
+                cont++;
+                var receta = new Recetas();
+                receta.Id = cont;
+                receta.Nombre = model.Name;
+                receta.Producto = model.Producto;
+                receta.Brazo = model.Brazo;
+                receta.Porcentaje_producto = model.Porc_producto;
+                receta.Cantidad_aditivo = model.Cantidad_Aditivo;
+                receta.Razon_flujo = model.Razon_flujo;
+                receta.Prod_usando_iny = model.Prod_Usando_iny;
+
+                db.Recetas.Add(receta);
+                db.SaveChanges();
+            }
+            return Redirect(Url.Content("~/Aditivo/ListarRecetas"));
+        }
+
+        public ActionResult EditReceta(int Id)
+        {
+            RecetasViewModel model = new RecetasViewModel();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            GetCatalogos();
+            using (bdSimcot_Entities db = new bdSimcot_Entities())
+            {
+                var receta = db.Recetas.Find(Id);
+
+                model.Id = receta.Id;
+                model.Name = receta.Nombre;
+                model.Producto = receta.Producto;
+                model.Brazo = receta.Brazo;
+                model.Porc_producto = receta.Porcentaje_producto;
+                model.Cantidad_Aditivo = receta.Cantidad_aditivo;
+                model.Razon_flujo = receta.Razon_flujo;
+                model.Prod_Usando_iny = receta.Prod_usando_iny; 
+               
+
+            }
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult EditReceta(RecetasViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            using (bdSimcot_Entities db = new bdSimcot_Entities())
+            {
+                var receta = db.Recetas.Find(model.Id);
+
+                receta.Nombre = model.Name;
+                receta.Producto = model.Producto;
+                receta.Porcentaje_producto =model.Porc_producto;
+                receta.Brazo = model.Brazo;
+                receta.Cantidad_aditivo = model.Cantidad_Aditivo;
+                receta.Razon_flujo = model.Razon_flujo;
+                receta.Prod_usando_iny = model.Prod_Usando_iny;
+               
+                db.Entry(receta).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+
+            }
+            return Redirect(Url.Content("~/Aditivo/ListarRecetas"));
+        }
+
+        private void GetCatalogos()
+        {
+
+            List<SelectListItem> ListProductos = new List<SelectListItem>();
+            ListProductos.Add(new SelectListItem
+            {
+                Text = "Seleccione producto",
+                Value = "00"
+            });
+            ListProductos.Add(new SelectListItem
+            {
+                Text = "Regular",
+                Value = "Regular"
+            });
+            ListProductos.Add(new SelectListItem
+            {
+                Text = "Premium",
+                Value = "Premium"
+            });
+            ListProductos.Add(new SelectListItem
+            {
+                Text = "Turbosina",
+                Value = "Turbosina"
+            });
+            ViewBag.ListProductos = ListProductos;
+
         }
         private void CreateCommand(string queryString,string connectionString)
         {

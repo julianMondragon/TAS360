@@ -1,4 +1,4 @@
-﻿
+﻿@model List<TAS360.Models.ViewModel.RecetasViewModel>
 @{
     ViewBag.Title = "Listado de Recetas";
 }
@@ -21,18 +21,27 @@
                 <th class="alert-success">Cantidad Aditivo</th>
                 <th class="alert-success">Razon de flujo</th>
                 <th class="alert-success">Prod Usando Inyector</th>
+                <th class="alert-success">Operaciones</th>
 
             </tr>
-            <tr>
-                <td>1</td>
-                <td>Regular</td>
-                <td>Regular</td>
-                <td>100.0</td>
-                <td>1</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-            </tr>
+            @foreach (var receta in Model)
+            {
+                <tr>
+                    <td>@receta.Id</td>
+                    <td>@receta.Name</td>
+                    <td>@receta.Producto</td>
+                    <td>@receta.Porc_producto</td>
+                    <td>@receta.Brazo</td>
+                    <td>@receta.Cantidad_Aditivo</td>
+                    <td>@receta.Razon_flujo</td>
+                    <td>@receta.Prod_Usando_iny</td>
+                    <td>
+                        <input type="button" class="btn btn-default" onclick="document.location.href = '@Url.Content("~/Aditivo/EditReceta/" + receta.Id)'" value="Editar" />
+                        @*<input type="button" class="btn btn-danger" value="Eliminar" />*@
+                    </td>
+                </tr>
+            }
+
         </table>
     </div>
 </div>

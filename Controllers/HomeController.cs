@@ -76,8 +76,6 @@ namespace TAS360.Controllers
 
             return View(entradasVM);
         }
-
-
         public OrdenCargaDescarga leertrama(string trama)
         {
             OrdenCargaDescarga ordenCarga = new OrdenCargaDescarga();
@@ -209,7 +207,6 @@ namespace TAS360.Controllers
             GetProducto();
             return View();
         }
-        
         
         private void GetCatalogos()
         {

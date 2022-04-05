@@ -277,6 +277,7 @@
     <Compile Include="Models\ViewModel\aditivoViewModel.cs" />
     <Compile Include="Models\ViewModel\auditoriaViewModel.cs" />
     <Compile Include="Models\ViewModel\entradasViewModel.cs" />
+    <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
     <Compile Include="Models\ViewModel\RepTotalizadoViewModel.cs" />
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
     <Compile Include="Models\ViewModel\TramaViewModel.cs" />
@@ -365,6 +366,10 @@
     <Content Include="Views\Aditivo\Index.cshtml" />
     <Content Include="Views\Aditivo\VolTotalizado.cshtml" />
     <Content Include="Views\Aditivo\ListarRecetas.cshtml" />
+    <Content Include="Views\Aditivo\AgregarReceta.cshtml" />
+    <Content Include="Views\Aditivo\EditReceta.cshtml" />
+    <Content Include="Views\Home\InterpretarTramaS.cshtml" />
+    <Content Include="Views\Home\TramaConfirmacionO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
