@@ -209,8 +209,17 @@ namespace TAS360.Controllers
             GetProducto();
             return View();
         }
+        public ActionResult TramaCancelacionO()
+        {
+            GetCatalogos3();
+            GetComportamientos();
+            GetEstadoTran();
+            GetModulo();
+            GetProducto();
+            return View();
+        }
         
-        
+         
         private void GetCatalogos()
         {
 
@@ -230,6 +239,11 @@ namespace TAS360.Controllers
             {
                 Text = "Volumen en tanques de almacenamiento",
                 Value = "04"
+            });
+            ListTipoTrancc.Add(new SelectListItem
+            {
+                Text = "Cancelacion de orden de Carga / Descarga",
+                Value = "02"
             });
             ViewBag.ListTipoTrancc = ListTipoTrancc;
 
@@ -254,9 +268,42 @@ namespace TAS360.Controllers
                 Value = "04",
                 Selected = true
             });
+            ListTipoTrancc2.Add(new SelectListItem
+            {
+                Text = "Cancelacion de orden de Carga / Descarga",
+                Value = "02"
+            });
             ViewBag.ListTipoTrancc2 = ListTipoTrancc2;
 
-        }        
+        }
+        private void GetCatalogos3()
+        {
+
+            List<SelectListItem> ListTipoTrancc3 = new List<SelectListItem>();
+            ListTipoTrancc3.Add(new SelectListItem
+            {
+                Text = "Seleccione una transacción",
+                Value = "00"
+            });
+            ListTipoTrancc3.Add(new SelectListItem
+            {
+                Text = "Confirmacion de orden de Carga / Descarga",
+                Value = "02"
+            });
+            ListTipoTrancc3.Add(new SelectListItem
+            {
+                Text = "Volumen en tanques de almacenamiento",
+                Value = "04"
+            });
+            ListTipoTrancc3.Add(new SelectListItem
+            {
+                Text = "Cancelacion de orden de Carga / Descarga",
+                Value = "02",
+                Selected = true
+            });
+            ViewBag.ListTipoTrancc3 = ListTipoTrancc3;
+
+        }
         private void GetComportamientos()
         {
 
@@ -294,6 +341,11 @@ namespace TAS360.Controllers
             {
                 Text = "Terminado",
                 Value = "0"
+            });
+            ListEstadoTran.Add(new SelectListItem
+            {
+                Text = "Cancelado",
+                Value = "1"
             });
             ViewBag.ListEstadoTran = ListEstadoTran;
 
@@ -396,7 +448,7 @@ namespace TAS360.Controllers
                     using (bd_Entities db = new bd_Entities())
                     {
                         var tabla = new Salidas();
-                        tabla.Id = 2 ;
+                        tabla.Id =  2;
                         tabla.Transaccion =
                             model.Tipo_Transaccion +
                             model.Numero_Operacion +
@@ -480,8 +532,52 @@ namespace TAS360.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        [HttpPost]
+        public ActionResult TramaCancelacionO(TramaCancelacionOrdenesViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (bd_Entities db = new bd_Entities())
+                    {
+                        var tabla = new Salidas();
+                        tabla.Id = 4;
+                        tabla.Transaccion =
+                            model.Tipo_Transaccion +
+                            model.Numero_Operacion +
+                            model.Numero_Compartimiento +
+                            model.Estado_Transaccion +
+                            model.Razones +
+                            model.Modulo_Operacion +
+                            model.Identificador_Vehiculo +
+                            model.codigo_Anterior_producto +
+                            model.volumen_natural +
+                            model.codigo_nuevo_producto;
 
-        
+                        db.Salidas.Add(tabla);
+                        db.SaveChanges();
+                    }
+
+                    return Redirect("about/");
+                }
+                else
+                {
+                    GetCatalogos3();
+                    GetComportamientos();
+                    GetEstadoTran();
+                    GetModulo();
+                    GetProducto();
+                    return View(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
         public ActionResult InterpretarTramaS(string id)
         {
             salidasViewModel salidasVM = new salidasViewModel();
@@ -497,10 +593,16 @@ namespace TAS360.Controllers
                 trama = db.Salidas.Find(int.Parse(id)).Transaccion;
             }
 
-            if (trama.Substring(0,2) == "02")
+            if (trama.Substring(0,2) == "02" && trama.Substring(8, 1) == "0")
             {
                 salidasVM.Trama = new ordenCargaDescargaSalidas();
                 salidasVM.Trama = leertramaConfirmada(trama);
+            }
+            else
+            if (trama.Substring(0, 2) == "02" && trama.Substring(8 , 1) == "1")
+            {
+                salidasVM.Trama3 = new cancelacionOrdenes();
+                salidasVM.Trama3 = leerTramaCancelada(trama);
             }
             else
             if (trama.Substring(0, 2) == "04")
@@ -516,7 +618,7 @@ namespace TAS360.Controllers
             ordenCargaDescargaSalidas confirmacion = new ordenCargaDescargaSalidas();
 
             #region Orden de Carga
-            //Numero de operacion
+            //Tipo de transaccion
             confirmacion.TipoTransaccion = "Confirmacion de carga / descarga";
 
             //Numero de operacion
@@ -642,7 +744,7 @@ namespace TAS360.Controllers
             volumenTanques confirmacion = new volumenTanques();
 
             #region Orden de Carga
-            //Numero de operacion
+            //Tipo de transaccion
             confirmacion.TipoTransaccion = "Volumen de Tanques";
 
             //Numero de tanque
@@ -693,6 +795,100 @@ namespace TAS360.Controllers
 
             //Producto nuevo
             string productoNuevo = Trama2.Substring(57, 4);
+            confirmacion.CodigoProductoNuevo = productoNuevo;
+            #endregion
+
+            return confirmacion;
+        }
+        public cancelacionOrdenes leerTramaCancelada(string Trama3)
+        {
+            cancelacionOrdenes confirmacion = new cancelacionOrdenes();
+
+            #region Orden de Carga
+            //Tipo Transaccion
+            confirmacion.TipoTransaccion = "Cancelacion de orden de Carga / Descarga";
+
+            //Numero de operacion
+            string numeroOperacion = Trama3.Substring(2, 5);
+            confirmacion.NumeroOperacion = numeroOperacion;
+
+            //Numero de comportamiento
+            string numeroComportamiento = Trama3.Substring(7, 1);
+            confirmacion.NumeroCopartimiento = numeroComportamiento;
+
+            //Estado de transaccion
+            string estadoTransaccion = Trama3.Substring(8, 1);
+            if (estadoTransaccion == "0")
+                confirmacion.EstadoTransaccion = "Terminada";
+            else
+            if (estadoTransaccion == "1")
+                confirmacion.EstadoTransaccion = "Cancelada";
+
+            //Razones de cancelacion 
+            string Razon = Trama3.Substring(9, 2);
+            confirmacion.Razon = Razon;
+
+            //Modulo de operacion
+            string moduloOperacion = Trama3.Substring(11, 2);
+            switch (moduloOperacion)
+            {
+                case "11":
+                    confirmacion.ModuloOperacion = "Descarga de auto-tanques";
+                    break;
+                case "12":
+                    confirmacion.ModuloOperacion = "Descarga de carro-tanques";
+                    break;
+                case "13":
+                    confirmacion.ModuloOperacion = "Descarga de barcos";
+                    break;
+                case "21":
+                    confirmacion.ModuloOperacion = "Carga de auto-tanques";
+                    break;
+                case "22":
+                    confirmacion.ModuloOperacion = "Carga de carro-tanques";
+                    break;
+                case "23":
+                    confirmacion.ModuloOperacion = "Carga de carro-tanques";
+                    break;
+                case "24":
+                    confirmacion.ModuloOperacion = "Movimiento en poliducto";
+                    break;
+                case "26":
+                    confirmacion.ModuloOperacion = "Carga de tambores";
+                    break;
+                case "27":
+                    confirmacion.ModuloOperacion = "Autoconsumo";
+                    break;
+            }
+
+            //Identificador del vehiculo
+            string identificadorVehiculo = Trama3.Substring(13, 11);
+            confirmacion.IdentificacionVehiculo = identificadorVehiculo;
+
+            //Producto anterior
+            string productoA = Trama3.Substring(24, 4);
+            switch (productoA)
+            {
+                case "0470":
+                    confirmacion.CodigoProductoAnterior = "Diesel automotriz";
+                    break;
+                case "0270":
+                    confirmacion.CodigoProductoAnterior = "Premium";
+                    break;
+                case "0266":
+                    confirmacion.CodigoProductoAnterior = "Regular";
+                    break;
+                default:
+                    confirmacion.CodigoProductoAnterior = productoA;
+                    break;
+            }
+
+            //Volumen natural
+            string volumenNatural = Trama3.Substring(28, 11);
+            confirmacion.VolumenNaturalProgramado = volumenNatural;
+
+            //Producto nuevo
+            string productoNuevo = Trama3.Substring(39, 4);
             confirmacion.CodigoProductoNuevo = productoNuevo;
             #endregion
 

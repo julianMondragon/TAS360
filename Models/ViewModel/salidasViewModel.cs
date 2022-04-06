@@ -11,14 +11,16 @@ namespace TAS360.Models.ViewModel
         public salidasViewModel()
         {
             salidas = new List<Salidas>();
-            Trama = new ordenCargaDescargaSalidas();
-            Trama2 = new volumenTanques();
+            Trama   = new ordenCargaDescargaSalidas();
+            Trama2  = new volumenTanques();
+            Trama3  = new cancelacionOrdenes();
         }
         public List<Salidas> salidas { get; set; }
         public ordenCargaDescargaSalidas Trama { get; set; }
         public volumenTanques Trama2 { get; set; }
+        public cancelacionOrdenes Trama3 { get; set; }  
     }
-   public class ordenCargaDescargaSalidas
+    public class ordenCargaDescargaSalidas
     {
         public string TipoTransaccion { get; set; }
         public string NumeroOperacion { get; set; }
@@ -50,6 +52,19 @@ namespace TAS360.Models.ViewModel
         public string TemperaturaPromedio { get; set; }
         public string Fecha { get; set; }
         public string Hora { get; set; }
+        public string CodigoProductoNuevo { get; set; }
+    }
+    public class cancelacionOrdenes
+    {
+        public string TipoTransaccion { get; set; }
+        public string NumeroOperacion { get; set; }
+        public string NumeroCopartimiento { get; set; }
+        public string EstadoTransaccion { get; set; }
+        public string Razon { get; set; }
+        public string ModuloOperacion { get; set; }
+        public string IdentificacionVehiculo { get; set; }
+        public string CodigoProductoAnterior { get; set; }
+        public string VolumenNaturalProgramado { get; set; }
         public string CodigoProductoNuevo { get; set; }
     }
 }

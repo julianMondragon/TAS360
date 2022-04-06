@@ -223,23 +223,107 @@
 
 </div>
 
+<div style="display:box" id="divthr" class="row">
+
+    <h2>Valores de la Trama</h2>
+
+    <div class="col-md-4">
+        <table class="table table-bordered">
+            <tr>
+                <th class="alert-success">Dato</th>
+                <th class="alert-success">Valor</th>
+            </tr>
+            <tr>
+                <td>Tipo de transaccion</td>
+                <td>@Model.Trama3.TipoTransaccion</td>
+            </tr>
+            <tr>
+                <td>Numero de Operacion</td>
+                <td>@Model.Trama3.NumeroOperacion</td>
+            </tr>
+            <tr>
+                <td>Numero de compartimiento</td>
+                <td>@Model.Trama3.NumeroCopartimiento</td>
+            </tr>
+            <tr>
+                <td>Estado de transaccion</td>
+                <td>@Model.Trama3.EstadoTransaccion</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <table class="table table-bordered">
+            <tr>
+                <th class="alert-info">Dato</th>
+                <th class="alert-info">Valor</th>
+            </tr>
+            <tr>
+                <td>Reazones</td>
+                <td>@Model.Trama3.Razon</td>
+            </tr>
+            <tr>
+                <td>Modulo de Operacion</td>
+                <td>@Model.Trama3.ModuloOperacion</td>
+            </tr>
+            <tr>
+                <td>Vehiculo</td>
+                <td>@Model.Trama3.IdentificacionVehiculo</td>
+            </tr>
+            <tr>
+                <td>Producto Anterior</td>
+                <td>@Model.Trama3.CodigoProductoAnterior</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <table class="table table-bordered">
+            <tr>
+                <th class="alert-warning">Dato</th>
+                <th class="alert-warning">Valor</th>
+            </tr>
+            <tr>
+                <td>Volumen Natural Programado</td>
+                <td>@Model.Trama3.VolumenNaturalProgramado</td>
+            </tr>
+            <tr>
+                <td>Producto nuevo</td>
+                <td>@Model.Trama3.CodigoProductoNuevo</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
 <script type="text/javascript">
 
-    let trama1 = '@Model.Trama.TipoTransaccion'
-    let trama2 = '@Model.Trama2.TipoTransaccion'
-    let divone = document.getElementById("divone")
-    let divtwo = document.getElementById("divtwo")
+    let trama1      = '@Model.Trama.TipoTransaccion'
+    let trama2      = '@Model.Trama2.TipoTransaccion'
+    let trama3      = '@Model.Trama3.TipoTransaccion'
+    let divone      = document.getElementById("divone")
+    let divtwo      = document.getElementById("divtwo")
+    let divthr      = document.getElementById("divthr")
 
-    if (trama1 == "Confirmacion de carga / descarga" && trama2 == "")
+    if (trama1 === "Confirmacion de carga / descarga" && trama2 == "" && trama3 == "")
     {
         divtwo.setAttribute("style", "display:none")
+        divthr.setAttribute("style", "display:none")
         divone.setAttribute("style", "display:box")
     }
 
-    if (trama2 === "Volumen de Tanques" && trama1 == "")
+    if (trama2 === "Volumen de Tanques" && trama1 == "" && trama3 == "")
     {
         divone.setAttribute("style", "display:none")
         divtwo.setAttribute("style", "display:box")
+        divthr.setAttribute("style", "display:none")
+    }
+
+    if (trama3 === "Cancelacion de orden de Carga / Descarga" && trama1 == "" && trama2 == "")
+    {
+        divone.setAttribute("style", "display:none")
+        divtwo.setAttribute("style", "display:none")
+        divthr.setAttribute("style", "display:box")
     }
 
 </script>
