@@ -12,23 +12,10 @@ namespace TAS360.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class aditivos
+    public partial class Aditivos
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public aditivos()
-        {
-            this.llenaderas = new HashSet<llenaderas>();
-        }
-    
-        public int id_aditivos { get; set; }
-        public Nullable<double> volumen { get; set; }
-        public Nullable<double> totalizador_aditivo { get; set; }
-        public Nullable<System.DateTime> ultima_carga { get; set; }
-        public Nullable<double> nivel_tq_aditivo { get; set; }
-        public Nullable<double> volumen_tq { get; set; }
-        public string estado_nivel_tq { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<llenaderas> llenaderas { get; set; }
+        public int id { get; set; }
+        public string Nombre { get; set; }
+        public Nullable<int> Num_Inyetor { get; set; }
     }
 }

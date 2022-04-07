@@ -128,137 +128,214 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AditivoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\accesos.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\AditivoBD.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AditivoBD.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\aditivos.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\AditivoBD.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AditivoBD.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AditivoBD.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Aditivos.cs">
+      <DependentUpon>Simcot_db.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny10.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny11.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny12.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny13.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny14.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny6.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny7.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny8.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlIny9.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlNiv.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AlSkid.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Auditoria.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Simcot_db.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\bomba.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\bombas_descargaderas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\bombas_llenaderas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\cubicacion.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\descargaderas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Componentes.cs">
+      <DependentUpon>Simcot_db.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entradas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Simcot_db.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\eventos_alarmas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\NivTanq.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\eventos_alarmas_descargaderas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\eventos_alarmas_llenaderas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\llenaderas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\operaciones.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\paro.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\poliducto.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\proceso_voes.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\producto.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Recetas.cs">
+      <DependentUpon>Simcot_db.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Salidas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Simcot_db.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Simcot_db.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Simcot_db.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Simcot_db.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Simcot_db.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Simcot_db.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Simcot_db.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tanque.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\TotIny10.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tanque_bomba.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\TotIny11.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tanque_cubicacion.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\TotIny12.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tanque_poliducto.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\TotIny13.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tanque_Voe.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\TotIny14.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TotIny6.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TotIny7.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TotIny8.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TotIny9.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny10.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny11.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny12.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny13.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny14.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny6.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny7.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny8.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UCIny9.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModel\aditivoViewModel.cs" />
     <Compile Include="Models\ViewModel\auditoriaViewModel.cs" />
     <Compile Include="Models\ViewModel\entradasViewModel.cs" />
+    <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
+    <Compile Include="Models\ViewModel\RepTotalizadoViewModel.cs" />
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
     <Compile Include="Models\ViewModel\TramaViewModel.cs" />
-    <Compile Include="Models\voe.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\VolTanq.cs">
+      <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Backup_Database\Triger_Entradas_auditoria.sql" />
+    <Content Include="Backup_Database\Trigger_Salidas_auditoria.sql" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\TanqueAditivo.JPG" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Model1.Context.tt">
+    <Content Include="Models\AditivoBD.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>AditivoBD.edmx</DependentUpon>
+      <LastGenOutput>AditivoBD.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Model1.tt">
+    <Content Include="Models\AditivoBD.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>AditivoBD.edmx</DependentUpon>
+      <LastGenOutput>AditivoBD.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Simcot_db.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Simcot_db.edmx</DependentUpon>
+      <LastGenOutput>Simcot_db.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Simcot_db.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Simcot_db.edmx</DependentUpon>
+      <LastGenOutput>Simcot_db.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Model1.edmx">
+    <EntityDeploy Include="Models\AditivoBD.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+      <LastGenOutput>AditivoBD.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <Content Include="Models\AditivoBD.edmx.diagram">
+      <DependentUpon>AditivoBD.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="Models\Simcot_db.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Simcot_db.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Simcot_db.edmx.diagram">
+      <DependentUpon>Simcot_db.edmx</DependentUpon>
+    </Content>
+    <Content Include="Backup_Database\backup_sistemaAditivado" />
+    <Content Include="Backup_Database\SIMCOT_DB_Backup" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -286,6 +363,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\InterpretarTrama.cshtml" />
     <Content Include="Views\Home\GenerarTrama.cshtml" />
+    <Content Include="Views\Aditivo\Index.cshtml" />
+    <Content Include="Views\Aditivo\VolTotalizado.cshtml" />
+    <Content Include="Views\Aditivo\ListarRecetas.cshtml" />
+    <Content Include="Views\Aditivo\AgregarReceta.cshtml" />
+    <Content Include="Views\Aditivo\EditReceta.cshtml" />
+    <Content Include="Views\Home\InterpretarTramaS.cshtml" />
     <Content Include="Views\Home\TramaConfirmacionO.cshtml" />
     <Content Include="Views\Home\TramaVolumenTanques.cshtml" />
     <Content Include="Views\Home\InterpretarTramaS.cshtml" />

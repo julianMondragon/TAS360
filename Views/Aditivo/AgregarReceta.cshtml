@@ -1,0 +1,62 @@
+﻿@model TAS360.Models.ViewModel.RecetasViewModel
+@{
+    ViewBag.Title = "Agregar Receta";
+    List<SelectListItem> ListProductos = (List<SelectListItem>)ViewBag.ListProductos;
+}
+<div class="jumbotron">
+    <h1>Agregar recetas</h1>
+    <p class="lead">Hoja para crear recetas en la TAD </p>
+</div>
+<section class="page-section about-heading">
+    <div class="container">
+        @*<img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="assets/img/about.jpg" alt="..." />*@
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @using (Html.BeginForm("AgregarReceta", "Aditivo", FormMethod.Post, new { role = "form", @class = "" }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    @Html.LabelFor(f => f.Name)
+                                    @Html.TextBoxFor(f => f.Name, new { @class = "form-control" })
+                                    @Html.ValidationMessage("name", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(f => f.Producto)
+                                    @Html.DropDownListFor(model => model.Producto, ListProductos, new { @class = "form-control" })
+                                    @Html.ValidationMessage("producto", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(f => f.Porc_producto)
+                                    @Html.TextBoxFor(f => f.Porc_producto, new { @class = "form-control" })
+                                    @Html.ValidationMessage("Porc_producto", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(f => f.Brazo)
+                                    @Html.TextBoxFor(f => f.Brazo, new { @class = "form-control" })
+                                    @Html.ValidationMessage("Brazo", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(f => f.Cantidad_Aditivo)
+                                    @Html.TextBoxFor(f => f.Cantidad_Aditivo, new { @class = "form-control" })
+                                    @Html.ValidationMessage("Cantidad_Aditivo", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(f => f.Razon_flujo)
+                                    @Html.TextBoxFor(f => f.Razon_flujo, new { @class = "form-control" })
+                                    @Html.ValidationMessage("Razon_flujo", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(f => f.Prod_Usando_iny)
+                                    @Html.TextBoxFor(f => f.Prod_Usando_iny, new { @class = "form-control" })
+                                    @Html.ValidationMessage("Prod_Usando_iny", new { @class = "text-danger" })
+                                    <br />
+                                    <div style="text-align:right">
+                                        <input type="submit" class="btn btn-success" value="Guardar Receta" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
