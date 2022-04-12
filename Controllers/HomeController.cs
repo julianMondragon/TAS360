@@ -16,9 +16,12 @@ namespace TAS360.Controllers
             using (bdSimcot_Entities db = new bdSimcot_Entities())
             {
                 var aux = (from s in db.Entradas select s);
-                foreach (var a in aux)
+                if (aux != null && aux.Any())
                 {
-                    entradasVM.entradas.Add(a);
+                    foreach (var a in aux)
+                    {
+                        entradasVM.entradas.Add(a);
+                    }
                 }
             }
             return View(entradasVM);
@@ -445,8 +448,19 @@ namespace TAS360.Controllers
                 { 
                     using (bdSimcot_Entities db = new bdSimcot_Entities())
                     {
+                        int cont = 0;
+                        var salidas = db.Salidas.OrderByDescending(x => x.Id).FirstOrDefault();
+                        if(salidas != null)
+                        {
+                            cont = salidas.Id + 1;
+                        }
+                        if(cont == 0)
+                        {
+                            cont = 1;
+                        }
+
                         var tabla = new Salidas();
-                        tabla.Id =  2;
+                        tabla.Id =  cont;
                         tabla.Transaccion =
                             model.Tipo_Transaccion +
                             model.Numero_Operacion +
@@ -498,8 +512,19 @@ namespace TAS360.Controllers
                 {
                     using (bdSimcot_Entities db = new bdSimcot_Entities())
                     {
+                        int cont = 0;
+                        var salidas = db.Salidas.OrderByDescending(x => x.Id).FirstOrDefault();
+                        if (salidas != null)
+                        {
+                            cont = salidas.Id + 1;
+                        }
+                        if (cont == 0)
+                        {
+                            cont = 1;
+                        }
+
                         var tabla = new Salidas();
-                        tabla.Id = 3;
+                        tabla.Id = cont;
                         tabla.Transaccion =
                             model.Tipo_Transaccion +
                             model.numero_tanque +
@@ -537,10 +562,21 @@ namespace TAS360.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    using (bd_Entities db = new bd_Entities())
+                    using (bdSimcot_Entities db = new bdSimcot_Entities())
                     {
+                        int cont = 0;
+                        var salidas = db.Salidas.OrderByDescending(x => x.Id).FirstOrDefault();
+                        if (salidas != null)
+                        {
+                            cont = salidas.Id + 1;
+                        }
+                        if (cont == 0)
+                        {
+                            cont = 1;
+                        }
+
                         var tabla = new Salidas();
-                        tabla.Id = 4;
+                        tabla.Id = cont;
                         tabla.Transaccion =
                             model.Tipo_Transaccion +
                             model.Numero_Operacion +
