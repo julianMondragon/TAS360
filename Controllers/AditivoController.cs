@@ -16,8 +16,8 @@ namespace TAS360.Controllers
         {
             
             aditivoViewModel aditivo = new aditivoViewModel();
-            aditivo.Tag = "TH-13";
-            aditivo.NombreAditivo = "TESORO";
+            aditivo.Tag = "TH-01";
+            aditivo.NombreAditivo = "IMPDG15";
             using(Aditivo_Entities db = new Aditivo_Entities())
             {
                 var aux = db.VolTanq.OrderByDescending(a => a.Fecha_y_Hora).FirstOrDefault();
@@ -69,8 +69,16 @@ namespace TAS360.Controllers
             #region ADO.NET
             var Fecha_y_Hora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             Random rnd = new Random();
-            var volumen = rnd.Next(1000, 23000);
-            var Nivel = rnd.Next(10);
+            double volumen = rnd.Next(1000, 23000);
+            if(volumen > 11.4609375)
+            {
+                volumen = volumen - 11.4609375;
+            }
+            else
+            {
+                volumen = volumen + 11.4609375;
+            }
+            double  Nivel = rnd.Next(10);
             string connectionString = "Data source=DESKTOP-RBH8FQ1;initial catalog=IMPDG15;integrated security=True;";
             string query = $"INSERT INTO VolTanq (Fecha_y_Hora , Nivel_Volumetrico) VALUES ('{Fecha_y_Hora}','{volumen}')";
             string query1 = $"INSERT INTO NivTanq (Fecha_y_Hora , Nivel_Tanque_Nivel_Value) VALUES ('{Fecha_y_Hora}','{Nivel}')";
@@ -84,12 +92,22 @@ namespace TAS360.Controllers
         public ActionResult VolTotalizado()
         {
             RepTotalizadoViewModel model = new RepTotalizadoViewModel();
+            DateTime fecha_inicio = new DateTime(2020, 10, 20, 05, 00, 00);
+            DateTime fecha_Fin = new DateTime(2020, 10, 21, 05, 00, 00);
+
 
             using (Aditivo_Entities db = new Aditivo_Entities())
             {
-                var ucl1 = db.TotIny9.OrderByDescending(x => x.Fecha_y_Hora).Take(50);
-                var ucl2 = db.TotIny8.OrderByDescending(x => x.Fecha_y_Hora).Take(50);
-                var ucl3 = db.TotIny7.OrderByDescending(x => x.Fecha_y_Hora).Take(50);
+                
+                var ucl9 = db.TotIny14.Where(x => x.Fecha_y_Hora >= fecha_inicio && x.Fecha_y_Hora <= fecha_Fin);
+                var ucl8 = db.TotIny13.Where(x => x.Fecha_y_Hora >= fecha_inicio && x.Fecha_y_Hora <= fecha_Fin);
+                var ucl7 = db.TotIny12.Where(x => x.Fecha_y_Hora >= fecha_inicio && x.Fecha_y_Hora <= fecha_Fin);
+                var ucl6 = db.TotIny11.Where(x => x.Fecha_y_Hora >= fecha_inicio && x.Fecha_y_Hora <= fecha_Fin);
+                var ucl5 = db.TotIny10.Where(x => x.Fecha_y_Hora >= fecha_inicio && x.Fecha_y_Hora <= fecha_Fin);
+                var ucl1 = db.TotIny9.Where(x => x.Fecha_y_Hora >= fecha_inicio && x.Fecha_y_Hora <= fecha_Fin );
+                var ucl2 = db.TotIny8.Where(x => x.Fecha_y_Hora >= fecha_inicio && x.Fecha_y_Hora <= fecha_Fin);
+                var ucl3 = db.TotIny7.Where(x => x.Fecha_y_Hora >= fecha_inicio && x.Fecha_y_Hora <= fecha_Fin);
+                var ucl4 = db.TotIny6.Where(x => x.Fecha_y_Hora >= fecha_inicio && x.Fecha_y_Hora <= fecha_Fin);
 
                 foreach (var ucl in ucl1)
                 {
@@ -103,7 +121,89 @@ namespace TAS360.Controllers
                 {
                     model.Ucls.Ucl3.Add(ucl);
                 }
+                foreach (var ucl in ucl4)
+                {
+                    model.Ucls.Ucl4.Add(ucl);
+                }
+                foreach (var ucl in ucl5)
+                {
+                    model.Ucls.Ucl5.Add(ucl);
+                }
+                foreach (var ucl in ucl6)
+                {
+                    model.Ucls.Ucl6.Add(ucl);
+                }
+                foreach (var ucl in ucl7)
+                {
+                    model.Ucls.Ucl7.Add(ucl);
+                }
+                foreach (var ucl in ucl8)
+                {
+                    model.Ucls.Ucl8.Add(ucl);
+                }
+                foreach (var ucl in ucl9)
+                {
+                    model.Ucls.Ucl9.Add(ucl);
+                }
+
+
+                #region Salidas totales
+
+                double? Sumatoria = 0;
+                var Total_Ucl6  = db.TotIny6.Where(x => x.Fecha_y_Hora == fecha_inicio || x.Fecha_y_Hora == fecha_Fin).ToList();
+                var Total_ucl7  = db.TotIny7.Where(x => x.Fecha_y_Hora == fecha_inicio || x.Fecha_y_Hora == fecha_Fin).ToList();
+                var Total_ucl8  = db.TotIny8.Where(x => x.Fecha_y_Hora == fecha_inicio || x.Fecha_y_Hora == fecha_Fin).ToList();
+                var Total_Ucl9  = db.TotIny9.Where(x => x.Fecha_y_Hora == fecha_inicio || x.Fecha_y_Hora == fecha_Fin).ToList();
+                var Total_ucl10 = db.TotIny10.Where(x => x.Fecha_y_Hora == fecha_inicio || x.Fecha_y_Hora == fecha_Fin).ToList();
+                var Total_ucl11 = db.TotIny11.Where(x => x.Fecha_y_Hora == fecha_inicio || x.Fecha_y_Hora == fecha_Fin).ToList();
+                var Total_Ucl12 = db.TotIny12.Where(x => x.Fecha_y_Hora == fecha_inicio || x.Fecha_y_Hora == fecha_Fin).ToList();
+                var Total_ucl13 = db.TotIny13.Where(x => x.Fecha_y_Hora == fecha_inicio || x.Fecha_y_Hora == fecha_Fin).ToList();
+                var Total_ucl14 = db.TotIny14.Where(x => x.Fecha_y_Hora == fecha_inicio || x.Fecha_y_Hora == fecha_Fin).ToList();
+                if(Total_Ucl6 != null && Total_Ucl6.Any())
+                {
+                    Sumatoria += Total_Ucl6[1].Isla_6_Totalizador_de_Aditivo - Total_Ucl6[0].Isla_6_Totalizador_de_Aditivo;                 
+                }
+                if (Total_ucl7 != null && Total_ucl7.Any())
+                {
+                    Sumatoria += Total_ucl7[1].Isla_7_Totalizador_de_Aditivo - Total_ucl7[0].Isla_7_Totalizador_de_Aditivo;
+                }
+                if (Total_ucl8 != null && Total_ucl8.Any())
+                {
+                    Sumatoria += Total_ucl8[1].Isla_8_Totalizador_de_Aditivo - Total_ucl8[0].Isla_8_Totalizador_de_Aditivo;
+                }
+                if (Total_Ucl9 != null && Total_Ucl9.Any())
+                {
+                    Sumatoria += Total_Ucl9[1].Isla_9_Totalizador_de_Aditivo - Total_Ucl9[0].Isla_9_Totalizador_de_Aditivo;
+                }
+                if (Total_ucl10 != null && Total_ucl10.Any())
+                {
+                    Sumatoria += Total_ucl10[1].Isla_10_Totalizador_de_Aditivo - Total_ucl10[0].Isla_10_Totalizador_de_Aditivo;
+                }
+                if (Total_ucl11 != null && Total_ucl11.Any())
+                {
+                    Sumatoria += Total_ucl11[1].Isla_11_Totalizador_de_Aditivo - Total_ucl11[0].Isla_11_Totalizador_de_Aditivo;
+                }
+                if (Total_Ucl12 != null && Total_Ucl12.Any())
+                {
+                    Sumatoria += Total_Ucl12[1].Isla_12_Totalizador_de_Aditivo - Total_Ucl12[0].Isla_12_Totalizador_de_Aditivo;
+                }
+                if (Total_ucl13 != null && Total_ucl13.Any())
+                {
+                    Sumatoria += Total_ucl13[1].Isla_13_Totalizador_de_Aditivo - Total_ucl13[0].Isla_13_Totalizador_de_Aditivo;
+                }
+                if (Total_ucl14 != null && Total_ucl14.Any())
+                {
+                    Sumatoria += Total_ucl14[1].Isla_14_Totalizador_de_Aditivo - Total_ucl14[0].Isla_14_Totalizador_de_Aditivo;
+                }
+                #endregion
+                
+                model.Balance.Existencia_inicial = db.VolTanq.FirstOrDefault(x => x.Fecha_y_Hora == fecha_inicio).Nivel_Volumetrico;
+                model.Balance.ExistenciaFinal = db.VolTanq.FirstOrDefault(x => x.Fecha_y_Hora == fecha_Fin).Nivel_Volumetrico;
+                model.Balance.Resta_de_volumen_Tanq = model.Balance.Existencia_inicial - model.Balance.ExistenciaFinal;
+                model.Balance.Salidas = Sumatoria;
+                model.Balance.Sobrante_Faltante = model.Balance.Resta_de_volumen_Tanq - Sumatoria;
             }
+             SalidasTotalesxUCLs(model);
 
             return View(model); 
         }
@@ -284,6 +384,99 @@ namespace TAS360.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        public void SalidasTotalesxUCLs(RepTotalizadoViewModel model)
+        {
+
+            int count = model.Ucls.Ucl1.Count() - 1;
+            double? premiun = 0;
+            double? regular = 0;
+            double? valor_inical1 = model.Ucls.Ucl1[0].Isla_9_Totalizador_de_Aditivo;
+            double? valor_final1 = model.Ucls.Ucl1[count].Isla_9_Totalizador_de_Aditivo;
+            double? valor_inical2 = model.Ucls.Ucl2[0].Isla_8_Totalizador_de_Aditivo;
+            double? valor_final2 = model.Ucls.Ucl2[count].Isla_8_Totalizador_de_Aditivo;
+            double? valor_inical3 = model.Ucls.Ucl3[0].Isla_7_Totalizador_de_Aditivo;
+            double? valor_final3 = model.Ucls.Ucl3[count].Isla_7_Totalizador_de_Aditivo;
+            double? valor_inical4 = model.Ucls.Ucl4[0].Isla_6_Totalizador_de_Aditivo;
+            double? valor_final4 = model.Ucls.Ucl4[count].Isla_6_Totalizador_de_Aditivo;
+            double? valor_inical5 = model.Ucls.Ucl5[0].Isla_10_Totalizador_de_Aditivo;
+            double? valor_final5 = model.Ucls.Ucl5[count].Isla_10_Totalizador_de_Aditivo;
+            double? valor_inical6 = model.Ucls.Ucl6[0].Isla_11_Totalizador_de_Aditivo;
+            double? valor_final6 = model.Ucls.Ucl6[count].Isla_11_Totalizador_de_Aditivo;
+            double? valor_inical7 = model.Ucls.Ucl7[0].Isla_12_Totalizador_de_Aditivo;
+            double? valor_final7 = model.Ucls.Ucl7[count].Isla_12_Totalizador_de_Aditivo;
+            double? valor_inical8 = model.Ucls.Ucl8[0].Isla_13_Totalizador_de_Aditivo;
+            double? valor_final8 = model.Ucls.Ucl8[count].Isla_13_Totalizador_de_Aditivo;
+            double? valor_inical9 = model.Ucls.Ucl9[0].Isla_14_Totalizador_de_Aditivo;
+            double? valor_final9 = model.Ucls.Ucl9[count].Isla_14_Totalizador_de_Aditivo;
+
+            if (valor_inical1.HasValue && valor_final1.HasValue)
+            {
+                ViewBag.Total1 = valor_final1 - valor_inical1;
+                regular += valor_final1 - valor_inical1;
+            }
+            if (valor_inical2.HasValue && valor_final2.HasValue)
+            {
+                ViewBag.Total2 = valor_final2 - valor_inical2;
+                regular += valor_final2 - valor_inical2;
+            }
+            if (valor_inical3.HasValue && valor_final3.HasValue)
+            {
+                double? aux = valor_final3 - valor_inical3;
+                if (aux != 0)
+                {
+                    ViewBag.Total3 = aux;
+                    regular += aux;
+                }                   
+                else
+                    ViewBag.Total3 = 0;
+            }
+            if (valor_inical4.HasValue && valor_final4.HasValue)
+            {
+                ViewBag.Total4 = valor_final4 - valor_inical4;
+                regular += valor_final4 - valor_inical4;
+            }
+            if (valor_inical5.HasValue && valor_final5.HasValue)
+            {
+                ViewBag.Total5 = valor_final5 - valor_inical5;
+                regular += valor_final5 - valor_inical5;
+            }
+            if (valor_inical6.HasValue && valor_final6.HasValue)
+            {
+                double? aux = valor_final6 - valor_inical6;
+                if (aux != 0)
+                {
+                    ViewBag.Total6 = aux;
+                    regular += aux;
+                }                    
+                else
+                    ViewBag.Total6 = 0;
+            }
+            if (valor_inical7.HasValue && valor_final7.HasValue)
+            {
+                ViewBag.Total7 = valor_final7 - valor_inical7;
+                regular += valor_final7 - valor_inical7;
+            }
+            if (valor_inical8.HasValue && valor_final8.HasValue)
+            {
+                ViewBag.Total8 = valor_final8 - valor_inical8;
+                premiun += valor_final8 - valor_inical8;
+            }
+            if (valor_inical9.HasValue && valor_final9.HasValue)
+            {
+                double? aux = valor_final9 - valor_inical9;
+                if (aux != 0)
+                {
+                    ViewBag.Total9 = aux;
+                    premiun += aux;
+                }                    
+                else
+                    ViewBag.Total9 = 0;
+            }
+
+            ViewBag.Regular = regular;
+            ViewBag.Premium = premiun;
         }
     }
 }

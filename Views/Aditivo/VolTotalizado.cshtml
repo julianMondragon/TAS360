@@ -5,26 +5,137 @@
 
 <div class="jumbotron">
     <h1>Volumen Totalizado</h1>
-    <p class="lead">Reporte de volumen totalizado por islas en la TAD del ultimo día</p>
+    <p class="lead">Reporte de volumen totalizado por islas en la TAD del día 20/05/2020</p>
 </div>
 <div class="row">
-    <div class="col-md-6" style="align-content:center">
+    @*Balance*@
+    <div class="col-md-12">
+        <h3>Balance</h3>
+        <table class="table table-success table-striped">
+            <tr>
+                <th class="alert-success">Existencia Inicial</th>
+                <th class="alert-success">Existencia Final</th>
+                <th class="alert-success">Resta de volumen Tanq</th>
+                <th class="alert-success">Salidas Totales x UCL</th>
+                <th class="alert-success">Sobrante faltante</th>
+                <th class="alert-success">Recibos</th>
+            </tr>
+            <tr>
+                <td>@Model.Balance.Existencia_inicial</td>
+                <td>@Model.Balance.ExistenciaFinal</td>
+                <td>@Model.Balance.Resta_de_volumen_Tanq</td>
+                <td>@Model.Balance.Salidas</td>
+                <td>@Model.Balance.Sobrante_Faltante</td>
+                <td>0</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
+<div class="row">
+
+    @*Salidas por Posicion*@
+    <div class="col-md-6">
+        <h3>Totales por isla</h3>
+        <table class="table table-success table-striped">
+            <tr>
+                <th class="alert-info">Posicion</th>
+                <th class="alert-info">Volumen</th>
+            </tr>
+            <tr>
+                <td>Isla 14</td>
+                <td>@ViewBag.Total9</td>
+            </tr>
+            <tr>
+                <td>Isla 13</td>
+                <td>@ViewBag.Total8</td>
+            </tr>
+            <tr>
+                <td>Isla 12</td>
+                <td>@ViewBag.Total7</td>
+            </tr>
+            <tr>
+                <td>Isla 11</td>
+                <td>@ViewBag.Total6</td>
+            </tr>
+            <tr>
+                <td>Isla 10</td>
+                <td>@ViewBag.Total5</td>
+            </tr>
+            <tr>
+                <td>Isla 9</td>
+                <td>@ViewBag.Total1</td>
+            </tr>
+            <tr>
+                <td>Isla 8</td>
+                <td>@ViewBag.Total2</td>
+            </tr>
+            <tr>
+                <td>Isla 7</td>
+                <td>@ViewBag.Total3</td>
+            </tr>
+            <tr>
+                <td>Isla 6</td>
+                <td>@ViewBag.Total4</td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td>@Model.Balance.Salidas</td>
+            </tr>
+        </table>
+    </div>
+    @*Salidas por Producto*@
+    <div class="col-md-4">
+        <h3>Totales por Producto</h3>
+        <table class="table table-success table-striped">
+            <tr>
+                <th class="alert-info">Posicion</th>
+                <th class="alert-info">Volumen</th>
+            </tr>
+            <tr>
+                <td>Regular</td>
+                <td>@ViewBag.Regular</td>
+            </tr>
+            <tr>
+                <td>Premium</td>
+                <td>@ViewBag.Premium</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    @*Totalizadores *@
+    <div class="col-md-12" style="align-content:center">
+        <h3>Salidas por isla</h3>
         <table class="table table-success table-striped">
             <tr>
                 <th class="alert-warning">Fecha y Hora</th>
-                <th class="alert-warning">Isla 9</th>
-                <th class="alert-warning">Isla 8</th>
-                <th class="alert-warning">Isla 7</th>
+                <th class="alert-danger">Isla 14</th>
+                <th class="alert-danger">Isla 13</th>
+                <th class="alert-success">Isla 12</th>
+                <th class="alert-success">Isla 11</th>
+                <th class="alert-success">Isla 10</th>
+                <th class="alert-success">Isla 9</th>
+                <th class="alert-success">Isla 8</th>
+                <th class="alert-success">Isla 7</th>
+                <th class="alert-success">Isla 6</th>
+                
             </tr>
             @if (Model != null)
             {
-                for(int i = 0; i < Model.Ucls.Ucl1.Count; i++ )
+                for (int i = 0; i < Model.Ucls.Ucl1.Count; i++)
                 {
                     <tr>
                         <td>@Model.Ucls.Ucl1[i].Fecha_y_Hora</td>
+                        <td>@Model.Ucls.Ucl9[i].Isla_14_Totalizador_de_Aditivo</td>
+                        <td>@Model.Ucls.Ucl8[i].Isla_13_Totalizador_de_Aditivo</td>
+                        <td>@Model.Ucls.Ucl7[i].Isla_12_Totalizador_de_Aditivo</td>
+                        <td>@Model.Ucls.Ucl6[i].Isla_11_Totalizador_de_Aditivo</td>
+                        <td>@Model.Ucls.Ucl5[i].Isla_10_Totalizador_de_Aditivo</td>
                         <td>@Model.Ucls.Ucl1[i].Isla_9_Totalizador_de_Aditivo</td>
                         <td>@Model.Ucls.Ucl2[i].Isla_8_Totalizador_de_Aditivo</td>
                         <td>@Model.Ucls.Ucl3[i].Isla_7_Totalizador_de_Aditivo</td>
+                        <td>@Model.Ucls.Ucl4[i].Isla_6_Totalizador_de_Aditivo</td>
                     </tr>
                 }
             }
