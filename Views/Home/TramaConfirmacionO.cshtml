@@ -33,7 +33,7 @@
 
                                             <div class="col-md-4">
                                                 @Html.LabelFor(f => f.Tipo_Transaccion)
-                                                @Html.DropDownListFor(model => model.Tipo_Transaccion, ListTrancc, new { @class = "form-control" })
+                                                @Html.DropDownListFor(model => model.Tipo_Transaccion, ListTrancc, new { @class = "form-control", @readonly = "true" })
                                             </div>
 
                                             <div class="col-md-4">
@@ -49,7 +49,7 @@
 
                                             <div class="col-md-4">
                                                 @Html.LabelFor(f => f.Estado_Transaccion)
-                                                @Html.DropDownListFor(model => model.Estado_Transaccion, ListEstadoTran, new { @class = "form-control" })
+                                                @Html.DropDownListFor(model => model.Estado_Transaccion, ListEstadoTran, new { @class = "form-control", @readonly = "true" })
                                             </div>
 
                                             <div class="col-md-4">

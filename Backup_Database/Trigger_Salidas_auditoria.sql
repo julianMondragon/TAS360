@@ -11,5 +11,5 @@ begin
 	set @Date	= (select format(GETDATE(),'ddMMyy'))
 	set @Time	= (select format(CURRENT_TIMESTAMP,'HHmm'))
 
-	insert into Auditoria values(@Id,@Date,@Time,1,1,1,@trans)
+	insert into Auditoria(Fecha,Hora,Estado,Flujo_datos,secuencial,Transaccion) values(@Date,@Time,1,1,1,@trans)
 end

@@ -214,7 +214,7 @@ namespace TAS360.Controllers
         {
             GetCatalogos3();
             GetComportamientos();
-            GetEstadoTran();
+            GetEstadoTran2();
             GetModulo();
             GetProducto();
             return View();
@@ -228,7 +228,8 @@ namespace TAS360.Controllers
             ListTipoTrancc.Add(new SelectListItem
             {
                 Text = "Seleccione una transacción",
-                Value = "00"
+                Value = "00",
+                Disabled= true
             });
             ListTipoTrancc.Add(new SelectListItem
             {
@@ -239,12 +240,14 @@ namespace TAS360.Controllers
             ListTipoTrancc.Add(new SelectListItem
             {
                 Text = "Volumen en tanques de almacenamiento",
-                Value = "04"
+                Value = "04",
+                Disabled = true
             });
             ListTipoTrancc.Add(new SelectListItem
             {
                 Text = "Cancelacion de orden de Carga / Descarga",
-                Value = "02"
+                Value = "02",
+                Disabled = true
             });
             ViewBag.ListTipoTrancc = ListTipoTrancc;
 
@@ -256,12 +259,14 @@ namespace TAS360.Controllers
             ListTipoTrancc2.Add(new SelectListItem
             {
                 Text = "Seleccione una transacción",
-                Value = "00"
+                Value = "00",
+                Disabled = true
             });
             ListTipoTrancc2.Add(new SelectListItem
             {
                 Text = "Confirmacion de orden de Carga / Descarga",
-                Value = "02"
+                Value = "02",
+                Disabled = true
             });
             ListTipoTrancc2.Add(new SelectListItem
             {
@@ -272,7 +277,8 @@ namespace TAS360.Controllers
             ListTipoTrancc2.Add(new SelectListItem
             {
                 Text = "Cancelacion de orden de Carga / Descarga",
-                Value = "02"
+                Value = "02",
+                Disabled = true
             });
             ViewBag.ListTipoTrancc2 = ListTipoTrancc2;
 
@@ -284,17 +290,20 @@ namespace TAS360.Controllers
             ListTipoTrancc3.Add(new SelectListItem
             {
                 Text = "Seleccione una transacción",
-                Value = "00"
+                Value = "00",
+                Disabled = true
             });
             ListTipoTrancc3.Add(new SelectListItem
             {
                 Text = "Confirmacion de orden de Carga / Descarga",
-                Value = "02"
+                Value = "02",
+                Disabled = true
             });
             ListTipoTrancc3.Add(new SelectListItem
             {
                 Text = "Volumen en tanques de almacenamiento",
-                Value = "04"
+                Value = "04",
+                Disabled = true
             });
             ListTipoTrancc3.Add(new SelectListItem
             {
@@ -336,19 +345,34 @@ namespace TAS360.Controllers
             {
                 Text = "Seleccione un estado de transacción",
                 Value = "",
-                Selected = true
+                Disabled = true
             });
             ListEstadoTran.Add(new SelectListItem
             {
                 Text = "Terminado",
-                Value = "0"
-            });
-            ListEstadoTran.Add(new SelectListItem
-            {
-                Text = "Cancelado",
-                Value = "1"
+                Value = "0",
+                Selected = true
             });
             ViewBag.ListEstadoTran = ListEstadoTran;
+
+        }
+        private void GetEstadoTran2()
+        {
+
+            List<SelectListItem> ListEstadoTran2 = new List<SelectListItem>();
+            ListEstadoTran2.Add(new SelectListItem
+            {
+                Text = "Seleccione un estado de transacción",
+                Value = "",
+                Disabled = true
+            });
+            ListEstadoTran2.Add(new SelectListItem
+            {
+                Text = "Cancelado",
+                Value = "1",
+                Selected = true
+            });
+            ViewBag.ListEstadoTran2 = ListEstadoTran2;
 
         }
         private void GetModulo()
@@ -599,7 +623,7 @@ namespace TAS360.Controllers
                 {
                     GetCatalogos3();
                     GetComportamientos();
-                    GetEstadoTran();
+                    GetEstadoTran2();
                     GetModulo();
                     GetProducto();
                     return View(model);
