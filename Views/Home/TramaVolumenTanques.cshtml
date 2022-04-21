@@ -3,12 +3,19 @@
     ViewBag.Title = "Generar Trama";
     List<SelectListItem> ListTrancc = (List<SelectListItem>)ViewBag.ListTipoTrancc2;
     List<SelectListItem> ListPro = (List<SelectListItem>)ViewBag.ListProducto;
+    string exception = ViewBag.ExceptionMessage;
 }
 <br />
 <br />
 <section class="page-section about-heading">
     <div class="container">
         @*<img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="assets/img/about.jpg" alt="..." />*@
+        @if (exception != null)
+        {
+            <br />
+            <br />
+            <h3 style="color:red">@exception</h3>
+        }
         <div class="about-heading-content">
             <div class="row">
                 <div class="col-xl-9 col-lg-10 mx-auto">

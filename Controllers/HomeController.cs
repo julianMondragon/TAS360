@@ -468,8 +468,6 @@ namespace TAS360.Controllers
         {
             try 
             {
-                //eliminar esta linea una vez que se realice la las correcciones de los modulos
-                throw new Exception("Esto es una prueba de exception... :) ");
                 if (ModelState.IsValid)
                 { 
                     using (bdSimcot_Entities db = new bdSimcot_Entities())
@@ -584,7 +582,9 @@ namespace TAS360.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Message = ex.Message;
+                GetCatalogos2();
+                GetProducto();
+                ViewBag.ExceptionMessage = ex.Message;
                 return View(model);
             }
         }
@@ -640,7 +640,12 @@ namespace TAS360.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Message = ex.Message;
+                GetCatalogos3();
+                GetComportamientos();
+                GetEstadoTran2();
+                GetModulo();
+                GetProducto();
+                ViewBag.ExceptionMessage = ex.Message;
                 return View(model);
             }
         }
