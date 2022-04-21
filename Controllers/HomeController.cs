@@ -523,7 +523,8 @@ namespace TAS360.Controllers
             }
             catch(Exception ex)
             {
-                throw new Exception(ex.Message);
+                ViewBag.Message = ex.Message;
+                return View(model);
 
             }
         }
@@ -576,7 +577,8 @@ namespace TAS360.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                ViewBag.Message = ex.Message;
+                return View(model);
             }
         }
         [HttpPost]
@@ -631,7 +633,8 @@ namespace TAS360.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                ViewBag.Message = ex.Message;
+                return View(model);
             }
         }
 
