@@ -28,7 +28,7 @@
                                         <td>@usr.Transaccion</td>
                                         <td>
                                             <input type="button" class="btn btn-default" onclick="document.location.href = '@Url.Content("~/home/InterpretarTrama/" + usr.Id)'" value="Interpretar" />
-                                            <input type="button" class="btn btn-danger" value="Eliminar" />
+                                            <input type="button" class="btn btn-danger"  onclick="document.location.href = '@Url.Content("~/home/EliminarTramaE/" + usr.Id)'" value="Eliminar" />
                                         </td>
                                     </tr>
                                 }

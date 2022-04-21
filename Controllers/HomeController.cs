@@ -649,6 +649,28 @@ namespace TAS360.Controllers
                 return View(model);
             }
         }
+        [HttpGet]
+        public ActionResult EliminarTramaS(int id)
+        {
+            using (bdSimcot_Entities db = new bdSimcot_Entities())
+            {
+                var registro = db.Salidas.Find(id);
+                db.Salidas.Remove(registro);
+                db.SaveChanges();
+            }
+            return Redirect("~/Home/about/");
+        }
+        [HttpGet]
+        public ActionResult EliminarTramaE(int id)
+        {
+            using (bdSimcot_Entities db = new bdSimcot_Entities())
+            {
+                var registro = db.Entradas.Find(id);
+                db.Entradas.Remove(registro);
+                db.SaveChanges();
+            }
+            return Redirect("~/");
+        }
 
 
         public ActionResult InterpretarTramaS(string id)
