@@ -199,6 +199,8 @@ namespace TAS360.Controllers
                 
                 model.Balance.Existencia_inicial = db.VolTanq.FirstOrDefault(x => x.Fecha_y_Hora == fecha_inicio).Nivel_Volumetrico;
                 model.Balance.ExistenciaFinal = db.VolTanq.FirstOrDefault(x => x.Fecha_y_Hora == fecha_Fin).Nivel_Volumetrico;
+                model.Balance.Nivel_Inicial = db.NivTanq.FirstOrDefault(x => x.Fecha_y_Hora == fecha_inicio).Nivel_Tanque_Nivel_Value;
+                model.Balance.Nivel_Final = db.NivTanq.FirstOrDefault(x => x.Fecha_y_Hora == fecha_Fin).Nivel_Tanque_Nivel_Value;
                 model.Balance.Resta_de_volumen_Tanq = model.Balance.Existencia_inicial - model.Balance.ExistenciaFinal;
                 model.Balance.Salidas = Sumatoria;
                 model.Balance.Sobrante_Faltante = model.Balance.Resta_de_volumen_Tanq - Sumatoria;

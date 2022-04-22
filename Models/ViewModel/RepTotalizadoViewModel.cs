@@ -55,5 +55,7 @@ namespace TAS360.Models.ViewModel
         public double? ExistenciaFinal { get; set; }
         public double? Resta_de_volumen_Tanq { get; set; }
         public double? Sobrante_Faltante { get; set; }
+        public double? Nivel_Final { get; set; }
+        public double? Nivel_Inicial { get; set; }
     }
 }

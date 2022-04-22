@@ -7,29 +7,36 @@
     <h1>Volumen Totalizado</h1>
     <p class="lead">Reporte de volumen totalizado por islas en la TAD del día 20/05/2020</p>
 </div>
+<div class="row" style="text-align:end">
+    <section style="align-content:end"> Nivel inicial: @Model.Balance.Nivel_Inicial</section>
+    <section style="align-content:end"> Nivel final: @Model.Balance.Nivel_Final</section>
+</div>
 <div class="row">
     @*Balance*@
     <div class="col-md-12">
         <h3>Balance</h3>
         <table class="table table-success table-striped">
             <tr>
-                <th class="alert-success">Existencia Inicial</th>
-                <th class="alert-success">Existencia Final</th>
-                <th class="alert-success">Resta de volumen Tanq</th>
-                <th class="alert-success">Salidas Totales x UCL</th>
-                <th class="alert-success">Sobrante faltante</th>
+                <th class="alert-success">Vol Inicial del Tanque</th>
+                <th class="alert-success">Vol Final del Tanque</th>
                 <th class="alert-success">Recibos</th>
+                <th class="alert-success">Diferencia x nivel</th>
+                <th class="alert-danger">Salidas Totales x UCL</th>
+                <th class="alert-info">Sobrante(-) faltante(+)</th>
+
             </tr>
             <tr>
                 <td>@Model.Balance.Existencia_inicial</td>
                 <td>@Model.Balance.ExistenciaFinal</td>
+                <td>0</td>
                 <td>@Model.Balance.Resta_de_volumen_Tanq</td>
                 <td>@Model.Balance.Salidas</td>
                 <td>@Model.Balance.Sobrante_Faltante</td>
-                <td>0</td>
+
             </tr>
             
         </table>
+        <h4>El volumen entregado por nivel es: @Model.Balance.Resta_de_volumen_Tanq mientras que la entrega por ucl del aditivador reporta: @Model.Balance.Salidas </h4>
     </div>
 </div>
 <div class="row">
