@@ -1,0 +1,54 @@
+﻿@model TAS360.Models.ViewModel.TablaCubViewModel
+@{
+    ViewBag.Title = "Tabla de Cubicacion";
+    string exception = ViewBag.Exception;
+}
+
+<div class="jumbotron">
+    <h1>Tabla de Cubicacion</h1>
+    <p class="lead">
+        En esta venta podremos crear un tabla de cubicacion mm x mm apartir de un archivo csv
+    </p>
+    @if (exception != null)
+    {
+        <br />
+        <h3 style="color:red">Se Presento el siguiente error: +  @exception</h3>
+        <br />
+
+    }
+
+    @using (Html.BeginForm("Index", "TablaCub", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="postedFile" />
+        <br />
+        <input type="submit" value="Importar archivo" />
+    }
+</div>
+@if (Model != null)
+{
+    <div class="row">
+        @*Informacion de la tabla *@
+        <div class="col-md-12">
+            <h3>Informacion de la tabla</h3>
+            <table class="table table-success table-striped">
+                <tr>
+                    <th class="alert-info">TAD</th>
+                    <th class="alert-info">Tag</th>
+                    <th class="alert-info">Capacidad (Bls)</th>
+                    <th class="alert-info">Altura (m)</th>
+                    <th class="alert-info">Producto</th>
+                </tr>
+                <tr>
+                    <td>@Model.TAD</td>
+                    <td>@Model.Tag</td>
+                    <td>@Model.Capacidad</td>
+                    <td>@Model.Altura</td>
+                    <td>@Model.Producto</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+}
+
+

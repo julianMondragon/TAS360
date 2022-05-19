@@ -10,6 +10,10 @@ namespace TAS360.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult Home()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             entradasViewModel entradasVM = new entradasViewModel();
