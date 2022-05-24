@@ -94,9 +94,9 @@ namespace TAS360.Controllers
                         double valorB = TablaCub.GetCellValueAsDouble(row,2);
                         double valorC = TablaCub.GetCellValueAsDouble(row,3);
 
-                        //TablaCub.SetCellValue(row, 7, valorA);
-                        //TablaCub.SetCellValue(row, 8, valorB);
-                        //TablaCub.SetCellValue(row, 9, valorC);
+                        TablaCub.SetCellValue(row, 7, valorA);
+                        TablaCub.SetCellValue(row, 8, valorB);
+                        TablaCub.SetCellValue(row, 9, valorC);
 
                         tabla.Tabla.Add(new Tabla
                         {
@@ -107,9 +107,8 @@ namespace TAS360.Controllers
                         row++;
                     }
 
-
-                    TablaCub.SetCellValue(12, 9, "Esto es una prueba");
-                    TablaCub.Save();
+                    //BUG
+                    //TablaCub.Save();
                     //TablaCub.SaveAs("/TEST_CSV/Prueba_1.xlsx");
                     #endregion 
                     return View(tabla);
