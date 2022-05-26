@@ -45,6 +45,7 @@ namespace TAS360.Controllers
                 try
                 {   
                     SLDocument TablaCub  = new SLDocument(filepath);
+                    SLDocument NewTablaCub = new SLDocument();
 
                     #region Obtiene la informacion primaria de la tabla de cubicacion
                     while (!string.IsNullOrEmpty(TablaCub.GetCellValueAsString(row, column)))
@@ -75,28 +76,25 @@ namespace TAS360.Controllers
                     #endregion
 
                     #region Iteracion de la tabla 
-
+                    
                     row = 12;
                     column = 1;
-
-                    TablaCub.SetCellValue(row, 7, "Nivel (m)");
-                    TablaCub.SetCellValue(row, 8, "Volumen (Bls)");
-                    TablaCub.SetCellValue(row, 9, "Volumen (m3)");
+                    //Establece el encabezado del nuevo archivo 
+                    NewTablaCub.SetCellValue(row, 7, "Nivel (m)");
+                    NewTablaCub.SetCellValue(row, 8, "Volumen (Bls)");
+                    NewTablaCub.SetCellValue(row, 9, "Volumen (m3)");
                     row++;
 
-
-                    //TablaCub.AddWorksheet("DanceFloor");
-                    //TablaCub.SelectWorksheet("Sheet3");
-                    
+                    //Obtiene el fondo y lo escribe en escribe en el nuevo archivo 
                     while (tabla.Fondo_Rango2 != TablaCub.GetCellValueAsDouble(row, column))
                     {
                         double valorA = TablaCub.GetCellValueAsDouble(row,1);
                         double valorB = TablaCub.GetCellValueAsDouble(row,2);
                         double valorC = TablaCub.GetCellValueAsDouble(row,3);
 
-                        TablaCub.SetCellValue(row, 7, valorA);
-                        TablaCub.SetCellValue(row, 8, valorB);
-                        TablaCub.SetCellValue(row, 9, valorC);
+                        NewTablaCub.SetCellValue(row, 7, valorA);
+                        NewTablaCub.SetCellValue(row, 8, valorB);
+                        NewTablaCub.SetCellValue(row, 9, valorC);
 
                         tabla.Tabla.Add(new Tabla
                         {
@@ -107,10 +105,18 @@ namespace TAS360.Controllers
                         row++;
                     }
 
-                    //BUG
-                    //TablaCub.Save();
-                    //TablaCub.SaveAs("/TEST_CSV/Prueba_1.xlsx");
+                    //TODO (por hacer)
+                    //seguir iterando la tabla y aplicar la formula realizar
+                    //la cubicacion mm x mm evitando la zona critica de toda la tabla de cubicacion
+                    
+
+                    //Se crea e inserta un objeto<SLTabla> en el nuevo archivo, posteriormente se guarda el archivo
+                    SLTable lTable = NewTablaCub.CreateTable("G12", String.Format("I{0}", row--));
+                    NewTablaCub.InsertTable(lTable);
+                    NewTablaCub.SaveAs(path + "TablaCub_mm_x_mm.xlsx");
+                    
                     #endregion 
+
                     return View(tabla);
                 }
                 catch (Exception ex)
