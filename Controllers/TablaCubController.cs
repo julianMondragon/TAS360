@@ -105,16 +105,14 @@ namespace TAS360.Controllers
                         row++;
                     }
 
-                    //TODO (por hacer)
-                    //seguir iterando la tabla y aplicar la formula realizar
-                    //la cubicacion mm x mm evitando la zona critica de toda la tabla de cubicacion
+                    //iteracion de toda la tabla agregando los milimetros.
                     int newRow = row;
                     while(!string.IsNullOrEmpty(TablaCub.GetCellValueAsString(row, column)))
                     {
                         double valorA = TablaCub.GetCellValueAsDouble(row, 1);
                         double valorB = TablaCub.GetCellValueAsDouble(row, 2);
                         double valorC = TablaCub.GetCellValueAsDouble(row, 3);
-                        for (int i = 0; i < 9; i++)
+                        for (int i = 0; i < 10; i++)
                         { 
                             if(i != 0)
                                 valorA += 0.001;
@@ -148,7 +146,15 @@ namespace TAS360.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Exception = String.Format("En el renglon {0} y columna {1} ocurrio el siguiente error: {2}",row, column, ex.Message);
+                    if(ex.Message.Contains("El proceso no puede obtener acceso al archivo"))
+                    {
+                        ViewBag.Exception = "No puedes importar un archivo mientras este abierto, favor de cerrar el archivo";
+                    }
+                    else
+                    {
+                        ViewBag.Exception = String.Format("En el renglon {0} y columna {1} ocurrio el siguiente error: {2}", row, column, ex.Message);
+                    }
+                    
                 }
 
             }
