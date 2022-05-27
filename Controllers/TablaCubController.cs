@@ -108,10 +108,37 @@ namespace TAS360.Controllers
                     //TODO (por hacer)
                     //seguir iterando la tabla y aplicar la formula realizar
                     //la cubicacion mm x mm evitando la zona critica de toda la tabla de cubicacion
-                    
+                    int newRow = row;
+                    while(!string.IsNullOrEmpty(TablaCub.GetCellValueAsString(row, column)))
+                    {
+                        double valorA = TablaCub.GetCellValueAsDouble(row, 1);
+                        double valorB = TablaCub.GetCellValueAsDouble(row, 2);
+                        double valorC = TablaCub.GetCellValueAsDouble(row, 3);
+                        for (int i = 0; i < 9; i++)
+                        { 
+                            if(i != 0)
+                                valorA += 0.001;
+                            NewTablaCub.SetCellValue(newRow, 7, valorA);
+                            //NewTablaCub.SetCellValue(newRow, 8, valorB);
+                            if (i != 0)
+                            {
+                                double x = TablaCub.GetCellValueAsDouble(3, 7);
+                                valorC = valorC + x;
+                            }
+                            NewTablaCub.SetCellValue(newRow, 9, valorC);
+                            newRow ++;
+                            tabla.Tabla.Add(new Tabla
+                            {
+                                nivel = valorA,
+                                bls = valorB,
+                                volumen_m3 = valorC
+                            });
+                        }                        
+                        row++;
+                    }
 
                     //Se crea e inserta un objeto<SLTabla> en el nuevo archivo, posteriormente se guarda el archivo
-                    SLTable lTable = NewTablaCub.CreateTable("G12", String.Format("I{0}", row--));
+                    SLTable lTable = NewTablaCub.CreateTable("G12", String.Format("I{0}", newRow--));
                     NewTablaCub.InsertTable(lTable);
                     NewTablaCub.SaveAs(path + "TablaCub_mm_x_mm.xlsx");
                     
