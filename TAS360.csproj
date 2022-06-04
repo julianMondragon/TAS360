@@ -354,8 +354,6 @@
     <Content Include="Models\Simcot_db.edmx.diagram">
       <DependentUpon>Simcot_db.edmx</DependentUpon>
     </Content>
-    <Content Include="Backup_Database\backup_sistemaAditivado" />
-    <Content Include="Backup_Database\SIMCOT_DB_Backup" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
