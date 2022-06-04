@@ -5,6 +5,22 @@
     string exception = ViewBag.Exception;
 }
 
+<style>
+    .displayn {
+        display: none;
+    }
+
+    .displayy {
+        display: block;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+
 <div class="jumbotron">
     <h1>Tabla de Cubicacion</h1>
     <p class="lead">
@@ -15,7 +31,12 @@
     {
         <input type="file" name="postedFile" />
         <br />
-        <input type="submit" value="Importar archivo" />
+
+        <input id="fileinput" onclick="loading()" class="form-control" type="submit" value="Importar archivo" />
+
+        <div id="divspinner" class="displayn fa-3x container text-center">
+            <i class="form-group fas fa-spinner fa-spin"></i>
+        </div>
     }
     @if (exception != null)
     {
@@ -49,28 +70,80 @@
             </table>
         </div>
     </div>
-    <div class="row">
+    <div class="container">
+        <div id="spinerload" class="fa-3x text-center">
+            <i class="form-group fas fa-spinner fa-spin"></i>
+        </div>
+    </div>
+    <div id="containertab" class="displayn row">
         @*Tabla de Cubicacion mm x mm*@
-        <div class="col-md-6">
+        <div class="col-md-12">
             <h3>Tabla de Cubicacion mm x mm</h3>
-            <table class="table table-success table-striped">
-                <tr>
-                    <th class="alert-success">Nivel</th>
-                    <th class="alert-success">Volumen (Bls)</th>
-                    <th class="alert-success">Volumen (m3)</th>
-                </tr>
-                @foreach (var row in Model.Tabla)
-                {
+
+            <table id="example" class="table table-success table-striped">
+                <thead>
                     <tr>
-                        <td>@row.nivel</td>
-                        <td>@row.bls</td>
-                        <td>@row.volumen_m3</td>
+                        <th class="alert-success">Nivel</th>
+                        <th class="alert-success">Volumen (Bls)</th>
+                        <th class="alert-success">Volumen (m3)</th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+
+                    @foreach (var row in Model.Tabla)
+                    {
+                        <tr>
+                            <td>@row.nivel</td>
+                            <td>@row.bls</td>
+                            <td>@row.volumen_m3</td>
+                        </tr>
+                    }
+
+                </tbody>
+
 
             </table>
         </div>
     </div>
 }
+<script>
+    function loading() {
+        console.log("cargando...")
+        let divspinner = document.getElementById("divspinner")
+        let fileinput = document.getElementById("fileinput")
+
+        fileinput.setAttribute("style", "display:none")
+        divspinner.setAttribute("style", "display:block")
+    }
 
 
+
+    $(document).ready(function () {
+
+        
+
+        let spinerload = document.getElementById("spinerload")
+        let containertab = document.getElementById("containertab")
+        console.log(spinerload)
+        console.log(containertab)
+
+        
+        spinerload.setAttribute("style", "display:none")
+        containertab.setAttribute("style", "display:block")
+
+        $("#example").DataTable();
+
+        console.log("ready")
+        setTimeout(function () {
+            alert('page is loaded and 1 minute has passed');
+            //$("#datatable").DataTable({});
+              //asdasdasdasdas   
+            console.log("ready")
+
+        }, 6000);
+
+
+
+    });
+
+</script>
