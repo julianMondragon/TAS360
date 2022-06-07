@@ -14,12 +14,8 @@
         display: block;
     }
 </style>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
 
 <div class="jumbotron">
     <h1>Tabla de Cubicacion</h1>
@@ -106,44 +102,3 @@
         </div>
     </div>
 }
-<script>
-    function loading() {
-        console.log("cargando...")
-        let divspinner = document.getElementById("divspinner")
-        let fileinput = document.getElementById("fileinput")
-
-        fileinput.setAttribute("style", "display:none")
-        divspinner.setAttribute("style", "display:block")
-    }
-
-
-
-    $(document).ready(function () {
-
-        
-
-        let spinerload = document.getElementById("spinerload")
-        let containertab = document.getElementById("containertab")
-        console.log(spinerload)
-        console.log(containertab)
-
-        
-        spinerload.setAttribute("style", "display:none")
-        containertab.setAttribute("style", "display:block")
-
-        $("#example").DataTable();
-
-        console.log("ready")
-        setTimeout(function () {
-            alert('page is loaded and 1 minute has passed');
-            //$("#datatable").DataTable({});
-              //asdasdasdasdas   
-            console.log("ready")
-
-        }, 6000);
-
-
-
-    });
-
-</script>

@@ -25,6 +25,19 @@ namespace TAS360
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            //datatables https://datatables.net/ JS
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+                "~/Scripts/datatables/datatables.min.js"
+                ));
+            //datatables CSS
+            bundles.Add(new StyleBundle("~/bundles/datatables").Include(
+                "~/Scripts/datatables/datatables.min.css"));
+            
+            //core JS tabla cubi
+            bundles.Add(new ScriptBundle("~/bundles/corecubi").Include(
+                "~/Scripts/corecubi.js"
+                ));
+
         }
     }
 }
