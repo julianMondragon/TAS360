@@ -480,5 +480,11 @@ namespace TAS360.Controllers
             ViewBag.Regular = regular;
             ViewBag.Premium = premiun;
         }
+
+        // GET: Aditivo
+        public ActionResult ConfiguracionAditivo()
+        {
+            return View();
+        }
     }
 }
