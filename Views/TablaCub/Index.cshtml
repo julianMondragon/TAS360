@@ -3,6 +3,8 @@
     //using TAS360.Models.ViewModel;
     ViewBag.Title = "Tabla de Cubicacion";
     string exception = ViewBag.Exception;
+    string warning = ViewBag.Warning;
+    string sucess = ViewBag.sucess;
 }
 
 <style>
@@ -38,6 +40,16 @@
     {
         <br />
         <h3 style="color:red">@exception</h3>
+    }
+    @if (warning != null)
+    {
+        <br />
+        <h3 style="color:sandybrown">@warning</h3>
+    }
+    @if (sucess != null)
+    {
+        <br />
+        <h3 style="color:dodgerblue">@sucess</h3>
     }
 </div>
 
