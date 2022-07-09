@@ -81,10 +81,14 @@ namespace TAS360.Controllers
                     column++;
                     tabla.ZonaCritica_Rango2 =(TablaCub.GetCellValueAsDouble(row,column));
                     tabla.VolumenXmil = TablaCub.GetCellValueAsDouble(3,7);
+
+                    var zona_critica_R1_aviable = double.TryParse(tabla.ZonaCritica_Rango1.ToString(), out double result);
+                    var zona_critica_R2_aviable = double.TryParse(tabla.ZonaCritica_Rango2.ToString(), out double result1);
+
                     #endregion
 
                     #region Iteracion de la tabla de cubicacion 
-                    
+
                     row = 12;
                     column = 1;
                     //Establece el encabezado del nuevo archivo 
@@ -129,55 +133,133 @@ namespace TAS360.Controllers
                         double valorD = TablaCub.GetCellValueAsDouble(row + 1, 2);
                         double valorF = TablaCub.GetCellValueAsDouble(row + 1, 3);
 
-                        //agrega los 10 registros de cada milimetro.
-                        for (int i = 0; i < 10; i++)
-                        { 
-                            if(i != 0)
+                        //Evalua si existe una zona critica definida para 
+                        if (zona_critica_R1_aviable && zona_critica_R2_aviable)
+                        {
+                            if(valorA >= result && valorA < result1)
                             {
-                                valorA += 0.001;
-                                double x = TablaCub.GetCellValueAsDouble(3, 7);
-                                valorC = valorC + x;
-                                double y = TablaCub.GetCellValueAsDouble(3, 6);
-                                valorB = valorB + y;
-                            }
-
-                            //establece los valores en un nuevo reglon de la nueva tabla de Cub
-                            NewTablaCub.SetCellValue(newRow, 1, valorA * 1000);
-
-                            //valida que el valor de volumen ingresado en BLS en mm no sea mayor al siguiente valor en cm  
-                            if (valorB > valorD && valorD != 0)
-                            {
+                                //establece los valores en un nuevo reglon de la nueva tabla de Cub
+                                NewTablaCub.SetCellValue(newRow, 1, valorA * 1000);
                                 NewTablaCub.SetCellValue(newRow, 2, valorB);
-                                NewTablaCub.SetCellStyle(newRow, 2, style1);
-                                contWarningm3++;
+                                NewTablaCub.SetCellValue(newRow, 3, valorC);
+
+                                //agrega los registros a la tabla que se va mostrar en la interfaz web 
+                                tabla.Tabla.Add(new Tabla
+                                {
+                                    nivel = valorA,
+                                    bls = valorB,
+                                    volumen_m3 = valorC
+                                });
+                                row++;
+                                newRow++;
                             }
                             else
                             {
-                                NewTablaCub.SetCellValue(newRow, 2, valorB);
-                            }
-                            //valida que el valor de volumen ingresado en m3 en mm no sea mayor al siguiente valor en cm   
-                            if (valorC > valorF && valorF != 0)
-                            {
-                                NewTablaCub.SetCellValue(newRow, 3, valorC);
-                                NewTablaCub.SetCellStyle(newRow, 3, style1);
-                                contWarningBls++;
-                            }
-                            else
-                            {
-                                NewTablaCub.SetCellValue(newRow, 3, valorC);
-                            }
-                            //se incrementa un nuevo reglon     
-                            newRow++;
+                                //agrega los 10 registros de cada milimetro.
+                                for (int i = 0; i < 10; i++)
+                                {
+                                    if (i != 0)
+                                    {
+                                        valorA += 0.001;
+                                        double x = TablaCub.GetCellValueAsDouble(3, 7);
+                                        valorC = valorC + x;
+                                        double y = TablaCub.GetCellValueAsDouble(3, 6);
+                                        valorB = valorB + y;
+                                    }
 
-                            //agrega los registros a la tabla que se va mostrar en la interfaz web 
-                            tabla.Tabla.Add(new Tabla
+                                    //establece los valores en un nuevo reglon de la nueva tabla de Cub
+                                    NewTablaCub.SetCellValue(newRow, 1, valorA * 1000);
+
+                                    //valida que el valor de volumen ingresado en BLS en mm no sea mayor al siguiente valor en cm  
+                                    if (valorB > valorD && valorD != 0)
+                                    {
+                                        NewTablaCub.SetCellValue(newRow, 2, valorB);
+                                        NewTablaCub.SetCellStyle(newRow, 2, style1);
+                                        contWarningm3++;
+                                    }
+                                    else
+                                    {
+                                        NewTablaCub.SetCellValue(newRow, 2, valorB);
+                                    }
+                                    //valida que el valor de volumen ingresado en m3 en mm no sea mayor al siguiente valor en cm   
+                                    if (valorC > valorF && valorF != 0)
+                                    {
+                                        NewTablaCub.SetCellValue(newRow, 3, valorC);
+                                        NewTablaCub.SetCellStyle(newRow, 3, style1);
+                                        contWarningBls++;
+                                    }
+                                    else
+                                    {
+                                        NewTablaCub.SetCellValue(newRow, 3, valorC);
+                                    }
+                                    //se incrementa un nuevo reglon     
+                                    newRow++;
+
+                                    //agrega los registros a la tabla que se va mostrar en la interfaz web 
+                                    tabla.Tabla.Add(new Tabla
+                                    {
+                                        nivel = valorA,
+                                        bls = valorB,
+                                        volumen_m3 = valorC
+                                    });
+                                }
+                                row++;
+                            }
+                            
+                        }
+                        else
+                        {
+                            //agrega los 10 registros de cada milimetro.
+                            for (int i = 0; i < 10; i++)
                             {
-                                nivel = valorA,
-                                bls = valorB,
-                                volumen_m3 = valorC
-                            });
-                        }                        
-                        row++;
+                                if (i != 0)
+                                {
+                                    valorA += 0.001;
+                                    double x = TablaCub.GetCellValueAsDouble(3, 7);
+                                    valorC = valorC + x;
+                                    double y = TablaCub.GetCellValueAsDouble(3, 6);
+                                    valorB = valorB + y;
+                                }
+
+                                //establece los valores en un nuevo reglon de la nueva tabla de Cub
+                                NewTablaCub.SetCellValue(newRow, 1, valorA * 1000);
+
+                                //valida que el valor de volumen ingresado en BLS en mm no sea mayor al siguiente valor en cm  
+                                if (valorB > valorD && valorD != 0)
+                                {
+                                    NewTablaCub.SetCellValue(newRow, 2, valorB);
+                                    NewTablaCub.SetCellStyle(newRow, 2, style1);
+                                    contWarningm3++;
+                                }
+                                else
+                                {
+                                    NewTablaCub.SetCellValue(newRow, 2, valorB);
+                                }
+                                //valida que el valor de volumen ingresado en m3 en mm no sea mayor al siguiente valor en cm   
+                                if (valorC > valorF && valorF != 0)
+                                {
+                                    NewTablaCub.SetCellValue(newRow, 3, valorC);
+                                    NewTablaCub.SetCellStyle(newRow, 3, style1);
+                                    contWarningBls++;
+                                }
+                                else
+                                {
+                                    NewTablaCub.SetCellValue(newRow, 3, valorC);
+                                }
+                                //se incrementa un nuevo reglon     
+                                newRow++;
+
+                                //agrega los registros a la tabla que se va mostrar en la interfaz web 
+                                tabla.Tabla.Add(new Tabla
+                                {
+                                    nivel = valorA,
+                                    bls = valorB,
+                                    volumen_m3 = valorC
+                                });
+                            }
+                            row++;
+                        }
+                        
                     }
 
                     //Se crea e inserta un objeto<SLTabla> en el nuevo archivo, posteriormente se guarda el archivo
