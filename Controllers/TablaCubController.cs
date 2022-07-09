@@ -49,8 +49,8 @@ namespace TAS360.Controllers
                 }
                 filepath = path + Path.GetFileName(postedFile.FileName);
                 try
-                {   
-                    SLDocument TablaCub  = new SLDocument(filepath);
+                {
+                    SLDocument TablaCub = new SLDocument(filepath);
                     SLDocument NewTablaCub = new SLDocument();
                     SLStyle style1 = NewTablaCub.CreateStyle();
                     style1.Fill.SetPattern(PatternValues.Solid, SLThemeColorIndexValues.Accent2Color, SLThemeColorIndexValues.Accent4Color);
@@ -58,7 +58,7 @@ namespace TAS360.Controllers
                     #region Obtiene la informacion primaria de la tabla de cubicacion
                     while (!string.IsNullOrEmpty(TablaCub.GetCellValueAsString(row, column)))
                     {
-                        if(row == 2)
+                        if (row == 2)
                             tabla.TAD = TablaCub.GetCellValueAsString(row, column);
                         if (row == 3)
                             tabla.Tag = TablaCub.GetCellValueAsString(row, column);
@@ -74,16 +74,21 @@ namespace TAS360.Controllers
                     row = 9;
                     column = 3;
                     tabla.Fondo_Rango1 = 0;
-                    tabla.Fondo_Rango2 = TablaCub.GetCellValueAsDouble(row,column);
+                    tabla.Fondo_Rango2 = TablaCub.GetCellValueAsDouble(row, column);
                     row++;
                     column--;
-                    tabla.ZonaCritica_Rango1 = TablaCub.GetCellValueAsDouble(row,column);
+                    tabla.ZonaCritica_Rango1 = TablaCub.GetCellValueAsDouble(row, column);
                     column++;
-                    tabla.ZonaCritica_Rango2 =(TablaCub.GetCellValueAsDouble(row,column));
-                    tabla.VolumenXmil = TablaCub.GetCellValueAsDouble(3,7);
+                    tabla.ZonaCritica_Rango2 = (TablaCub.GetCellValueAsDouble(row, column));
+                    tabla.VolumenXmil = TablaCub.GetCellValueAsDouble(3, 7);
 
-                    var zona_critica_R1_aviable = double.TryParse(tabla.ZonaCritica_Rango1.ToString(), out double result);
-                    var zona_critica_R2_aviable = double.TryParse(tabla.ZonaCritica_Rango2.ToString(), out double result1);
+                    var zona_critica_R1_aviable = double.TryParse(tabla.ZonaCritica_Rango1.ToString(), out double ZCR1);
+                    var zona_critica_R2_aviable = double.TryParse(tabla.ZonaCritica_Rango2.ToString(), out double ZCR2);
+                    if(ZCR1 == 0 && ZCR2 == 0)
+                    {
+                        zona_critica_R1_aviable = false; 
+                        zona_critica_R2_aviable = false;
+                    }
 
                     #endregion
 
@@ -102,9 +107,9 @@ namespace TAS360.Controllers
                     while (tabla.Fondo_Rango2 != TablaCub.GetCellValueAsDouble(row, column))
                     {
                         //obtiene los valores por cada renglon de la tabla actual
-                        double valorA = TablaCub.GetCellValueAsDouble(row,1);
-                        double valorB = TablaCub.GetCellValueAsDouble(row,2);
-                        double valorC = TablaCub.GetCellValueAsDouble(row,3);
+                        double valorA = TablaCub.GetCellValueAsDouble(row, 1);
+                        double valorB = TablaCub.GetCellValueAsDouble(row, 2);
+                        double valorC = TablaCub.GetCellValueAsDouble(row, 3);
 
                         //establece los valores en un nuevo reglon de la nueva tabla de Cub
                         NewTablaCub.SetCellValue(newRow, 1, valorA * 1000);
@@ -117,26 +122,27 @@ namespace TAS360.Controllers
                             nivel = valorA,
                             bls = valorB,
                             volumen_m3 = valorC
-                        }); 
+                        });
                         row++;
                         newRow++;
                     }
 
                     //Iteracion de toda la tabla apartir del fondo.
-                    while(!string.IsNullOrEmpty(TablaCub.GetCellValueAsString(row, column)))
+                    while (!string.IsNullOrEmpty(TablaCub.GetCellValueAsString(row, column)))
                     {
                         //obtiene los valores por cada renglon de la tabla actual 
                         double valorA = TablaCub.GetCellValueAsDouble(row, 1);
                         double valorB = TablaCub.GetCellValueAsDouble(row, 2);
                         double valorC = TablaCub.GetCellValueAsDouble(row, 3);
-
+                        //obtiene el valor del siguiente reglon para su validacion 
                         double valorD = TablaCub.GetCellValueAsDouble(row + 1, 2);
                         double valorF = TablaCub.GetCellValueAsDouble(row + 1, 3);
 
-                        //Evalua si existe una zona critica definida para 
+                        //Evalua si existe una zona critica definida para que se salte la iteracion por milimetros
                         if (zona_critica_R1_aviable && zona_critica_R2_aviable)
                         {
-                            if(valorA >= result && valorA < result1)
+                            //evalua si el valor de nivel esta dentro de los rangos de la zona critica
+                            if (valorA >= ZCR1 && valorA < ZCR2)
                             {
                                 //establece los valores en un nuevo reglon de la nueva tabla de Cub
                                 NewTablaCub.SetCellValue(newRow, 1, valorA * 1000);
@@ -205,7 +211,7 @@ namespace TAS360.Controllers
                                 }
                                 row++;
                             }
-                            
+
                         }
                         else
                         {
@@ -259,19 +265,20 @@ namespace TAS360.Controllers
                             }
                             row++;
                         }
-                        
+
                     }
 
                     //Se crea e inserta un objeto<SLTabla> en el nuevo archivo, posteriormente se guarda el archivo
                     SLTable lTable = NewTablaCub.CreateTable("A1", String.Format("C{0}", newRow--));
                     NewTablaCub.InsertTable(lTable);
-                    NewTablaCub.SaveAs(path + "Tabla_Cub_mm_x_mm.xlsx");
+                    string[] name = postedFile.FileName.Split('.');
+                    NewTablaCub.SaveAs(path + name[0] +"_mm_x_mm.xlsx");
 
 
                     string mesage = "Se genero correctamente la tabla de cubicacion";
                     if (contWarningm3 > 0 || contWarningBls > 0)
                     {
-                        mesage = "Se genero correctamente la tabla de cubicacion, pero se encontraron iregularidades de volumen en m3 (" +  contWarningm3 + ") y en Bls (" + contWarningBls + ") en la tabla milimetrica generada (marcados en rojo) favor de realizar los ajustes de manera manual antes de cargar la tabla al TAS360";
+                        mesage = "Se genero correctamente la tabla de cubicacion, pero se encontraron iregularidades de volumen en m3 (" +  contWarningm3 + " puntos) y en Bls (" + contWarningBls + " puntos) en la tabla milimetrica generada (marcados en rojo) favor de realizar los ajustes de manera manual antes de cargar la tabla al TAS360";
                         ViewBag.Warning = mesage;
                     }
                     else
