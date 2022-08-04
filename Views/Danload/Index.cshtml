@@ -1,0 +1,109 @@
+﻿@model TAS360.Models.ViewModel.PuertoSerialViewModel
+@{
+    ViewBag.Title = "Comunicacion Danload PTS";
+    List<SelectListItem> ListCOMs = (List<SelectListItem>)ViewBag.ListCOMs;
+    bool IsOpen = (bool)ViewBag.IsOpen;
+    string warning = ViewBag.Warning;
+    string transacciones = "";
+    if (ViewBag.trasacciones != null)
+    {
+        transacciones = ViewBag.trasacciones;
+    }
+
+}
+
+<div class="jumbotron">
+    <h1>Danload 6000</h1>
+    <p class="lead">
+        En esta pestalla se establece comunicación con la UCL Danload 6000,
+        se envian comandos en formato string que son convertidos en Hexadecimal 
+        y enviados mediante un arreglo de bytes por un puerto serial COM.
+    </p>
+    @if (warning != null)
+    {
+        <h3 style="color:sandybrown">@warning</h3>
+    }
+    @if (IsOpen)
+    {
+        <a onclick="document.location.href = '@Url.Content("~/Danload/ReadCommandPort")'" class="btn btn-info">Leer puerto &raquo;</a>
+        <a onclick="document.location.href = '@Url.Content("~/Danload/ClosePort")'" class="btn btn-danger">Cerrar puerto Serial &raquo;</a>
+    }
+</div>
+@if (!IsOpen)
+{
+    <section class="page-section about-heading">
+        <div class="container">
+            @*<img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="assets/img/about.jpg" alt="..." />*@
+            <div class="about-heading-content">
+                <div class="row">
+                    <div class="col-xl-9 col-lg-10 mx-auto">
+                        <div class="bg-faded rounded p-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @using (Html.BeginForm("OpenPort", "Danload", FormMethod.Post, new { role = "form", @class = "" }))
+                                    {
+                                        <div style="text-align:right">
+                                            <input type="submit" class="btn btn-success" value="Abrir Puerto" />
+                                        </div>
+                                        <br />
+                                        @Html.LabelFor(f => f.Name)
+                                        @Html.DropDownListFor(model => model.Name, ListCOMs, new { @class = "form-control" })
+                                        @Html.ValidationMessage("name", new { @class = "text-danger" })
+                                        <br />
+                                        @Html.LabelFor(f => f.BaudRate)
+                                        @Html.TextBoxFor(f => f.BaudRate, new { @class = "form-control" })
+                                        @Html.ValidationMessage("BaundRate default", new { @class = "text-danger" })
+                                        <br />
+                                        @Html.LabelFor(f => f.DataBits)
+                                        @Html.TextBoxFor(f => f.DataBits, new { @class = "form-control" })
+                                        @Html.ValidationMessage("DataBits", new { @class = "text-danger" })
+                                        <br />
+                                        @Html.LabelFor(f => f.StopBits)
+                                        @Html.TextBoxFor(f => f.StopBits, new { @class = "form-control" })
+                                        @Html.ValidationMessage("StopBits", new { @class = "text-danger" })
+                                        <br />
+                                        @Html.LabelFor(f => f.Parity)
+                                        @Html.TextBoxFor(f => f.Parity, new { @class = "form-control" })
+                                        @Html.ValidationMessage("Parity", new { @class = "text-danger" })
+                                        <br />
+                                        @Html.LabelFor(f => f.Handshake)
+                                        @Html.TextBoxFor(f => f.Handshake, new { @class = "form-control" })
+                                        @Html.ValidationMessage("Handshake", new { @class = "text-danger" })
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <div class="form-floating">
+        @using (Html.BeginForm("SendCommand", "Danload", FormMethod.Post, new { role = "form", @class = "" }))
+        {
+
+            @Html.LabelFor(f => f.Commant_Send)
+            @Html.TextBoxFor(f => f.Commant_Send, new { @class = "form-control" })
+            @Html.ValidationMessage("Comando", new { @class = "text-danger" })
+            <br />
+            <div style="text-align:right">
+                <input type="submit" class="btn btn-info" value="Enviar " />
+            </div>
+        }
+        <label for="floatingTextarea">Transacciones </label>
+        @if (transacciones != "")
+        {
+            <textarea class="form-control" id="floatingTextarea">@transacciones</textarea>
+        }
+        else
+        {
+            <textarea class="form-control" placeholder="Trama de comunicacion: 0141022190B4" id="floatingTextarea"></textarea>
+        }
+    </div>    
+}
+
+

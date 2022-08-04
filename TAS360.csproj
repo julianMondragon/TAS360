@@ -147,6 +147,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AditivoController.cs" />
+    <Compile Include="Controllers\DanloadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TablaCubController.cs" />
     <Compile Include="Global.asax.cs">
@@ -297,6 +298,7 @@
     <Compile Include="Models\ViewModel\auditoriaViewModel.cs" />
     <Compile Include="Models\ViewModel\ConfigTanqAditivoViewModel.cs" />
     <Compile Include="Models\ViewModel\entradasViewModel.cs" />
+    <Compile Include="Models\ViewModel\PuertoSerialViewModel.cs" />
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
     <Compile Include="Models\ViewModel\RepTotalizadoViewModel.cs" />
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
@@ -689,6 +691,7 @@
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\TablaCub\Index.cshtml" />
     <Content Include="Views\Aditivo\ConfiguracionAditivo.cshtml" />
+    <Content Include="Views\Danload\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
