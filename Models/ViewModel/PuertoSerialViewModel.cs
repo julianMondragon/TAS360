@@ -37,7 +37,7 @@ namespace TAS360.Models.ViewModel
         [Display(Name = "Handshake")]
         public Handshake Handshake { get; set; }
 
-        [Display(Name = "Comando a enviar")]
+        [Display(Name = "Comando a enviar en hexadecimal")]
         public string Commant_Send { get; set; }
     }
 }
