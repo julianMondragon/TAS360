@@ -86,7 +86,7 @@ namespace TAS360.Controllers
                 byte[] Bytes = FromHexStringToArrBytes(model.Commant_Send);
                 _serialPort.Write(Bytes, 0, Bytes.Length);
                 string result = System.Text.Encoding.UTF8.GetString(Bytes);
-                transaccions += "> " + model.Commant_Send + "\n" + "> " + result;
+                transaccions += "> " + model.Commant_Send + "\n" + "> " + result + "\n";
                 warnings = "";
             }
             catch (Exception ex)
