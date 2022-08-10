@@ -234,17 +234,6 @@ namespace TAS360.Controllers
 
             return bytes;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static string FromHexToString(string hex)
-        {
-            string cadena = "";
-
-
-
-            return cadena;
-        }
+        
     }
 }
