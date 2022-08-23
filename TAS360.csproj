@@ -146,6 +146,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AcculoadController.cs" />
     <Compile Include="Controllers\AditivoController.cs" />
     <Compile Include="Controllers\DanloadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -302,6 +303,7 @@
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
     <Compile Include="Models\ViewModel\RepTotalizadoViewModel.cs" />
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
+    <Compile Include="Models\ViewModel\SocketViewModel.cs" />
     <Compile Include="Models\ViewModel\TablaCubViewModel.cs" />
     <Compile Include="Models\ViewModel\TramaViewModel.cs" />
     <Compile Include="Models\VolTanq.cs">
@@ -692,6 +694,7 @@
     <Content Include="Views\TablaCub\Index.cshtml" />
     <Content Include="Views\Aditivo\ConfiguracionAditivo.cshtml" />
     <Content Include="Views\Danload\Index.cshtml" />
+    <Content Include="Views\Accuload\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
