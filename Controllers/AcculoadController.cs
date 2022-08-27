@@ -56,7 +56,7 @@ namespace TAS360.Controllers
                 // Establish the remote endpoint for the socket.  
                 // This example uses port 11000 on the local computer.  
                 IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-                IPAddress ipAddress = ipHostInfo.AddressList[3];
+                IPAddress ipAddress = ipHostInfo.AddressList[1];
                 // Create EndPoind
                 IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse(model.ipAddress), model.Port);
                 // Create a TCP/IP  socket.  
@@ -101,8 +101,18 @@ namespace TAS360.Controllers
             {
                 // Establish the remote endpoint for the socket.  
                 // This example uses port 11000 on the local computer.  
-                IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());                
-                IPAddress ipAddress = ipHostInfo.AddressList[2];
+                IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+                int count = 0;
+                int posicion = 0;
+                foreach(var ip in ipHostInfo.AddressList)
+                {                    
+                    if(ip.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        posicion = count;
+                    }
+                    count++;
+                }
+                IPAddress ipAddress = ipHostInfo.AddressList[posicion];
 
                 socket.ipHostInfo = Dns.GetHostEntry(Dns.GetHostName()).HostName;
                 socket.ipAddress = ipAddress.ToString();
