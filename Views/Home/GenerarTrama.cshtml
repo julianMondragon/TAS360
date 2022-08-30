@@ -1,4 +1,13 @@
-﻿<section class="page-section about-heading">
+﻿@{ 
+    ViewBag.Title = "Generador de tramas ";
+}
+<div class="jumbotron">
+    <h1>Generador de Tramas</h1>
+    <p class="lead">
+        En esta pestalla se elije que trama(s) se van a generar.
+    </p>
+</div>
+<section class="page-section about-heading">
     <div class="container">
         @*<img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="assets/img/about.jpg" alt="..." />*@
         <div class="about-heading-content">
@@ -7,15 +16,15 @@
                     <div class="bg-faded rounded p-5">
                         <h2 class="section-heading mb-4">
                             @*<span class="section-heading-upper">Strong Coffee, Strong Roots</span>*@
-                            <span class="section-heading-lower">Generar Trama</span>
+                            <span class="section-heading-lower">Elije la el tipo de trama</span>
                         </h2>
                         <div class="row">
                             <div class="col-md-12">                                                                   
 
                                 <div class="row">
 
-                                    <p><a onclick="document.location.href = '@Url.Content("~/home/TramaConfirmacionO/")'" class="btn btn-primary btn-lg">Confirmacion de Carga/Descarga &raquo;</a></p>
-                                    <p><a onclick="document.location.href = '@Url.Content("~/home/TramaVolumenTanques/")'" class="btn btn-primary btn-lg">Volumen de tanques &raquo;</a></p>
+                                    <p><a onclick="document.location.href = '@Url.Content("~/home/TramaConfirmacionO/")'" class="btn btn-primary btn-lg">Orden de Carga/Descarga &raquo;</a></p>
+                                    @*<p><a onclick="document.location.href = '@Url.Content("~/home/TramaVolumenTanques/")'" class="btn btn-primary btn-lg">Volumen de tanques &raquo;</a></p>*@
                                     <p><a onclick="document.location.href = '@Url.Content("~/home/TramaCancelacionO/")'" class="btn btn-primary btn-lg">Cancelacion de Carga/Descarga &raquo;</a></p>
 
                                 </div>

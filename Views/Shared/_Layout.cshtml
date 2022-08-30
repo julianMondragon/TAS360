@@ -22,9 +22,17 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Entradas", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Salidas", "About", "Home")</li>
-                    <li>@Html.ActionLink("Auditoria", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Operaciones SIIC <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Entradas", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Salidas", "About", "Home")</li>                            
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Auditoria", "Contact", "Home")</li>
+                            @*<li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>*@
+                        </ul>
+                    </li>                    
                     <li>@Html.ActionLink("Inventario de Aditivo", "Index", "Aditivo")</li>
                     <li>@Html.ActionLink("Tabla de Cubicación", "Index", "TablaCub")</li>
                     <li>@Html.ActionLink("Danload_6000", "Index", "Danload")</li>

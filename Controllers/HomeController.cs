@@ -201,6 +201,7 @@ namespace TAS360.Controllers
         }
         public ActionResult TramaConfirmacionO()
         {
+            TramaCancelacionOrdenesViewModel model = new TramaCancelacionOrdenesViewModel();
             GetCatalogos();
             GetComportamientos();
             GetEstadoTran();
@@ -223,8 +224,7 @@ namespace TAS360.Controllers
             GetProducto();
             return View();
         }
-        
-         
+
         private void GetCatalogos()
         {
 
@@ -237,7 +237,7 @@ namespace TAS360.Controllers
             });
             ListTipoTrancc.Add(new SelectListItem
             {
-                Text = "Confirmacion de orden de Carga / Descarga",
+                Text = "Orden de Carga / Descarga",
                 Value = "02",
                 Selected = true
             });
@@ -324,18 +324,18 @@ namespace TAS360.Controllers
             List<SelectListItem> ListComport = new List<SelectListItem>();
             ListComport.Add(new SelectListItem
             {
-                Text = "Seleccione un comportamiento",
+                Text = "Seleccione un tonel",
                 Value = "00",
                 Selected = true
             });
             ListComport.Add(new SelectListItem
             {
-                Text = "Cargado",
+                Text = "1",
                 Value = "1"
             });
             ListComport.Add(new SelectListItem
             {
-                Text = "Descargado",
+                Text = "2",
                 Value = "2"
             });
             ViewBag.ListComport = ListComport;
@@ -353,8 +353,14 @@ namespace TAS360.Controllers
             });
             ListEstadoTran.Add(new SelectListItem
             {
-                Text = "Terminado",
+                Text = "Normal",
                 Value = "0",
+                Selected = true
+            });
+            ListEstadoTran.Add(new SelectListItem
+            {
+                Text = "Cancelado",
+                Value = "1",
                 Selected = true
             });
             ViewBag.ListEstadoTran = ListEstadoTran;
@@ -465,7 +471,6 @@ namespace TAS360.Controllers
             ViewBag.ListProducto = ListProducto;
 
         }
-        
         
         [HttpPost]  
         public ActionResult TramaConfirmacionO(TramaConfOrdenCargaDescViewModel model)
@@ -592,6 +597,7 @@ namespace TAS360.Controllers
                 return View(model);
             }
         }
+
         [HttpPost]
         public ActionResult TramaCancelacionO(TramaCancelacionOrdenesViewModel model)
         {
@@ -675,7 +681,6 @@ namespace TAS360.Controllers
             }
             return Redirect("~/");
         }
-
 
         public ActionResult InterpretarTramaS(string id)
         {
