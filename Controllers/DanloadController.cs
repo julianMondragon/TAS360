@@ -85,7 +85,8 @@ namespace TAS360.Controllers
                 }                
                 byte[] Bytes = FromHexStringToArrBytes(model.Commant_Send);
                 _serialPort.Write(Bytes, 0, Bytes.Length);
-                transaccions += "> " + model.Commant_Send + "\n";
+                string result = System.Text.Encoding.UTF8.GetString(Bytes);
+                transaccions += "> " + model.Commant_Send + "\n" + "> " + result + "\n";
                 warnings = "";
             }
             catch (Exception ex)
@@ -106,11 +107,14 @@ namespace TAS360.Controllers
             {
                 byte[] bytes = new byte[64];
                 StringBuilder sb = new StringBuilder();
+                string result = "";
                 //Read
                 var longitud = _serialPort.Read(bytes, 0, 64);
                 string respuesta = BitConverter.ToString(bytes, 0, longitud);
                 respuesta = respuesta.Replace("-", "");
-                transaccions += "* " + respuesta + "\n";
+                result = System.Text.Encoding.UTF8.GetString(bytes, 0 ,longitud);
+
+                transaccions += "* " + respuesta + "\n" + "* " + result + "\n";
                 warnings = "";
 
             }
@@ -221,13 +225,15 @@ namespace TAS360.Controllers
        /// <returns></returns>
         public static byte[] FromHexStringToArrBytes(string hexString)
         {
-            var bytes = new byte[hexString.Length / 2];
+            var bytes = new byte[(hexString.Length / 2)];
             for (var i = 0; i < bytes.Length; i++)
             {
-                bytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
+                string substring = hexString.Substring(i * 2, 2);
+                bytes[i] = Convert.ToByte(substring, 16);
             }
 
             return bytes;
         }
+        
     }
 }

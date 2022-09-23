@@ -86,7 +86,7 @@ namespace TAS360.Controllers
             CreateCommand(query1, connectionString);
             #endregion
 
-            return Redirect(Url.Content("~/Aditivo"));
+            return Redirect(Url.Content("~/Aditivo/Index"));
         }
 
         public ActionResult VolTotalizado()

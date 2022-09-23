@@ -1,0 +1,97 @@
+﻿@model TAS360.Models.ViewModel.SocketViewModel
+@{
+    ViewBag.Title = "Comunicación Accuload";
+    //List<SelectListItem> ListIPs = (List<SelectListItem>)ViewBag.ListIPs;
+    bool IsOpen = false;
+    if (ViewBag.IsOpen != null)
+    {
+         IsOpen = (bool)ViewBag.IsOpen;
+    }
+    string warning = ViewBag.Warning;
+    string transacciones = "";
+    if (ViewBag.trasacciones != null)
+    {
+        transacciones = ViewBag.trasacciones;
+    }
+}
+
+<div class="jumbotron">
+    <h1>Accuload III S</h1>
+    <p class="lead">
+        En esta pestalla se establece comunicación con la UCL Accuload III Simple,
+        se envian comandos en formato string mediante un arreglo de bytes por un Socket a una IP.
+    </p>
+    @if (warning != null)
+    {
+        <h3 style="color:sandybrown">@warning</h3>
+    }
+    @if (IsOpen)
+    {
+        <a onclick="document.location.href = '@Url.Content("~/Accuload/ReadCommandPort")'" class="btn btn-info">Leer Socket &raquo;</a>
+        <a onclick="document.location.href = '@Url.Content("~/Accuload/CloseSocket")'" class="btn btn-danger">Cerrar Socket &raquo;</a>
+    }
+</div>
+@if (!IsOpen)
+{
+    <section class="page-section about-heading">
+        <div class="container">
+            <div class="about-heading-content">
+                <div class="row">
+                    <div class="col-xl-9 col-lg-10 mx-auto">
+                        <div class="bg-faded rounded p-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @using (Html.BeginForm("Index", "Accuload", FormMethod.Post, new { role = "form", @class = "" }))
+                                    {
+                                        <br />
+                                        @Html.LabelFor(f => f.ipAddress)
+                                        @Html.TextBoxFor(f => f.ipAddress, new { @class = "form-control" })
+                                        @Html.ValidationMessage("name", new { @class = "text-danger" })
+                                        <br />
+                                        @Html.LabelFor(f => f.ipHostInfo)
+                                        @Html.TextBoxFor(f => f.ipHostInfo, new { @class = "form-control" })
+                                        @Html.ValidationMessage("ipHostInfo", new { @class = "text-danger" })
+                                        <br />
+                                        @Html.LabelFor(f => f.Port)
+                                        @Html.TextBoxFor(f => f.Port, new { @class = "form-control" })
+                                        @Html.ValidationMessage("Puerto", new { @class = "text-danger" })
+                                        <br />
+                                        <div style="text-align:right">
+                                            <input type="submit" class="btn btn-success" value="Abrir Socket" />
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <div class="form-floating">
+        @using (Html.BeginForm("SendCommand", "Accuload", FormMethod.Post, new { role = "form", @class = "" }))
+        {
+
+            @Html.LabelFor(f => f.Commant_Send)
+            @Html.TextBoxFor(f => f.Commant_Send, new { @class = "form-control" })
+            @Html.ValidationMessage("Comando", new { @class = "text-danger" })
+            <br />
+            <div style="text-align:right">
+                <input type="submit" class="btn btn-info" value="Enviar " />
+            </div>
+        }
+        <label for="floatingTextarea">Transacciones </label>
+        @if (transacciones != "")
+        {
+            <textarea class="form-control" id="floatingTextarea">@transacciones</textarea>
+        }
+        else
+        {
+            <textarea class="form-control" placeholder="Trama de comunicacion: 0141022190B4" id="floatingTextarea"></textarea>
+        }
+    </div>
+}
