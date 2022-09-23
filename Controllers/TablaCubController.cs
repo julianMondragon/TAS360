@@ -97,7 +97,7 @@ namespace TAS360.Controllers
                     row = 12;
                     column = 1;
                     //Establece el encabezado del nuevo archivo 
-                    NewTablaCub.SetCellValue(newRow, 1, "Nivel (m)");
+                    NewTablaCub.SetCellValue(newRow, 1, "Nivel (mm)");
                     NewTablaCub.SetCellValue(newRow, 2, "Volumen (Bls)");
                     NewTablaCub.SetCellValue(newRow, 3, "Volumen (m3)");
                     row++;
@@ -278,11 +278,13 @@ namespace TAS360.Controllers
                     string mesage = "Se genero correctamente la tabla de cubicacion";
                     if (contWarningm3 > 0 || contWarningBls > 0)
                     {
+                        NewTablaCub.SaveAs(path + name[0] + "_mm_x_mm.xlsx");
                         mesage = "Se genero correctamente la tabla de cubicacion, pero se encontraron iregularidades de volumen en m3 (" +  contWarningm3 + " puntos) y en Bls (" + contWarningBls + " puntos) en la tabla milimetrica generada (marcados en rojo) favor de realizar los ajustes de manera manual antes de cargar la tabla al TAS360";
                         ViewBag.Warning = mesage;
                     }
                     else
                     {
+                        NewTablaCub.SaveAs(path + name[0] + "_mm_x_mm.csv");
                         ViewBag.sucess = mesage;
                     }
 
