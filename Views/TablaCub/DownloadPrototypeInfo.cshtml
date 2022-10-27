@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Información Tabla Cub";
+}
+
+<div class="jumbotron">
+    <h2>Info tabla de cubicación mm x mm </h2>
+    <p class="lead">
+        En esta pagina podras descargar el formato que se necesita para poder convertir una tabla de cubicacion milimetro a milimetro.
+    </p>
+    <a onclick="document.location.href = '@Url.Content("~/TablaCub/DownloadPrototype")'" class="btn btn-success btn-lg">Descargar formato &raquo;</a>
+    <p class="lead">
+        Deberas respetar el diseño del formato y llenar los campos obligatorios para que se pueda realizar la conveción de manera correcta.
+        A continuación vemos un ejemplo:
+    </p>
+</div>
+<div class="row">
+    <img src="~/Content/img/Ej_Tabla_Cub_LLenado_2.jpg" class="img-responsive" alt="Responsive image">
+    <br/>
+    <p class="bg-warning"> Una vez completado el llenado del formato de la tabla de cubicacion podras usar la herramienta de convercion mm x mm que se encuentra en la pagina anterior ..</p>
+</div>

@@ -695,6 +695,7 @@
     <Content Include="Views\Aditivo\ConfiguracionAditivo.cshtml" />
     <Content Include="Views\Danload\Index.cshtml" />
     <Content Include="Views\Accuload\Index.cshtml" />
+    <Content Include="Views\TablaCub\DownloadPrototypeInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

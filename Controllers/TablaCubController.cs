@@ -272,8 +272,6 @@ namespace TAS360.Controllers
                     SLTable lTable = NewTablaCub.CreateTable("A1", String.Format("C{0}", newRow--));
                     NewTablaCub.InsertTable(lTable);
                     string[] name = postedFile.FileName.Split('.');
-                    NewTablaCub.SaveAs(path + name[0] +"_mm_x_mm.xlsx");
-
 
                     string mesage = "Se genero correctamente la tabla de cubicacion";
                     if (contWarningm3 > 0 || contWarningBls > 0)
@@ -307,6 +305,22 @@ namespace TAS360.Controllers
 
             }
             return View();
+        }
+
+        public ActionResult DownloadPrototypeInfo()
+        {
+
+            return View();
+        }
+
+        /// <summary>
+        /// Descarga el archivo prototipo para llenar la tabla de Cubicacion
+        /// </summary>
+        /// <returns></returns>
+        public FileResult DownloadPrototype()
+        {
+            string rute = Server.MapPath("~/Prototipo_Tabla/Prototipo2.xlsx");
+            return File(rute, "application/xlsx", "TV-0x.xlsx");
         }
     }
 }
