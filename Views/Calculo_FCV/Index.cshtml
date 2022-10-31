@@ -1,0 +1,106 @@
+﻿@model TAS360.Models.ViewModel.FCV_ViewModel
+@{
+    ViewBag.Title = "Cálculo del FCV";
+}
+<div class="jumbotron">
+    <h2>CÁLCULO DEL FCV CONFORME AL STANDAR ISO 91-2</h2>
+    <p class="lead">
+        Cálculo de FCV a 20 a partir de la densidad corregida y de la temperatura de almacenamiento.
+    </p>
+</div>
+<section class="page-section about-heading">
+    <div class="container">
+        @*<img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="assets/img/about.jpg" alt="..." />*@
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @using (Html.BeginForm("CalculoFCV", "Calculo_FCV", FormMethod.Post, new { role = "form", @class = "" }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    @Html.LabelFor(f => f.dens)
+                                    @Html.TextBoxFor(f => f.dens, new { @class = "form-control" })
+                                    @Html.ValidationMessage("dens", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(f => f.temp)
+                                    @Html.TextBoxFor(f => f.temp, new { @class = "form-control" })
+                                    @Html.ValidationMessage("temp", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(f => f.volnat)
+                                    @Html.TextBoxFor(f => f.volnat, new { @class = "form-control" })
+                                    @Html.ValidationMessage("volnat", new { @class = "text-danger" })
+                                    <br />
+                                    <div style="text-align:right">
+                                        <input type="submit" class="btn btn-success" value="Cálcular" />
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-md-4">
+                                <table class="table table-success table-striped">
+                                    <tr>
+                                        <th class="alert-success">Dato</th>
+                                        <th class="alert-success">Valor</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Densidad</td>
+                                        @if (Model != null)
+                                        {
+                                            <td>@Model.dens</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <td>Temperatura</td>
+                                        @if (Model != null)
+                                        {
+                                            <td>@Model.temp</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <td>Volumen Natural</td>
+                                        @if (Model != null)
+                                        {
+                                            <td>@Model.volnat</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <td>Volumen corregido</td>
+                                        <td>@Model.volcor</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Factor FCV</td>
+                                        @if (Model != null)
+                                        {
+                                            <td>@Model.factor</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    </tr>
+
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
