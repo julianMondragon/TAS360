@@ -10,7 +10,11 @@ namespace TAS360.Controllers
 {
     public class Calculo_FCVController : Controller
     {
-        // GET: Calculo_FCV
+        /// <summary>
+		/// GET: Calculo_FCV
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
         public ActionResult Index(FCV_ViewModel model)
         {
             if(model == null)
@@ -31,7 +35,8 @@ namespace TAS360.Controllers
             try
             {
 				model.factor = FCV(model.dens, model.temp);
-				model.volcor = model.volnat * model.factor;
+				if(model.volnat != 0)
+					model.volcor = model.volnat * model.factor;
 
 			}
 			catch(Exception ex)
@@ -49,18 +54,8 @@ namespace TAS360.Controllers
 		/// <returns></returns>
 		double CoefExpTerm(double ar_densidad)
 		{
-			/*************************** VARIABLES AUTOMATICAS ***************************/
 			double K0 = 0.0, K1 = 0.0, A = 0.0, B = 0.0, la_alpha;
 			int tipo = 1;
-
-			/************************ VARIABLES ESTATICAS LOCALES ************************/
-
-
-			/********************************** CODIGO ***********************************/
-
-
-			/*if ( ar_tipoprod == 0)
-			{*/
 
 			if ((ar_densidad >= 653.0) && (ar_densidad < 770.0))
 			{
@@ -83,15 +78,7 @@ namespace TAS360.Controllers
 				/*VMAG. tipo = COMBUSTOLEOS; */
 				tipo = 4;
 			}
-			/*}
-			else if (ar_tipoprod == 1)
-			{
-				tipo = PETROLEO_CRUDO;
-			}
-			else if (ar_tipoprod == 2)
-			{
-				tipo = ACEITE_LUBRICANTE;
-			}*/
+			
 
 			switch (tipo)
 			{
@@ -149,32 +136,29 @@ namespace TAS360.Controllers
 		/// <returns></returns>
 		public double FCV(float ar_densidad, float ar_temp_alm)
 		{
-			
-
-			double la_densidad_ajustada, la_temp_ajustada, la_inc_temp, la_densidad_inicial, la_densidad_final;
-			double la_alpha, la_fcv20, la_fcv15;
-
-			double la_truncado1, la_truncado2;
-
+			double la_densidad_ajustada;
+			double la_temp_ajustada;
+			double la_inc_temp;
+			double la_densidad_inicial;
+			double la_densidad_final;
+			double la_alpha;
+			double la_fcv20;
+			double la_fcv15;
+			double la_truncado1;
+			double la_truncado2;
 			double decimal_analizar;
-
 			double la_inc_temp_20;
-
 			double la_dif_densidad, la_densidad_final_ajustada;
 
-			/************************ VARIABLES ESTATICAS LOCALES ************************/
-
-
-			/********************************** CODIGO ***********************************/
-
-			/* Redondeos iniciales */
-			la_densidad_ajustada = Redondeo05(ar_densidad);
-			la_temp_ajustada = Redondeo005(ar_temp_alm);
-
+			//la_densidad_ajustada = Redondeo05(ar_densidad);
+			//la_temp_ajustada = Redondeo005(ar_temp_alm);
+			la_densidad_ajustada = ar_densidad;
+			la_temp_ajustada = ar_temp_alm;
 
 			la_inc_temp_20 = 20 - 15;
 			la_densidad_inicial = la_densidad_ajustada;
-			la_alpha = CoefExpTerm(la_densidad_ajustada/*,ar_tipoprod*/);
+
+			la_alpha = CoefExpTerm(la_densidad_ajustada);
 
 			la_fcv15 = (float)(Exp(-la_alpha * la_inc_temp_20 - 0.8 * la_alpha * la_alpha * la_inc_temp_20 * la_inc_temp_20));
 
@@ -184,14 +168,11 @@ namespace TAS360.Controllers
 			{
 
 				la_densidad_inicial = la_densidad_final;
-				la_alpha = CoefExpTerm(la_densidad_inicial/*,ar_tipoprod*/);
+				la_alpha = CoefExpTerm(la_densidad_inicial);
 
 				la_fcv15 = (float)(Exp(-la_alpha * la_inc_temp_20 - 0.8 * la_alpha * la_alpha * la_inc_temp_20 * la_inc_temp_20));
 
 				la_densidad_final = la_densidad_ajustada / la_fcv15;
-
-
-
 
 				/* Se comprueba iguadad hasta el quinto decimal */
 				la_dif_densidad = la_densidad_inicial - la_densidad_final;
@@ -204,23 +185,23 @@ namespace TAS360.Controllers
 
 				/* Truncamos el quinto decimal */
 				la_densidad_final = (float)(la_densidad_final * 10000.0);
-				la_densidad_final = (float)(la_densidad_final);
+				//la_densidad_final = (float)(la_densidad_final);
 				la_densidad_final = (float)(la_densidad_final / 10000.0);
 
 			}
 
-			la_truncado1 = (float)((long)((la_densidad_final) * 100.0));
-			la_truncado2 = (float)((long)((la_densidad_final) * 10.0));
+			la_truncado1 = (la_densidad_final * 100.0);
+			la_truncado2 = (la_densidad_final * 10.0);
 
 			decimal_analizar = la_truncado1 - (la_truncado2 * 10);
 
 			if ((decimal_analizar >= 0) && (decimal_analizar < 5))
 			{
-				la_densidad_final_ajustada = (float)(la_truncado2 / 10.0);
+				la_densidad_final_ajustada = (la_truncado2 / 10.0);
 			}
 			else
 			{
-				la_densidad_final_ajustada = (float)(la_truncado2 / 10.0 + 0.1);
+				la_densidad_final_ajustada = (la_truncado2 / 10.0 + 0.1);
 			}
 
 
@@ -231,10 +212,10 @@ namespace TAS360.Controllers
 
 			/********* PASO 5 ***************/
 
-			la_alpha = CoefExpTerm(la_densidad_final_ajustada/*,ar_tipoprod*/);
+			la_alpha = CoefExpTerm(la_densidad_final_ajustada);
 
 			/* Calculo fcv a 20º */
-			la_fcv20 = (float)Exp(-la_alpha * la_inc_temp - 8.0 * la_alpha * la_alpha * la_inc_temp - 0.8 * la_alpha * la_alpha * la_inc_temp * la_inc_temp);
+			la_fcv20 = Exp(-la_alpha * la_inc_temp - 8.0 * la_alpha * la_alpha * la_inc_temp - 0.8 * la_alpha * la_alpha * la_inc_temp * la_inc_temp);
 
 
 			/* Redondeo del sexto decimal para dejarlo igual que el programa Pemex */
@@ -245,13 +226,14 @@ namespace TAS360.Controllers
 
 			if ((decimal_analizar >= 0) && (decimal_analizar < 5))
 			{
-				la_fcv20 = (float)la_truncado2 / (float)100000.0;
+				la_fcv20 = la_truncado2 / 100000.0;
 			}
 			else
 			{
-				la_fcv20 = (float)la_truncado2 / (float)100000.0 + (float)0.00001;
+				la_fcv20 = la_truncado2 / 100000.0 +0.00001;
 			}
 
+			la_fcv20 = Round(la_fcv20,5);
 
 			return (la_fcv20);
 
