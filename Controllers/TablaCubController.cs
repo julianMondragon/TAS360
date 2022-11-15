@@ -21,6 +21,8 @@ namespace TAS360.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            ViewBag.IsVisbleDlcsv = false;
+            ViewBag.IsVisbleDlxlsx = false;
             return View();
         }
 
@@ -49,8 +51,9 @@ namespace TAS360.Controllers
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
-                }
+                }                
                 filepath = path + Path.GetFileName(postedFile.FileName);
+                postedFile.SaveAs(filepath);
                 try
                 {
                     SLDocument TablaCub = new SLDocument(filepath);
@@ -287,9 +290,13 @@ namespace TAS360.Controllers
                     string mesage = "Se genero correctamente la tabla de cubicacion";
                     if (contWarningm3 > 0 || contWarningBls > 0)
                     {
-                        NewTablaCub.SaveAs(path + name[0] + "_mm_x_mm.xlsx");
+                        NewTablaCub.SaveAs(path + name[0] + "_mm_x_mm_"+ tabla.TAD +".xlsx");
                         mesage = "Se genero correctamente la tabla de cubicacion, pero se encontraron iregularidades de volumen en m3 (" +  contWarningm3 + " puntos) y en Bls (" + contWarningBls + " puntos) en la tabla milimetrica generada (marcados en rojo) favor de realizar los ajustes de manera manual antes de cargar la tabla al TAS360";
                         ViewBag.Warning = mesage;
+                        System.IO.File.Delete(filepath);
+                        ViewBag.IsVisbleDlxlsx = true;
+                        ViewBag.IsVisbleDlcsv = false;
+                        tabla.fileName = name[0] + "_mm_x_mm_" + tabla.TAD + ".xlsx";
                     }
                     else
                     {
@@ -298,8 +305,12 @@ namespace TAS360.Controllers
                         //ViewBag.sucess = mesage;
 
                         //Codigo nuevo
-                        System.IO.File.WriteAllText(path + name[0] + "_mm_x_mm.csv", stringbuilder.ToString());
+                        System.IO.File.WriteAllText(path + name[0] + "_mm_x_mm_" + tabla.TAD + ".csv", stringbuilder.ToString());
                         ViewBag.sucess = mesage;
+                        System.IO.File.Delete(filepath);
+                        ViewBag.IsVisbleDlcsv = true;
+                        ViewBag.IsVisbleDlxlsx = false;
+                        tabla.fileName = name[0] + "_mm_x_mm_" + tabla.TAD + ".csv";
 
                     }
 
@@ -342,6 +353,26 @@ namespace TAS360.Controllers
         {
             string rute = Server.MapPath("~/Prototipo_Tabla/Prototipo2.xlsx");
             return File(rute, "application/xlsx", "TV-0x.xlsx");
+        }
+        /// <summary>
+        /// Metodo que se encarga de descargar el archivo en excel que fue convertido
+        /// </summary>
+        /// <param name="NameFile"></param>
+        /// <returns></returns>
+        public FileResult DownloadFileExcel(string NameFile)
+        {
+            string rute = Server.MapPath("~/Tablas_CSV/" + NameFile);
+            return File(rute, "application/xlsx", NameFile);
+        }
+        /// <summary>
+        /// Metodo que se encarga de descargar el archivo en CSV que fue convertido
+        /// </summary>
+        /// <param name="NameFile"></param>
+        /// <returns></returns>
+        public FileResult DownloadFileCSV(string NameFile)
+        {
+            string rute = Server.MapPath("~/Tablas_CSV/" + NameFile);
+            return File(rute, "application/text", NameFile);
         }
     }
 }

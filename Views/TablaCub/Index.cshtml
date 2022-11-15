@@ -5,6 +5,8 @@
     string exception = ViewBag.Exception;
     string warning = ViewBag.Warning;
     string sucess = ViewBag.sucess;
+    bool IsVisbleDlcsv = ViewBag.IsVisbleDlcsv;
+    bool IsVisbleDlxlsx = ViewBag.IsVisbleDlxlsx;
 }
 
 <style>
@@ -22,22 +24,32 @@
 <div class="jumbotron">
     <h1>Tabla de Cubicación</h1>
     <p class="lead">
-        En esta venta podremos crear un tabla de cubicación mm x mm apartir de un archivo .xlsx        
+        En esta venta podremos crear un tabla de cubicación mm x mm apartir de un archivo .xlsx
     </p>
     <p class="lead">
         <a onclick="document.location.href = '@Url.Content("~/TablaCub/DownloadPrototypeInfo")'" class="btn btn-info">Información &raquo;</a>
+
     </p>
-  
+
     @using (Html.BeginForm("Index", "TablaCub", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <input type="file" name="postedFile" />
         <br />
 
         <input id="fileinput" onclick="loading()" class="btn btn-success btn-lg" type="submit" value="Convertir archivo a mm x mm " />
-
         <div id="divspinner" class="displayn fa-3x container text-center">
             <i class="form-group fas fa-spinner fa-spin"></i>
         </div>
+    }
+    @if (IsVisbleDlcsv)
+    {
+        <br />
+        <a onclick="document.location.href = '@Url.Content("~/TablaCub/DownloadFileCSV" + "?NameFile=" + Model.fileName)'" class="btn btn-primary btn-lg">Descargar archivo mm x mm </a>
+    }
+    @if (IsVisbleDlxlsx)
+    {
+        <br />
+        <a onclick="document.location.href = '@Url.Content("~/TablaCub/DownloadFileExcel" + "?NameFile=" + Model.fileName)'" class="btn btn-warning btn-lg">Descargar archivo mm x mm </a>
     }
     @if (exception != null)
     {
@@ -69,6 +81,9 @@
                     <th class="alert-info">Capacidad (Bls)</th>
                     <th class="alert-info">Altura (m)</th>
                     <th class="alert-info">Producto</th>
+                    <th class="alert-warning">Fondo (m)</th>
+                    <th class="alert-danger">Zona</th>
+                    <th class="alert-danger">Critica (m)</th>
                 </tr>
                 <tr>
                     <td>@Model.TAD</td>
@@ -76,6 +91,9 @@
                     <td>@Model.Capacidad</td>
                     <td>@Model.Altura</td>
                     <td>@Model.Producto</td>
+                    <td>@Model.Fondo_Rango2</td>
+                    <td>@Model.ZonaCritica_Rango1</td>
+                    <td>@Model.ZonaCritica_Rango2</td>
                 </tr>
 
             </table>

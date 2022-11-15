@@ -13,6 +13,7 @@ namespace TAS360.Models.ViewModel
         }
 
         public string TAD { get ; set; }
+        public string fileName { get; set; }
         public string Tag { get; set; }
         public string Capacidad { get; set; }
         public double Altura { get; set; }
