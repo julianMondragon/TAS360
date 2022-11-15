@@ -320,6 +320,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\Ej_Tabla_Cub_LLenado_2.JPG" />
     <Content Include="Content\img\TanqueAditivo.JPG" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -364,6 +365,8 @@
     <Content Include="Scripts\corecubi.js" />
     <Content Include="Scripts\datatables\Buttons-2.2.3\css\common.scss" />
     <Content Include="Scripts\datatables\Buttons-2.2.3\css\mixins.scss" />
+    <Content Include="Prototipo_Tabla\Prototipo.xlsx" />
+    <Content Include="Prototipo_Tabla\Prototipo2.xlsx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.min.css" />
@@ -702,6 +705,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Tablas_CSV\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

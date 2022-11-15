@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.IO;
 using SpreadsheetLight;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.Text;
+using System.Data;
 
 namespace TAS360.Controllers
 {
@@ -32,6 +34,7 @@ namespace TAS360.Controllers
         public ActionResult Index(HttpPostedFileBase postedFile)
         {
             TablaCubViewModel tabla = new TablaCubViewModel();
+            StringBuilder stringbuilder = new StringBuilder();
             string filepath = string.Empty;
             string WarnigMesagge = string.Empty;
             string SucessMesagge = string.Empty;
@@ -103,13 +106,15 @@ namespace TAS360.Controllers
                     row++;
                     newRow++;
 
+                    stringbuilder.AppendLine("Nivel (mm),Volumen (Bls), Volumen (m3)");
+
                     //Obtiene el fondo y lo escribe en escribe en el nuevo archivo 
                     while (tabla.Fondo_Rango2 != TablaCub.GetCellValueAsDouble(row, column))
                     {
                         //obtiene los valores por cada renglon de la tabla actual
                         double valorA = TablaCub.GetCellValueAsDouble(row, 1);
-                        double valorB = TablaCub.GetCellValueAsDouble(row, 2);
-                        double valorC = TablaCub.GetCellValueAsDouble(row, 3);
+                        double valorB = Math.Round(TablaCub.GetCellValueAsDouble(row, 2),2);
+                        double valorC = Math.Round(TablaCub.GetCellValueAsDouble(row, 3),3);
 
                         //establece los valores en un nuevo reglon de la nueva tabla de Cub
                         NewTablaCub.SetCellValue(newRow, 1, valorA * 1000);
@@ -125,6 +130,7 @@ namespace TAS360.Controllers
                         });
                         row++;
                         newRow++;
+                        stringbuilder.AppendLine(valorA * 1000 + "," + valorB + "," + valorC);
                     }
 
                     //Iteracion de toda la tabla apartir del fondo.
@@ -132,8 +138,8 @@ namespace TAS360.Controllers
                     {
                         //obtiene los valores por cada renglon de la tabla actual 
                         double valorA = TablaCub.GetCellValueAsDouble(row, 1);
-                        double valorB = TablaCub.GetCellValueAsDouble(row, 2);
-                        double valorC = TablaCub.GetCellValueAsDouble(row, 3);
+                        double valorB = Math.Round(TablaCub.GetCellValueAsDouble(row, 2),2);
+                        double valorC = Math.Round(TablaCub.GetCellValueAsDouble(row, 3),3);
                         //obtiene el valor del siguiente reglon para su validacion 
                         double valorD = TablaCub.GetCellValueAsDouble(row + 1, 2);
                         double valorF = TablaCub.GetCellValueAsDouble(row + 1, 3);
@@ -156,6 +162,9 @@ namespace TAS360.Controllers
                                     bls = valorB,
                                     volumen_m3 = valorC
                                 });
+
+                                stringbuilder.AppendLine(valorA * 1000 + "," + valorB + "," + valorC);
+
                                 row++;
                                 newRow++;
                             }
@@ -167,9 +176,9 @@ namespace TAS360.Controllers
                                     if (i != 0)
                                     {
                                         valorA += 0.001;
-                                        double x = TablaCub.GetCellValueAsDouble(3, 7);
+                                        double x = Math.Round(TablaCub.GetCellValueAsDouble(3, 7),3);
                                         valorC = valorC + x;
-                                        double y = TablaCub.GetCellValueAsDouble(3, 6);
+                                        double y = Math.Round(TablaCub.GetCellValueAsDouble(3, 6),2);
                                         valorB = valorB + y;
                                     }
 
@@ -208,6 +217,7 @@ namespace TAS360.Controllers
                                         bls = valorB,
                                         volumen_m3 = valorC
                                     });
+                                    stringbuilder.AppendLine(valorA * 1000 + "," + valorB + "," + valorC);
                                 }
                                 row++;
                             }
@@ -221,9 +231,9 @@ namespace TAS360.Controllers
                                 if (i != 0)
                                 {
                                     valorA += 0.001;
-                                    double x = TablaCub.GetCellValueAsDouble(3, 7);
+                                    double x = Math.Round(TablaCub.GetCellValueAsDouble(3, 7),3);
                                     valorC = valorC + x;
-                                    double y = TablaCub.GetCellValueAsDouble(3, 6);
+                                    double y = Math.Round(TablaCub.GetCellValueAsDouble(3, 6),2);
                                     valorB = valorB + y;
                                 }
 
@@ -262,6 +272,7 @@ namespace TAS360.Controllers
                                     bls = valorB,
                                     volumen_m3 = valorC
                                 });
+                                stringbuilder.AppendLine(valorA * 1000 + "," + valorB + "," + valorC);
                             }
                             row++;
                         }
@@ -282,12 +293,18 @@ namespace TAS360.Controllers
                     }
                     else
                     {
-                        NewTablaCub.SaveAs(path + name[0] + "_mm_x_mm.csv");
+                        //Codigo Anterior 
+                        //NewTablaCub.SaveAs(path + name[0] + "_mm_x_mm.csv");
+                        //ViewBag.sucess = mesage;
+
+                        //Codigo nuevo
+                        System.IO.File.WriteAllText(path + name[0] + "_mm_x_mm.csv", stringbuilder.ToString());
                         ViewBag.sucess = mesage;
+
                     }
 
                     #endregion 
-
+                    
                     return View(tabla);
                 }
                 catch (Exception ex)
@@ -301,6 +318,10 @@ namespace TAS360.Controllers
                         ViewBag.Exception = String.Format("En el renglon {0} y columna {1} ocurrio el siguiente error: {2}", row, column, ex.Message);
                     }
                     
+                }
+                finally
+                {
+                    stringbuilder = null;
                 }
 
             }
