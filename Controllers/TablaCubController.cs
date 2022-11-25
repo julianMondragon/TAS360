@@ -146,6 +146,8 @@ namespace TAS360.Controllers
                         //obtiene el valor del siguiente reglon para su validacion 
                         double valorD = TablaCub.GetCellValueAsDouble(row + 1, 2);
                         double valorF = TablaCub.GetCellValueAsDouble(row + 1, 3);
+                        double valorG = valorB;
+                        double valorH = valorC;
 
                         //Evalua si existe una zona critica definida para que se salte la iteracion por milimetros
                         if (zona_critica_R1_aviable && zona_critica_R2_aviable)
@@ -178,11 +180,39 @@ namespace TAS360.Controllers
                                 {
                                     if (i != 0)
                                     {
+                                        int indexRow = 3;
+                                        switch (i) 
+                                        {                                     
+                                          case 2:
+                                                indexRow = 4;
+                                                break;
+                                          case 3:
+                                                indexRow = 5;
+                                                break;
+                                          case 4:
+                                                indexRow = 6;
+                                                break;
+                                          case 5:
+                                                indexRow = 7;
+                                                break;
+                                          case 6:
+                                                indexRow = 8;
+                                                break;
+                                          case 7:
+                                                indexRow = 9;
+                                                break;
+                                          case 8:
+                                                indexRow = 10;
+                                                break;
+                                          case 9:
+                                                indexRow = 11;
+                                                break;
+                                        }
                                         valorA += 0.001;
-                                        double x = Math.Round(TablaCub.GetCellValueAsDouble(3, 7),3);
-                                        valorC = valorC + x;
-                                        double y = Math.Round(TablaCub.GetCellValueAsDouble(3, 6),2);
-                                        valorB = valorB + y;
+                                        double x = Math.Round(TablaCub.GetCellValueAsDouble(indexRow, 7),3);
+                                        valorC = valorH + x;
+                                        double y = Math.Round(TablaCub.GetCellValueAsDouble(indexRow, 6),2);
+                                        valorB = valorG + y;
                                     }
 
                                     //establece los valores en un nuevo reglon de la nueva tabla de Cub
@@ -233,11 +263,39 @@ namespace TAS360.Controllers
                             {
                                 if (i != 0)
                                 {
+                                    int indexRow = 3;
+                                    switch (i)
+                                    {
+                                        case 2:
+                                            indexRow = 4;
+                                            break;
+                                        case 3:
+                                            indexRow = 5;
+                                            break;
+                                        case 4:
+                                            indexRow = 6;
+                                            break;
+                                        case 5:
+                                            indexRow = 7;
+                                            break;
+                                        case 6:
+                                            indexRow = 8;
+                                            break;
+                                        case 7:
+                                            indexRow = 9;
+                                            break;
+                                        case 8:
+                                            indexRow = 10;
+                                            break;
+                                        case 9:
+                                            indexRow = 11;
+                                            break;
+                                    }
                                     valorA += 0.001;
-                                    double x = Math.Round(TablaCub.GetCellValueAsDouble(3, 7),3);
-                                    valorC = valorC + x;
-                                    double y = Math.Round(TablaCub.GetCellValueAsDouble(3, 6),2);
-                                    valorB = valorB + y;
+                                    double x = Math.Round(TablaCub.GetCellValueAsDouble(indexRow, 7), 3);
+                                    valorC = valorH + x;
+                                    double y = Math.Round(TablaCub.GetCellValueAsDouble(indexRow, 6), 2);
+                                    valorB = valorG + y;
                                 }
 
                                 //establece los valores en un nuevo reglon de la nueva tabla de Cub
