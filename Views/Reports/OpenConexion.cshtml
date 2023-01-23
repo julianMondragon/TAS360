@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "OpenConexion";
+    string warning = ViewBag.Warning;
+    string Open = ViewBag.Open;
+    string Info = ViewBag.Info;
+}
+
+<div class="jumbotron">
+    <h1>Por definir </h1>
+    <p class="lead">
+        En esta pestalla se establece conexion con la base de datos deseada,
+        mediante los sigueintes parametros: Server usuario y contraseña.
+    </p>
+    @if (warning != null)
+    {
+        if (warning == "conexón null")
+        {
+            <h3 style="color:sandybrown">@warning</h3>
+            <a onclick="document.location.href = '@Url.Content("~/Reports/Index")'" class="btn btn-primary">Reconectar &raquo;</a>
+        }
+        else
+        {
+            <h3 style="color:sandybrown">@warning</h3>
+        }
+
+    }
+    @if (Open != null)
+    {
+        <h3 style="color:dodgerblue">@Open</h3>
+    }
+    @if (Info != null)
+    {
+        <h7 style="color::blue">@Info</h7>
+    }
+</div>
+
+<div class="form-floating">
+    <a onclick="document.location.href = '@Url.Content("~/Reports/CreateRequest")'" class="btn btn-success">Crear Consulta &raquo;</a>   
+</div>    

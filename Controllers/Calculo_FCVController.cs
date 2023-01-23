@@ -34,19 +34,22 @@ namespace TAS360.Controllers
             }
             try
             {
-				model.factor = FCV(model.dens, model.temp);
+				model.dens = Redondeo05(model.dens);
+				model.temp = (float) Math.Round(Redondeo005(model.temp), 2);
+				model.factor = FCV(model.dens, model.temp);				
 				if(model.volnat != 0)
 					model.volcor = model.volnat * model.factor;
 
 			}
 			catch(Exception ex)
             {
-
+				//ViewBag.warning = ex.Message;
             }
 			
 
             return View("Index", model);
         }
+
 		/// <summary>
 		/// Calculo del coeficiente de expansion termica
 		/// </summary>
@@ -127,6 +130,7 @@ namespace TAS360.Controllers
 			return (la_alpha);
 
 		}
+
 		/// <summary>
 		/// Calculo de FCV a 20 a partir de la densidad corregida y de
 		/// la temperatura de almacenamiento.
@@ -150,12 +154,12 @@ namespace TAS360.Controllers
 			double la_inc_temp_20;
 			double la_dif_densidad, la_densidad_final_ajustada;
 
-			//la_densidad_ajustada = Redondeo05(ar_densidad);
-			//la_temp_ajustada = Redondeo005(ar_temp_alm);
-			la_densidad_ajustada = ar_densidad;
-			la_temp_ajustada = ar_temp_alm;
+            //la_densidad_ajustada = Redondeo05(ar_densidad);
+            //la_temp_ajustada = Redondeo005(ar_temp_alm);
+            la_densidad_ajustada = ar_densidad;
+            la_temp_ajustada = ar_temp_alm;
 
-			la_inc_temp_20 = 20 - 15;
+            la_inc_temp_20 = 20 - 15;
 			la_densidad_inicial = la_densidad_ajustada;
 
 			la_alpha = CoefExpTerm(la_densidad_ajustada);
@@ -239,99 +243,183 @@ namespace TAS360.Controllers
 
 
 		}
+
 		/// <summary>
 		///  Redondeo del primer decimal
 		///  X.0, X.1, X.2 -> X.0
-	    ///	 X.3, X.4, X.5, X.6, X.7 -> X.5
-	    ///	 X.8, X.9 ->(X+1).0
+		///	 X.3, X.4, X.5, X.6, X.7 -> X.5
+		///	 X.8, X.9 ->(X+1).0
 		/// </summary>
 		/// <param name="valor"></param>
 		/// <returns></returns>
 		float Redondeo05(float valor)
 		{
 			
-			double truncado1 = 0, truncado2 = 0, aux = 0/*, truncado3*/;
-			/*	int decimal_analizar;*/
-			double analizar;
-			aux = valor * 10;
-			truncado2 = Math.Floor(valor);
-			analizar = valor - (truncado2);
+            string[] x = valor.ToString().Split('.');
+			if (x.Length <= 1)
+				return valor;
+            int y = int.Parse(x[1].Substring(0,1));
+			valor = (float)Math.Floor(valor);
+			double z = (y % 10) * 0.1;
+			valor = valor + (float)z;
+			if (y > 0)
+            {
+				switch (y)
+                {
+					case 1:
+						valor = valor - (float)0.1;
+						break;
+					case 2:
+						valor = valor - (float)0.2;						
+						break ;
+					case 3:
+						valor = valor + (float)0.2;						
+						break;
+					case 4:
+						valor = valor + (float)0.1;						
+						break;					
+					case 6:
+						valor = valor - (float)0.1;
+						break;
+					case 7:
+						valor = valor - (float)0.2;
+						break;
+					case 8:
+						valor = valor + (float)0.2;
+						break;
+					case 9:
+						valor = valor + (float)0.1;						
+						break;
+					default:
+						return valor;
+				}
+            }            
+			return valor;
+            #region Codigo c
+            //double truncado1 = 0, truncado2 = 0, aux = 0/*, truncado3*/;
+            ///*	int decimal_analizar;*/
+            //double analizar;
+            //aux = valor * 10;
+            //truncado2 = Math.Floor(valor);
+            //analizar = valor - (truncado2);
 
-			if ((analizar >= 0.0) && (analizar < 0.299))
-			{
-				return ((float)truncado2);
-			}
-			else if ((analizar >= 0.3001) && (analizar < 0.799))
-			{
-				return ((float)(truncado2 + 0.5));
-			}
-			else if ((analizar >= 0.299) && (analizar < 0.3001))
-			{
-				return ((float)(truncado2 + 0.5));
-			}
-			else if ((analizar >= 0.799) && (analizar < 0.8001))
-			{
-				return ((float)truncado2 + 1);
-			}
+            //if ((analizar >= 0.0) && (analizar < 0.299))
+            //{
+            //    return ((float)truncado2);
+            //}
+            //else if ((analizar >= 0.3001) && (analizar < 0.799))
+            //{
+            //    return ((float)(truncado2 + 0.5));
+            //}
+            //else if ((analizar >= 0.299) && (analizar < 0.3001))
+            //{
+            //    return ((float)(truncado2 + 0.5));
+            //}
+            //else if ((analizar >= 0.799) && (analizar < 0.8001))
+            //{
+            //    return ((float)truncado2 + 1);
+            //}
 
-			else
-				return ((float)truncado2 + 1);
+            //else
+            //    return ((float)truncado2 + 1);
+            #endregion
 
-
-		}
-		/// <summary>
-		/// Redondeo del segundo decimal
-		/// X.Y0, X.Y1, X.Y2 -> X.Y0
-		/// X.Y3, X.Y4, X.Y5, X.Y6, X.Y7 -> X.Y5
-		/// X.Y8, X.Y9 ->X.(Y+1).0
-		/// </summary>
-		/// <param name="valor"></param>
-		/// <returns></returns>
-		float Redondeo005(float valor)
+        }
+        /// <summary>
+        /// Redondeo del segundo decimal
+        /// X.Y0, X.Y1, X.Y2 -> X.Y0
+        /// X.Y3, X.Y4, X.Y5, X.Y6, X.Y7 -> X.Y5
+        /// X.Y8, X.Y9 ->X.(Y+1).0
+        /// </summary>
+        /// <param name="valor"></param>
+        /// <returns></returns>
+        double Redondeo005(double valor)
 		{
 
-			double truncado1 = 0, truncado2 = 0, aux = 0;			
-			double analizar;
-			double y, i;
-			
-			aux = valor * 10;
-			truncado2 = Floor(valor);
-
-			truncado1 = Math.Ceiling(aux);
-
-			analizar = valor - (truncado2);
-
-			//y = modf(analizar * 10.0, &i);
-			y = Truncate(analizar * 10);
-			analizar = y;
-
-			valor = (float)Floor(valor * 10.000);
-
-			valor = (float)(valor * 10.0);
-
-			/* Manejamos intervalos */
-			if ((analizar >= 0.0) && (analizar < 0.299))
+			valor = Math.Round(valor, 2);
+			string[] x = valor.ToString().Split('.');
+			if (x.Length <= 1)
+				return valor;
+            if (x[1].Length <= 1)
+            {
+				valor = Redondeo05((float)valor);
+				return valor;
+            }
+			int w = int.Parse(x[1].Substring(0, 1));
+			int y = int.Parse(x[1].Substring(1, 1));
+			valor = (float)Math.Floor(valor);
+			double z = (w % 10) * 0.1;
+			valor = valor + (float)z;
+			if (y > 0)
 			{
-				return ((float)((double)valor / 100.0));
+				switch (y)
+				{
+					case 3:
+						valor = valor + (float)0.05;
+						break;
+					case 4:
+						valor = valor + (float)0.05;
+						break;
+					case 6:
+						valor = valor + (float)0.05;
+						break;
+					case 7:
+						valor = valor + (float)0.05;
+						break;
+					case 8:
+						valor = valor + (float)0.1;
+						break;
+					case 9:
+						valor = valor + (float)0.1;
+						break;
+					default:
+						return valor;
+				}
 			}
-			else if ((analizar >= 0.3001) && (analizar < 0.799))
-			{
-				return ((float)((double)(valor + 5) / 100.0));
-			}
-			else if ((analizar >= 0.299) && (analizar < 0.3001))
-			{
-				return ((float)((double)(valor + 5) / 100.0));
-			}
-			else if ((analizar >= 0.799) && (analizar < 0.8001))
-			{
-				return ((float)((double)(valor + 10) / 100.0));
-			}
+			return valor;
+			#region Codigo C
+			//double truncado1 = 0, truncado2 = 0, aux = 0;			
+			//double analizar;
+			//double y, i;
 
-			else
-				return ((float)((double)(valor + 10) / 100.0));
+			//aux = valor * 10;
+			//truncado2 = Floor(valor);
 
+			//truncado1 = Math.Ceiling(aux);
+
+			//analizar = valor - (truncado2);
+
+			////y = modf(analizar * 10.0, &i);
+			//y = Truncate(analizar * 10);
+			//analizar = y;
+
+			//valor = (float)Floor(valor * 10.000);
+
+			//valor = (float)(valor * 10.0);
+
+			///* Manejamos intervalos */
+			//if ((analizar >= 0.0) && (analizar < 0.299))
+			//{
+			//	return ((float)((double)valor / 100.0));
+			//}
+			//else if ((analizar >= 0.3001) && (analizar < 0.799))
+			//{
+			//	return ((float)((double)(valor + 5) / 100.0));
+			//}
+			//else if ((analizar >= 0.299) && (analizar < 0.3001))
+			//{
+			//	return ((float)((double)(valor + 5) / 100.0));
+			//}
+			//else if ((analizar >= 0.799) && (analizar < 0.8001))
+			//{
+			//	return ((float)((double)(valor + 10) / 100.0));
+			//}
+
+			//else
+			//	return ((float)((double)(valor + 10) / 100.0));
+			#endregion
 
 
 		}
-	}
+    }
 }

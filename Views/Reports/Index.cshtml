@@ -1,0 +1,56 @@
+﻿@model TAS360.Models.ViewModel.ConnexionSQLViewModel
+@{
+    ViewBag.Title = "Conexión con base de datos";
+
+}
+
+<div class="jumbotron">
+    <h1>Reports </h1>
+    <p class="lead">
+        En esta pestalla se establece conexion con la base de datos deseada,
+        mediante los sigueintes parametros: Server usuario y contraseña.
+    </p>
+
+</div>
+<section class="page-section about-heading">
+    <div class="container">
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @using (Html.BeginForm("OpenConexion", "Reports", FormMethod.Post, new { role = "form", @class = "" }))
+                                {
+
+                                    <br />
+                                    @Html.LabelFor(f => f.server)
+                                    @Html.TextBoxFor(f => f.server, new { @class = "form-control" })
+                                    @Html.ValidationMessage("server", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(f => f.user)
+                                    @Html.TextBoxFor(f => f.user, new { @class = "form-control" })
+                                    @Html.ValidationMessage("user", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(f => f.password)
+                                    @Html.TextBoxFor(f => f.password, new { @class = "form-control" })
+                                    @Html.ValidationMessage("password", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(f => f.namedatabase)
+                                    @Html.TextBoxFor(f => f.namedatabase, new { @class = "form-control" })
+                                    @Html.ValidationMessage("namedatabase", new { @class = "text-danger" })
+                                    <br />
+                                    <div style="text-align:right">
+                                        <input type="submit" class="btn btn-success" value="Abrir Conexión" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

@@ -9,12 +9,12 @@ namespace TAS360.Models.ViewModel
     public class FCV_ViewModel
     {
         [Required]
-        [Display(Name = "Temperatura")]
+        [Display(Name = "Temperatura Observada")]
         [Range(-18, 150, ErrorMessage = "Rango -18 a 150")]
         public float temp { get; set; }
         [Required]
-        [Display(Name = "Densidad")]
-        [RegularExpression(@"^\d+(\.\d{1,1})?$", ErrorMessage = "Formato #.#")]
+        [Display(Name = "Densidad Observada")]
+        //[RegularExpression(@"^\d+(\.\d{1,1})?$", ErrorMessage = "Formato #.#")]
         [Range(653, 1075, ErrorMessage = "Rango 653 a 1075")]
         public float dens { get; set; }
         [Required]

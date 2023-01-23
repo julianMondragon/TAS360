@@ -1,0 +1,62 @@
+﻿@model TAS360.Models.ViewModel.CreateReportViewModel
+@{
+    ViewBag.Title = "Create Request";
+    string warning = ViewBag.Warning;
+    string Open = ViewBag.Open;
+    string Info = ViewBag.Info;
+}
+
+<div class="jumbotron">
+    <h1>Crear Consulta SQL </h1>
+    <p class="lead">
+        En esta pestalla ......
+    </p>
+    @if (warning != null)
+    {
+        <h3 style="color:sandybrown">@warning</h3>
+    }
+    @if (Open != null)
+    {
+        <h3 style="color:dodgerblue">@Open</h3>
+    }
+    @if (Info != null)
+    {
+        <h7 style="color:blue">@Info</h7>
+    }
+</div>
+<section class="page-section about-heading">
+    <div class="container">
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @using (Html.BeginForm("CreateReport", "Reports", FormMethod.Post, new { role = "form", @class = "" }))
+                                {
+
+                                    @Html.LabelFor(x => x.TypeQuery)
+                                    @Html.DropDownList("Tipo de Query", Model.TypeQuery, new { @class = "form-control" })
+                                    @Html.ValidationMessage("TypeQuery", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(x => x.whatRequest)
+                                    @Html.DropDownList("Que solicitas", Model.whatRequest, new { @class = "form-control" })
+                                    @Html.ValidationMessage("whatRequest", new { @class = "text-danger" })
+                                    <br />
+                                    @Html.LabelFor(x => x.Table)
+                                    @Html.DropDownList("Tablas", Model.Table, new { @class = "form-control" })
+                                    @Html.ValidationMessage("TypeQuery", new { @class = "text-danger" })
+                                    <br />
+                                    
+                                    <div style="text-align:right">
+                                        <input type="submit" class="btn btn-success" value="Cálcular" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,34 @@
+﻿@model TAS360.Models.ViewModel.WebAPIPemexViewModel
+@{
+    ViewBag.Title = "Conexion webapi";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    string warning = ViewBag.Warning;
+    string Open = ViewBag.Open;
+    string Info = ViewBag.Info;
+}
+
+<div class="jumbotron">
+    <h1>Conexión WebAPI Pemex-ASA </h1>
+    <p class="lead">
+        En esta pestalla se establace una concexion con el WebAPI de Pemex para descargar un archivo Zip y almacenarlo en un directorio local.
+    </p>
+    @if (warning != null)
+    {
+        <h3 style="color:sandybrown">@warning</h3>
+    }
+    @if (Info != null)
+    {
+        <h7 style="color:blue">@Info</h7>
+    }
+</div>
+
+@using (Html.BeginForm("Index", "WebAPIPemex", FormMethod.Post, new { role = "form", @class = "" }))
+{
+    @Html.LabelFor(f => f.date)
+    @Html.TextBoxFor(f => f.date, new { @class = "form-control" })
+    @Html.ValidationMessage("dens", new { @class = "text-danger" })
+    <br />
+    <div style="text-align:right">
+        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Obtener archivo Zip" />
+    </div>
+}

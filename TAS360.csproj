@@ -151,7 +151,9 @@
     <Compile Include="Controllers\Calculo_FCVController.cs" />
     <Compile Include="Controllers\DanloadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TablaCubController.cs" />
+    <Compile Include="Controllers\WebAPIPemexController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -299,6 +301,8 @@
     <Compile Include="Models\ViewModel\aditivoViewModel.cs" />
     <Compile Include="Models\ViewModel\auditoriaViewModel.cs" />
     <Compile Include="Models\ViewModel\ConfigTanqAditivoViewModel.cs" />
+    <Compile Include="Models\ViewModel\ConnexionSQLViewModel.cs" />
+    <Compile Include="Models\ViewModel\CreateReportViewModel.cs" />
     <Compile Include="Models\ViewModel\entradasViewModel.cs" />
     <Compile Include="Models\ViewModel\FCV_ViewModel.cs" />
     <Compile Include="Models\ViewModel\PuertoSerialViewModel.cs" />
@@ -308,6 +312,7 @@
     <Compile Include="Models\ViewModel\SocketViewModel.cs" />
     <Compile Include="Models\ViewModel\TablaCubViewModel.cs" />
     <Compile Include="Models\ViewModel\TramaViewModel.cs" />
+    <Compile Include="Models\ViewModel\WebAPIPemexViewModel.cs" />
     <Compile Include="Models\VolTanq.cs">
       <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
@@ -702,9 +707,15 @@
     <Content Include="Views\Accuload\Index.cshtml" />
     <Content Include="Views\TablaCub\DownloadPrototypeInfo.cshtml" />
     <Content Include="Views\Calculo_FCV\Index.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Reports\OpenConexion.cshtml" />
+    <Content Include="Views\Reports\CreateRequest.cshtml" />
+    <Content Include="Views\WebAPIPemex\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ArchivosASA\" />
     <Folder Include="Tablas_CSV\" />
   </ItemGroup>
   <ItemGroup>
