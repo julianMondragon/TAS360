@@ -360,6 +360,9 @@ namespace TAS360.Controllers
 					case 4:
 						valor = valor + (float)0.05;
 						break;
+					case 5:
+						valor = valor + (float)0.05;
+						break;
 					case 6:
 						valor = valor + (float)0.05;
 						break;
