@@ -190,7 +190,7 @@ namespace TAS360.Controllers
                         }
                         else
                         {
-                            if (!TablaCub.GetCellValueAsString(row, 2).Contains("fin"))
+                            if (!TablaCub.GetCellValueAsString(row, 2).Contains("Fin"))
                             {
                                 string aux = TablaCub.GetCellValueAsString(row + 1, 2);
                                 if (TablaCub.GetCellValueAsString(row + 1, 2) == "")
@@ -214,7 +214,7 @@ namespace TAS360.Controllers
                         }
                         else
                         {
-                            if (!TablaCub.GetCellValueAsString(row, 2).Contains("fin"))
+                            if (!TablaCub.GetCellValueAsString(row, 2).Contains("Fin"))
                             {
                                 string aux = TablaCub.GetCellValueAsString(row + 1, 2);
                                 if (TablaCub.GetCellValueAsString(row, 2) == "")
@@ -239,7 +239,7 @@ namespace TAS360.Controllers
                         }
                         else
                         {
-                            if (!TablaCub.GetCellValueAsString(row, 3).Contains("fin"))
+                            if (!TablaCub.GetCellValueAsString(row, 3).Contains("Fin"))
                             {
                                 string aux = TablaCub.GetCellValueAsString(row , 3);
                                 if (TablaCub.GetCellValueAsString(row, 3) == "")
