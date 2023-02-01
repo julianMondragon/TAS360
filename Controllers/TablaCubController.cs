@@ -40,6 +40,7 @@ namespace TAS360.Controllers
             string filepath = string.Empty;
             string WarnigMesagge = string.Empty;
             string SucessMesagge = string.Empty;
+            double convert_number;
             int contWarningm3 = 0;
             int contWarningBls = 0;
             int row = 2;
@@ -115,12 +116,48 @@ namespace TAS360.Controllers
                     while (tabla.Fondo_Rango2 != TablaCub.GetCellValueAsDouble(row, column))
                     {
                         //obtiene los valores por cada renglon de la tabla actual
+                        //VALOR A - Nivel 
                         double valorA = TablaCub.GetCellValueAsDouble(row, 1);
+                        //Validacion de convercion a double del valor de celda 
+                        if (Double.TryParse(TablaCub.GetCellValueAsString(row, 1), out convert_number))
+                        {
+                            valorA = convert_number;
+                        }
+                        else
+                        {
+                            string message = $"Unable to parse {TablaCub.GetCellValueAsString(row, 1)} as double type, \n Verifica: El contenido del renglon {row} y la columna 1.";
+                            throw new Exception(message);
+                        }
+
+                        //VALOR B - Barilles 
                         double valorB = Math.Round(TablaCub.GetCellValueAsDouble(row, 2),2);
+                        //Validacion de convercion a double del valor de celda 
+                        if (Double.TryParse(TablaCub.GetCellValueAsString(row, 2), out convert_number))
+                        {
+                            valorB = Math.Round(convert_number,2);
+                        }
+                        else
+                        {
+                            string message = $"Unable to parse {TablaCub.GetCellValueAsString(row, 2)} as double type, \n Verifica: El contenido del renglon {row} y la columna 2.";
+                            throw new Exception(message);
+                        }
+
+                        //VALOR C - Metros cubicos
                         double valorC = Math.Round(TablaCub.GetCellValueAsDouble(row, 3),3);
+                        //Validacion de convercion a double del valor de celda 
+                        if (Double.TryParse(TablaCub.GetCellValueAsString(row, 3), out convert_number))
+                        {
+                            valorC = Math.Round(convert_number, 3);
+                        }
+                        else
+                        {
+                            //Console.WriteLine("Unable to parse '{0}'.", value);
+                            string message = $"Unable to parse {TablaCub.GetCellValueAsString(row, 3)} as double type, \n Verifica: El contenido del renglon {row} y la columna 3.";
+                            throw new Exception(message);
+                        }
 
                         //establece los valores en un nuevo reglon de la nueva tabla de Cub
-                        NewTablaCub.SetCellValue(newRow, 1, valorA * 1000);
+                        NewTablaCub.SetCellValue(newRow, 1, Math.Round(valorA * 1000));
                         NewTablaCub.SetCellValue(newRow, 2, valorB);
                         NewTablaCub.SetCellValue(newRow, 3, valorC);
 
@@ -133,19 +170,142 @@ namespace TAS360.Controllers
                         });
                         row++;
                         newRow++;
-                        stringbuilder.AppendLine(valorA * 1000 + "," + valorB + "," + valorC);
+                        stringbuilder.AppendLine(Math.Round(valorA * 1000) + "," + valorB + "," + valorC);
                     }
 
                     //Iteracion de toda la tabla apartir del fondo.
                     while (!string.IsNullOrEmpty(TablaCub.GetCellValueAsString(row, column)))
                     {
+                        if (TablaCub.GetCellValueAsString(row, column).Contains("Fin"))
+                        {
+                            row++;
+                            continue;
+                        }
                         //obtiene los valores por cada renglon de la tabla actual 
                         double valorA = TablaCub.GetCellValueAsDouble(row, 1);
+                        //Validacion de convercion a double del valor de celda 
+                        if (Double.TryParse(TablaCub.GetCellValueAsString(row, 1), out convert_number))
+                        {
+                            valorA = convert_number;
+                        }
+                        else
+                        {
+                            if (!TablaCub.GetCellValueAsString(row, 2).Contains("fin"))
+                            {
+                                string aux = TablaCub.GetCellValueAsString(row + 1, 2);
+                                if (TablaCub.GetCellValueAsString(row + 1, 2) == "")
+                                {
+                                    string mgs = String.Format("Unable to parse value NULL as double type \n Verifica el contenido del renglon {0} y la columna 2 \n Asegurate que al final de la tabla de cubicacion en cada columna contenga Fin de Tabla", row);
+                                    throw new Exception(mgs);
+                                }
+                                else
+                                {
+                                    string message = $"Unable to parse {TablaCub.GetCellValueAsString(row, 1)} as double type \n Verifica: El contenido del renglon {row} y la columna 1.";
+                                    throw new Exception(message);
+                                }
+                            }                            
+                        }
+
                         double valorB = Math.Round(TablaCub.GetCellValueAsDouble(row, 2),2);
+                        //Validacion de convercion a double del valor de celda 
+                        if (Double.TryParse(TablaCub.GetCellValueAsString(row, 2), out convert_number))
+                        {
+                            valorB = Math.Round(convert_number, 2);
+                        }
+                        else
+                        {
+                            if (!TablaCub.GetCellValueAsString(row, 2).Contains("fin"))
+                            {
+                                string aux = TablaCub.GetCellValueAsString(row + 1, 2);
+                                if (TablaCub.GetCellValueAsString(row, 2) == "")
+                                {
+                                    string mgs = String.Format("Unable to parse value NULL as double type \n Verifica el contenido del renglon {0} y la columna 2 \n Asegurate que al final de la tabla de cubicacion en cada columna contenga Fin de Tabla", row);
+                                    throw new Exception(mgs);
+                                }
+                                else
+                                {
+                                    string message = $"Unable to parse {TablaCub.GetCellValueAsString(row, 2)} as double type \n Verifica: El contenido del renglon {row} y la columna 2";
+                                    throw new Exception(message);
+                                }
+                            }
+                            
+                        }
+
                         double valorC = Math.Round(TablaCub.GetCellValueAsDouble(row, 3),3);
+                        //Validacion de convercion a double del valor de celda 
+                        if (Double.TryParse(TablaCub.GetCellValueAsString(row, 3), out convert_number))
+                        {
+                            valorC = Math.Round(convert_number, 3);
+                        }
+                        else
+                        {
+                            if (!TablaCub.GetCellValueAsString(row, 3).Contains("fin"))
+                            {
+                                string aux = TablaCub.GetCellValueAsString(row , 3);
+                                if (TablaCub.GetCellValueAsString(row, 3) == "")
+                                {
+                                    string mgs = String.Format("Unable to parse value NULL as double type \n Verifica el contenido del renglon {0} y la columna 2 \n Asegurate que al final de la tabla de cubicacion en cada columna contenga Fin de Tabla", row);
+                                    throw new Exception(mgs);
+                                }
+                                else
+                                {
+                                    string message = $"Unable to parse {TablaCub.GetCellValueAsString(row, 3)} as double type \n Verifica el contenido del renglon {row} y la columna 3.";
+                                    throw new Exception(message);
+                                }
+                            }
+                            
+                        }
+
                         //obtiene el valor del siguiente reglon para su validacion 
                         double valorD = TablaCub.GetCellValueAsDouble(row + 1, 2);
+                        //Validacion de convercion a double del valor de celda 
+                        if (Double.TryParse(TablaCub.GetCellValueAsString(row + 1, 2), out convert_number))
+                        {
+                            valorD = convert_number;
+                        }
+                        else
+                        {
+                            string var = TablaCub.GetCellValueAsString(row + 1, 2);
+                            if (!TablaCub.GetCellValueAsString(row +1, 2).Contains("Fin"))
+                            {
+                                string aux = TablaCub.GetCellValueAsString(row + 1, 2);
+                                if (TablaCub.GetCellValueAsString(row + 1, 2) == "")
+                                {
+                                    string mgs = String.Format("Unable to parse value NULL as double type \n Verifica el contenido del renglon {0} y la columna 2 \n Asegurate que al final de la tabla de cubicacion en cada columna contenga Fin de Tabla", row + 1);
+                                    throw new Exception(mgs);
+                                }
+                                else
+                                {
+                                    string message = $"Unable to parse {TablaCub.GetCellValueAsString(row + 1, 2)} as double type \n Verifica el contenido del renglon {row + 1} y la columna 2";
+                                    throw new Exception(message);
+                                }                                
+                            }                            
+                        }
+
                         double valorF = TablaCub.GetCellValueAsDouble(row + 1, 3);
+                        //Validacion de convercion a double del valor de celda 
+                        if (Double.TryParse(TablaCub.GetCellValueAsString(row + 1, 3), out convert_number))
+                        {
+                            valorF = convert_number;
+                        }
+                        else
+                        {
+                            if (!TablaCub.GetCellValueAsString(row +1, 3).Contains("Fin"))
+                            {
+                                string aux = TablaCub.GetCellValueAsString(row + 1, 3);
+                                if (TablaCub.GetCellValueAsString(row + 1, 3) == "")
+                                {
+                                    string mgs = String.Format("Unable to parse value NULL as double type \n Verifica el contenido del renglon {0} y la columna 3 \n Asegurate que al final de la tabla de cubicacion en cada columna contenga Fin de Tabla", row + 1);
+                                    throw new Exception(mgs);
+                                }
+                                else
+                                {
+                                    string message = $"Unable to parse {TablaCub.GetCellValueAsString(row + 1, 3)} as double \n Verifica el contenido del renglon {row + 1} y la columna 3";
+                                    throw new Exception(message);
+                                }
+                            }
+                        }
+
                         double valorG = valorB;
                         double valorH = valorC;
 
@@ -156,7 +316,7 @@ namespace TAS360.Controllers
                             if (valorA >= ZCR1 && valorA < ZCR2)
                             {
                                 //establece los valores en un nuevo reglon de la nueva tabla de Cub
-                                NewTablaCub.SetCellValue(newRow, 1, valorA * 1000);
+                                NewTablaCub.SetCellValue(newRow, 1, Math.Round(valorA * 1000));
                                 NewTablaCub.SetCellValue(newRow, 2, valorB);
                                 NewTablaCub.SetCellValue(newRow, 3, valorC);
 
@@ -168,7 +328,7 @@ namespace TAS360.Controllers
                                     volumen_m3 = valorC
                                 });
 
-                                stringbuilder.AppendLine(valorA * 1000 + "," + valorB + "," + valorC);
+                                stringbuilder.AppendLine(Math.Round(valorA * 1000) + "," + valorB + "," + valorC);
 
                                 row++;
                                 newRow++;
@@ -210,13 +370,33 @@ namespace TAS360.Controllers
                                         }
                                         valorA += 0.001;
                                         double x = Math.Round(TablaCub.GetCellValueAsDouble(indexRow, 7),3);
+                                        //Validacion de convercion a double del valor de celda 
+                                        if (Double.TryParse(TablaCub.GetCellValueAsString(indexRow, 7), out convert_number))
+                                        {
+                                            x = Math.Round(convert_number,3);
+                                        }
+                                        else
+                                        {
+                                            string message = $"Unable to parse {TablaCub.GetCellValueAsString(indexRow, 7)} as double type \n Verifica el contenido del renglon {row} y la columna 7";
+                                            throw new Exception(message);
+                                        }
                                         valorC = valorH + x;
                                         double y = Math.Round(TablaCub.GetCellValueAsDouble(indexRow, 6),2);
+                                        //Validacion de convercion a double del valor de celda 
+                                        if (Double.TryParse(TablaCub.GetCellValueAsString(indexRow, 6), out convert_number))
+                                        {
+                                            y = Math.Round(convert_number, 2);
+                                        }
+                                        else
+                                        {
+                                            string message = $"Unable to parse {TablaCub.GetCellValueAsString(indexRow, 6)} as double type \n Verifica el contenido del renglon {row} y la columna 6";
+                                            throw new Exception(message);
+                                        }
                                         valorB = valorG + y;
                                     }
 
                                     //establece los valores en un nuevo reglon de la nueva tabla de Cub
-                                    NewTablaCub.SetCellValue(newRow, 1, valorA * 1000);
+                                    NewTablaCub.SetCellValue(newRow, 1, Math.Round(valorA * 1000));
 
                                     //valida que el valor de volumen ingresado en BLS en mm no sea mayor al siguiente valor en cm  
                                     if (valorB > valorD && valorD != 0)
@@ -250,7 +430,7 @@ namespace TAS360.Controllers
                                         bls = valorB,
                                         volumen_m3 = valorC
                                     });
-                                    stringbuilder.AppendLine(valorA * 1000 + "," + valorB + "," + valorC);
+                                    stringbuilder.AppendLine(Math.Round(valorA * 1000) + "," + valorB + "," + valorC);
                                 }
                                 row++;
                             }
@@ -293,13 +473,33 @@ namespace TAS360.Controllers
                                     }
                                     valorA += 0.001;
                                     double x = Math.Round(TablaCub.GetCellValueAsDouble(indexRow, 7), 3);
+                                    //Validacion de convercion a double del valor de celda 
+                                    if (Double.TryParse(TablaCub.GetCellValueAsString(indexRow, 7), out convert_number))
+                                    {
+                                        x = Math.Round(convert_number, 3);
+                                    }
+                                    else
+                                    {
+                                        string message = $"Unable to parse {TablaCub.GetCellValueAsString(indexRow, 7)} as double type \n Verifica el contenido del renglon {indexRow} y la columna 7";
+                                        throw new Exception(message);
+                                    }
                                     valorC = valorH + x;
                                     double y = Math.Round(TablaCub.GetCellValueAsDouble(indexRow, 6), 2);
+                                    //Validacion de convercion a double del valor de celda 
+                                    if (Double.TryParse(TablaCub.GetCellValueAsString(indexRow, 6), out convert_number))
+                                    {
+                                        y = Math.Round(convert_number, 2);
+                                    }
+                                    else
+                                    {
+                                        string message = $"Unable to parse {TablaCub.GetCellValueAsString(indexRow, 6)} as double type \n Verifica el contenido del renglon {indexRow} y la columna 6";
+                                        throw new Exception(message);
+                                    }
                                     valorB = valorG + y;
                                 }
 
                                 //establece los valores en un nuevo reglon de la nueva tabla de Cub
-                                NewTablaCub.SetCellValue(newRow, 1, valorA * 1000);
+                                NewTablaCub.SetCellValue(newRow, 1, Math.Round(valorA * 1000));
 
                                 //valida que el valor de volumen ingresado en BLS en mm no sea mayor al siguiente valor en cm  
                                 if (valorB > valorD && valorD != 0)
@@ -333,7 +533,7 @@ namespace TAS360.Controllers
                                     bls = valorB,
                                     volumen_m3 = valorC
                                 });
-                                stringbuilder.AppendLine(valorA * 1000 + "," + valorB + "," + valorC);
+                                stringbuilder.AppendLine(Math.Round(valorA * 1000) + "," + valorB + "," + valorC);
                             }
                             row++;
                         }
@@ -349,7 +549,7 @@ namespace TAS360.Controllers
                     if (contWarningm3 > 0 || contWarningBls > 0)
                     {
                         NewTablaCub.SaveAs(path + name[0] + "_mm_x_mm_"+ tabla.TAD +".xlsx");
-                        mesage = "Se genero correctamente la tabla de cubicacion, pero se encontraron iregularidades de volumen en m3 (" +  contWarningm3 + " puntos) y en Bls (" + contWarningBls + " puntos) en la tabla milimetrica generada (marcados en rojo) favor de realizar los ajustes de manera manual antes de cargar la tabla al TAS360";
+                        mesage = "Se genero correctamente la tabla de cubicacion, \n pero se encontraron iregularidades de volumen en m3 (" +  contWarningm3 + " puntos) y en Bls (" + contWarningBls + " puntos) \n en la tabla milimetrica generada (marcados en rojo) favor de realizar \n los ajustes de manera manual antes de cargar la tabla al TAS360";
                         ViewBag.Warning = mesage;
                         System.IO.File.Delete(filepath);
                         ViewBag.IsVisbleDlxlsx = true;
@@ -382,9 +582,16 @@ namespace TAS360.Controllers
                     {
                         ViewBag.Exception = "No puedes importar un archivo mientras este abierto, favor de cerrar el archivo";
                     }
+                    else if(ex.Message.Contains("Unable to parse"))
+                    {
+                        ViewBag.IsVisbleDlxlsx = false;
+                        ViewBag.IsVisbleDlcsv = false;
+                        string msg = $" {ex.Message} \n Asegurate de que el formato de las celdas en el documento sea de tipo number y no contengan espacios entre los valores. ";
+                        ViewBag.Exception = msg;
+                    }
                     else
                     {
-                        ViewBag.Exception = String.Format("En el renglon {0} y columna {1} ocurrio el siguiente error: {2}", row, column, ex.Message);
+                        ViewBag.Exception = String.Format("En el renglon {0} y columna {1} ocurrio el siguiente error: \n {2}", row, column, ex.Message);
                     }
                     
                 }
