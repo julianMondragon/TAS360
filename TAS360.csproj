@@ -153,6 +153,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TablaCubController.cs" />
+    <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\WebAPIPemexController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -211,11 +212,29 @@
     <Compile Include="Models\Auditoria.cs">
       <DependentUpon>Simcot_db.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Categoria.cs">
+      <DependentUpon>HelpDesk_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Componentes.cs">
       <DependentUpon>Simcot_db.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entradas.cs">
       <DependentUpon>Simcot_db.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HelpDesk_DB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HelpDesk_DB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HelpDesk_DB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HelpDesk_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HelpDesk_DB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HelpDesk_DB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\NivTanq.cs">
       <DependentUpon>AditivoBD.tt</DependentUpon>
@@ -241,8 +260,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Simcot_db.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>HelpDesk_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>HelpDesk_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Status.cs">
+      <DependentUpon>HelpDesk_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>AditivoBD.tt</DependentUpon>
+      <DependentUpon>HelpDesk_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Terminal.cs">
+      <DependentUpon>HelpDesk_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ticket.cs">
+      <DependentUpon>HelpDesk_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TotIny10.cs">
       <DependentUpon>AditivoBD.tt</DependentUpon>
@@ -298,6 +332,9 @@
     <Compile Include="Models\UCIny9.cs">
       <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>HelpDesk_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ViewModel\aditivoViewModel.cs" />
     <Compile Include="Models\ViewModel\auditoriaViewModel.cs" />
     <Compile Include="Models\ViewModel\ConfigTanqAditivoViewModel.cs" />
@@ -311,6 +348,7 @@
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
     <Compile Include="Models\ViewModel\SocketViewModel.cs" />
     <Compile Include="Models\ViewModel\TablaCubViewModel.cs" />
+    <Compile Include="Models\ViewModel\TicketViewModel.cs" />
     <Compile Include="Models\ViewModel\TramaViewModel.cs" />
     <Compile Include="Models\ViewModel\WebAPIPemexViewModel.cs" />
     <Compile Include="Models\VolTanq.cs">
@@ -340,6 +378,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>AditivoBD.edmx</DependentUpon>
       <LastGenOutput>AditivoBD.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\HelpDesk_DB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HelpDesk_DB.edmx</DependentUpon>
+      <LastGenOutput>HelpDesk_DB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\HelpDesk_DB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HelpDesk_DB.edmx</DependentUpon>
+      <LastGenOutput>HelpDesk_DB.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Simcot_db.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -372,6 +420,13 @@
     <Content Include="Scripts\datatables\Buttons-2.2.3\css\mixins.scss" />
     <Content Include="Prototipo_Tabla\Prototipo.xlsx" />
     <Content Include="Prototipo_Tabla\Prototipo2.xlsx" />
+    <EntityDeploy Include="Models\HelpDesk_DB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HelpDesk_DB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\HelpDesk_DB.edmx.diagram">
+      <DependentUpon>HelpDesk_DB.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.min.css" />
@@ -712,6 +767,8 @@
     <Content Include="Views\Reports\CreateRequest.cshtml" />
     <Content Include="Views\WebAPIPemex\Index.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\Tickets\Index.cshtml" />
+    <Content Include="Views\Tickets\CreateTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
