@@ -18,12 +18,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("SIMCOT ", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("PTS-SIMCOT", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Tickets", "Index", "Tickets")</li>
+                    <li>@Html.ActionLink("Cálculo FCV", "Index", "Calculo_FCV")</li>
+                    <li>@Html.ActionLink("Conv.Tabla de Cubicación", "Index", "TablaCub")</li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Operaciones SIIC <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SIIC <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Entradas", "Index", "Home")</li>
                             <li>@Html.ActionLink("Salidas", "About", "Home")</li>
@@ -43,14 +46,18 @@
                             <li role="separator" class="divider"></li>
                             <li>@Html.ActionLink("abrir conexion", "Index", "Reports")</li>
                             @*<li role="separator" class="divider"></li>
-        <li><a href="#">One more separated link</a></li>*@
+                <li><a href="#">One more separated link</a></li>*@
                         </ul>
                     </li>
-                    <li>@Html.ActionLink("HMI de Aditivación", "Index", "Aditivo")</li>
-                    <li>@Html.ActionLink("Conv.Tabla de Cubicación", "Index", "TablaCub")</li>
-                    <li>@Html.ActionLink("Cálculo FCV", "Index", "Calculo_FCV")</li>
-                    <li>@Html.ActionLink("Danload 6000", "Index", "Danload")</li>
-                    <li>@Html.ActionLink("Accuload III", "Index", "Accuload")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Otras <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("HMI de Aditivación", "Index", "Aditivo")</li>
+                            <li>@Html.ActionLink("Danload 6000", "Index", "Danload")</li>
+                            <li>@Html.ActionLink("Accuload III", "Index", "Accuload")</li>
+                        </ul>
+                    </li>
+
                 </ul>
             </div>
         </div>

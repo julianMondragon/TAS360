@@ -25,6 +25,5 @@ namespace TAS360.Models
     
         public virtual Categoria Categoria { get; set; }
         public virtual Terminal Terminal { get; set; }
-        public virtual User User { get; set; }
     }
 }

@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "UnauthorizedOperation";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="jumbotron">
+    <h1>Sin autorización </h1>
+    <p class="lead">No tienes los privilegios para acceder a: </p>
+</div>
+
+
+<div class="row">
+    <img src="~/Content/img/NoAuthorizado.jpg" class="card-img-top" alt="...">
+    <div class="col-md-4">
+        <table class="table table-success table-striped">
+            <tr>
+                <th class="alert-success">Dato</th>
+                <th class="alert-success">Valor</th>
+            </tr>
+            <tr>
+                <td>Modulo</td>
+                <td>@ViewBag.modulo</td>
+
+            </tr>
+            <tr>
+                <td>Operación</td>
+                <td>@ViewBag.operacion</td>
+            </tr>
+            <tr>
+                <td>Mensaje</td>
+                <td>@ViewBag.message</td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+

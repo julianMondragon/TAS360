@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TAS360.Filters;
 using TAS360.Models;
 using TAS360.Models.ViewModel;
 
@@ -11,10 +12,11 @@ namespace TAS360.Controllers
     public class TicketsController : Controller
     {
         // GET: Tickets
+        [AuthorizeUser(idOperacion:5)]
         public ActionResult Index()
         {
               List<TicketViewModel> tickets = new List<TicketViewModel>();
-            using (Models.HelpDeskEntities Ticket = new Models.HelpDeskEntities())
+            using (Models.HelpDesk_Entities1 Ticket = new Models.HelpDesk_Entities1())
             {
                 var Tickets = (from s in Ticket.Ticket select s);
                 if (Tickets != null && Tickets.Any())
@@ -41,6 +43,7 @@ namespace TAS360.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeUser(idOperacion: 1)]
         public ActionResult CreateTicket()
         {
             TicketViewModel NewTicket = new TicketViewModel();
@@ -63,7 +66,7 @@ namespace TAS360.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    using (HelpDeskEntities db = new HelpDeskEntities())
+                    using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                     {
                         Ticket ticket = new Ticket();
                         ticket.titulo = model.titulo;
@@ -105,7 +108,7 @@ namespace TAS360.Controllers
         private void GetCategories()
         {
             List<SelectListItem> Categorias = new List<SelectListItem>();
-            using (HelpDeskEntities db = new HelpDeskEntities ())
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1 ())
             {
                 var aux = (from s in db.Categoria select s);
                 if (aux != null && aux.Any())
@@ -137,7 +140,7 @@ namespace TAS360.Controllers
                 Selected = true
             });
 
-            using (HelpDeskEntities db = new HelpDeskEntities())
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
             {
                 var aux = (from s in db.Terminal select s);
                 if (aux != null && aux.Any())
@@ -170,7 +173,7 @@ namespace TAS360.Controllers
                 Selected = true
             });
 
-            using (HelpDeskEntities db = new HelpDeskEntities())
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
             {
                 var aux = (from s in db.User select s);
                 if (aux != null && aux.Any())
@@ -179,7 +182,7 @@ namespace TAS360.Controllers
                     {
                         Usuarios.Add(new SelectListItem
                         {
-                            Text = a.Nombre,
+                            Text = a.nombre,
                             Value = a.id.ToString()
 
                         });
@@ -196,7 +199,7 @@ namespace TAS360.Controllers
         {
 
             List<SelectListItem> Status = new List<SelectListItem>();
-            using (HelpDeskEntities db = new HelpDeskEntities())
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
             {
                 var aux = (from s in db.Status select s);
                 if (aux != null && aux.Any())

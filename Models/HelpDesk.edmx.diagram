@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d91f5ac36dfc49c78298fcabef5c2a5a" Name="Diagram1">
+        <EntityTypeShape EntityType="HelpDeskModel.Categoria" Width="1.5" PointX="1" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.Modulo" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.Operacion" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.Roll" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.Roll_Operacion" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.Status" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.sysdiagrams" Width="1.5" PointX="8" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.Terminal" Width="1.5" PointX="1" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.Ticket" Width="1.5" PointX="3.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelpDeskModel.User" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+        <AssociationConnector Association="HelpDeskModel.FK_Ticket_Categoria" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_Operacion_Modulo" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_Roll_Operacion_Operacion" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_Roll_Operacion_Roll" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_User_Roll" ManuallyRouted="false" />
+        <AssociationConnector Association="HelpDeskModel.FK_Ticket_Terminal" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

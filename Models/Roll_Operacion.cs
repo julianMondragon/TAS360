@@ -12,16 +12,13 @@ namespace TAS360.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Roll_Operacion
     {
         public int id { get; set; }
-        public string nombre { get; set; }
         public Nullable<int> id_Roll { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
-        public Nullable<System.DateTime> createdAt { get; set; }
-        public Nullable<System.DateTime> updateAt { get; set; }
+        public Nullable<int> id_Operacion { get; set; }
     
+        public virtual Operacion Operacion { get; set; }
         public virtual Roll Roll { get; set; }
     }
 }

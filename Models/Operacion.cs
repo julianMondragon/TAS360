@@ -12,16 +12,20 @@ namespace TAS360.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Operacion
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Operacion()
+        {
+            this.Roll_Operacion = new HashSet<Roll_Operacion>();
+        }
+    
         public int id { get; set; }
         public string nombre { get; set; }
-        public Nullable<int> id_Roll { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
-        public Nullable<System.DateTime> createdAt { get; set; }
-        public Nullable<System.DateTime> updateAt { get; set; }
+        public Nullable<int> id_Modulo { get; set; }
     
-        public virtual Roll Roll { get; set; }
+        public virtual Modulo Modulo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Roll_Operacion> Roll_Operacion { get; set; }
     }
 }

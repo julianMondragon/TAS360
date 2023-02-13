@@ -12,6 +12,36 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Modulo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="Operacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="60" />
+          <Property Name="id_Modulo" Type="int" />
+        </EntityType>
+        <EntityType Name="Roll">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="Roll_Operacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Roll" Type="int" />
+          <Property Name="id_Operacion" Type="int" />
+        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="Status" />
@@ -55,11 +85,49 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="50" />
-          <Property Name="email" Type="varchar" MaxLength="50" />
-          <Property Name="password" Type="varbinary" MaxLength="64" />
+          <Property Name="nombre" Type="varchar" MaxLength="80" />
           <Property Name="id_Roll" Type="int" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="80" />
+          <Property Name="createdAt" Type="date" />
+          <Property Name="updateAt" Type="date" />
         </EntityType>
+        <Association Name="FK_Operacion_Modulo">
+          <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="id_Modulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roll_Operacion_Operacion">
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="0..1" />
+          <End Role="Roll_Operacion" Type="Self.Roll_Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operacion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Roll_Operacion">
+              <PropertyRef Name="id_Operacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roll_Operacion_Roll">
+          <End Role="Roll" Type="Self.Roll" Multiplicity="0..1" />
+          <End Role="Roll_Operacion" Type="Self.Roll_Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roll">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Roll_Operacion">
+              <PropertyRef Name="id_Roll" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Ticket_Categoria">
           <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
           <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
@@ -84,15 +152,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Ticket_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+        <Association Name="FK_User_Roll">
+          <End Role="Roll" Type="Self.Roll" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Roll">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Ticket">
-              <PropertyRef Name="id_User" />
+            <Dependent Role="User">
+              <PropertyRef Name="id_Roll" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -129,11 +197,27 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="HelpDeskModelStoreContainer">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operacion" EntityType="Self.Operacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roll" EntityType="Self.Roll" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roll_Operacion" EntityType="Self.Roll_Operacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Terminal" EntityType="Self.Terminal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Operacion_Modulo" Association="Self.FK_Operacion_Modulo">
+            <End Role="Modulo" EntitySet="Modulo" />
+            <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roll_Operacion_Operacion" Association="Self.FK_Roll_Operacion_Operacion">
+            <End Role="Operacion" EntitySet="Operacion" />
+            <End Role="Roll_Operacion" EntitySet="Roll_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roll_Operacion_Roll" Association="Self.FK_Roll_Operacion_Roll">
+            <End Role="Roll" EntitySet="Roll" />
+            <End Role="Roll_Operacion" EntitySet="Roll_Operacion" />
+          </AssociationSet>
           <AssociationSet Name="FK_Ticket_Categoria" Association="Self.FK_Ticket_Categoria">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Ticket" EntitySet="Ticket" />
@@ -142,9 +226,9 @@
             <End Role="Terminal" EntitySet="Terminal" />
             <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
-          <AssociationSet Name="FK_Ticket_User" Association="Self.FK_Ticket_User">
+          <AssociationSet Name="FK_User_Roll" Association="Self.FK_User_Roll">
+            <End Role="Roll" EntitySet="Roll" />
             <End Role="User" EntitySet="User" />
-            <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -159,6 +243,43 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Categoria" FromRole="Categoria" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Modulo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Operacion" Relationship="Self.FK_Operacion_Modulo" FromRole="Modulo" ToRole="Operacion" />
+        </EntityType>
+        <EntityType Name="Operacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="id_Modulo" Type="Int32" />
+          <NavigationProperty Name="Modulo" Relationship="Self.FK_Operacion_Modulo" FromRole="Operacion" ToRole="Modulo" />
+          <NavigationProperty Name="Roll_Operacion" Relationship="Self.FK_Roll_Operacion_Operacion" FromRole="Operacion" ToRole="Roll_Operacion" />
+        </EntityType>
+        <EntityType Name="Roll">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Roll_Operacion" Relationship="Self.FK_Roll_Operacion_Roll" FromRole="Roll" ToRole="Roll_Operacion" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Roll" FromRole="Roll" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Roll_Operacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Roll" Type="Int32" />
+          <Property Name="id_Operacion" Type="Int32" />
+          <NavigationProperty Name="Operacion" Relationship="Self.FK_Roll_Operacion_Operacion" FromRole="Roll_Operacion" ToRole="Operacion" />
+          <NavigationProperty Name="Roll" Relationship="Self.FK_Roll_Operacion_Roll" FromRole="Roll_Operacion" ToRole="Roll" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -200,18 +321,19 @@
           <Property Name="status" Type="Int32" />
           <NavigationProperty Name="Categoria" Relationship="Self.FK_Ticket_Categoria" FromRole="Ticket" ToRole="Categoria" />
           <NavigationProperty Name="Terminal" Relationship="Self.FK_Ticket_Terminal" FromRole="Ticket" ToRole="Terminal" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Ticket_User" FromRole="Ticket" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="Binary" MaxLength="64" FixedLength="false" />
+          <Property Name="nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="id_Roll" Type="Int32" />
-          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_User" FromRole="User" ToRole="Ticket" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="createdAt" Type="DateTime" Precision="0" />
+          <Property Name="updateAt" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Roll" Relationship="Self.FK_User_Roll" FromRole="User" ToRole="Roll" />
         </EntityType>
         <Association Name="FK_Ticket_Categoria">
           <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
@@ -222,6 +344,54 @@
             </Principal>
             <Dependent Role="Ticket">
               <PropertyRef Name="id_Categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operacion_Modulo">
+          <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="id_Modulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roll_Operacion_Operacion">
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="0..1" />
+          <End Role="Roll_Operacion" Type="Self.Roll_Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operacion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Roll_Operacion">
+              <PropertyRef Name="id_Operacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roll_Operacion_Roll">
+          <End Role="Roll" Type="Self.Roll" Multiplicity="0..1" />
+          <End Role="Roll_Operacion" Type="Self.Roll_Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roll">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Roll_Operacion">
+              <PropertyRef Name="id_Roll" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Roll">
+          <End Role="Roll" Type="Self.Roll" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roll">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_Roll" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -237,20 +407,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Ticket_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Ticket">
-              <PropertyRef Name="id_User" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="HelpDeskEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="HelpDesk_Entities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+          <EntitySet Name="Modulo" EntityType="Self.Modulo" />
+          <EntitySet Name="Operacion" EntityType="Self.Operacion" />
+          <EntitySet Name="Roll" EntityType="Self.Roll" />
+          <EntitySet Name="Roll_Operacion" EntityType="Self.Roll_Operacion" />
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Terminal" EntityType="Self.Terminal" />
@@ -260,12 +422,24 @@
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
+          <AssociationSet Name="FK_Operacion_Modulo" Association="Self.FK_Operacion_Modulo">
+            <End Role="Modulo" EntitySet="Modulo" />
+            <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roll_Operacion_Operacion" Association="Self.FK_Roll_Operacion_Operacion">
+            <End Role="Operacion" EntitySet="Operacion" />
+            <End Role="Roll_Operacion" EntitySet="Roll_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roll_Operacion_Roll" Association="Self.FK_Roll_Operacion_Roll">
+            <End Role="Roll" EntitySet="Roll" />
+            <End Role="Roll_Operacion" EntitySet="Roll_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Roll" Association="Self.FK_User_Roll">
+            <End Role="Roll" EntitySet="Roll" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
           <AssociationSet Name="FK_Ticket_Terminal" Association="Self.FK_Ticket_Terminal">
             <End Role="Terminal" EntitySet="Terminal" />
-            <End Role="Ticket" EntitySet="Ticket" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ticket_User" Association="Self.FK_Ticket_User">
-            <End Role="User" EntitySet="User" />
             <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
@@ -315,12 +489,46 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="HelpDeskModelStoreContainer" CdmEntityContainer="HelpDeskEntities">
+        <EntityContainerMapping StorageEntityContainer="HelpDeskModelStoreContainer" CdmEntityContainer="HelpDesk_Entities1">
           <EntitySetMapping Name="Categoria">
             <EntityTypeMapping TypeName="HelpDeskModel.Categoria">
               <MappingFragment StoreEntitySet="Categoria">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modulo">
+            <EntityTypeMapping TypeName="HelpDeskModel.Modulo">
+              <MappingFragment StoreEntitySet="Modulo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operacion">
+            <EntityTypeMapping TypeName="HelpDeskModel.Operacion">
+              <MappingFragment StoreEntitySet="Operacion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_Modulo" ColumnName="id_Modulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roll">
+            <EntityTypeMapping TypeName="HelpDeskModel.Roll">
+              <MappingFragment StoreEntitySet="Roll">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roll_Operacion">
+            <EntityTypeMapping TypeName="HelpDeskModel.Roll_Operacion">
+              <MappingFragment StoreEntitySet="Roll_Operacion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_Roll" ColumnName="id_Roll" />
+                <ScalarProperty Name="id_Operacion" ColumnName="id_Operacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -370,10 +578,12 @@
             <EntityTypeMapping TypeName="HelpDeskModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_Roll" ColumnName="id_Roll" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="id_Roll" ColumnName="id_Roll" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="updateAt" ColumnName="updateAt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

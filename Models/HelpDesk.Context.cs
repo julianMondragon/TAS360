@@ -15,10 +15,10 @@ namespace TAS360.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class HelpDeskEntities : DbContext
+    public partial class HelpDesk_Entities1 : DbContext
     {
-        public HelpDeskEntities()
-            : base("name=HelpDeskEntities")
+        public HelpDesk_Entities1()
+            : base("name=HelpDesk_Entities1")
         {
         }
     
@@ -28,6 +28,10 @@ namespace TAS360.Models
         }
     
         public virtual DbSet<Categoria> Categoria { get; set; }
+        public virtual DbSet<Modulo> Modulo { get; set; }
+        public virtual DbSet<Operacion> Operacion { get; set; }
+        public virtual DbSet<Roll> Roll { get; set; }
+        public virtual DbSet<Roll_Operacion> Roll_Operacion { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Terminal> Terminal { get; set; }
