@@ -1,0 +1,102 @@
+﻿@model TAS360.Models.ViewModel.TicketViewModel
+@{
+    ViewBag.Title = "Ticket :" + @Model.id;
+    int count = 0;
+    int count1 = 0;
+}
+<div class="jumbotron">
+    @switch (Model.status_name)
+    {
+        case "Pendiente":
+            <h2 style="color:blue">@Model.status_name</h2>
+            break;
+        case "Analisis":
+            <h2 style="color:blue">@Model.status_name</h2>
+            break;
+        case "Correccion":
+            <h2 style="color:orangered">@Model.status_name</h2>
+            break;
+        case "Pruebas   ":
+            <h2 style="color:orange">@Model.status_name</h2>
+            break;
+        case "Implementa":
+            <h2 style="color:yellow">@Model.status_name</h2>
+            break;
+        case "Pend_Pmx  ":
+            <h2 style="color:red">@Model.status_name</h2>
+            break;
+        case "Cerrado   ":
+            <h2 style="color:blue">@Model.status_name</h2>
+            break;
+        default:
+            <h2>@Model.status_name</h2>
+            break;
+}
+    <h3>@Model.titulo</h3>
+    @*<p class="lead">Reporte de volumen totalizado por islas en la TAD del día 20/10/2020</p>*@
+</div>
+<!--Heathers -->
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-success table-striped">
+            <tr>
+                @*<th class="alert-success">Status</th>*@
+                <th class="alert-success">Subsistema</th>
+                <th class="alert-success">Categoria</th>
+                <th class="alert-success">Usuario</th>
+                @*<th class="alert-info">Sobrante(-) faltante(+)</th>*@
+
+            </tr>
+            <tr>
+                @*<td>@Model.status_name</td>*@
+                <td>@Model.Subsistema_name</td>
+                <td> @Model.categoria_name</td>
+                <td>@Model.usuario_name</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!--Section details-->
+<section class="page-section cta">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <pre>@Model.mensaje</pre>
+                <div class="cta-inner bg-faded text-left rounded">
+                    <div class="intro-button mx-auto">
+                        <br />
+                        @using (Html.BeginForm("AddFiles", "Tickets", new { IdTicket = Model.id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <input type="file" name="postedFile" style="margin:0 0 5px 0" />
+                            <input class="btn btn-success" type="submit" value="Agregar evidencia" />
+                        }
+                        <br />
+                        <a class="btn btn-default " href="@Url.Content("~/Tickets/index")">Regresar</a>
+                        <a class="btn btn-warning " href="@Url.Content("~/Tickets/AddCommentTicket/" + (int)Model.id)">Agregar comentario</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Imagenes -->
+@foreach (var photo in Model.Files)
+{
+    <div class="row" style="margin:05px 0px 0px 0px">
+        <div class="col-sm-4 col-md-4">
+            <div class="thumbnail">
+                <img src="@photo.URL" />
+                @*<img src="~/TicketFiles/Evidencia1.jpeg" />*@
+                <div class="caption">
+                    <h4>@photo.Nombre</h4>
+                </div>
+                <p><a href="#" class="btn btn-primary" role="button">Ver</a>
+                   <a href="#" class="btn btn-default" role="button">Descargar</a>
+                </p>
+            </div>
+        </div>
+    </div>
+   
+}
+

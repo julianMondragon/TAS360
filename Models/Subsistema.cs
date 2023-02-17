@@ -12,10 +12,10 @@ namespace TAS360.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Terminal
+    public partial class Subsistema
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Terminal()
+        public Subsistema()
         {
             this.Pendiente = new HashSet<Pendiente>();
             this.Ticket = new HashSet<Ticket>();
@@ -23,7 +23,7 @@ namespace TAS360.Models
     
         public int id { get; set; }
         public string Nombre { get; set; }
-        public string clave { get; set; }
+        public string Descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pendiente> Pendiente { get; set; }

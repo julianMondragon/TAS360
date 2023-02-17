@@ -1,0 +1,66 @@
+﻿@model TAS360.Models.ViewModel.TicketViewModel
+@using TAS360.Models.ViewModel;
+@{
+
+    ViewBag.Title = "Agregar comentario";
+    List<SelectListItem> Status = (List<SelectListItem>)ViewBag.Status;
+    List<SelectListItem> Usuarios = (List<SelectListItem>)ViewBag.Usuarios;
+    Comentarios comentario = Model.Comentarios.FirstOrDefault();
+    string exception = ViewBag.ExceptionMessage;
+}
+<div class="jumbotron">
+    <h3>Agrega un comentario al ticket : @Model.id</h3>
+    <p class="lead">@Model.titulo</p>
+</div>
+<section class="page-section about-heading">
+    <div class="container">
+        @if (exception != null)
+        {
+            <h3 style="color:red">@exception</h3>
+        }
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @using (Html.BeginForm("AddCommentTicket", "Tickets", FormMethod.Post))
+                                {
+                                    @*@Html.AntiForgeryToken()*@
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-4">
+                                                @Html.LabelFor(f => f.Status)
+                                                @Html.DropDownListFor(model => model.Status, Status, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Html.LabelFor(f => f.id_Resp)
+                                                @Html.DropDownListFor(model => model.id_Usuario, Usuarios, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-10">
+                                                @Html.LabelFor(f => f.mensaje)
+                                                @Html.TextAreaFor(f => f.Comentarios.FirstOrDefault().Comentario1, new { @class = "form-control", rows = "10" })
+                                                @Html.ValidationMessageFor(f => f.Comentarios.FirstOrDefault().Comentario1, null, new { @class = "red" })
+                                            </div>
+                                        </div>
+
+                                        <div style="text-align:right">
+                                            <br />
+                                            <input type="submit" class="btn btn-lg btn-primary" value="Agregar" />
+                                        </div>
+
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-md-12">
+                                <pre>@Model.mensaje</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

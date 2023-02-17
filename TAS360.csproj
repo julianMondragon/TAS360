@@ -219,11 +219,20 @@
     <Compile Include="Models\Categoria.cs">
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Clasificacion_Pendiente.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comentario.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Componentes.cs">
       <DependentUpon>Simcot_db.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entradas.cs">
       <DependentUpon>Simcot_db.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Files.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HelpDesk.Context.cs">
       <AutoGen>True</AutoGen>
@@ -247,6 +256,12 @@
       <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Operacion.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Pendiente.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Prioridad_de_Pendiente.cs">
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Recetas.cs">
@@ -285,6 +300,9 @@
     <Compile Include="Models\Status.cs">
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Subsistema.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
@@ -292,6 +310,18 @@
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ticket.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tickets_Files.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ticket_Comentario.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ticket_Record_Status.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ticket_User.cs">
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TotIny10.cs">
@@ -745,6 +775,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="TicketFiles\Evidencia 1.jpeg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -787,6 +818,9 @@
     <Content Include="Views\Tickets\CreateTicket.cshtml" />
     <Content Include="Views\Acceso\Login.cshtml" />
     <Content Include="Views\Error\UnauthorizedOperation.cshtml" />
+    <Content Include="Views\Tickets\ShowTicket.cshtml" />
+    <Content Include="Views\Tickets\EditTicket.cshtml" />
+    <Content Include="Views\Tickets\AddCommentTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

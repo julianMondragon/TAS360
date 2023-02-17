@@ -1,7 +1,7 @@
 ﻿
 @model TAS360.Models.ViewModel.TicketViewModel
 @{
-    ViewBag.Title = "Crear Ticket";
+    ViewBag.Title = "Editar Ticket";
     List<SelectListItem> Categorias = (List<SelectListItem>)ViewBag.Categorias;
     List<SelectListItem> Terminales = (List<SelectListItem>)ViewBag.Terminales;
     List<SelectListItem> Status = (List<SelectListItem>)ViewBag.Status;
@@ -13,7 +13,6 @@
 <br />
 <section class="page-section about-heading">
     <div class="container">
-        @*<img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="assets/img/about.jpg" alt="..." />*@
         @if (exception != null)
         {
             <h3 style="color:red">@exception</h3>
@@ -24,14 +23,14 @@
                     <div class="bg-faded rounded p-5">
                         <h2 class="section-heading mb-4">
                             @*<span class="section-heading-upper">Strong Coffee, Strong Roots</span>*@
-                            <span class="section-heading-lower">Crear Ticket</span>
+                            <span class="section-heading-lower">Editar Ticket</span>
                         </h2>
                         <div class="row">
                             <div class="col-md-12">
-                                @using (Html.BeginForm("CreateTicket", "Tickets", FormMethod.Post))
+                                @using (Html.BeginForm("EditTicket", "Tickets", FormMethod.Post))
                                 {
                                     @Html.AntiForgeryToken()
-                                    <br />
+                                    @*<br />@Model.Status*@
 
                                     <div class="row">
 
@@ -53,7 +52,7 @@
 
                                             <div class="col-md-4">
                                                 @Html.LabelFor(f => f.Status)
-                                                @Html.DropDownListFor(model => model.Status, Status, new { @class = "form-control" , @readonly = "true" })
+                                                @Html.DropDownListFor(model => model.Status, Status, new { @class = "form-control", @readonly = "true" })
                                             </div>
 
                                             <div class="col-md-6">
@@ -73,10 +72,10 @@
                                                 @Html.ValidationMessageFor(f => f.mensaje, null, new { @class = "red" })
                                             </div>
                                         </div>
-                                        
+
                                         <div style="text-align:right">
                                             <br />
-                                            <input type="submit" class="btn btn-lg btn-primary" value="Crear" />
+                                            <input type="submit" class="btn btn-lg btn-primary" value="Guardar" />
                                         </div>
 
                                     </div>

@@ -7,45 +7,42 @@
     <h1>Mis Tickets</h1>
     <p class="lead">Todos los tickets ordenados por fecha</p>
     <p class="lead">
-        <a onclick="document.location.href = '@Url.Content("~/Tickets/CreateTicket")'" class="btn btn-info">Crear un Ticket &raquo;</a>
+        <a onclick="document.location.href = '@Url.Content("~/Tickets/CreateTicket")'" class="btn btn-success">Crear un Ticket &raquo;</a>
     </p>
 </div>
 <div class="row">
     <div class="col-md-12">
         <table class="table table-success table-striped">
             <tr>
-                <th class="alert-success">Folio</th>                
-                <th class="alert-success">Categoria</th>
-                <th class="alert-success">Usuario</th>
-                <th class="alert-warning">Status</th>
-                <th class="alert-info">Titulo</th>
-
+                <th class="alert-success" colspan="1">Folio</th>
+                <th class="alert-info" colspan="2">Titulo</th>
+                <th class="alert-warning" colspan="1">Categoria</th>
+                <th class="alert-success" colspan="1">Usuario</th>
+                <th class="alert-success" colspan="1">Status</th>
+                <th class="alert-success" colspan="1">Subsistema</th>
+                <th class="alert-success" colspan="1">Accion</th>
             </tr>
-            <tr>
-                @*@if (Model != null)
-                {
-                    for (int i = 0; i < Model.Ucls.Ucl1.Count; i++)
+            @if (Model != null)
+            {
+                    foreach(var ticket in Model)
                     {
                         <tr>
-                            <td>@Model.Ucls.Ucl1[i].Fecha_y_Hora</td>
-                            <td>@Model.Ucls.Ucl9[i].Isla_14_Totalizador_de_Aditivo</td>
-                            <td>@Model.Ucls.Ucl8[i].Isla_13_Totalizador_de_Aditivo</td>
-                            <td>@Model.Ucls.Ucl7[i].Isla_12_Totalizador_de_Aditivo</td>
-                            <td>@Model.Ucls.Ucl6[i].Isla_11_Totalizador_de_Aditivo</td>
-                            <td>@Model.Ucls.Ucl5[i].Isla_10_Totalizador_de_Aditivo</td>
-                            <td>@Model.Ucls.Ucl1[i].Isla_9_Totalizador_de_Aditivo</td>
-                            <td>@Model.Ucls.Ucl2[i].Isla_8_Totalizador_de_Aditivo</td>
-                            <td>@Model.Ucls.Ucl3[i].Isla_7_Totalizador_de_Aditivo</td>
-                            <td>@Model.Ucls.Ucl4[i].Isla_6_Totalizador_de_Aditivo</td>
+                            <td colspan="1"> @ticket.id</td>
+                            <td colspan="2"> @ticket.titulo</td>
+                            <td colspan="1"> @ticket.categoria_name</td>
+                            <td colspan="1"> @ticket.usuario_name</td>
+                            <td colspan="1"> @ticket.status_name</td>
+                            <td colspan="1"> @ticket.Subsistema_name</td>
+                            <td>
+                                <input type="button" class="btn btn-info" onclick="document.location.href = '@Url.Content("~/Tickets/ShowTicket/" + ticket.id)'" value="Ver" />
+                                <input type="button" class="btn btn-default" onclick="document.location.href = '@Url.Content("~/Tickets/EditTicket/" + ticket.id)'" value="Editar" />
+                            </td>
                         </tr>
                     }
-                }*@
-            </tr>
-
-        </table>
-      
+            }
+        </table>      
     </div>
 </div>
-<div class="row">
+
 
    

@@ -28,14 +28,24 @@ namespace TAS360.Models
         }
     
         public virtual DbSet<Categoria> Categoria { get; set; }
+        public virtual DbSet<Clasificacion_Pendiente> Clasificacion_Pendiente { get; set; }
+        public virtual DbSet<Comentario> Comentario { get; set; }
+        public virtual DbSet<Files> Files { get; set; }
         public virtual DbSet<Modulo> Modulo { get; set; }
         public virtual DbSet<Operacion> Operacion { get; set; }
+        public virtual DbSet<Pendiente> Pendiente { get; set; }
+        public virtual DbSet<Prioridad_de_Pendiente> Prioridad_de_Pendiente { get; set; }
         public virtual DbSet<Roll> Roll { get; set; }
         public virtual DbSet<Roll_Operacion> Roll_Operacion { get; set; }
         public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<Subsistema> Subsistema { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Terminal> Terminal { get; set; }
         public virtual DbSet<Ticket> Ticket { get; set; }
+        public virtual DbSet<Ticket_Comentario> Ticket_Comentario { get; set; }
+        public virtual DbSet<Ticket_Record_Status> Ticket_Record_Status { get; set; }
+        public virtual DbSet<Ticket_User> Ticket_User { get; set; }
+        public virtual DbSet<Tickets_Files> Tickets_Files { get; set; }
         public virtual DbSet<User> User { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

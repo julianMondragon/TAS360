@@ -12,22 +12,21 @@ namespace TAS360.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Terminal
+    public partial class Comentario
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Terminal()
+        public Comentario()
         {
-            this.Pendiente = new HashSet<Pendiente>();
-            this.Ticket = new HashSet<Ticket>();
+            this.Ticket_Comentario = new HashSet<Ticket_Comentario>();
         }
     
         public int id { get; set; }
-        public string Nombre { get; set; }
-        public string clave { get; set; }
+        public string Comentario1 { get; set; }
+        public Nullable<int> id_User { get; set; }
+        public Nullable<System.DateTime> CreatedAt { get; set; }
     
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Pendiente> Pendiente { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ticket> Ticket { get; set; }
+        public virtual ICollection<Ticket_Comentario> Ticket_Comentario { get; set; }
     }
 }

@@ -4,13 +4,40 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HelpDeskModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HelpDeskModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categoria">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Clasificacion_Pendiente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="80" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" />
+          <Property Name="Clave" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Comentario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Comentario" Type="varchar" MaxLength="5000" />
+          <Property Name="id_User" Type="int" />
+          <Property Name="CreatedAt" Type="date" />
+        </EntityType>
+        <EntityType Name="Files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="60" />
+          <Property Name="URL" Type="varchar" MaxLength="255" />
+          <Property Name="Tipo" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Modulo">
           <Key>
@@ -26,6 +53,34 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="60" />
           <Property Name="id_Modulo" Type="int" />
+        </EntityType>
+        <EntityType Name="Pendiente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" />
+          <Property Name="id_Clasificacion" Type="int" />
+          <Property Name="Observacion" Type="varchar" MaxLength="3000" />
+          <Property Name="Avance" Type="int" />
+          <Property Name="id_Prioridad" Type="int" />
+          <Property Name="Actividades_Pend_Susess" Type="varchar" MaxLength="3000" />
+          <Property Name="Responsable" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedAt" Type="date" />
+          <Property Name="Fecha_Compromiso" Type="date" />
+          <Property Name="id_User" Type="int" />
+          <Property Name="id_Ticket" Type="int" />
+          <Property Name="id_Terminal" Type="int" />
+          <Property Name="id_Subsistema" Type="int" />
+        </EntityType>
+        <EntityType Name="Prioridad_de_Pendiente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="80" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="80" />
+          <Property Name="clave" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Roll">
           <Key>
@@ -48,6 +103,14 @@
           </Key>
           <Property Name="Status" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="descripcion" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Subsistema">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="90" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -79,6 +142,43 @@
           <Property Name="id_Terminal" Type="int" />
           <Property Name="id_Subsistema" Type="int" />
           <Property Name="status" Type="int" />
+          <Property Name="CreatedAt" Type="date" />
+        </EntityType>
+        <EntityType Name="Ticket_Comentario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Ticket" Type="int" />
+          <Property Name="id_Comentario" Type="int" />
+        </EntityType>
+        <EntityType Name="Ticket_Record_Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Ticket" Type="int" />
+          <Property Name="id_Status" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="UpdateAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Ticket_User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Ticket" Type="int" Nullable="false" />
+          <Property Name="id_User" Type="int" Nullable="false" />
+          <Property Name="funcion" Type="varchar" MaxLength="80" />
+          <Property Name="CreatedAt" Type="date" />
+        </EntityType>
+        <EntityType Name="Tickets_Files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Ticket" Type="int" />
+          <Property Name="id_File" Type="int" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -92,6 +192,18 @@
           <Property Name="createdAt" Type="date" />
           <Property Name="updateAt" Type="date" />
         </EntityType>
+        <Association Name="FK_Comentario_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Comentario" Type="Self.Comentario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Comentario">
+              <PropertyRef Name="id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Operacion_Modulo">
           <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
           <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
@@ -101,6 +213,78 @@
             </Principal>
             <Dependent Role="Operacion">
               <PropertyRef Name="id_Modulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Clasificacion_Pendiente">
+          <End Role="Clasificacion_Pendiente" Type="Self.Clasificacion_Pendiente" Multiplicity="0..1" />
+          <End Role="Pendiente" Type="Self.Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clasificacion_Pendiente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_Clasificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Prioridad_de_Pendiente">
+          <End Role="Prioridad_de_Pendiente" Type="Self.Prioridad_de_Pendiente" Multiplicity="0..1" />
+          <End Role="Pendiente" Type="Self.Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prioridad_de_Pendiente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_Prioridad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Subsistema">
+          <End Role="Subsistema" Type="Self.Subsistema" Multiplicity="0..1" />
+          <End Role="Pendiente" Type="Self.Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subsistema">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_Subsistema" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Terminal">
+          <End Role="Terminal" Type="Self.Terminal" Multiplicity="0..1" />
+          <End Role="Pendiente" Type="Self.Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Terminal">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_Terminal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="Pendiente" Type="Self.Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_Ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Pendiente" Type="Self.Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_User" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -140,6 +324,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Ticket_Comentario_Comentario">
+          <End Role="Comentario" Type="Self.Comentario" Multiplicity="0..1" />
+          <End Role="Ticket_Comentario" Type="Self.Ticket_Comentario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comentario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket_Comentario">
+              <PropertyRef Name="id_Comentario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Comentario_Ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="Ticket_Comentario" Type="Self.Ticket_Comentario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket_Comentario">
+              <PropertyRef Name="id_Ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Record_Status_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Ticket_Record_Status" Type="Self.Ticket_Record_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Status" />
+            </Principal>
+            <Dependent Role="Ticket_Record_Status">
+              <PropertyRef Name="id_Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Record_Status_Ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="Ticket_Record_Status" Type="Self.Ticket_Record_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket_Record_Status">
+              <PropertyRef Name="id_Ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Subsistema">
+          <End Role="Subsistema" Type="Self.Subsistema" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subsistema">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="id_Subsistema" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Ticket_Terminal">
           <End Role="Terminal" Type="Self.Terminal" Multiplicity="0..1" />
           <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
@@ -149,6 +393,54 @@
             </Principal>
             <Dependent Role="Ticket">
               <PropertyRef Name="id_Terminal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_User">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+          <End Role="Ticket_User" Type="Self.Ticket_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket_User">
+              <PropertyRef Name="id_Ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_User_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Ticket_User" Type="Self.Ticket_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket_User">
+              <PropertyRef Name="id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Files_Files">
+          <End Role="Files" Type="Self.Files" Multiplicity="0..1" />
+          <End Role="Tickets_Files" Type="Self.Tickets_Files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tickets_Files">
+              <PropertyRef Name="id_File" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Files_Ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="Tickets_Files" Type="Self.Tickets_Files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tickets_Files">
+              <PropertyRef Name="id_Ticket" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -197,18 +489,56 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="HelpDeskModelStoreContainer">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clasificacion_Pendiente" EntityType="Self.Clasificacion_Pendiente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comentario" EntityType="Self.Comentario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Operacion" EntityType="Self.Operacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pendiente" EntityType="Self.Pendiente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prioridad_de_Pendiente" EntityType="Self.Prioridad_de_Pendiente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roll" EntityType="Self.Roll" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roll_Operacion" EntityType="Self.Roll_Operacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subsistema" EntityType="Self.Subsistema" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Terminal" EntityType="Self.Terminal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket_Comentario" EntityType="Self.Ticket_Comentario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket_Record_Status" EntityType="Self.Ticket_Record_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket_User" EntityType="Self.Ticket_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tickets_Files" EntityType="Self.Tickets_Files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comentario_User" Association="Self.FK_Comentario_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comentario" EntitySet="Comentario" />
+          </AssociationSet>
           <AssociationSet Name="FK_Operacion_Modulo" Association="Self.FK_Operacion_Modulo">
             <End Role="Modulo" EntitySet="Modulo" />
             <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Clasificacion_Pendiente" Association="Self.FK_Pendiente_Clasificacion_Pendiente">
+            <End Role="Clasificacion_Pendiente" EntitySet="Clasificacion_Pendiente" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Prioridad_de_Pendiente" Association="Self.FK_Pendiente_Prioridad_de_Pendiente">
+            <End Role="Prioridad_de_Pendiente" EntitySet="Prioridad_de_Pendiente" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Subsistema" Association="Self.FK_Pendiente_Subsistema">
+            <End Role="Subsistema" EntitySet="Subsistema" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Terminal" Association="Self.FK_Pendiente_Terminal">
+            <End Role="Terminal" EntitySet="Terminal" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Ticket" Association="Self.FK_Pendiente_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_User" Association="Self.FK_Pendiente_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
           </AssociationSet>
           <AssociationSet Name="FK_Roll_Operacion_Operacion" Association="Self.FK_Roll_Operacion_Operacion">
             <End Role="Operacion" EntitySet="Operacion" />
@@ -222,226 +552,56 @@
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Comentario_Comentario" Association="Self.FK_Ticket_Comentario_Comentario">
+            <End Role="Comentario" EntitySet="Comentario" />
+            <End Role="Ticket_Comentario" EntitySet="Ticket_Comentario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Comentario_Ticket" Association="Self.FK_Ticket_Comentario_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Ticket_Comentario" EntitySet="Ticket_Comentario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Record_Status_Status" Association="Self.FK_Ticket_Record_Status_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Ticket_Record_Status" EntitySet="Ticket_Record_Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Record_Status_Ticket" Association="Self.FK_Ticket_Record_Status_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Ticket_Record_Status" EntitySet="Ticket_Record_Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Subsistema" Association="Self.FK_Ticket_Subsistema">
+            <End Role="Subsistema" EntitySet="Subsistema" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
           <AssociationSet Name="FK_Ticket_Terminal" Association="Self.FK_Ticket_Terminal">
             <End Role="Terminal" EntitySet="Terminal" />
             <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_User" Association="Self.FK_Ticket_User">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Ticket_User" EntitySet="Ticket_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_User_User" Association="Self.FK_Ticket_User_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Ticket_User" EntitySet="Ticket_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Files_Files" Association="Self.FK_Tickets_Files_Files">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="Tickets_Files" EntitySet="Tickets_Files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Files_Ticket" Association="Self.FK_Tickets_Files_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Tickets_Files" EntitySet="Tickets_Files" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Roll" Association="Self.FK_User_Roll">
             <End Role="Roll" EntitySet="Roll" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HelpDeskModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Categoria">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Categoria" FromRole="Categoria" ToRole="Ticket" />
-        </EntityType>
-        <EntityType Name="Modulo">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Operacion" Relationship="Self.FK_Operacion_Modulo" FromRole="Modulo" ToRole="Operacion" />
-        </EntityType>
-        <EntityType Name="Operacion">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="id_Modulo" Type="Int32" />
-          <NavigationProperty Name="Modulo" Relationship="Self.FK_Operacion_Modulo" FromRole="Operacion" ToRole="Modulo" />
-          <NavigationProperty Name="Roll_Operacion" Relationship="Self.FK_Roll_Operacion_Operacion" FromRole="Operacion" ToRole="Roll_Operacion" />
-        </EntityType>
-        <EntityType Name="Roll">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Roll_Operacion" Relationship="Self.FK_Roll_Operacion_Roll" FromRole="Roll" ToRole="Roll_Operacion" />
-          <NavigationProperty Name="User" Relationship="Self.FK_User_Roll" FromRole="Roll" ToRole="User" />
-        </EntityType>
-        <EntityType Name="Roll_Operacion">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_Roll" Type="Int32" />
-          <Property Name="id_Operacion" Type="Int32" />
-          <NavigationProperty Name="Operacion" Relationship="Self.FK_Roll_Operacion_Operacion" FromRole="Roll_Operacion" ToRole="Operacion" />
-          <NavigationProperty Name="Roll" Relationship="Self.FK_Roll_Operacion_Roll" FromRole="Roll_Operacion" ToRole="Roll" />
-        </EntityType>
-        <EntityType Name="Status">
-          <Key>
-            <PropertyRef Name="Status1" />
-          </Key>
-          <Property Name="Status1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="descripcion" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="Terminal">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="clave" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Terminal" FromRole="Terminal" ToRole="Ticket" />
-        </EntityType>
-        <EntityType Name="Ticket">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="titulo" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="mensaje" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
-          <Property Name="id_User" Type="Int32" />
-          <Property Name="id_Categoria" Type="Int32" />
-          <Property Name="id_Terminal" Type="Int32" />
-          <Property Name="id_Subsistema" Type="Int32" />
-          <Property Name="status" Type="Int32" />
-          <NavigationProperty Name="Categoria" Relationship="Self.FK_Ticket_Categoria" FromRole="Ticket" ToRole="Categoria" />
-          <NavigationProperty Name="Terminal" Relationship="Self.FK_Ticket_Terminal" FromRole="Ticket" ToRole="Terminal" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="id_Roll" Type="Int32" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="createdAt" Type="DateTime" Precision="0" />
-          <Property Name="updateAt" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Roll" Relationship="Self.FK_User_Roll" FromRole="User" ToRole="Roll" />
-        </EntityType>
-        <Association Name="FK_Ticket_Categoria">
-          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categoria">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Ticket">
-              <PropertyRef Name="id_Categoria" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Operacion_Modulo">
-          <End Role="Modulo" Type="Self.Modulo" Multiplicity="0..1" />
-          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Modulo">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Operacion">
-              <PropertyRef Name="id_Modulo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Roll_Operacion_Operacion">
-          <End Role="Operacion" Type="Self.Operacion" Multiplicity="0..1" />
-          <End Role="Roll_Operacion" Type="Self.Roll_Operacion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Operacion">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Roll_Operacion">
-              <PropertyRef Name="id_Operacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Roll_Operacion_Roll">
-          <End Role="Roll" Type="Self.Roll" Multiplicity="0..1" />
-          <End Role="Roll_Operacion" Type="Self.Roll_Operacion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Roll">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Roll_Operacion">
-              <PropertyRef Name="id_Roll" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User_Roll">
-          <End Role="Roll" Type="Self.Roll" Multiplicity="0..1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Roll">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="id_Roll" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Ticket_Terminal">
-          <End Role="Terminal" Type="Self.Terminal" Multiplicity="0..1" />
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Terminal">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Ticket">
-              <PropertyRef Name="id_Terminal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="HelpDesk_Entities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Categoria" EntityType="Self.Categoria" />
-          <EntitySet Name="Modulo" EntityType="Self.Modulo" />
-          <EntitySet Name="Operacion" EntityType="Self.Operacion" />
-          <EntitySet Name="Roll" EntityType="Self.Roll" />
-          <EntitySet Name="Roll_Operacion" EntityType="Self.Roll_Operacion" />
-          <EntitySet Name="Status" EntityType="Self.Status" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="Terminal" EntityType="Self.Terminal" />
-          <EntitySet Name="Ticket" EntityType="Self.Ticket" />
-          <EntitySet Name="User" EntityType="Self.User" />
-          <AssociationSet Name="FK_Ticket_Categoria" Association="Self.FK_Ticket_Categoria">
-            <End Role="Categoria" EntitySet="Categoria" />
-            <End Role="Ticket" EntitySet="Ticket" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Operacion_Modulo" Association="Self.FK_Operacion_Modulo">
-            <End Role="Modulo" EntitySet="Modulo" />
-            <End Role="Operacion" EntitySet="Operacion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Roll_Operacion_Operacion" Association="Self.FK_Roll_Operacion_Operacion">
-            <End Role="Operacion" EntitySet="Operacion" />
-            <End Role="Roll_Operacion" EntitySet="Roll_Operacion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Roll_Operacion_Roll" Association="Self.FK_Roll_Operacion_Roll">
-            <End Role="Roll" EntitySet="Roll" />
-            <End Role="Roll_Operacion" EntitySet="Roll_Operacion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_Roll" Association="Self.FK_User_Roll">
-            <End Role="Roll" EntitySet="Roll" />
-            <End Role="User" EntitySet="User" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ticket_Terminal" Association="Self.FK_Ticket_Terminal">
-            <End Role="Terminal" EntitySet="Terminal" />
-            <End Role="Ticket" EntitySet="Ticket" />
-          </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -472,7 +632,115 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-        </EntityContainer>
+          <EntitySet Name="Categoria" EntityType="HelpDeskModel.Categoria" />
+          <EntitySet Name="Clasificacion_Pendiente" EntityType="HelpDeskModel.Clasificacion_Pendiente" />
+          <EntitySet Name="Comentario" EntityType="HelpDeskModel.Comentario" />
+          <EntitySet Name="Files" EntityType="HelpDeskModel.Files" />
+          <EntitySet Name="Modulo" EntityType="HelpDeskModel.Modulo" />
+          <EntitySet Name="Operacion" EntityType="HelpDeskModel.Operacion" />
+          <EntitySet Name="Pendiente" EntityType="HelpDeskModel.Pendiente" />
+          <EntitySet Name="Prioridad_de_Pendiente" EntityType="HelpDeskModel.Prioridad_de_Pendiente" />
+          <EntitySet Name="Roll" EntityType="HelpDeskModel.Roll" />
+          <EntitySet Name="Roll_Operacion" EntityType="HelpDeskModel.Roll_Operacion" />
+          <EntitySet Name="Status" EntityType="HelpDeskModel.Status" />
+          <EntitySet Name="Subsistema" EntityType="HelpDeskModel.Subsistema" />
+          <EntitySet Name="sysdiagrams" EntityType="HelpDeskModel.sysdiagrams" />
+          <EntitySet Name="Terminal" EntityType="HelpDeskModel.Terminal" />
+          <EntitySet Name="Ticket" EntityType="HelpDeskModel.Ticket" />
+          <EntitySet Name="Ticket_Comentario" EntityType="HelpDeskModel.Ticket_Comentario" />
+          <EntitySet Name="Ticket_Record_Status" EntityType="HelpDeskModel.Ticket_Record_Status" />
+          <EntitySet Name="Ticket_User" EntityType="HelpDeskModel.Ticket_User" />
+          <EntitySet Name="Tickets_Files" EntityType="HelpDeskModel.Tickets_Files" />
+          <EntitySet Name="User" EntityType="HelpDeskModel.User" />
+          <AssociationSet Name="FK_Ticket_Categoria" Association="HelpDeskModel.FK_Ticket_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Clasificacion_Pendiente" Association="HelpDeskModel.FK_Pendiente_Clasificacion_Pendiente">
+            <End Role="Clasificacion_Pendiente" EntitySet="Clasificacion_Pendiente" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comentario_User" Association="HelpDeskModel.FK_Comentario_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comentario" EntitySet="Comentario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Comentario_Comentario" Association="HelpDeskModel.FK_Ticket_Comentario_Comentario">
+            <End Role="Comentario" EntitySet="Comentario" />
+            <End Role="Ticket_Comentario" EntitySet="Ticket_Comentario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Files_Files" Association="HelpDeskModel.FK_Tickets_Files_Files">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="Tickets_Files" EntitySet="Tickets_Files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operacion_Modulo" Association="HelpDeskModel.FK_Operacion_Modulo">
+            <End Role="Modulo" EntitySet="Modulo" />
+            <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roll_Operacion_Operacion" Association="HelpDeskModel.FK_Roll_Operacion_Operacion">
+            <End Role="Operacion" EntitySet="Operacion" />
+            <End Role="Roll_Operacion" EntitySet="Roll_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Prioridad_de_Pendiente" Association="HelpDeskModel.FK_Pendiente_Prioridad_de_Pendiente">
+            <End Role="Prioridad_de_Pendiente" EntitySet="Prioridad_de_Pendiente" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Subsistema" Association="HelpDeskModel.FK_Pendiente_Subsistema">
+            <End Role="Subsistema" EntitySet="Subsistema" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Terminal" Association="HelpDeskModel.FK_Pendiente_Terminal">
+            <End Role="Terminal" EntitySet="Terminal" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Ticket" Association="HelpDeskModel.FK_Pendiente_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_User" Association="HelpDeskModel.FK_Pendiente_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roll_Operacion_Roll" Association="HelpDeskModel.FK_Roll_Operacion_Roll">
+            <End Role="Roll" EntitySet="Roll" />
+            <End Role="Roll_Operacion" EntitySet="Roll_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Roll" Association="HelpDeskModel.FK_User_Roll">
+            <End Role="Roll" EntitySet="Roll" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Record_Status_Status" Association="HelpDeskModel.FK_Ticket_Record_Status_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Ticket_Record_Status" EntitySet="Ticket_Record_Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Subsistema" Association="HelpDeskModel.FK_Ticket_Subsistema">
+            <End Role="Subsistema" EntitySet="Subsistema" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Terminal" Association="HelpDeskModel.FK_Ticket_Terminal">
+            <End Role="Terminal" EntitySet="Terminal" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Comentario_Ticket" Association="HelpDeskModel.FK_Ticket_Comentario_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Ticket_Comentario" EntitySet="Ticket_Comentario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Record_Status_Ticket" Association="HelpDeskModel.FK_Ticket_Record_Status_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Ticket_Record_Status" EntitySet="Ticket_Record_Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_User" Association="HelpDeskModel.FK_Ticket_User">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Ticket_User" EntitySet="Ticket_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Files_Ticket" Association="HelpDeskModel.FK_Tickets_Files_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Tickets_Files" EntitySet="Tickets_Files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_User_User" Association="HelpDeskModel.FK_Ticket_User_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Ticket_User" EntitySet="Ticket_User" />
+          </AssociationSet>
+          </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -484,109 +752,507 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-      </Schema>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Ticket_Categoria" FromRole="Categoria" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Clasificacion_Pendiente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Clave" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Clasificacion_Pendiente" FromRole="Clasificacion_Pendiente" ToRole="Pendiente" />
+        </EntityType>
+        <EntityType Name="Comentario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Comentario1" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="id_User" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="User" Relationship="HelpDeskModel.FK_Comentario_User" FromRole="Comentario" ToRole="User" />
+          <NavigationProperty Name="Ticket_Comentario" Relationship="HelpDeskModel.FK_Ticket_Comentario_Comentario" FromRole="Comentario" ToRole="Ticket_Comentario" />
+        </EntityType>
+        <EntityType Name="Files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tickets_Files" Relationship="HelpDeskModel.FK_Tickets_Files_Files" FromRole="Files" ToRole="Tickets_Files" />
+        </EntityType>
+        <EntityType Name="Modulo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Operacion" Relationship="HelpDeskModel.FK_Operacion_Modulo" FromRole="Modulo" ToRole="Operacion" />
+        </EntityType>
+        <EntityType Name="Operacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="id_Modulo" Type="Int32" />
+          <NavigationProperty Name="Modulo" Relationship="HelpDeskModel.FK_Operacion_Modulo" FromRole="Operacion" ToRole="Modulo" />
+          <NavigationProperty Name="Roll_Operacion" Relationship="HelpDeskModel.FK_Roll_Operacion_Operacion" FromRole="Operacion" ToRole="Roll_Operacion" />
+        </EntityType>
+        <EntityType Name="Pendiente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="id_Clasificacion" Type="Int32" />
+          <Property Name="Observacion" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+          <Property Name="Avance" Type="Int32" />
+          <Property Name="id_Prioridad" Type="Int32" />
+          <Property Name="Actividades_Pend_Susess" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+          <Property Name="Responsable" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Compromiso" Type="DateTime" Precision="0" />
+          <Property Name="id_User" Type="Int32" />
+          <Property Name="id_Ticket" Type="Int32" />
+          <Property Name="id_Terminal" Type="Int32" />
+          <Property Name="id_Subsistema" Type="Int32" />
+          <NavigationProperty Name="Clasificacion_Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Clasificacion_Pendiente" FromRole="Pendiente" ToRole="Clasificacion_Pendiente" />
+          <NavigationProperty Name="Prioridad_de_Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Prioridad_de_Pendiente" FromRole="Pendiente" ToRole="Prioridad_de_Pendiente" />
+          <NavigationProperty Name="Subsistema" Relationship="HelpDeskModel.FK_Pendiente_Subsistema" FromRole="Pendiente" ToRole="Subsistema" />
+          <NavigationProperty Name="Terminal" Relationship="HelpDeskModel.FK_Pendiente_Terminal" FromRole="Pendiente" ToRole="Terminal" />
+          <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Pendiente_Ticket" FromRole="Pendiente" ToRole="Ticket" />
+          <NavigationProperty Name="User" Relationship="HelpDeskModel.FK_Pendiente_User" FromRole="Pendiente" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Prioridad_de_Pendiente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="clave" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Prioridad_de_Pendiente" FromRole="Prioridad_de_Pendiente" ToRole="Pendiente" />
+        </EntityType>
+        <EntityType Name="Roll">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Roll_Operacion" Relationship="HelpDeskModel.FK_Roll_Operacion_Roll" FromRole="Roll" ToRole="Roll_Operacion" />
+          <NavigationProperty Name="User" Relationship="HelpDeskModel.FK_User_Roll" FromRole="Roll" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Roll_Operacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Roll" Type="Int32" />
+          <Property Name="id_Operacion" Type="Int32" />
+          <NavigationProperty Name="Operacion" Relationship="HelpDeskModel.FK_Roll_Operacion_Operacion" FromRole="Roll_Operacion" ToRole="Operacion" />
+          <NavigationProperty Name="Roll" Relationship="HelpDeskModel.FK_Roll_Operacion_Roll" FromRole="Roll_Operacion" ToRole="Roll" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Status1" />
+          </Key>
+          <Property Name="Status1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Ticket_Record_Status" Relationship="HelpDeskModel.FK_Ticket_Record_Status_Status" FromRole="Status" ToRole="Ticket_Record_Status" />
+        </EntityType>
+        <EntityType Name="Subsistema">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Subsistema" FromRole="Subsistema" ToRole="Pendiente" />
+          <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Ticket_Subsistema" FromRole="Subsistema" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Terminal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="clave" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Terminal" FromRole="Terminal" ToRole="Pendiente" />
+          <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Ticket_Terminal" FromRole="Terminal" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titulo" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="mensaje" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+          <Property Name="id_User" Type="Int32" />
+          <Property Name="id_Categoria" Type="Int32" />
+          <Property Name="id_Terminal" Type="Int32" />
+          <Property Name="id_Subsistema" Type="Int32" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Categoria" Relationship="HelpDeskModel.FK_Ticket_Categoria" FromRole="Ticket" ToRole="Categoria" />
+          <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Ticket" FromRole="Ticket" ToRole="Pendiente" />
+          <NavigationProperty Name="Subsistema" Relationship="HelpDeskModel.FK_Ticket_Subsistema" FromRole="Ticket" ToRole="Subsistema" />
+          <NavigationProperty Name="Terminal" Relationship="HelpDeskModel.FK_Ticket_Terminal" FromRole="Ticket" ToRole="Terminal" />
+          <NavigationProperty Name="Ticket_Comentario" Relationship="HelpDeskModel.FK_Ticket_Comentario_Ticket" FromRole="Ticket" ToRole="Ticket_Comentario" />
+          <NavigationProperty Name="Ticket_Record_Status" Relationship="HelpDeskModel.FK_Ticket_Record_Status_Ticket" FromRole="Ticket" ToRole="Ticket_Record_Status" />
+          <NavigationProperty Name="Ticket_User" Relationship="HelpDeskModel.FK_Ticket_User" FromRole="Ticket" ToRole="Ticket_User" />
+          <NavigationProperty Name="Tickets_Files" Relationship="HelpDeskModel.FK_Tickets_Files_Ticket" FromRole="Ticket" ToRole="Tickets_Files" />
+        </EntityType>
+        <EntityType Name="Ticket_Comentario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Ticket" Type="Int32" />
+          <Property Name="id_Comentario" Type="Int32" />
+          <NavigationProperty Name="Comentario" Relationship="HelpDeskModel.FK_Ticket_Comentario_Comentario" FromRole="Ticket_Comentario" ToRole="Comentario" />
+          <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Ticket_Comentario_Ticket" FromRole="Ticket_Comentario" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Ticket_Record_Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Ticket" Type="Int32" />
+          <Property Name="id_Status" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="UpdateAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Status" Relationship="HelpDeskModel.FK_Ticket_Record_Status_Status" FromRole="Ticket_Record_Status" ToRole="Status" />
+          <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Ticket_Record_Status_Ticket" FromRole="Ticket_Record_Status" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Ticket_User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Ticket" Type="Int32" Nullable="false" />
+          <Property Name="id_User" Type="Int32" Nullable="false" />
+          <Property Name="funcion" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Ticket_User" FromRole="Ticket_User" ToRole="Ticket" />
+          <NavigationProperty Name="User" Relationship="HelpDeskModel.FK_Ticket_User_User" FromRole="Ticket_User" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Tickets_Files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Ticket" Type="Int32" />
+          <Property Name="id_File" Type="Int32" />
+          <NavigationProperty Name="Files" Relationship="HelpDeskModel.FK_Tickets_Files_Files" FromRole="Tickets_Files" ToRole="Files" />
+          <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Tickets_Files_Ticket" FromRole="Tickets_Files" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="id_Roll" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="createdAt" Type="DateTime" Precision="0" />
+          <Property Name="updateAt" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Comentario" Relationship="HelpDeskModel.FK_Comentario_User" FromRole="User" ToRole="Comentario" />
+          <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_User" FromRole="User" ToRole="Pendiente" />
+          <NavigationProperty Name="Roll" Relationship="HelpDeskModel.FK_User_Roll" FromRole="User" ToRole="Roll" />
+          <NavigationProperty Name="Ticket_User" Relationship="HelpDeskModel.FK_Ticket_User_User" FromRole="User" ToRole="Ticket_User" />
+        </EntityType>
+        <Association Name="FK_Ticket_Categoria">
+          <End Type="HelpDeskModel.Categoria" Role="Categoria" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="id_Categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Clasificacion_Pendiente">
+          <End Type="HelpDeskModel.Clasificacion_Pendiente" Role="Clasificacion_Pendiente" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Pendiente" Role="Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clasificacion_Pendiente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_Clasificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comentario_User">
+          <End Type="HelpDeskModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Comentario" Role="Comentario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Comentario">
+              <PropertyRef Name="id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Comentario_Comentario">
+          <End Type="HelpDeskModel.Comentario" Role="Comentario" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Ticket_Comentario" Role="Ticket_Comentario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comentario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket_Comentario">
+              <PropertyRef Name="id_Comentario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Files_Files">
+          <End Type="HelpDeskModel.Files" Role="Files" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Tickets_Files" Role="Tickets_Files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tickets_Files">
+              <PropertyRef Name="id_File" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operacion_Modulo">
+          <End Type="HelpDeskModel.Modulo" Role="Modulo" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Operacion" Role="Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="id_Modulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roll_Operacion_Operacion">
+          <End Type="HelpDeskModel.Operacion" Role="Operacion" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Roll_Operacion" Role="Roll_Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operacion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Roll_Operacion">
+              <PropertyRef Name="id_Operacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Prioridad_de_Pendiente">
+          <End Type="HelpDeskModel.Prioridad_de_Pendiente" Role="Prioridad_de_Pendiente" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Pendiente" Role="Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prioridad_de_Pendiente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_Prioridad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Subsistema">
+          <End Type="HelpDeskModel.Subsistema" Role="Subsistema" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Pendiente" Role="Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subsistema">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_Subsistema" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Terminal">
+          <End Type="HelpDeskModel.Terminal" Role="Terminal" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Pendiente" Role="Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Terminal">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_Terminal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Ticket">
+          <End Type="HelpDeskModel.Ticket" Role="Ticket" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Pendiente" Role="Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_Ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_User">
+          <End Type="HelpDeskModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Pendiente" Role="Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roll_Operacion_Roll">
+          <End Type="HelpDeskModel.Roll" Role="Roll" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Roll_Operacion" Role="Roll_Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roll">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Roll_Operacion">
+              <PropertyRef Name="id_Roll" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Roll">
+          <End Type="HelpDeskModel.Roll" Role="Roll" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roll">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_Roll" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Record_Status_Status">
+          <End Type="HelpDeskModel.Status" Role="Status" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Ticket_Record_Status" Role="Ticket_Record_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Status1" />
+            </Principal>
+            <Dependent Role="Ticket_Record_Status">
+              <PropertyRef Name="id_Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Subsistema">
+          <End Type="HelpDeskModel.Subsistema" Role="Subsistema" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subsistema">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="id_Subsistema" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Terminal">
+          <End Type="HelpDeskModel.Terminal" Role="Terminal" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Terminal">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="id_Terminal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Comentario_Ticket">
+          <End Type="HelpDeskModel.Ticket" Role="Ticket" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Ticket_Comentario" Role="Ticket_Comentario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket_Comentario">
+              <PropertyRef Name="id_Ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Record_Status_Ticket">
+          <End Type="HelpDeskModel.Ticket" Role="Ticket" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Ticket_Record_Status" Role="Ticket_Record_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket_Record_Status">
+              <PropertyRef Name="id_Ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_User">
+          <End Type="HelpDeskModel.Ticket" Role="Ticket" Multiplicity="1" />
+          <End Type="HelpDeskModel.Ticket_User" Role="Ticket_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket_User">
+              <PropertyRef Name="id_Ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Files_Ticket">
+          <End Type="HelpDeskModel.Ticket" Role="Ticket" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Tickets_Files" Role="Tickets_Files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tickets_Files">
+              <PropertyRef Name="id_Ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_User_User">
+          <End Type="HelpDeskModel.User" Role="User" Multiplicity="1" />
+          <End Type="HelpDeskModel.Ticket_User" Role="Ticket_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket_User">
+              <PropertyRef Name="id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HelpDeskModelStoreContainer" CdmEntityContainer="HelpDesk_Entities1">
-          <EntitySetMapping Name="Categoria">
-            <EntityTypeMapping TypeName="HelpDeskModel.Categoria">
-              <MappingFragment StoreEntitySet="Categoria">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Modulo">
-            <EntityTypeMapping TypeName="HelpDeskModel.Modulo">
-              <MappingFragment StoreEntitySet="Modulo">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Operacion">
-            <EntityTypeMapping TypeName="HelpDeskModel.Operacion">
-              <MappingFragment StoreEntitySet="Operacion">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="id_Modulo" ColumnName="id_Modulo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roll">
-            <EntityTypeMapping TypeName="HelpDeskModel.Roll">
-              <MappingFragment StoreEntitySet="Roll">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roll_Operacion">
-            <EntityTypeMapping TypeName="HelpDeskModel.Roll_Operacion">
-              <MappingFragment StoreEntitySet="Roll_Operacion">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="id_Roll" ColumnName="id_Roll" />
-                <ScalarProperty Name="id_Operacion" ColumnName="id_Operacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Status">
-            <EntityTypeMapping TypeName="HelpDeskModel.Status">
-              <MappingFragment StoreEntitySet="Status">
-                <ScalarProperty Name="Status1" ColumnName="Status" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="HelpDeskModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Terminal">
-            <EntityTypeMapping TypeName="HelpDeskModel.Terminal">
-              <MappingFragment StoreEntitySet="Terminal">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="clave" ColumnName="clave" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Ticket">
-            <EntityTypeMapping TypeName="HelpDeskModel.Ticket">
-              <MappingFragment StoreEntitySet="Ticket">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="titulo" ColumnName="titulo" />
-                <ScalarProperty Name="mensaje" ColumnName="mensaje" />
-                <ScalarProperty Name="id_User" ColumnName="id_User" />
-                <ScalarProperty Name="id_Categoria" ColumnName="id_Categoria" />
-                <ScalarProperty Name="id_Terminal" ColumnName="id_Terminal" />
-                <ScalarProperty Name="id_Subsistema" ColumnName="id_Subsistema" />
-                <ScalarProperty Name="status" ColumnName="status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="HelpDeskModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="id_Roll" ColumnName="id_Roll" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
-                <ScalarProperty Name="updateAt" ColumnName="updateAt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="HelpDeskModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="HelpDeskModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="HelpDeskModel.Store.sp_dropdiagram" />
@@ -611,7 +1277,214 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="HelpDeskModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="HelpDeskModel.Store.sp_upgraddiagrams" />
-        </EntityContainerMapping>
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="HelpDeskModel.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clasificacion_Pendiente">
+            <EntityTypeMapping TypeName="HelpDeskModel.Clasificacion_Pendiente">
+              <MappingFragment StoreEntitySet="Clasificacion_Pendiente">
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comentario">
+            <EntityTypeMapping TypeName="HelpDeskModel.Comentario">
+              <MappingFragment StoreEntitySet="Comentario">
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="id_User" ColumnName="id_User" />
+                <ScalarProperty Name="Comentario1" ColumnName="Comentario" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Files">
+            <EntityTypeMapping TypeName="HelpDeskModel.Files">
+              <MappingFragment StoreEntitySet="Files">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modulo">
+            <EntityTypeMapping TypeName="HelpDeskModel.Modulo">
+              <MappingFragment StoreEntitySet="Modulo">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operacion">
+            <EntityTypeMapping TypeName="HelpDeskModel.Operacion">
+              <MappingFragment StoreEntitySet="Operacion">
+                <ScalarProperty Name="id_Modulo" ColumnName="id_Modulo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pendiente">
+            <EntityTypeMapping TypeName="HelpDeskModel.Pendiente">
+              <MappingFragment StoreEntitySet="Pendiente">
+                <ScalarProperty Name="id_Subsistema" ColumnName="id_Subsistema" />
+                <ScalarProperty Name="id_Terminal" ColumnName="id_Terminal" />
+                <ScalarProperty Name="id_Ticket" ColumnName="id_Ticket" />
+                <ScalarProperty Name="id_User" ColumnName="id_User" />
+                <ScalarProperty Name="Fecha_Compromiso" ColumnName="Fecha_Compromiso" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Responsable" ColumnName="Responsable" />
+                <ScalarProperty Name="Actividades_Pend_Susess" ColumnName="Actividades_Pend_Susess" />
+                <ScalarProperty Name="id_Prioridad" ColumnName="id_Prioridad" />
+                <ScalarProperty Name="Avance" ColumnName="Avance" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="id_Clasificacion" ColumnName="id_Clasificacion" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prioridad_de_Pendiente">
+            <EntityTypeMapping TypeName="HelpDeskModel.Prioridad_de_Pendiente">
+              <MappingFragment StoreEntitySet="Prioridad_de_Pendiente">
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roll">
+            <EntityTypeMapping TypeName="HelpDeskModel.Roll">
+              <MappingFragment StoreEntitySet="Roll">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roll_Operacion">
+            <EntityTypeMapping TypeName="HelpDeskModel.Roll_Operacion">
+              <MappingFragment StoreEntitySet="Roll_Operacion">
+                <ScalarProperty Name="id_Operacion" ColumnName="id_Operacion" />
+                <ScalarProperty Name="id_Roll" ColumnName="id_Roll" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="HelpDeskModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="Status1" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subsistema">
+            <EntityTypeMapping TypeName="HelpDeskModel.Subsistema">
+              <MappingFragment StoreEntitySet="Subsistema">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="HelpDeskModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Terminal">
+            <EntityTypeMapping TypeName="HelpDeskModel.Terminal">
+              <MappingFragment StoreEntitySet="Terminal">
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket">
+            <EntityTypeMapping TypeName="HelpDeskModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="id_Subsistema" ColumnName="id_Subsistema" />
+                <ScalarProperty Name="id_Terminal" ColumnName="id_Terminal" />
+                <ScalarProperty Name="id_Categoria" ColumnName="id_Categoria" />
+                <ScalarProperty Name="id_User" ColumnName="id_User" />
+                <ScalarProperty Name="mensaje" ColumnName="mensaje" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Comentario">
+            <EntityTypeMapping TypeName="HelpDeskModel.Ticket_Comentario">
+              <MappingFragment StoreEntitySet="Ticket_Comentario">
+                <ScalarProperty Name="id_Comentario" ColumnName="id_Comentario" />
+                <ScalarProperty Name="id_Ticket" ColumnName="id_Ticket" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Record_Status">
+            <EntityTypeMapping TypeName="HelpDeskModel.Ticket_Record_Status">
+              <MappingFragment StoreEntitySet="Ticket_Record_Status">
+                <ScalarProperty Name="UpdateAt" ColumnName="UpdateAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="id_Status" ColumnName="id_Status" />
+                <ScalarProperty Name="id_Ticket" ColumnName="id_Ticket" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_User">
+            <EntityTypeMapping TypeName="HelpDeskModel.Ticket_User">
+              <MappingFragment StoreEntitySet="Ticket_User">
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="funcion" ColumnName="funcion" />
+                <ScalarProperty Name="id_User" ColumnName="id_User" />
+                <ScalarProperty Name="id_Ticket" ColumnName="id_Ticket" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets_Files">
+            <EntityTypeMapping TypeName="HelpDeskModel.Tickets_Files">
+              <MappingFragment StoreEntitySet="Tickets_Files">
+                <ScalarProperty Name="id_File" ColumnName="id_File" />
+                <ScalarProperty Name="id_Ticket" ColumnName="id_Ticket" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="HelpDeskModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="updateAt" ColumnName="updateAt" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id_Roll" ColumnName="id_Roll" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

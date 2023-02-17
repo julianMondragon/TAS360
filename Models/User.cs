@@ -14,6 +14,14 @@ namespace TAS360.Models
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.Comentario = new HashSet<Comentario>();
+            this.Pendiente = new HashSet<Pendiente>();
+            this.Ticket_User = new HashSet<Ticket_User>();
+        }
+    
         public int id { get; set; }
         public string nombre { get; set; }
         public Nullable<int> id_Roll { get; set; }
@@ -22,6 +30,12 @@ namespace TAS360.Models
         public Nullable<System.DateTime> createdAt { get; set; }
         public Nullable<System.DateTime> updateAt { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comentario> Comentario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pendiente> Pendiente { get; set; }
         public virtual Roll Roll { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ticket_User> Ticket_User { get; set; }
     }
 }
