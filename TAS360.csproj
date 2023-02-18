@@ -775,7 +775,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="TicketFiles\Evidencia 1.jpeg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -826,6 +825,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="ArchivosASA\" />
     <Folder Include="Tablas_CSV\" />
+    <Folder Include="TicketFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
