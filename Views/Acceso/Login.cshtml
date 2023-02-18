@@ -2,10 +2,16 @@
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout2.cshtml";
+    string exception = ViewBag.exception;
 }
 
-<div class="jumbotron">    
+<div class="jumbotron">
     <h2>Iniciar Sesion</h2>
+    @if (exception != null)
+    {
+        <br />
+        <pre style="font-size:2rem; color:red">@exception</pre>
+    }
 </div>
 <section class="page-section about-heading">
     <div class="container">

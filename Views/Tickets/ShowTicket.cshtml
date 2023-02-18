@@ -81,9 +81,9 @@
 </section>
 
 <!-- Imagenes -->
-@foreach (var photo in Model.Files)
-{
-    <div class="row" style="margin:05px 0px 0px 0px">
+<div class="row" style="margin:05px 0px 0px 0px">
+    @foreach (var photo in Model.Files)
+    {
         <div class="col-sm-4 col-md-4">
             <div class="thumbnail">
                 <img src="@photo.URL" />
@@ -91,12 +91,13 @@
                 <div class="caption">
                     <h4>@photo.Nombre</h4>
                 </div>
-                <p><a href="#" class="btn btn-primary" role="button">Ver</a>
-                   <a href="#" class="btn btn-default" role="button">Descargar</a>
+                <p>
+                    <a href="#" class="btn btn-primary" role="button">Ver</a>
+                    <a href="#" class="btn btn-default" role="button">Descargar</a>
                 </p>
             </div>
         </div>
-    </div>
-   
-}
+    }
+</div>
+
 

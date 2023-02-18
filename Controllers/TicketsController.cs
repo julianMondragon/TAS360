@@ -186,7 +186,10 @@ namespace TAS360.Controllers
                     myticket.Files.Add(new Archivos
                     {
                         Nombre = file.Files.Nombre,
-                        URL = (file.Files.URL.Replace("C:\\Projects\\PTS\\TAS360", "")).Replace("\\","/")
+                        //Local
+                        //URL = (file.Files.URL.Replace("C:\\Projects\\PTS\\TAS360", "")).Replace("\\","/")
+                        //Plesk
+                        URL = (file.Files.URL.Replace("C:\\Inetpub\\vhosts\\pts-tools.com.mx\\httpdocs\\softwaretool", "")).Replace("\\","/")
                     });
                 }
                 if(db.Ticket_Comentario.Where(c => c.id_Ticket == id).Any())
