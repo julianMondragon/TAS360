@@ -87,13 +87,12 @@
         <div class="col-sm-4 col-md-4">
             <div class="thumbnail">
                 <img src="@photo.URL" />
-                @*<img src="~/TicketFiles/Evidencia1.jpeg" />*@
                 <div class="caption">
                     <h4>@photo.Nombre</h4>
                 </div>
                 <p>
-                    <a href="#" class="btn btn-primary" role="button">Ver</a>
-                    <a href="#" class="btn btn-default" role="button">Descargar</a>
+                    <a href="@photo.URL" class="btn btn-primary" role="button">Ver</a>
+                    <a href="@Url.Content("~/Tickets/DonloadTicketFile/" + (int)photo.id)" class="btn btn-default" role="button">Descargar</a>
                 </p>
             </div>
         </div>

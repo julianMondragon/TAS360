@@ -185,6 +185,7 @@ namespace TAS360.Controllers
 
                     myticket.Files.Add(new Archivos
                     {
+                        id = file.Files.id,
                         Nombre = file.Files.Nombre,
                         //Local
                         //URL = (file.Files.URL.Replace("C:\\Projects\\PTS\\TAS360", "")).Replace("\\","/")
@@ -468,6 +469,22 @@ namespace TAS360.Controllers
                 db.SaveChanges();
             }
             return Redirect("~/Tickets/ShowTicket/"+IdTicket);
+        }
+
+        /// <summary>
+        /// Metodo que se encarga de descargar el archivo del ticket seleccionado
+        /// </summary>
+        /// <param name="NameFile"></param>
+        /// <returns></returns>
+        public FileResult DonloadTicketFile(int id)
+        {
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            {
+                var file = db.Files.FirstOrDefault(f => f.id == id);
+                string NameFile = file.Nombre;
+                string rute = Server.MapPath("~/TicketFiles/" + NameFile);
+                return File(rute, "image/jpeg", NameFile);
+            }
         }
 
         /// <summary>
