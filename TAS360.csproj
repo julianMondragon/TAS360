@@ -153,6 +153,7 @@
     <Compile Include="Controllers\DanloadController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PendientesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TablaCubController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
@@ -388,6 +389,7 @@
     <Compile Include="Models\ViewModel\CreateReportViewModel.cs" />
     <Compile Include="Models\ViewModel\entradasViewModel.cs" />
     <Compile Include="Models\ViewModel\FCV_ViewModel.cs" />
+    <Compile Include="Models\ViewModel\PendientesViewModel.cs" />
     <Compile Include="Models\ViewModel\PuertoSerialViewModel.cs" />
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
     <Compile Include="Models\ViewModel\RepTotalizadoViewModel.cs" />
@@ -820,6 +822,7 @@
     <Content Include="Views\Tickets\ShowTicket.cshtml" />
     <Content Include="Views\Tickets\EditTicket.cshtml" />
     <Content Include="Views\Tickets\AddCommentTicket.cshtml" />
+    <Content Include="Views\Pendientes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

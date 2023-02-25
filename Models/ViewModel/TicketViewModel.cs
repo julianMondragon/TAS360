@@ -43,6 +43,7 @@ namespace TAS360.Models.ViewModel
         public DateTime? Date { get; set; }
         public List<Archivos> Files { get; set; }
         public List<Comentarios> Comentarios { get; set; }
+        public List<string> RecordStatus { get; set; }
 
     }
 

@@ -1,13 +1,14 @@
 ﻿@model TAS360.Models.ViewModel.TicketViewModel
 @{
-    ViewBag.Title = "Ticket :" + @Model.id;
+    ViewBag.Title = "Ticket : " + @Model.id;
     int count = 0;
     int count1 = 0;
+    string exception = ViewBag.Exception;
 }
 <div class="jumbotron">
     @switch (Model.status_name)
     {
-        case "Pendiente":
+        case "Pendiente ":
             <h2 style="color:blue">@Model.status_name</h2>
             break;
         case "Analisis":
@@ -31,9 +32,14 @@
         default:
             <h2>@Model.status_name</h2>
             break;
-}
+    }
     <h3>@Model.titulo</h3>
     @*<p class="lead">Reporte de volumen totalizado por islas en la TAD del día 20/10/2020</p>*@
+    @if (exception != null)
+    {
+        <br />
+        <pre style="font-size:2rem; color:red">@exception</pre>
+    }
 </div>
 <!--Heathers -->
 <div class="row">
@@ -60,7 +66,7 @@
 <section class="page-section cta">
     <div class="container">
         <div class="row">
-            <div class="col-xl-9 mx-auto">
+            <div class="col-md-10" style="margin:05px 0px 0px 0px">
                 <pre>@Model.mensaje</pre>
                 <div class="cta-inner bg-faded text-left rounded">
                     <div class="intro-button mx-auto">
@@ -76,6 +82,20 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-2" style="margin:05px 0px 0px 0px">
+                @*<h3>Record Status</h3>*@
+                <table class="table table-success table-striped">
+                    <tr>
+                        <th class="alert-info">Record Status</th>                
+                    </tr>
+                        @foreach (var status in Model.RecordStatus)
+                        {
+                            <tr>
+                                <td>@status</td>
+                            </tr>
+                        }                    
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -84,7 +104,7 @@
 <div class="row" style="margin:05px 0px 0px 0px">
     @foreach (var photo in Model.Files)
     {
-        <div class="col-sm-4 col-md-4">
+        <div class="col-md-5 mx-auto">
             <div class="thumbnail">
                 <img src="@photo.URL" />
                 <div class="caption">
