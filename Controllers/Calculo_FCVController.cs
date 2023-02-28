@@ -34,7 +34,8 @@ namespace TAS360.Controllers
             }
             try
             {
-				model.dens = Redondeo05(model.dens);
+				  
+				model.dens = Redondeo05((float)Math.Round(model.dens, 1));
 				model.temp = (float) Math.Round(Redondeo005(model.temp), 2);
 				model.factor = FCV(model.dens, model.temp);				
 				if(model.volnat != 0)
@@ -342,7 +343,7 @@ namespace TAS360.Controllers
 				return valor;
             if (x[1].Length <= 1)
             {
-				valor = Redondeo05((float)valor);
+				//valor = Redondeo05((float)valor);
 				return valor;
             }
 			int w = int.Parse(x[1].Substring(0, 1));
