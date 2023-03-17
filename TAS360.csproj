@@ -153,6 +153,7 @@
     <Compile Include="Controllers\DanloadController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\logoutController.cs" />
     <Compile Include="Controllers\PendientesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TablaCubController.cs" />
@@ -829,6 +830,7 @@
     <Folder Include="ArchivosASA\" />
     <Folder Include="Tablas_CSV\" />
     <Folder Include="TicketFiles\" />
+    <Folder Include="Views\logout\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

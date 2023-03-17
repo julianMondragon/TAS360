@@ -39,7 +39,7 @@ namespace TAS360.Controllers
 				model.temp = (float) Math.Round(Redondeo005(model.temp), 2);
 				model.factor = FCV(model.dens, model.temp);				
 				if(model.volnat != 0)
-					model.volcor = model.volnat * model.factor;
+					model.volcor = Math.Round(model.volnat * model.factor);
 
 			}
 			catch(Exception ex)
@@ -238,7 +238,7 @@ namespace TAS360.Controllers
 				la_fcv20 = la_truncado2 / 100000.0 +0.00001;
 			}
 
-			la_fcv20 = Round(la_fcv20,5);
+			la_fcv20 = Round(la_fcv20,6);
 
 			return (la_fcv20);
 

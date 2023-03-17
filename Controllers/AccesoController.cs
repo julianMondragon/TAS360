@@ -26,7 +26,7 @@ namespace TAS360.Controllers
                     var usuario = (from u in db.User where u.email == user && u.password == pass select u).FirstOrDefault();
                     if(usuario == null)
                     {
-                        ViewBag.Error = "Usuario o contraseña no validos";
+                        ViewBag.exception = "Usuario o contraseña no validos";
                         return View();
                     }
                     Session["User"] = usuario;

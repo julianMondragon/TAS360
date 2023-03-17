@@ -18,55 +18,60 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("PTS-SIMCOT", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("PTS-TOOLS", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
+                @using TAS360.Models;
+                @{
+                    User usuario = (User)HttpContext.Current.Session["user"];
+                }
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Tickets", "Index", "Tickets")</li>
                     <li>@Html.ActionLink("Cálculo FCV", "Index", "Calculo_FCV")</li>
                     <li>@Html.ActionLink("Conv.Tabla de Cubicación", "Index", "TablaCub")</li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SIIC <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Entradas", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Salidas", "About", "Home")</li>
-                            <li role="separator" class="divider"></li>
-                            <li>@Html.ActionLink("Auditoria", "Contact", "Home")</li>
-                            @*<li role="separator" class="divider"></li>
-                <li><a href="#">One more separated link</a></li>*@
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reportes <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Carga", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Tanques", "About", "Home")</li>
-                            <li role="separator" class="divider"></li>
-                            <li>@Html.ActionLink("Crear Reporte", "Create", "Reports")</li>
-                            <li role="separator" class="divider"></li>
-                            <li>@Html.ActionLink("abrir conexion", "Index", "Reports")</li>
-                            @*<li role="separator" class="divider"></li>
-                <li><a href="#">One more separated link</a></li>*@
-                        </ul>
-                    </li>
-                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Otras <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("HMI de Aditivación", "Index", "Aditivo")</li>
+                            <li role="separator" class="divider"></li>
                             <li>@Html.ActionLink("Danload 6000", "Index", "Danload")</li>
+                            <li role="separator" class="divider"></li>
                             <li>@Html.ActionLink("Accuload III", "Index", "Accuload")</li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Reportes</a></li>
+                            @*<li>@Html.ActionLink("Carga", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Tanques", "About", "Home")</li>
+                            <li role="separator" class="divider"></li>*@
+                            <li>@Html.ActionLink("Crear Reporte", "Create", "Reports")</li>
+                            <li>@Html.ActionLink("abrir conexion", "Index", "Reports")</li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">SIIC</a></li>
+                            <li>@Html.ActionLink("Entradas", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Salidas", "About", "Home")</li>
+                            <li>@Html.ActionLink("Auditoria", "Contact", "Home")</li>
+                            @*<li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>*@
                         </ul>
                     </li>
+                    @if (usuario != null)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@usuario.nombre <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item px-lg-4"><a href="@Url.Content("~/logout/logout")">Cerrar Sesion</a></li>
+                            </ul>
+                        </li>                        
+                    }
 
                 </ul>
-            </div>
+                </div>
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer >
-            <p>&copy; @DateTime.Now - Developed by Julian Mondragon - Version V1.5</p>
+            <p>&copy; @DateTime.Now - Developed by Julian Mondragon - Version V1.6</p>
         </footer>
     </div>
 
