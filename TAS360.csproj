@@ -164,6 +164,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Log.cs" />
     <Compile Include="Models\AditivoBD.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -828,6 +829,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ArchivosASA\" />
+    <Folder Include="Logs\" />
     <Folder Include="Tablas_CSV\" />
     <Folder Include="TicketFiles\" />
     <Folder Include="Views\logout\" />

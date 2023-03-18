@@ -78,12 +78,12 @@ namespace TAS360.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    string path = Server.MapPath("~/Logs/");
+                    Log oLog = new Log(path);
                     using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                     {
                         Ticket ticket = new Ticket();
-
-                        //int lastid = db.Ticket.Count();
-                        //ticket.id = lastid+1; 
+                                               
                         ticket.titulo = model.titulo;
                         ticket.id_Terminal = model.id_Terminal;
                         ticket.id_Categoria = model.id_Categoria;
@@ -91,13 +91,16 @@ namespace TAS360.Controllers
                         ticket.id_User = ((User)Session["User"]).id;
                         ticket.status = model.Status;
                         ticket.mensaje = model.mensaje;
+                        ticket.CreatedAt = DateTime.Now;
 
                         //db.Entry(ticket).State = System.Data.Entity.EntityState.Modified;
                         db.Ticket.Add(ticket);
                         db.SaveChanges();
 
                         int idTicket = db.Ticket.FirstOrDefault(a => a.titulo == model.titulo).id;
-
+                        oLog.Add("Se creo el Ticket: " + idTicket );
+                        oLog.Add("Titulo del Ticket: " + model.titulo);
+                        oLog.Add("Usuario creador: " + ((User)Session["User"]).nombre);
                         if (idTicket != 0)
                         {
                             Ticket_Record_Status New_ticket_Record = new Ticket_Record_Status();
@@ -106,14 +109,18 @@ namespace TAS360.Controllers
 
                             db.Ticket_Record_Status.Add(New_ticket_Record);
                             db.SaveChanges();
+                            oLog.Add("Se agrega record status");
+                            oLog.Add("Status: " + New_ticket_Record.id_Status);
 
                             Ticket_User ticket_User = new Ticket_User();
                             ticket_User.id_Ticket = ticket.id;
                             ticket_User.id_User = (int)model.id_Resp;
                             ticket_User.CreatedAt = DateTime.Now;
-
+                            
                             db.Ticket_User.Add(ticket_User);
                             db.SaveChanges();
+                            oLog.Add("Se agrega nuevo usuario asociado al ticket: " + model.id_Resp);
+                            
                         }
                     }
 
@@ -142,6 +149,12 @@ namespace TAS360.Controllers
                         Message += "Property: " + validationError.PropertyName +  " Error: "+ validationError.ErrorMessage + "\n";
                     }
                 }
+
+                //Add Logs
+                string path = Server.MapPath("~/Logs/");
+                Log oLog = new Log(path);
+                oLog.Add(Message);
+
                 ViewBag.ExceptionMessage = Message;
                 return View(model);
             }
@@ -153,6 +166,10 @@ namespace TAS360.Controllers
                 GetStatus(1);
                 GetSubsistemas();
                 ViewBag.ExceptionMessage = ex.Message;
+                //Add Log
+                string path = Server.MapPath("~/Logs/");
+                Log oLog = new Log(path);
+                oLog.Add(ex.Message);
                 return View(model);
 
             }
@@ -215,6 +232,10 @@ namespace TAS360.Controllers
             }
             catch (Exception ex)
             {
+                //Add Log
+                string path = Server.MapPath("~/Logs/");
+                Log oLog = new Log(path);
+                oLog.Add(ex.Message);
                 ViewBag.Exception = ex.Message;
             }
             
@@ -264,11 +285,20 @@ namespace TAS360.Controllers
         {
             try
             {
+                
+                string path = Server.MapPath("~/Logs/");
+                Log oLog = new Log(path);
+                oLog.Add("Agrega comentario a Ticket: " + ticket.id);
                 bool StatusChanged = false;
                 using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                 {
-                    var t = db.Ticket.Find(ticket.id);
+                    var t = db.Ticket.Find(ticket.id);                    
                     ticket.id_Resp = t.Ticket_User.OrderByDescending(a => a.CreatedAt).FirstOrDefault().id_User;
+                    
+
+                    oLog.Add("Status actual del Ticket: " + t.status );
+                    oLog.Add("Nuevo Status para el Ticket: " + ticket.Status);
+                    oLog.Add("Valida status");
                     if (t.status != ticket.Status)
                     {
                         Ticket_Record_Status New_ticket_Record = new Ticket_Record_Status();
@@ -279,17 +309,21 @@ namespace TAS360.Controllers
                         t.status = ticket.Status;
                         StatusChanged = true;
                         db.SaveChanges();
+                        oLog.Add("Se agrega nuevo record status");
+                        oLog.Add("Status: " + New_ticket_Record.id_Status);
                     }
                     if (StatusChanged)
-                    {
-
+                    {                        
                         db.Comentario.Add(new Comentario()
                         {
-                            Comentario1 = (GetTemplateStatus((int)ticket.Status) + Comentario.Comentario1 ),
+                            Comentario1 = (GetTemplateStatus((int)ticket.Status) + Comentario.Comentario1),
                             id_User = ((User)Session["User"]).id,
                             CreatedAt = DateTime.Now
                         });
+                        
                         db.SaveChanges();
+                        oLog.Add("Guardo comentario: " + Comentario.Comentario1);
+                        oLog.Add("Usuario asociado: " + ((User)Session["User"]).nombre);
                     }                
                     else
                     {
@@ -301,6 +335,8 @@ namespace TAS360.Controllers
                             CreatedAt = DateTime.Now
                         });
                         db.SaveChanges();
+                        oLog.Add("Guardo comentario: " + Comentario.Comentario1);
+                        oLog.Add("Usuario asociado: " + ((User)Session["User"]).nombre);
                     }
                           
                     var idComentario = db.Comentario.FirstOrDefault(c => c.Comentario1.Contains(Comentario.Comentario1)).id;
@@ -312,10 +348,12 @@ namespace TAS360.Controllers
                             id_Comentario = idComentario
                         });
                         db.SaveChanges();
+                        oLog.Add("Guardo una relacion entre el ticket y el comentario");
                     }
 
                     if (ticket.id_Resp != db.Ticket_User.OrderByDescending(a => a.CreatedAt).FirstOrDefault().id_User)
                     {
+                        
                         Ticket_User ticket_User = new Ticket_User();
                         ticket_User.id_Ticket = ticket.id;
                         ticket_User.id_User = (int)ticket.id_Resp;
@@ -323,6 +361,10 @@ namespace TAS360.Controllers
 
                         db.Ticket_User.Add(ticket_User);
                         db.SaveChanges();
+                        //Logs
+                        oLog.Add("actual Responsable user id : " + db.Ticket_User.OrderByDescending(a => a.CreatedAt).FirstOrDefault().id_User);
+                        oLog.Add("Se agrega una relacion entre usuario responsable y ticket");                                             
+                        oLog.Add("Nuevo id User: " + ticket_User.id_User);
                     }
                     
                 }
@@ -337,6 +379,14 @@ namespace TAS360.Controllers
                 ViewBag.ExceptionMessage = ex.Message;
                 GetStatus((int)ticket.Status);
                 GetUsuarios();
+                //Add Log
+                string path = Server.MapPath("~/Logs/");
+                Log oLog = new Log(path);
+                oLog.Add("Excepcion agregando un comentario");
+                oLog.Add(ex.Message);
+                oLog.Add("Usuario: " + ((User)Session["User"]).nombre);
+                oLog.Add("Ticket id: " + ticket.id);
+                oLog = null;
                 return View(ticket);
             }
             
@@ -388,20 +438,36 @@ namespace TAS360.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    string path = Server.MapPath("~/Logs/");
+                    Log oLog = new Log(path);
+                    oLog.Add("Edit Ticket: " + ticket.id);
                     using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                     {
                         var Ticket = db.Ticket.Find(ticket.id);
+                        oLog.Add("Titulo: " + Ticket.titulo);
                         Ticket.titulo = ticket.titulo;
+                        oLog.Add("Terminal: " + Ticket.id_Terminal);
                         Ticket.id_Terminal = ticket.id_Terminal;
+                        oLog.Add("Categoria: " + Ticket.id_Categoria);
                         Ticket.id_Categoria = ticket.id_Categoria;
+                        oLog.Add("Subsistema: " + Ticket.id_Subsistema);
                         Ticket.id_Subsistema = ticket.id_Subsistema;
-                        //TODO
+                        oLog.Add("Usuario: " + Ticket.id_User);
                         Ticket.id_User = ((User)Session["User"]).id;
+                        oLog.Add("Status: " + Ticket.status);
                         Ticket.status = ticket.Status;
+                        oLog.Add("Mensaje: " + Ticket.mensaje);
                         Ticket.mensaje = ticket.mensaje;
 
                         db.Entry(Ticket).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
+                        oLog.Add("Se guardan cambios en el Ticket");
+                        oLog.Add("Nuevo Titulo: " + ticket.titulo);
+                        oLog.Add("Nuevo Terminal: " + ticket.id_Terminal);
+                        oLog.Add("Nuevo Categoria: " + ticket.id_Categoria);
+                        oLog.Add("Nuevo Subsistema: " + ticket.id_Subsistema);
+                        oLog.Add("Nuevo Usuario: " + Ticket.id_User);
+                        oLog.Add("Nuevo Mensaje: " + ticket.mensaje);
                     }
 
                     return Redirect("~/Tickets/ShowTicket/" + ticket.id);
@@ -430,6 +496,11 @@ namespace TAS360.Controllers
                     }
                 }
                 ViewBag.ExceptionMessage = Message;
+                //Add Logs
+                string path = Server.MapPath("~/Logs/");
+                Log oLog = new Log(path);
+                oLog.Add("DbEntityValidationException: " + Message);
+
                 return View(ticket);
             }
             catch (Exception ex)
@@ -440,6 +511,10 @@ namespace TAS360.Controllers
                 GetStatus((int)ticket.Status);
                 GetSubsistemas();
                 ViewBag.ExceptionMessage = ex.Message;
+                //Add Logs
+                string path = Server.MapPath("~/Logs/");
+                Log oLog = new Log(path);
+                oLog.Add("Excepcion: " + ex.Message);
                 return View(ticket);
 
             }

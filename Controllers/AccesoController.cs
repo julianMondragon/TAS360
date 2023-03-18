@@ -30,12 +30,23 @@ namespace TAS360.Controllers
                         return View();
                     }
                     Session["User"] = usuario;
+                    //Add Log
+                    string path = Server.MapPath("~/Logs/");
+                    Log oLog = new Log(path);
+                    oLog.Add("Ingreso " + usuario.nombre);
+                    oLog = null;
                 }
-
+                
                 return RedirectToAction("home", "Home");
             }
             catch(Exception ex)
             {
+                //Add Log
+                string path = Server.MapPath("~/Logs/");
+                Log oLog = new Log(path);
+                oLog.Add("Excepcion en el controllador de acceso");
+                oLog.Add(ex.Message);
+                oLog = null;
                 ViewBag.exception = ex.Message;
                 return View();
             }
