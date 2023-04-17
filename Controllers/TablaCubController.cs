@@ -545,6 +545,8 @@ namespace TAS360.Controllers
                     NewTablaCub.InsertTable(lTable);
                     string[] name = postedFile.FileName.Split('.');
 
+                    #endregion
+
                     string mesage = "Se genero correctamente la tabla de cubicacion";
                     if (contWarningm3 > 0 || contWarningBls > 0)
                     {
@@ -572,7 +574,7 @@ namespace TAS360.Controllers
 
                     }
 
-                    #endregion 
+                   
                     
                     return View(tabla);
                 }

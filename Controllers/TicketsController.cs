@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rotativa;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
@@ -240,6 +241,75 @@ namespace TAS360.Controllers
             }
             
             return View(myticket);
+        }
+
+        public ActionResult TicketReport(int id)
+        {
+            TicketViewModel myticket = new TicketViewModel();
+            try
+            {
+                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                {
+                    var ticket = db.Ticket.Find(id);
+                    myticket.id = id;
+                    myticket.titulo = ticket.titulo;
+                    myticket.mensaje = ticket.mensaje;
+                    myticket.usuario_name = ticket.Ticket_User.OrderByDescending(u => u.CreatedAt).FirstOrDefault().User.nombre;
+                    myticket.categoria_name = ticket.Categoria.nombre;
+                    myticket.status_name = db.Ticket_Record_Status.Where(x => x.id_Ticket == id).OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion;
+                    //Lista de status
+                    myticket.RecordStatus = new List<string>();
+                    foreach (var status in db.Ticket_Record_Status.Where(x => x.id_Ticket == id))
+                    {
+                        myticket.RecordStatus.Add(status.Status.descripcion);
+                    }
+                    myticket.Subsistema_name = ticket.Subsistema.Nombre;
+                    var files = db.Tickets_Files.Where(f => f.id_Ticket == id);
+                    //Lista de Files
+                    myticket.Files = new List<Archivos>();
+                    foreach (var file in files)
+                    {
+
+                        myticket.Files.Add(new Archivos
+                        {
+                            id = file.Files.id,
+                            Nombre = file.Files.Nombre,
+                            //Local
+                            //URL = (file.Files.URL.Replace("C:\\Projects\\PTS\\TAS360", "")).Replace("\\","/")
+                            //Plesk
+                            URL = (file.Files.URL.Replace("C:\\Inetpub\\vhosts\\pts-tools.com.mx\\httpdocs\\softwaretool", "")).Replace("\\", "/")
+                        });
+                    }
+                    //Comentarios
+                    if (db.Ticket_Comentario.Where(c => c.id_Ticket == id).Any())
+                    {
+                        var coms = db.Ticket_Comentario.Where(c => c.id_Ticket == id);
+                        foreach (var com in coms)
+                        {
+
+                            myticket.mensaje += ("\n" + com.Comentario.Comentario1);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //Add Log
+                string path = Server.MapPath("~/Logs/");
+                Log oLog = new Log(path);
+                oLog.Add(ex.Message);
+                ViewBag.Exception = ex.Message;
+            }
+
+            return View(myticket);
+        }
+
+        public ActionResult PrintTicketReport(int id)
+        {
+            return new ActionAsPdf($"TicketReport/{id}")
+            {
+                FileName = $"Reporte de Ticket {id}.pdf"
+            };
         }
 
         /// <summary>
