@@ -833,7 +833,6 @@
     <Content Include="Views\Tickets\EditTicket.cshtml" />
     <Content Include="Views\Tickets\AddCommentTicket.cshtml" />
     <Content Include="Views\Pendientes\Index.cshtml" />
-    <Content Include="Views\Calculo_FCV\InfoISO912IMP.cshtml" />
     <Content Include="Views\Tickets\TicketReport.cshtml" />
     <Content Include="Views\Shared\_LayoutReport.cshtml" />
   </ItemGroup>
