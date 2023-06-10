@@ -11,7 +11,7 @@ namespace Homexcellence.Controllers
         public ActionResult logout()
         {
             Session["User"] = null;
-            return RedirectToAction("index", "Access");
+            return RedirectToAction("login", "Acceso");
         }
     }
 }

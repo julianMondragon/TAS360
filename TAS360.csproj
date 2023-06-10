@@ -835,6 +835,7 @@
     <Content Include="Views\Pendientes\Index.cshtml" />
     <Content Include="Views\Tickets\TicketReport.cshtml" />
     <Content Include="Views\Shared\_LayoutReport.cshtml" />
+    <Content Include="Views\Pendientes\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

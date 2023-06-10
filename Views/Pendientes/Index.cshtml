@@ -1,6 +1,9 @@
-﻿@model TAS360.Models.ViewModel.PendientesViewModel
+﻿@using System.Collections.Generic; 
+
+@model List<TAS360.Models.ViewModel.PendientesViewModel>
 @{
     ViewBag.Title = "Pendientes del TAS360";
+    int count = 0;
 }
 
 <div class="jumbotron">
@@ -12,34 +15,39 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <table class="table table-success table-striped">
-            <tr>
-                <th class="alert-success" colspan="1">Id</th>
-                <th class="alert-info" colspan="2">Descripcion</th>
-                <th class="alert-warning" colspan="1">Clasificacion</th>
-                <th class="alert-success" colspan="1">Usuario</th>
-                <th class="alert-success" colspan="1">Avance</th>
-                <th class="alert-success" colspan="1">Subsistema</th>
-                <th class="alert-success" colspan="1">Accion</th>
-            </tr>
-            @if (Model != null)
-            {
-                foreach (var pendiente in Model.Pendientes)
+        <table class="table table-success table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th colspan="1" scope="col">Id</th>
+                    <th colspan="3" scope="col">Descripcion</th>
+                    <th colspan="2" scope="col">Clasificacion</th>
+                    <th colspan="2" scope="col">Usuario</th>
+                    <th colspan="2">Avance</th>
+                    <th colspan="1">Subsistema</th>
+                    <th colspan="1">Accion</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @if (Model != null)
                 {
-                    <tr>
-                        <td colspan="1"> @pendiente.id</td>
-                        <td colspan="2"> @pendiente.Descripcion</td>
-                        <td colspan="1"> @pendiente.Clasificacion_Pendiente.Clave</td>
-                        <td colspan="1"> @pendiente.User.nombre</td>
-                        <td colspan="1"> @pendiente.Avance</td>
-                        <td colspan="1"> @pendiente.Subsistema.Nombre</td>
-                        <td>
-                            @*<input type="button" class="btn btn-info" onclick="document.location.href = '@Url.Content("~/Tickets/ShowTicket/" + ticket.id)'" value="Ver" />*@
-                            <input type="button" class="btn btn-default" onclick="document.location.href = '@Url.Content("~/Pendientes/Edit/" + pendiente.id)'" value="Editar" />
-                        </td>
-                    </tr>
+                    foreach (var pendiente in Model)
+                    {
+                        <tr>
+                            <td colspan="1"> @pendiente.id</td>
+                            <td colspan="3"> @pendiente.Descripcion</td>
+                            <td colspan="2"> @pendiente.Clasificacion_Pendiente.Clave</td>
+                            <td colspan="2"> @pendiente.User.nombre</td>
+                            <td colspan="2"> @pendiente.Avance</td>
+                            <td colspan="1"> @pendiente.Subsistema.Nombre</td>
+                            <td colspan="1">
+                                <input type="button" class="btn btn-info" onclick="document.location.href = '@Url.Content("~/Pendientes/Details/" + pendiente.id)'" value="Detalles" />
+                                <input type="button" class="btn btn-default" onclick="document.location.href = '@Url.Content("~/Pendientes/Edit/" + pendiente.id)'" value="Editar" />
+                            </td>
+                        </tr>
+                    }
                 }
-            }
+            </tbody>
         </table>
     </div>
 </div>
