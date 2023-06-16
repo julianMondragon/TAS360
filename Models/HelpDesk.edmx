@@ -72,6 +72,18 @@
           <Property Name="id_Ticket" Type="int" />
           <Property Name="id_Terminal" Type="int" />
           <Property Name="id_Subsistema" Type="int" />
+          <Property Name="id_status" Type="int" />
+          <Property Name="is_deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Pendiente_Record_Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Pendiente" Type="int" />
+          <Property Name="id_Status" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="UpdateAt" Type="datetime" />
         </EntityType>
         <EntityType Name="Prioridad_de_Pendiente">
           <Key>
@@ -111,16 +123,6 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="90" />
           <Property Name="Descripcion" Type="varchar" MaxLength="500" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Terminal">
           <Key>
@@ -237,6 +239,42 @@
             </Principal>
             <Dependent Role="Pendiente">
               <PropertyRef Name="id_Prioridad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Record_Status_Pendiente">
+          <End Role="Pendiente" Type="Self.Pendiente" Multiplicity="0..1" />
+          <End Role="Pendiente_Record_Status" Type="Self.Pendiente_Record_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pendiente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente_Record_Status">
+              <PropertyRef Name="id_Pendiente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Record_Status_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Pendiente_Record_Status" Type="Self.Pendiente_Record_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Status" />
+            </Principal>
+            <Dependent Role="Pendiente_Record_Status">
+              <PropertyRef Name="id_Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Pendiente" Type="Self.Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Status" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_status" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -456,37 +494,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="HelpDeskModelStoreContainer">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clasificacion_Pendiente" EntityType="Self.Clasificacion_Pendiente" Schema="dbo" store:Type="Tables" />
@@ -495,12 +502,12 @@
           <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Operacion" EntityType="Self.Operacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pendiente" EntityType="Self.Pendiente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pendiente_Record_Status" EntityType="Self.Pendiente_Record_Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prioridad_de_Pendiente" EntityType="Self.Prioridad_de_Pendiente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roll" EntityType="Self.Roll" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roll_Operacion" EntityType="Self.Roll_Operacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subsistema" EntityType="Self.Subsistema" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Terminal" EntityType="Self.Terminal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket_Comentario" EntityType="Self.Ticket_Comentario" Schema="dbo" store:Type="Tables" />
@@ -522,6 +529,18 @@
           </AssociationSet>
           <AssociationSet Name="FK_Pendiente_Prioridad_de_Pendiente" Association="Self.FK_Pendiente_Prioridad_de_Pendiente">
             <End Role="Prioridad_de_Pendiente" EntitySet="Prioridad_de_Pendiente" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Record_Status_Pendiente" Association="Self.FK_Pendiente_Record_Status_Pendiente">
+            <End Role="Pendiente" EntitySet="Pendiente" />
+            <End Role="Pendiente_Record_Status" EntitySet="Pendiente_Record_Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Record_Status_Status" Association="Self.FK_Pendiente_Record_Status_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Pendiente_Record_Status" EntitySet="Pendiente_Record_Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Status" Association="Self.FK_Pendiente_Status">
+            <End Role="Status" EntitySet="Status" />
             <End Role="Pendiente" EntitySet="Pendiente" />
           </AssociationSet>
           <AssociationSet Name="FK_Pendiente_Subsistema" Association="Self.FK_Pendiente_Subsistema">
@@ -639,12 +658,12 @@
           <EntitySet Name="Modulo" EntityType="HelpDeskModel.Modulo" />
           <EntitySet Name="Operacion" EntityType="HelpDeskModel.Operacion" />
           <EntitySet Name="Pendiente" EntityType="HelpDeskModel.Pendiente" />
+          <EntitySet Name="Pendiente_Record_Status" EntityType="HelpDeskModel.Pendiente_Record_Status" />
           <EntitySet Name="Prioridad_de_Pendiente" EntityType="HelpDeskModel.Prioridad_de_Pendiente" />
           <EntitySet Name="Roll" EntityType="HelpDeskModel.Roll" />
           <EntitySet Name="Roll_Operacion" EntityType="HelpDeskModel.Roll_Operacion" />
           <EntitySet Name="Status" EntityType="HelpDeskModel.Status" />
           <EntitySet Name="Subsistema" EntityType="HelpDeskModel.Subsistema" />
-          <EntitySet Name="sysdiagrams" EntityType="HelpDeskModel.sysdiagrams" />
           <EntitySet Name="Terminal" EntityType="HelpDeskModel.Terminal" />
           <EntitySet Name="Ticket" EntityType="HelpDeskModel.Ticket" />
           <EntitySet Name="Ticket_Comentario" EntityType="HelpDeskModel.Ticket_Comentario" />
@@ -684,6 +703,14 @@
             <End Role="Prioridad_de_Pendiente" EntitySet="Prioridad_de_Pendiente" />
             <End Role="Pendiente" EntitySet="Pendiente" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Record_Status_Pendiente" Association="HelpDeskModel.FK_Pendiente_Record_Status_Pendiente">
+            <End Role="Pendiente" EntitySet="Pendiente" />
+            <End Role="Pendiente_Record_Status" EntitySet="Pendiente_Record_Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Status" Association="HelpDeskModel.FK_Pendiente_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
           <AssociationSet Name="FK_Pendiente_Subsistema" Association="HelpDeskModel.FK_Pendiente_Subsistema">
             <End Role="Subsistema" EntitySet="Subsistema" />
             <End Role="Pendiente" EntitySet="Pendiente" />
@@ -699,6 +726,10 @@
           <AssociationSet Name="FK_Pendiente_User" Association="HelpDeskModel.FK_Pendiente_User">
             <End Role="User" EntitySet="User" />
             <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Record_Status_Status" Association="HelpDeskModel.FK_Pendiente_Record_Status_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Pendiente_Record_Status" EntitySet="Pendiente_Record_Status" />
           </AssociationSet>
           <AssociationSet Name="FK_Roll_Operacion_Roll" Association="HelpDeskModel.FK_Roll_Operacion_Roll">
             <End Role="Roll" EntitySet="Roll" />
@@ -827,12 +858,28 @@
           <Property Name="id_Ticket" Type="Int32" />
           <Property Name="id_Terminal" Type="Int32" />
           <Property Name="id_Subsistema" Type="Int32" />
+          <Property Name="id_status" Type="Int32" />
+          <Property Name="is_deleted" Type="Boolean" />
           <NavigationProperty Name="Clasificacion_Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Clasificacion_Pendiente" FromRole="Pendiente" ToRole="Clasificacion_Pendiente" />
           <NavigationProperty Name="Prioridad_de_Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Prioridad_de_Pendiente" FromRole="Pendiente" ToRole="Prioridad_de_Pendiente" />
+          <NavigationProperty Name="Pendiente_Record_Status" Relationship="HelpDeskModel.FK_Pendiente_Record_Status_Pendiente" FromRole="Pendiente" ToRole="Pendiente_Record_Status" />
+          <NavigationProperty Name="Status" Relationship="HelpDeskModel.FK_Pendiente_Status" FromRole="Pendiente" ToRole="Status" />
           <NavigationProperty Name="Subsistema" Relationship="HelpDeskModel.FK_Pendiente_Subsistema" FromRole="Pendiente" ToRole="Subsistema" />
           <NavigationProperty Name="Terminal" Relationship="HelpDeskModel.FK_Pendiente_Terminal" FromRole="Pendiente" ToRole="Terminal" />
           <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Pendiente_Ticket" FromRole="Pendiente" ToRole="Ticket" />
           <NavigationProperty Name="User" Relationship="HelpDeskModel.FK_Pendiente_User" FromRole="Pendiente" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Pendiente_Record_Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Pendiente" Type="Int32" />
+          <Property Name="id_Status" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="UpdateAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Record_Status_Pendiente" FromRole="Pendiente_Record_Status" ToRole="Pendiente" />
+          <NavigationProperty Name="Status" Relationship="HelpDeskModel.FK_Pendiente_Record_Status_Status" FromRole="Pendiente_Record_Status" ToRole="Status" />
         </EntityType>
         <EntityType Name="Prioridad_de_Pendiente">
           <Key>
@@ -869,6 +916,8 @@
           </Key>
           <Property Name="Status1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="descripcion" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Status" FromRole="Status" ToRole="Pendiente" />
+          <NavigationProperty Name="Pendiente_Record_Status" Relationship="HelpDeskModel.FK_Pendiente_Record_Status_Status" FromRole="Status" ToRole="Pendiente_Record_Status" />
           <NavigationProperty Name="Ticket_Record_Status" Relationship="HelpDeskModel.FK_Ticket_Record_Status_Status" FromRole="Status" ToRole="Ticket_Record_Status" />
         </EntityType>
         <EntityType Name="Subsistema">
@@ -880,16 +929,6 @@
           <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Subsistema" FromRole="Subsistema" ToRole="Pendiente" />
           <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Ticket_Subsistema" FromRole="Subsistema" ToRole="Ticket" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Terminal">
           <Key>
@@ -1079,6 +1118,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pendiente_Record_Status_Pendiente">
+          <End Type="HelpDeskModel.Pendiente" Role="Pendiente" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Pendiente_Record_Status" Role="Pendiente_Record_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pendiente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente_Record_Status">
+              <PropertyRef Name="id_Pendiente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Status">
+          <End Type="HelpDeskModel.Status" Role="Status" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Pendiente" Role="Pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Status1" />
+            </Principal>
+            <Dependent Role="Pendiente">
+              <PropertyRef Name="id_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Pendiente_Subsistema">
           <End Type="HelpDeskModel.Subsistema" Role="Subsistema" Multiplicity="0..1" />
           <End Type="HelpDeskModel.Pendiente" Role="Pendiente" Multiplicity="*" />
@@ -1124,6 +1187,18 @@
             </Principal>
             <Dependent Role="Pendiente">
               <PropertyRef Name="id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Record_Status_Status">
+          <End Type="HelpDeskModel.Status" Role="Status" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Pendiente_Record_Status" Role="Pendiente_Record_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Status1" />
+            </Principal>
+            <Dependent Role="Pendiente_Record_Status">
+              <PropertyRef Name="id_Status" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1253,30 +1328,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HelpDeskModelStoreContainer" CdmEntityContainer="HelpDesk_Entities1">
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="HelpDeskModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="HelpDeskModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="HelpDeskModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="HelpDeskModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="HelpDeskModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="HelpDeskModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="HelpDeskModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="HelpDeskModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="HelpDeskModel.Store.sp_upgraddiagrams" />
           <EntitySetMapping Name="Categoria">
             <EntityTypeMapping TypeName="HelpDeskModel.Categoria">
               <MappingFragment StoreEntitySet="Categoria">
@@ -1335,6 +1386,8 @@
           <EntitySetMapping Name="Pendiente">
             <EntityTypeMapping TypeName="HelpDeskModel.Pendiente">
               <MappingFragment StoreEntitySet="Pendiente">
+                <ScalarProperty Name="is_deleted" ColumnName="is_deleted" />
+                <ScalarProperty Name="id_status" ColumnName="id_status" />
                 <ScalarProperty Name="id_Subsistema" ColumnName="id_Subsistema" />
                 <ScalarProperty Name="id_Terminal" ColumnName="id_Terminal" />
                 <ScalarProperty Name="id_Ticket" ColumnName="id_Ticket" />
@@ -1348,6 +1401,17 @@
                 <ScalarProperty Name="Observacion" ColumnName="Observacion" />
                 <ScalarProperty Name="id_Clasificacion" ColumnName="id_Clasificacion" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pendiente_Record_Status">
+            <EntityTypeMapping TypeName="HelpDeskModel.Pendiente_Record_Status">
+              <MappingFragment StoreEntitySet="Pendiente_Record_Status">
+                <ScalarProperty Name="UpdateAt" ColumnName="UpdateAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="id_Status" ColumnName="id_Status" />
+                <ScalarProperty Name="id_Pendiente" ColumnName="id_Pendiente" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1393,17 +1457,6 @@
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="HelpDeskModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1484,7 +1537,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

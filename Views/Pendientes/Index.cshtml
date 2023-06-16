@@ -1,17 +1,48 @@
-﻿@using System.Collections.Generic; 
-
+﻿@using System.Collections.Generic;
+@using TAS360.Models.ViewModel;
+@using Newtonsoft.Json;
 @model List<TAS360.Models.ViewModel.PendientesViewModel>
 @{
     ViewBag.Title = "Pendientes del TAS360";
-    int count = 0;
+
+    //// Objeto a enviar
+    //List<PendientesViewModel> CurrentList = new List<PendientesViewModel>();
+    //string encodedCurrentList = "";
+    //try
+    //{
+    //    foreach(var item in Model)
+    //    {
+    //        CurrentList.Add(item);
+    //        item.Subsistema = null;
+    //        item.Clasificacion_Pendiente = null;
+    //    }
+    //    // Serialización y codificación
+    //    var serializedObject = JsonConvert.SerializeObject(Model);
+    //    encodedCurrentList = HttpUtility.UrlEncode(serializedObject);
+    //}
+    //catch(Exception e)
+    //{
+
+    //}
+
+
 }
 
 <div class="jumbotron">
     <h1>Lista de Pendientes</h1>
-    <p class="lead">Todos los Pendientes para cerrar la version del sistema TAS360 </p>
-    <p class="lead">
-        <a onclick="document.location.href = '@Url.Content("~/Pendientes/Create")'" class="btn btn-success">Crear un pendiente &raquo;</a>
-    </p>
+    <p class="lead">Todos los Pendientes ( @Model.Count() ) para cerrar la version del sistema TAS360 </p>
+    <div class="row">
+        <button onclick="document.location.href = '@Url.Content("~/Pendientes/Create")'" type="button" class="btn btn-success" data-toggle="tooltip" title="se abrirá un formulario para crear un pendiente">
+            Crear un pendiente &raquo;
+        </button>
+        <button type="button" class="btn btn-warning" data-toggle="tooltip" title="funcionalidad futura --> Realiza un filtrado personalizado de los pendientes ">
+            Filtrado &fnof;
+        </button>
+        <button type="button" class="btn btn-info" data-toggle="tooltip" title="funcionalidad futura --> exporta la tabla actual ">
+            Exportar &pound;
+        </button>
+    </div>
+    
 </div>
 <div class="row">
     <div class="col-md-12">
@@ -21,9 +52,10 @@
                     <th colspan="1" scope="col">Id</th>
                     <th colspan="3" scope="col">Descripcion</th>
                     <th colspan="2" scope="col">Clasificacion</th>
-                    <th colspan="2" scope="col">Usuario</th>
+                    <th colspan="2" scope="col">Responsable</th>
                     <th colspan="2">Avance</th>
                     <th colspan="1">Subsistema</th>
+                    <th colspan="1">Terminal</th>
                     <th colspan="1">Accion</th>
                 </tr>
 
@@ -37,13 +69,44 @@
                             <td colspan="1"> @pendiente.id</td>
                             <td colspan="3"> @pendiente.Descripcion</td>
                             <td colspan="2"> @pendiente.Clasificacion_Pendiente.Clave</td>
-                            <td colspan="2"> @pendiente.User.nombre</td>
+                            <td colspan="2"> @pendiente.Responsable</td>
                             <td colspan="2"> @pendiente.Avance</td>
                             <td colspan="1"> @pendiente.Subsistema.Nombre</td>
-                            <td colspan="1">
-                                <input type="button" class="btn btn-info" onclick="document.location.href = '@Url.Content("~/Pendientes/Details/" + pendiente.id)'" value="Detalles" />
-                                <input type="button" class="btn btn-default" onclick="document.location.href = '@Url.Content("~/Pendientes/Edit/" + pendiente.id)'" value="Editar" />
-                            </td>
+                            @switch (pendiente.id_Terminal)
+                            {
+                                case 1:
+                                    <td colspan="1">Hermosillo</td>
+                                    break;
+                                case 2:
+                                    <td colspan="1">Santa Catarina</td>
+                                    break;
+                                case 3:
+                                    <td colspan="1">Sabinas</td>
+                                    break;
+                                case 4:
+                                    <td colspan="1">Chihuahua</td>
+                                    break;
+                                case 5:
+                                    <td colspan="1">Gomez Palacio</td>
+                                    break;
+                                case 6:
+                                    <td colspan="1">Guaymas</td>
+                                    break;
+                                case 7:
+                                    <td colspan="1">Rosarito</td>
+                                    break;
+                                case 8:
+                                    <td colspan="1">Otra</td>
+                                    break;
+                                case 9:
+                                    <td colspan="1">Todas</td>
+                                    break;
+                            }
+                        <td colspan="1">
+                            @*<input type="button" class="btn btn-info" onclick="document.location.href = '@Url.Content("~/Pendientes/Set_Pending_CurrentList/?Current_List="+ encodedCurrentList +"&id_pendiente=" + pendiente.id)'" value="Detalles" />*@
+                            <input type="button" class="btn btn-info" onclick="document.location.href = '@Url.Content("~/Pendientes/Details/" + pendiente.id)'" value="Detalles" />
+                            <input type="button" class="btn btn-default" onclick="document.location.href = '@Url.Content("~/Pendientes/Edit/" + pendiente.id)'" value="Editar" />
+                        </td>
                         </tr>
                     }
                 }
@@ -51,4 +114,5 @@
         </table>
     </div>
 </div>
+
 

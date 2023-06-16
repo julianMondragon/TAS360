@@ -14,6 +14,12 @@ namespace TAS360.Models
     
     public partial class Pendiente
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Pendiente()
+        {
+            this.Pendiente_Record_Status = new HashSet<Pendiente_Record_Status>();
+        }
+    
         public int id { get; set; }
         public string Descripcion { get; set; }
         public Nullable<int> id_Clasificacion { get; set; }
@@ -28,9 +34,14 @@ namespace TAS360.Models
         public Nullable<int> id_Ticket { get; set; }
         public Nullable<int> id_Terminal { get; set; }
         public Nullable<int> id_Subsistema { get; set; }
+        public Nullable<int> id_status { get; set; }
+        public Nullable<bool> is_deleted { get; set; }
     
         public virtual Clasificacion_Pendiente Clasificacion_Pendiente { get; set; }
         public virtual Prioridad_de_Pendiente Prioridad_de_Pendiente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pendiente_Record_Status> Pendiente_Record_Status { get; set; }
+        public virtual Status Status { get; set; }
         public virtual Subsistema Subsistema { get; set; }
         public virtual Terminal Terminal { get; set; }
         public virtual Ticket Ticket { get; set; }

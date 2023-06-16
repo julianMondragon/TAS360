@@ -34,12 +34,12 @@ namespace TAS360.Models
         public virtual DbSet<Modulo> Modulo { get; set; }
         public virtual DbSet<Operacion> Operacion { get; set; }
         public virtual DbSet<Pendiente> Pendiente { get; set; }
+        public virtual DbSet<Pendiente_Record_Status> Pendiente_Record_Status { get; set; }
         public virtual DbSet<Prioridad_de_Pendiente> Prioridad_de_Pendiente { get; set; }
         public virtual DbSet<Roll> Roll { get; set; }
         public virtual DbSet<Roll_Operacion> Roll_Operacion { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Subsistema> Subsistema { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Terminal> Terminal { get; set; }
         public virtual DbSet<Ticket> Ticket { get; set; }
         public virtual DbSet<Ticket_Comentario> Ticket_Comentario { get; set; }

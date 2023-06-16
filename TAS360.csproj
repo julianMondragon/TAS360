@@ -56,7 +56,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
@@ -267,6 +267,9 @@
     <Compile Include="Models\Pendiente.cs">
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Pendiente_Record_Status.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Prioridad_de_Pendiente.cs">
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
@@ -307,9 +310,6 @@
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Subsistema.cs">
-      <DependentUpon>HelpDesk.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Terminal.cs">
@@ -410,6 +410,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Backup_Database\Migraciones\Alter_Pendiente_Add_id_status.sql" />
+    <Content Include="Backup_Database\Migraciones\Create_Table_Pendiente_Record_Status.sql" />
     <Content Include="Backup_Database\Triger_Entradas_auditoria.sql" />
     <Content Include="Backup_Database\Trigger_Salidas_auditoria.sql" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -836,6 +838,7 @@
     <Content Include="Views\Tickets\TicketReport.cshtml" />
     <Content Include="Views\Shared\_LayoutReport.cshtml" />
     <Content Include="Views\Pendientes\Create.cshtml" />
+    <Content Include="Views\Pendientes\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,31 +9,38 @@
     List<SelectListItem> Tickets = (List<SelectListItem>) ViewBag.Tickets;
     List<SelectListItem> Status = (List<SelectListItem>)ViewBag.Status;
     string exception = ViewBag.ExceptionMessage;
+    string Info = ViewBag.InfoMessage;
 }
 <br />
 <br />
 <section class="page-section about-heading">
     <div class="container">
-        @if (exception != null)
-        {
-            <h3 style="color:red">@exception</h3>
-            <div class="alert alert-danger" role="alert">
-                @exception
-            </div>
-        }
-        <div class="about-heading-content">
+       <div class="about-heading-content">
             <div class="row">
                 <div class="col-xl-9 col-lg-10 mx-auto">
                     <div class="bg-faded rounded p-5">
-                        <h2 class="section-heading mb-4">                            
+                        <h2 class="section-heading mb-4">
                             <span class="section-heading-lower">Crear Pendiente</span>
                         </h2>
+                        @if (exception != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @exception
+                            </div>
+                        }
+                        @if (Info != null)
+                        {
+                            <div class="alert alert-info" role="alert">
+                                @Info
+                            </div>
+                        }
                         <div class="row" style="margin:5px 0 0 0">
                             <div class="col-md-12">
                                 @using (Html.BeginForm("Create", "Pendientes", FormMethod.Post))
                                 {
                                     @Html.AntiForgeryToken()
                                     <br />
+                                    //Renglon 0
                                     <div name="row1" class="row" style="margin:0 0 10px 0">
 
                                         <div class="col-md-12">
@@ -43,17 +50,19 @@
                                                 @Html.ValidationMessageFor(f => f.id_Terminal, null, new { @class = "red" })
                                             </div>
                                             <div class="col-md-4">
-                                                <label>Clasificación</label>
+                                                @Html.LabelFor(l => l.id_Clasificacion)
                                                 @Html.DropDownListFor(model => model.id_Clasificacion, Clasificacion, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(v => v.id_Clasificacion)
                                             </div>
                                             <div class="col-md-4">
-                                                <label>Subsistema</label>
+                                                @Html.LabelFor(l => l.id_Subsistema)
                                                 @Html.DropDownListFor(model => model.id_Subsistema, Subsistemas, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(v => v.id_Subsistema)
                                             </div>
                                         </div>
                                     </div>
+                                    //Renglon 1
                                     <div class="row" style="margin:0 0 10px 0">
-
                                         <div class="col-md-12">
                                             <div class="col-md-2" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(L => L.id_Prioridad)
@@ -61,8 +70,9 @@
                                                 @Html.ValidationMessageFor(v => v.id_Prioridad, null, new { @class = "red" })
                                             </div>
                                             <div class="col-md-3" style="margin: 10px 0px 0px 0px;">
-                                                <label>Responsable</label>
+                                                @Html.LabelFor(L => L.id_User)
                                                 @Html.DropDownListFor(model => model.id_User, Usuarios, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(v => v.id_User)
                                             </div>
                                             <div class="col-lg-2" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(L => L.Avance)
@@ -70,28 +80,34 @@
                                                 @Html.ValidationMessageFor(f => f.Avance, null, new { @class = "red" })
                                             </div>
                                             <div class="col-md-5" style="margin: 10px 0px 0px 0px;">
-                                                <label>Ticket</label>
+                                                @Html.LabelFor(L => L.id_Ticket)
                                                 @Html.DropDownListFor(model => model.id_Ticket, Tickets, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(v => v.id_Ticket)
                                             </div>
                                         </div>
                                     </div>
-                                    <div  name="row2" class="row" style="margin:0 0 10px 0">
+                                    //Renglo 2
+                                    <div name="row2" class="row" style="margin:0 0 10px 0">
 
-                                        <div class="col-md-12">                                           
+                                        <div class="col-md-12">
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
-                                                <label>Fecha de creación</label>
+                                                @Html.LabelFor(L => L.CreatedAt)
                                                 @Html.TextBoxFor(x => x.CreatedAt, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "plz input date", @readonly = "true" })
+                                                @Html.ValidationMessageFor(v => v.CreatedAt)
                                             </div>
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
-                                                <label>Fecha compromiso</label>
+                                                @Html.LabelFor(L => L.Fecha_Compromiso)
                                                 @Html.TextBoxFor(x => x.Fecha_Compromiso, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "dd-MM-yyyy" })
+                                                @Html.ValidationMessageFor(v => v.Fecha_Compromiso)
                                             </div>
                                             <div class="col-md-4" style="margin: 10px 0px 0px 0px;">
-                                                @Html.LabelFor(l=>l.id_status);
+                                                @Html.LabelFor(l => l.id_status)
                                                 @Html.DropDownListFor(model => model.id_status, Status, new { @class = "form-control", @readonly = "true" })
+                                                @Html.ValidationMessageFor(v => v.id_status)
                                             </div>
                                         </div>
                                     </div>
+                                    //Renglon 3
                                     <div name="row3" class="row" style="margin:0 0 10px 0">
 
                                         <div class="col-md-12">
@@ -113,7 +129,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                     <div class="row" style="margin: 5px 0px 0px 0px; text-align:right">
                                         <input type="submit" class="btn btn-lg btn-primary" value="Crear" />
                                     </div>

@@ -1,13 +1,13 @@
-USE [ptstools_HelpDesk]
-GO
-
 /****** Object:  Table [dbo].[Ticket_Record_Status]    
         Script Date: 12/06/2023 12:53:00 p. m.
 		CreatedBy: Julian Mondragon Carter
 ******/
-SET ANSI_NULLS ON
+
+USE [ptstools_HelpDesk]
 GO
 
+SET ANSI_NULLS ON
+GO
 SET QUOTED_IDENTIFIER ON
 GO
 

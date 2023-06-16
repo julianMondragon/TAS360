@@ -25,7 +25,7 @@ namespace TAS360.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+       
         public virtual DbSet<AlIny10> AlIny10 { get; set; }
         public virtual DbSet<AlIny11> AlIny11 { get; set; }
         public virtual DbSet<AlIny12> AlIny12 { get; set; }

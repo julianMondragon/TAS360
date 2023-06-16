@@ -1,0 +1,212 @@
+﻿@using TAS360.Models.ViewModel;
+@model TAS360.Models.ViewModel.PendientesViewModel
+@{
+    
+    ViewBag.Title = "Detalles del Pendiente " + Model.id;
+    List<SelectListItem> Clasificacion = (List<SelectListItem>)ViewBag.Clasificacion;
+    List<SelectListItem> Terminales = (List<SelectListItem>)ViewBag.Terminales;
+    List<SelectListItem> Prioridad = (List<SelectListItem>)ViewBag.Prioridad;
+    List<SelectListItem> Usuarios = (List<SelectListItem>)ViewBag.Usuarios;
+    List<SelectListItem> Subsistemas = (List<SelectListItem>)ViewBag.Subsistemas;
+    List<SelectListItem> Tickets = (List<SelectListItem>)ViewBag.Tickets;
+    List<SelectListItem> Status = (List<SelectListItem>)ViewBag.Status;
+    string exception = ViewBag.ExceptionMessage;
+    string Info = ViewBag.InfoMessage;
+
+}
+<br />
+<div class="jumbotron">
+    <h1>Detalles del Pendiente @Model.id </h1>
+    @if (exception != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @exception
+        </div>
+    }
+    @if (Info != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @Info
+        </div>
+    }
+    @switch (Model.id_status)
+    {
+        case 1:
+            <h2 style="color:blue">Status: Pendiente</h2>
+            break;
+        case 2:
+            <h2 style="color:orangered">Status: Análisis</h2>
+            break;
+        case 3:
+            <h2 style="color:orangered">Status: Corrección</h2>
+            break;
+        case 4:
+            <h2 style="color:orange">Status: Pruebas</h2>
+            break;
+        case 9:
+            <h2 style="color:yellow">Status: Implementación</h2>
+            break;
+        case 11:
+            <h2 style="color:red">Status: Pendiente por pemex</h2>
+            break;
+        case 12:
+            <h2 style="color:blue">Status: Cerrado</h2>
+            break;
+        case 13:
+            <h2 style="color:blue">Status: Pendiente por PTS</h2>
+            break;
+        case 15:
+            <h2 style="color:blue">Status: Pendiente por PTS</h2>
+            break;
+        default:
+            <h2>Sin Status</h2>
+            break;
+    }
+    <p class="lead">@Model.Descripcion </p>
+    <!--<div class="row">
+        <button-->
+    @*onclick="document.location.href = '@Url.Content("~/Pendientes/Create")'"*@
+    <!--type="button" class="btn btn-success" data-toggle="tooltip" title="se abrirá el anterior pendiente">
+            Crear un pendiente &raquo;
+        </button>
+        <button type="button" class="btn btn-warning" data-toggle="tooltip" title="funcionalidad futura -> Realiza un filtrado personalizado de los pendientes ">
+            Filtrado &fnof;
+        </button>
+        <button type="button" class="btn btn-info" data-toggle="tooltip" title="funcionalidad futura -> exporta la tabla actual ">
+            Exportar &pound;
+        </button>
+    </div>-->
+
+</div>
+<section class="page-section about-heading">
+    <div class="container">
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">                        
+                        <div class="row" style="margin: 0 0 10px 0">
+                            <div class="col-md-12">
+                                <table class="table table-success table-striped table-bordered">
+                                    <tr class="thead-dark">
+                                        <th class="alert-success">Terminal de almacenamiento y despacho</th>
+                                        <th class="alert-success">Subsistema</th>
+                                        <th class="alert-danger">Clasificación</th>
+                                        <th class="alert-success">Responsable</th>
+                                        <th class="alert-success">Usuario creador</th>
+
+                                    </tr>
+                                    <tr>
+                                        <td>@Model.Terminal.Nombre</td>
+                                        <td>@Model.Subsistema.Nombre</td>
+                                        <td title="@Model.Clasificacion_Pendiente.Descripcion"> @Model.Clasificacion_Pendiente.Nombre</td>
+                                        <td>@Model.Responsable</td>
+                                        <td>@Model.User.nombre</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="row" style="margin:0 0 10px 0">
+                                <div class="col-md-12">
+                                    @switch (Model.id_Prioridad)
+                                    {
+                                        case 1:
+                                            <table class="table table-success table-striped table-bordered">
+                                                <tr class="thead-dark">
+                                                    <th class="alert-danger">Prioridad</th>
+                                                    <th class="alert-success">% de Avance</th>
+                                                    <th class="alert-success">Ticket relacionado</th>
+                                                    <th class="alert-success">Fecha de creacion</th>
+                                                    <th class="alert-success">Fecha de compromiso</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>@Model.Prioridad.Descripcion</td>
+                                                    <td>@Model.Avance</td>
+                                                    <td>@Model.id_Ticket</td>
+                                                    <td>@Model.CreatedAt</td>
+                                                    <td>@Model.Fecha_Compromiso</td>
+                                                </tr>
+                                            </table>
+                                            break;
+                                        case 2:
+                                            <table class="table table-success table-striped table-bordered">
+                                                <tr class="thead-dark">
+                                                    <th class="alert-warning">Prioridad</th>
+                                                    <th class="alert-success">% de Avance</th>
+                                                    <th class="alert-success">Ticket relacionado</th>
+                                                    <th class="alert-success">Fecha de creacion</th>
+                                                    <th class="alert-success">Fecha de compromiso</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>@Model.Prioridad.Descripcion</td>
+                                                    <td>@Model.Avance</td>
+                                                    <td>@Model.id_Ticket</td>
+                                                    <td>@Model.CreatedAt</td>
+                                                    <td>@Model.Fecha_Compromiso</td>
+                                                </tr>
+                                            </table>
+                                            break;
+                                        case 3:
+                                            <table class="table table-success table-striped table-bordered">
+                                                <tr class="thead-dark">
+                                                    <th class="alert-info">Prioridad</th>
+                                                    <th class="alert-success">% de Avance</th>
+                                                    <th class="alert-success">Ticket relacionado</th>
+                                                    <th class="alert-success">Fecha de creacion</th>
+                                                    <th class="alert-success">Fecha de compromiso</th>
+                                                    <th class="alert-success">Días restantes</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>@Model.Prioridad.Descripcion</td>
+                                                    <td>@Model.Avance</td>
+                                                    <td>@Model.id_Ticket</td>
+                                                    <td>@Model.CreatedAt.ToShortDateString()</td>
+                                                    <td>@Model.Fecha_Compromiso.ToShortDateString()</td>
+                                                </tr>
+                                            </table>
+                                            break;
+                                    }
+                                </div>
+                            </div>
+                            <div name="row3" class="row" style="margin:0 0 10px 0">
+
+                                <div class="col-md-12">
+                                    <div class="col-lg-10" style="margin: 10px 0px 0px 0px;">
+                                        @Html.LabelFor(l => l.Descripcion)
+                                        @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", @Style = "Width: 100%; height: 100px", @readonly = "true" })
+                                        @Html.ValidationMessageFor(f => f.Descripcion, null, new { @class = "red" })
+                                    </div>
+                                    <div class="col-md-2" style="margin:05px 0px 0px 0px">
+                                        @*<h3>Record Status</h3>*@
+                                        <table class="table table-success table-striped">
+                                            <tr>
+                                                <th class="alert-info">Record Status</th>
+                                            </tr>
+                                            @foreach (var record_Status in Model.Record_Status)
+                                            {
+                                                <tr>
+                                                    <td>@record_Status.Status.descripcion</td>
+                                                </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                    <div class="col-lg-12" style="margin: 10px 0px 0px 0px;">
+                                        @Html.LabelFor(l => l.Actividades_Pend_Susess)
+                                        @Html.TextAreaFor(model => model.Actividades_Pend_Susess, new { @class = "form-control", @Style = "Width: 100%; height: 150px", @readonly = "true" })
+                                        @Html.ValidationMessageFor(f => f.Actividades_Pend_Susess, null, new { @class = "red" })
+                                    </div>
+                                    <div class="row" style="margin:0 0 10px 0">
+                                        <div class="col-lg-12" style="margin: 10px 0px 0px 0px;">
+                                            @Html.LabelFor(l => l.Observacion)
+                                            @Html.TextAreaFor(model => model.Observacion, new { @class = "form-control", @Style = "Width: 100%; height: 200px", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
