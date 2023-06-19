@@ -1,10 +1,15 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
+using System.Xml.Linq;
+using TAS360.Filters;
 using TAS360.Models;
 using TAS360.Models.ViewModel;
 
@@ -19,12 +24,17 @@ namespace TAS360.Controllers
         public ActionResult Index()
         {
             List<PendientesViewModel> model = new List<PendientesViewModel>();
+            List<CurrentList> currentList = new List<CurrentList>();
             using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
             {
                 //db.Configuration.ProxyCreationEnabled = false;
                 var ListPendientes = from p in db.Pendiente where p.is_deleted == false select p;
                 if(ListPendientes.Any())
                 {
+                    foreach(var  p in ListPendientes)
+                    {
+                        currentList.Add(new CurrentList() { id = p.id , is_selected = false});
+                    }
                     foreach (var p in ListPendientes)
                     {
                         model.Add(new PendientesViewModel()
@@ -35,37 +45,49 @@ namespace TAS360.Controllers
                             Responsable = p.Responsable,
                             id_Terminal = (int) p.id_Terminal,
                             Avance = (double)p.Avance,
-                            Subsistema = db.Subsistema.FirstOrDefault(cp => cp.id == p.id_Subsistema)
-                        });
-                       
+                            Subsistema = db.Subsistema.FirstOrDefault(cp => cp.id == p.id_Subsistema),
+                            currentList = currentList
+                        });                        
                     }
+
                 }
                 
             }
             return View(model);
         }
 
+        
+
         /// <summary>
         /// Devuelve a la vista una lista de pendientes con un pendiente seleccionado para mostrar detalles
         /// </summary>
         /// <param name="Current_List"></param>
         /// <returns></returns>
-        public ActionResult Details(int id)
+        public ActionResult Details(string encodedCurrentList, int id_pendiente)
         {
             PendientesViewModel model = new PendientesViewModel();
+            List<CurrentList> Current_List = new List<CurrentList>();
+
+            var decodedObject = HttpUtility.UrlDecode(encodedCurrentList);
+            Current_List = JsonConvert.DeserializeObject<List<CurrentList>>(decodedObject);
+            foreach (var item in Current_List)
+            {
+                item.is_selected = false;
+            } 
+            Current_List.FirstOrDefault(z => z.id == id_pendiente).is_selected = true;
             using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
             {
-                var Pendiente =  db.Pendiente.Find(id);
-                if(Pendiente != null)
+                var Pendiente = db.Pendiente.Find(Current_List.FirstOrDefault(c => c.is_selected == true).id);
+                if (Pendiente != null)
                 {
                     model.id = Pendiente.id;
                     model.Descripcion = Pendiente.Descripcion;
                     model.Actividades_Pend_Susess = Pendiente.Actividades_Pend_Susess;
                     model.Observacion = Pendiente.Observacion;
-                    model.id_Clasificacion = (int) Pendiente.id_Clasificacion;
-                    model.id_Prioridad = (int) Pendiente.id_Prioridad;
+                    model.id_Clasificacion = (int)Pendiente.id_Clasificacion;
+                    model.id_Prioridad = (int)Pendiente.id_Prioridad;
                     model.CreatedAt = (DateTime)Pendiente.CreatedAt;
-                    model.Fecha_Compromiso = (DateTime) Pendiente.Fecha_Compromiso;
+                    model.Fecha_Compromiso = (DateTime)Pendiente.Fecha_Compromiso;
                     if (Pendiente.id_Ticket != null)
                         model.id_Ticket = (int)Pendiente.id_Ticket;
                     model.id_Terminal = (int)Pendiente.id_Terminal;
@@ -85,7 +107,7 @@ namespace TAS360.Controllers
                         item.Status = db.Status.Find(item.id_Status);
                         model.Record_Status.Add(item);
                     }
-                    
+                    model.currentList = Current_List;
                 }
                 else
                 {
@@ -99,7 +121,7 @@ namespace TAS360.Controllers
                     ViewBag.InfoMessage = "Pendiente no encontrado";
                     return View(model);
                 }
-                
+
             }
 
             GetTerminales();
@@ -110,28 +132,6 @@ namespace TAS360.Controllers
             GetTickets();
             GetStatus(1);
             return View(model);
-        }
-
-        public ActionResult Set_Pending_CurrentList(string encodedCurrentList, int id_pendiente)
-        {
-             List < PendientesViewModel > Current_List = new List<PendientesViewModel>();
-            try
-            {
-                var decodedObject = HttpUtility.UrlDecode(encodedCurrentList);
-                Current_List = JsonConvert.DeserializeObject<List<PendientesViewModel>>(decodedObject);
-
-                // Utilizar el objeto en el controlador
-                Current_List.FirstOrDefault(z => z.id == id_pendiente).is_selected = true;
-
-            }
-            catch(Exception ex)
-            {
-
-            }
-           
-
-           return RedirectToAction("~/Pendiente/Details/" + Current_List);
-
         }
 
         /// <summary>
@@ -169,6 +169,7 @@ namespace TAS360.Controllers
         /// registra en los logs los nuevos ojetos creados
         /// </example>
         [HttpPost]
+        [AuthorizeUser(idOperacion: 11)]
         public ActionResult Create(PendientesViewModel model)
         {
             try
@@ -186,10 +187,7 @@ namespace TAS360.Controllers
                     ViewBag.InfoMessage = "Inicia sesion para crear un pendiente ";
                     return View(model);
                 }
-                using(HelpDesk_Entities1 db = new HelpDesk_Entities1())
-                {
-                    model.Responsable = db.User.FirstOrDefault(x => x.id == model.id_User).nombre;
-                }                
+                               
                 if (ModelState.IsValid)
                 {
                     string path = Server.MapPath("~/Logs/Pendientes/");
@@ -214,7 +212,10 @@ namespace TAS360.Controllers
                                 Fecha_Compromiso = model.Fecha_Compromiso,
                                 Responsable = model.Responsable,
                                 id_status = model.id_status,
-                                is_deleted = false
+                                is_deleted = false,
+                                is_PAS = model.is_PAS,
+                                is_PAF = model.is_PAF,
+                                version_where_the_Pending_was_found = model.version_where_the_Pending_was_found
                             });
                         }
                         else
@@ -257,12 +258,13 @@ namespace TAS360.Controllers
                         oLog.Add("Prioridad: " + model.id_Prioridad);
                         oLog.Add("Subsistema: " + model.id_Subsistema);
                         oLog.Add("Ticket: " + model.id_Ticket);
-                        oLog.Add("Responsable: " + user.nombre);
+                        oLog.Add("Responsable: " + model.Responsable);
                         oLog.Add("Actividad Pendiente Susess: " + model.Actividades_Pend_Susess);
                         oLog.Add("Avance: " + model.Avance);
                         oLog.Add("Created At: " + model.CreatedAt.ToString());
                         oLog.Add("Fecha Compromiso: " + model.Fecha_Compromiso.ToString());
                         oLog.Add("Status: " + model.id_status);
+                        oLog.Add("version donde fue encontrado: " + model.version_where_the_Pending_was_found);
 
                         //redirige al listar pendientes
                         return RedirectToAction("Index");

@@ -7,6 +7,11 @@ namespace TAS360.Models.ViewModel
 {
     public class PendientesViewModel
     {
+        public PendientesViewModel() 
+        {
+            currentList = new List<CurrentList>();
+        }
+
         public int id { get; set; }
 
         [Required]
@@ -33,6 +38,8 @@ namespace TAS360.Models.ViewModel
         [Display(Name = "Acitividades pendientes por el fabricante (SUSESS)")]
         public string Actividades_Pend_Susess { get; set; }
 
+        [Required]
+        [Display(Name = "Responsable")]
         public string Responsable { get; set; }
 
         [Required]
@@ -43,8 +50,7 @@ namespace TAS360.Models.ViewModel
         [Display(Name = "Fecha Compromiso de entrega")]
         public DateTime Fecha_Compromiso { get; set; }
 
-        [Required]
-        [Display(Name = "Usuario relacionado")]
+        
         public int id_User { get; set; }
 
         [Display(Name = "Ticket relacionado")]
@@ -62,6 +68,20 @@ namespace TAS360.Models.ViewModel
         [Display(Name = "Status")]
         public int id_status { get; set; }
 
+        [Required]
+        [Display(Name = "Version donde fue encontrado")]
+        public string version_where_the_Pending_was_found { get; set; }
+
+        
+        [Display(Name = "Version donde fue solventado")]
+        public string version_where_the_Pending_is_fixed { get; set; }
+
+        [Display(Name = "Es PAS")]
+        public bool is_PAS { get; set; }
+
+        [Display(Name = "Es PAF")]
+        public bool is_PAF { get; set; }
+
         public Clasificacion_Pendiente Clasificacion_Pendiente { get; set; }        
         public User User { get; set; }      
         public Subsistema Subsistema { get; set; }
@@ -71,6 +91,14 @@ namespace TAS360.Models.ViewModel
 
         public bool is_selected { get; set; }
 
+        public List<CurrentList> currentList { get; set; }
 
+
+    }
+
+    public class CurrentList
+    {
+        public int id { get; set; }
+        public bool is_selected { get;  set; }
     }
 }

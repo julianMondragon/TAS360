@@ -74,6 +74,18 @@
           <Property Name="id_Subsistema" Type="int" />
           <Property Name="id_status" Type="int" />
           <Property Name="is_deleted" Type="bit" />
+          <Property Name="version_where_the_Pending_was_found" Type="varchar" MaxLength="250" />
+          <Property Name="version_where_the_Pending_is_fixed" Type="varchar" MaxLength="250" />
+          <Property Name="is_PAF" Type="bit" />
+          <Property Name="is_PAS" Type="bit" />
+        </EntityType>
+        <EntityType Name="Pendiente_Files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Pendiente" Type="int" />
+          <Property Name="id_File" Type="int" />
         </EntityType>
         <EntityType Name="Pendiente_Record_Status">
           <Key>
@@ -227,6 +239,30 @@
             </Principal>
             <Dependent Role="Pendiente">
               <PropertyRef Name="id_Clasificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Files_Files">
+          <End Role="Files" Type="Self.Files" Multiplicity="0..1" />
+          <End Role="Pendiente_Files" Type="Self.Pendiente_Files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente_Files">
+              <PropertyRef Name="id_File" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Files_Pendiente">
+          <End Role="Pendiente" Type="Self.Pendiente" Multiplicity="0..1" />
+          <End Role="Pendiente_Files" Type="Self.Pendiente_Files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pendiente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente_Files">
+              <PropertyRef Name="id_Pendiente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -502,6 +538,7 @@
           <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Operacion" EntityType="Self.Operacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pendiente" EntityType="Self.Pendiente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pendiente_Files" EntityType="Self.Pendiente_Files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pendiente_Record_Status" EntityType="Self.Pendiente_Record_Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prioridad_de_Pendiente" EntityType="Self.Prioridad_de_Pendiente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roll" EntityType="Self.Roll" Schema="dbo" store:Type="Tables" />
@@ -526,6 +563,14 @@
           <AssociationSet Name="FK_Pendiente_Clasificacion_Pendiente" Association="Self.FK_Pendiente_Clasificacion_Pendiente">
             <End Role="Clasificacion_Pendiente" EntitySet="Clasificacion_Pendiente" />
             <End Role="Pendiente" EntitySet="Pendiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Files_Files" Association="Self.FK_Pendiente_Files_Files">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="Pendiente_Files" EntitySet="Pendiente_Files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Files_Pendiente" Association="Self.FK_Pendiente_Files_Pendiente">
+            <End Role="Pendiente" EntitySet="Pendiente" />
+            <End Role="Pendiente_Files" EntitySet="Pendiente_Files" />
           </AssociationSet>
           <AssociationSet Name="FK_Pendiente_Prioridad_de_Pendiente" Association="Self.FK_Pendiente_Prioridad_de_Pendiente">
             <End Role="Prioridad_de_Pendiente" EntitySet="Prioridad_de_Pendiente" />
@@ -658,6 +703,7 @@
           <EntitySet Name="Modulo" EntityType="HelpDeskModel.Modulo" />
           <EntitySet Name="Operacion" EntityType="HelpDeskModel.Operacion" />
           <EntitySet Name="Pendiente" EntityType="HelpDeskModel.Pendiente" />
+          <EntitySet Name="Pendiente_Files" EntityType="HelpDeskModel.Pendiente_Files" />
           <EntitySet Name="Pendiente_Record_Status" EntityType="HelpDeskModel.Pendiente_Record_Status" />
           <EntitySet Name="Prioridad_de_Pendiente" EntityType="HelpDeskModel.Prioridad_de_Pendiente" />
           <EntitySet Name="Roll" EntityType="HelpDeskModel.Roll" />
@@ -687,6 +733,10 @@
             <End Role="Comentario" EntitySet="Comentario" />
             <End Role="Ticket_Comentario" EntitySet="Ticket_Comentario" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Files_Files" Association="HelpDeskModel.FK_Pendiente_Files_Files">
+            <End Role="Files" EntitySet="Files" />
+            <End Role="Pendiente_Files" EntitySet="Pendiente_Files" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tickets_Files_Files" Association="HelpDeskModel.FK_Tickets_Files_Files">
             <End Role="Files" EntitySet="Files" />
             <End Role="Tickets_Files" EntitySet="Tickets_Files" />
@@ -698,6 +748,10 @@
           <AssociationSet Name="FK_Roll_Operacion_Operacion" Association="HelpDeskModel.FK_Roll_Operacion_Operacion">
             <End Role="Operacion" EntitySet="Operacion" />
             <End Role="Roll_Operacion" EntitySet="Roll_Operacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pendiente_Files_Pendiente" Association="HelpDeskModel.FK_Pendiente_Files_Pendiente">
+            <End Role="Pendiente" EntitySet="Pendiente" />
+            <End Role="Pendiente_Files" EntitySet="Pendiente_Files" />
           </AssociationSet>
           <AssociationSet Name="FK_Pendiente_Prioridad_de_Pendiente" Association="HelpDeskModel.FK_Pendiente_Prioridad_de_Pendiente">
             <End Role="Prioridad_de_Pendiente" EntitySet="Prioridad_de_Pendiente" />
@@ -820,6 +874,7 @@
           <Property Name="Nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="URL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pendiente_Files" Relationship="HelpDeskModel.FK_Pendiente_Files_Files" FromRole="Files" ToRole="Pendiente_Files" />
           <NavigationProperty Name="Tickets_Files" Relationship="HelpDeskModel.FK_Tickets_Files_Files" FromRole="Files" ToRole="Tickets_Files" />
         </EntityType>
         <EntityType Name="Modulo">
@@ -860,7 +915,12 @@
           <Property Name="id_Subsistema" Type="Int32" />
           <Property Name="id_status" Type="Int32" />
           <Property Name="is_deleted" Type="Boolean" />
+          <Property Name="version_where_the_Pending_was_found" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="version_where_the_Pending_is_fixed" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="is_PAF" Type="Boolean" />
+          <Property Name="is_PAS" Type="Boolean" />
           <NavigationProperty Name="Clasificacion_Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Clasificacion_Pendiente" FromRole="Pendiente" ToRole="Clasificacion_Pendiente" />
+          <NavigationProperty Name="Pendiente_Files" Relationship="HelpDeskModel.FK_Pendiente_Files_Pendiente" FromRole="Pendiente" ToRole="Pendiente_Files" />
           <NavigationProperty Name="Prioridad_de_Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Prioridad_de_Pendiente" FromRole="Pendiente" ToRole="Prioridad_de_Pendiente" />
           <NavigationProperty Name="Pendiente_Record_Status" Relationship="HelpDeskModel.FK_Pendiente_Record_Status_Pendiente" FromRole="Pendiente" ToRole="Pendiente_Record_Status" />
           <NavigationProperty Name="Status" Relationship="HelpDeskModel.FK_Pendiente_Status" FromRole="Pendiente" ToRole="Status" />
@@ -868,6 +928,16 @@
           <NavigationProperty Name="Terminal" Relationship="HelpDeskModel.FK_Pendiente_Terminal" FromRole="Pendiente" ToRole="Terminal" />
           <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Pendiente_Ticket" FromRole="Pendiente" ToRole="Ticket" />
           <NavigationProperty Name="User" Relationship="HelpDeskModel.FK_Pendiente_User" FromRole="Pendiente" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Pendiente_Files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Pendiente" Type="Int32" />
+          <Property Name="id_File" Type="Int32" />
+          <NavigationProperty Name="Files" Relationship="HelpDeskModel.FK_Pendiente_Files_Files" FromRole="Pendiente_Files" ToRole="Files" />
+          <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Files_Pendiente" FromRole="Pendiente_Files" ToRole="Pendiente" />
         </EntityType>
         <EntityType Name="Pendiente_Record_Status">
           <Key>
@@ -1070,6 +1140,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pendiente_Files_Files">
+          <End Type="HelpDeskModel.Files" Role="Files" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Pendiente_Files" Role="Pendiente_Files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente_Files">
+              <PropertyRef Name="id_File" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tickets_Files_Files">
           <End Type="HelpDeskModel.Files" Role="Files" Multiplicity="0..1" />
           <End Type="HelpDeskModel.Tickets_Files" Role="Tickets_Files" Multiplicity="*" />
@@ -1103,6 +1185,18 @@
             </Principal>
             <Dependent Role="Roll_Operacion">
               <PropertyRef Name="id_Operacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pendiente_Files_Pendiente">
+          <End Type="HelpDeskModel.Pendiente" Role="Pendiente" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Pendiente_Files" Role="Pendiente_Files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pendiente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pendiente_Files">
+              <PropertyRef Name="id_Pendiente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1386,6 +1480,10 @@
           <EntitySetMapping Name="Pendiente">
             <EntityTypeMapping TypeName="HelpDeskModel.Pendiente">
               <MappingFragment StoreEntitySet="Pendiente">
+                <ScalarProperty Name="is_PAS" ColumnName="is_PAS" />
+                <ScalarProperty Name="is_PAF" ColumnName="is_PAF" />
+                <ScalarProperty Name="version_where_the_Pending_is_fixed" ColumnName="version_where_the_Pending_is_fixed" />
+                <ScalarProperty Name="version_where_the_Pending_was_found" ColumnName="version_where_the_Pending_was_found" />
                 <ScalarProperty Name="is_deleted" ColumnName="is_deleted" />
                 <ScalarProperty Name="id_status" ColumnName="id_status" />
                 <ScalarProperty Name="id_Subsistema" ColumnName="id_Subsistema" />
@@ -1401,6 +1499,15 @@
                 <ScalarProperty Name="Observacion" ColumnName="Observacion" />
                 <ScalarProperty Name="id_Clasificacion" ColumnName="id_Clasificacion" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pendiente_Files">
+            <EntityTypeMapping TypeName="HelpDeskModel.Pendiente_Files">
+              <MappingFragment StoreEntitySet="Pendiente_Files">
+                <ScalarProperty Name="id_File" ColumnName="id_File" />
+                <ScalarProperty Name="id_Pendiente" ColumnName="id_Pendiente" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

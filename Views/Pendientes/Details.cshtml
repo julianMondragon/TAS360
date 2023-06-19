@@ -1,7 +1,8 @@
 ﻿@using TAS360.Models.ViewModel;
+@using Newtonsoft.Json;
 @model TAS360.Models.ViewModel.PendientesViewModel
 @{
-    
+
     ViewBag.Title = "Detalles del Pendiente " + Model.id;
     List<SelectListItem> Clasificacion = (List<SelectListItem>)ViewBag.Clasificacion;
     List<SelectListItem> Terminales = (List<SelectListItem>)ViewBag.Terminales;
@@ -12,11 +13,57 @@
     List<SelectListItem> Status = (List<SelectListItem>)ViewBag.Status;
     string exception = ViewBag.ExceptionMessage;
     string Info = ViewBag.InfoMessage;
+    int count = 1;
+    int previus=0;
+    int Next= 0;
+    for (int i = 0; i <= Model.currentList.Count; i++)
+    {
+        if (Model.currentList[i].is_selected)
+        {
+            if (i == 0)
+            {
+                previus = Model.currentList.LastOrDefault().id;
+            }
+            else
+            {
+                if (i - 1 < 0)
+                {
+                    previus = Model.currentList[0].id;
+                }
+                else
+                {
+                    previus = Model.currentList[i - 1].id;
+                }
 
+            }
+            if (i == Model.currentList.Count)
+            {
+                Next = Model.currentList.FirstOrDefault().id;
+            }
+            else
+            {
+                if(i + 1 == Model.currentList.Count)
+                {
+                    Next = Model.currentList.FirstOrDefault().id;
+                }
+                else
+                {
+                    Next = Model.currentList[i + 1].id;
+                }
+            }
+            break;
+        }
+        count = count + 1;
+    }
+    // Objeto a enviar
+    string encodedCurrentList = "";
+    // Serialización y codificación
+    var serializedObject = JsonConvert.SerializeObject(Model.currentList);
+    encodedCurrentList = HttpUtility.UrlEncode(serializedObject);
 }
 <br />
 <div class="jumbotron">
-    <h1>Detalles del Pendiente @Model.id </h1>
+    <h2>Detalles del Pendiente # @count de @Model.currentList.Count </h2>
     @if (exception != null)
     {
         <div class="alert alert-danger" role="alert">
@@ -32,60 +79,61 @@
     @switch (Model.id_status)
     {
         case 1:
-            <h2 style="color:blue">Status: Pendiente</h2>
+            <h3 style="color:blue">Status: Pendiente</h3>
             break;
         case 2:
-            <h2 style="color:orangered">Status: Análisis</h2>
+            <h3 style="color:orangered">Status: Análisis</h3>
             break;
         case 3:
-            <h2 style="color:orangered">Status: Corrección</h2>
+            <h3 style="color:orangered">Status: Corrección</h3>
             break;
         case 4:
-            <h2 style="color:orange">Status: Pruebas</h2>
+            <h3 style="color:orange">Status: Pruebas</h3>
             break;
         case 9:
-            <h2 style="color:yellow">Status: Implementación</h2>
+            <h3 style="color:yellow">Status: Implementación</h3>
             break;
         case 11:
-            <h2 style="color:red">Status: Pendiente por pemex</h2>
+            <h3 style="color:red">Status: Pendiente por pemex</h3>
             break;
         case 12:
-            <h2 style="color:blue">Status: Cerrado</h2>
+            <h3 style="color:blue">Status: Cerrado</h3>
             break;
         case 13:
-            <h2 style="color:blue">Status: Pendiente por PTS</h2>
+            <h3 style="color:blue">Status: Pendiente por PTS</h3>
             break;
         case 15:
-            <h2 style="color:blue">Status: Pendiente por PTS</h2>
+            <h3 style="color:blue">Status: Pendiente por PTS</h3>
             break;
         default:
-            <h2>Sin Status</h2>
+            <h3>Sin Status</h3>
             break;
     }
     <p class="lead">@Model.Descripcion </p>
-    <!--<div class="row">
-        <button-->
-    @*onclick="document.location.href = '@Url.Content("~/Pendientes/Create")'"*@
-    <!--type="button" class="btn btn-success" data-toggle="tooltip" title="se abrirá el anterior pendiente">
-            Crear un pendiente &raquo;
+    <div class="col-md-12" style="margin:0 0 0 0">
+        <button onclick="document.location.href = '@Url.Content("~/Pendientes/Details/?encodedCurrentList="+ encodedCurrentList +"&id_pendiente=" + previus)'"
+                type="button" class="btn btn-primary" data-toggle="tooltip" title="se abrirá el anterior pendiente">
+            &laquo; Anterior
         </button>
-        <button type="button" class="btn btn-warning" data-toggle="tooltip" title="funcionalidad futura -> Realiza un filtrado personalizado de los pendientes ">
-            Filtrado &fnof;
+        <button onclick="document.location.href = '@Url.Content("~/Pendientes/Create")'"
+                type="button" class="btn btn-default" data-toggle="tooltip" title="Editar pendiente">
+            &epsilon; Editar
         </button>
-        <button type="button" class="btn btn-info" data-toggle="tooltip" title="funcionalidad futura -> exporta la tabla actual ">
-            Exportar &pound;
+        <button onclick="document.location.href = '@Url.Content("~/Pendientes/Details/?encodedCurrentList="+ encodedCurrentList +"&id_pendiente=" + Next)'"
+                type="button" class="btn btn-primary" data-toggle="tooltip" title="se abrirá el anterior pendiente">
+            Siguiente &raquo;
         </button>
-    </div>-->
-
+    </div>
 </div>
+
 <section class="page-section about-heading">
     <div class="container">
         <div class="about-heading-content">
             <div class="row">
                 <div class="col-xl-9 col-lg-10 mx-auto">
-                    <div class="bg-faded rounded p-5">                        
-                        <div class="row" style="margin: 0 0 10px 0">
-                            <div class="col-md-12">
+                    <div class="bg-faded rounded p-5">
+                        <div class="row">
+                            <div class="col-md-12" style="margin:5px 0 0 0">
                                 <table class="table table-success table-striped table-bordered">
                                     <tr class="thead-dark">
                                         <th class="alert-success">Terminal de almacenamiento y despacho</th>

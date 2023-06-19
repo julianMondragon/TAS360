@@ -70,9 +70,9 @@
                                                 @Html.ValidationMessageFor(v => v.id_Prioridad, null, new { @class = "red" })
                                             </div>
                                             <div class="col-md-3" style="margin: 10px 0px 0px 0px;">
-                                                @Html.LabelFor(L => L.id_User)
-                                                @Html.DropDownListFor(model => model.id_User, Usuarios, new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(v => v.id_User)
+                                                @Html.LabelFor(l => l.Responsable)
+                                                @Html.TextBoxFor(model => model.Responsable, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(f => f.Responsable, null, new { @class = "red" })
                                             </div>
                                             <div class="col-lg-2" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(L => L.Avance)
@@ -92,13 +92,13 @@
                                         <div class="col-md-12">
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(L => L.CreatedAt)
-                                                @Html.TextBoxFor(x => x.CreatedAt, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "plz input date", @readonly = "true" })
-                                                @Html.ValidationMessageFor(v => v.CreatedAt)
+                                                @Html.TextBoxFor(x => x.CreatedAt, "{0:MM-dd-yyyy}", new { @class = "form-control", @placeholder = "plz input date", @readonly = "true" })
+                                                @Html.ValidationMessageFor(v => v.CreatedAt, null, new { @class = "red" })
                                             </div>
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(L => L.Fecha_Compromiso)
-                                                @Html.TextBoxFor(x => x.Fecha_Compromiso, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "dd-MM-yyyy" })
-                                                @Html.ValidationMessageFor(v => v.Fecha_Compromiso)
+                                                @Html.TextBoxFor(x => x.Fecha_Compromiso, "{0:MM-dd-yyyy}", new { @class = "form-control", @placeholder = "dd-MM-yyyy" })
+                                                @Html.ValidationMessageFor(v => v.Fecha_Compromiso, null, new { @class = "red" })
                                             </div>
                                             <div class="col-md-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(l => l.id_status)
@@ -107,7 +107,26 @@
                                             </div>
                                         </div>
                                     </div>
-                                    //Renglon 3
+                                    //Renglo 3
+                                    <div name="row2" class="row" style="margin:0 0 10px 0">
+
+                                        <div class="col-md-12">
+                                            <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
+                                                @Html.LabelFor(L => L.version_where_the_Pending_was_found)
+                                                @Html.TextBoxFor(x => x.version_where_the_Pending_was_found, new { @class = "form-control", @placeholder = "Version 2.16.xxx"})
+                                                @Html.ValidationMessageFor(v => v.version_where_the_Pending_was_found, null, new { @class = "red" })
+                                            </div>
+                                            <div class="col-md-2" style="margin: 25px 0px 0px 0px;">
+                                                @Html.CheckBoxFor(m => m.is_PAF)
+                                                @Html.LabelFor(L => L.is_PAF)
+                                            </div>
+                                            <div class="col-md-2" style="margin: 25px 0px 0px 0px;">
+                                                @Html.CheckBoxFor(m => m.is_PAS)
+                                                @Html.LabelFor(l => l.is_PAS)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    //Renglon 4
                                     <div name="row3" class="row" style="margin:0 0 10px 0">
 
                                         <div class="col-md-12">

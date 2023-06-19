@@ -17,6 +17,7 @@ namespace TAS360.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Pendiente()
         {
+            this.Pendiente_Files = new HashSet<Pendiente_Files>();
             this.Pendiente_Record_Status = new HashSet<Pendiente_Record_Status>();
         }
     
@@ -36,8 +37,14 @@ namespace TAS360.Models
         public Nullable<int> id_Subsistema { get; set; }
         public Nullable<int> id_status { get; set; }
         public Nullable<bool> is_deleted { get; set; }
+        public string version_where_the_Pending_was_found { get; set; }
+        public string version_where_the_Pending_is_fixed { get; set; }
+        public Nullable<bool> is_PAF { get; set; }
+        public Nullable<bool> is_PAS { get; set; }
     
         public virtual Clasificacion_Pendiente Clasificacion_Pendiente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pendiente_Files> Pendiente_Files { get; set; }
         public virtual Prioridad_de_Pendiente Prioridad_de_Pendiente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pendiente_Record_Status> Pendiente_Record_Status { get; set; }

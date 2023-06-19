@@ -267,6 +267,9 @@
     <Compile Include="Models\Pendiente.cs">
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Pendiente_Files.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Pendiente_Record_Status.cs">
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
@@ -411,6 +414,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Backup_Database\Migraciones\Alter_Pendiente_Add_id_status.sql" />
+    <Content Include="Backup_Database\Migraciones\Alter_Pendiente_Add_properties.sql" />
+    <Content Include="Backup_Database\Migraciones\Create_Table_Pendiente_Files.sql" />
     <Content Include="Backup_Database\Migraciones\Create_Table_Pendiente_Record_Status.sql" />
     <Content Include="Backup_Database\Triger_Entradas_auditoria.sql" />
     <Content Include="Backup_Database\Trigger_Salidas_auditoria.sql" />
@@ -419,6 +424,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\Ej_Tabla_Cub_LLenado_2.JPG" />
+    <Content Include="Content\img\Home_BG.png" />
+    <Content Include="Content\img\Home_BG_1.png" />
+    <Content Include="Content\img\Home_BG_2.png" />
+    <Content Include="Content\img\Home_BG_3.png" />
+    <Content Include="Content\img\Home_BG_4.png" />
+    <Content Include="Content\img\NoAuthorizado.jpg" />
     <Content Include="Content\img\TanqueAditivo.JPG" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -487,6 +498,7 @@
       <DependentUpon>HelpDesk.edmx</DependentUpon>
     </Content>
     <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Content\img\iso912.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.min.css" />
@@ -839,6 +851,7 @@
     <Content Include="Views\Shared\_LayoutReport.cshtml" />
     <Content Include="Views\Pendientes\Create.cshtml" />
     <Content Include="Views\Pendientes\Details.cshtml" />
+    <Content Include="Views\Acceso\RetornarVistaAnterior.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

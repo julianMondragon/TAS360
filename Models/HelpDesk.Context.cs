@@ -34,6 +34,7 @@ namespace TAS360.Models
         public virtual DbSet<Modulo> Modulo { get; set; }
         public virtual DbSet<Operacion> Operacion { get; set; }
         public virtual DbSet<Pendiente> Pendiente { get; set; }
+        public virtual DbSet<Pendiente_Files> Pendiente_Files { get; set; }
         public virtual DbSet<Pendiente_Record_Status> Pendiente_Record_Status { get; set; }
         public virtual DbSet<Prioridad_de_Pendiente> Prioridad_de_Pendiente { get; set; }
         public virtual DbSet<Roll> Roll { get; set; }

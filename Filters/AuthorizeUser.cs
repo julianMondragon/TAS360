@@ -26,19 +26,28 @@ namespace TAS360.Filters
             string nombreModulo = "";
 
             try
-            {
+            {              
+               
                 oUser = (User)HttpContext.Current.Session["User"];
-                var MyOperationsList = from Op in db.Roll_Operacion 
-                                       where Op.id_Roll == oUser.id_Roll && Op.id_Operacion == idOperacion 
-                                       select Op;
-                if (MyOperationsList.ToList().Count() == 0)
+                if (oUser == null)
                 {
-                    var oOperation = db.Operacion.Find(idOperacion);
-                    int? IdModulo = oOperation.id_Modulo;
-                    nombreOperacion = getNombreDeOperacion(idOperacion);
-                    nombreModulo = getNombreModulo(IdModulo);
-                    filterContext.Result = new RedirectResult("~/Error/UnauthorizedOperation?operacion=" + nombreOperacion + "?modulo=" + nombreModulo + "?message=No_tienes_privilegios");
+                    filterContext.Result = new RedirectResult("~/Acceso/Login");
                 }
+                else
+                {
+                    var MyOperationsList = from Op in db.Roll_Operacion
+                                           where Op.id_Roll == oUser.id_Roll && Op.id_Operacion == idOperacion
+                                           select Op;
+                    if (MyOperationsList.ToList().Count() == 0)
+                    {
+                        var oOperation = db.Operacion.Find(idOperacion);
+                        int? IdModulo = oOperation.id_Modulo;
+                        nombreOperacion = getNombreDeOperacion(idOperacion);
+                        nombreModulo = getNombreModulo(IdModulo);
+                        filterContext.Result = new RedirectResult("~/Error/UnauthorizedOperation?operacion=" + nombreOperacion + "?modulo=" + nombreModulo + "?message=No tienes privilegios de acceso, verificalo con el administrador del sistema");
+                    }
+                }
+                
             }
             catch(Exception ex)
             {

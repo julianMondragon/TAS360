@@ -5,27 +5,11 @@
 @{
     ViewBag.Title = "Pendientes del TAS360";
 
-    //// Objeto a enviar
-    //List<PendientesViewModel> CurrentList = new List<PendientesViewModel>();
-    //string encodedCurrentList = "";
-    //try
-    //{
-    //    foreach(var item in Model)
-    //    {
-    //        CurrentList.Add(item);
-    //        item.Subsistema = null;
-    //        item.Clasificacion_Pendiente = null;
-    //    }
-    //    // Serialización y codificación
-    //    var serializedObject = JsonConvert.SerializeObject(Model);
-    //    encodedCurrentList = HttpUtility.UrlEncode(serializedObject);
-    //}
-    //catch(Exception e)
-    //{
-
-    //}
-
-
+    // Objeto a enviar    
+    string encodedCurrentList = "";
+    // Serialización y codificación
+    var serializedObject = JsonConvert.SerializeObject(Model.FirstOrDefault().currentList);
+    encodedCurrentList = HttpUtility.UrlEncode(serializedObject);
 }
 
 <div class="jumbotron">
@@ -103,8 +87,8 @@
                                     break;
                             }
                         <td colspan="1">
-                            @*<input type="button" class="btn btn-info" onclick="document.location.href = '@Url.Content("~/Pendientes/Set_Pending_CurrentList/?Current_List="+ encodedCurrentList +"&id_pendiente=" + pendiente.id)'" value="Detalles" />*@
-                            <input type="button" class="btn btn-info" onclick="document.location.href = '@Url.Content("~/Pendientes/Details/" + pendiente.id)'" value="Detalles" />
+                            @*<input type="button" class="btn btn-info" onclick="document.location.href = '@Url.Content("~/Pendientes/Set_Pending_CurrentList/)'" value="Detalles" />*@
+                            <input type="button" class="btn btn-info" onclick="document.location.href = '@Url.Content("~/Pendientes/Details/?encodedCurrentList="+ encodedCurrentList +"&id_pendiente=" + pendiente.id)'" value="Detalles" />
                             <input type="button" class="btn btn-default" onclick="document.location.href = '@Url.Content("~/Pendientes/Edit/" + pendiente.id)'" value="Editar" />
                         </td>
                         </tr>

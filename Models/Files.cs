@@ -17,6 +17,7 @@ namespace TAS360.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Files()
         {
+            this.Pendiente_Files = new HashSet<Pendiente_Files>();
             this.Tickets_Files = new HashSet<Tickets_Files>();
         }
     
@@ -25,6 +26,8 @@ namespace TAS360.Models
         public string URL { get; set; }
         public string Tipo { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pendiente_Files> Pendiente_Files { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tickets_Files> Tickets_Files { get; set; }
     }
