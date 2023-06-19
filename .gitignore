@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /TEST_CSV/TV01_mm_x_mm.xlsx
 /Backup_Database/Migraciones/Alter_Pendiente_Add_id_status.sql
+/Backup_Database/Migraciones/Alter_Pendiente_Add_id_status.sql
