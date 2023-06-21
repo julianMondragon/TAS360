@@ -1,10 +1,15 @@
-﻿using DocumentFormat.OpenXml.Office2010.Excel;
+﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
+using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -55,9 +60,7 @@ namespace TAS360.Controllers
             }
             return View(model);
         }
-
-        
-
+            
         /// <summary>
         /// Devuelve a la vista una lista de pendientes con un pendiente seleccionado para mostrar detalles
         /// </summary>
@@ -235,7 +238,10 @@ namespace TAS360.Controllers
                                 Fecha_Compromiso = model.Fecha_Compromiso,
                                 Responsable = model.Responsable,
                                 id_status = model.id_status,
-                                is_deleted = false
+                                is_deleted = false,
+                                is_PAS = model.is_PAS,
+                                is_PAF = model.is_PAF,
+                                version_where_the_Pending_was_found = model.version_where_the_Pending_was_found
                             });
                         }
                         
@@ -300,48 +306,280 @@ namespace TAS360.Controllers
             }
         }
 
-        // GET: Pendientes/Edit/5
-        public ActionResult Edit(int id)
+        /// <summary>
+        /// Metodo que devuelve a la vista el objeto para ser editado. 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public ActionResult Edit(string encodedCurrentList, int id_pendiente)
         {
-            return View();
+            PendientesViewModel model = new PendientesViewModel();
+            List<CurrentList> Current_List = new List<CurrentList>();
+            int last_status = 1;
+            try
+            {       
+
+                var decodedObject = HttpUtility.UrlDecode(encodedCurrentList);
+                Current_List = JsonConvert.DeserializeObject<List<CurrentList>>(decodedObject);
+                foreach (var item in Current_List)
+                {
+                    item.is_selected = false;
+                }
+                Current_List.FirstOrDefault(z => z.id == id_pendiente).is_selected = true;
+                string path = Server.MapPath("~/Logs/Pendientes/");
+                Log oLog = new Log(path);
+                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                {
+                    var PendienteToEdit = db.Pendiente.Find(Current_List.FirstOrDefault(x => x.is_selected).id);
+
+                    model.id = id_pendiente;
+                    model.Descripcion = PendienteToEdit.Descripcion;
+                    model.id_Terminal = (int)PendienteToEdit.id_Terminal;
+                    model.id_Clasificacion = (int)PendienteToEdit.id_Clasificacion;
+                    model.id_Prioridad = (int)PendienteToEdit.id_Prioridad;
+                    model.id_Subsistema = (int)PendienteToEdit.id_Subsistema;
+                    model.id_Ticket = PendienteToEdit.id_Ticket == null ? 0 : (int)PendienteToEdit.id_Ticket;
+                    model.id_User = (int)PendienteToEdit.id_User;
+                    model.Actividades_Pend_Susess = PendienteToEdit.Actividades_Pend_Susess;
+                    model.Avance = (double)PendienteToEdit.Avance;
+                    model.Observacion = PendienteToEdit.Observacion;
+                    model.CreatedAt = (DateTime)PendienteToEdit.CreatedAt;
+                    model.Fecha_Compromiso = (DateTime)PendienteToEdit.Fecha_Compromiso;
+                    model.Responsable = PendienteToEdit.Responsable;
+                    model.id_status = (int)PendienteToEdit.id_status;
+                    model.is_PAS = PendienteToEdit.is_PAS == null ? false : (bool)PendienteToEdit.is_PAS;
+                    model.is_PAF = PendienteToEdit.is_PAF == null ? false : (bool)PendienteToEdit.is_PAF;
+                    model.version_where_the_Pending_was_found = PendienteToEdit.version_where_the_Pending_was_found;
+                    model.version_where_the_Pending_is_fixed = PendienteToEdit.version_where_the_Pending_is_fixed;
+                    model.currentList = Current_List;
+
+                    var status = (from prs in db.Pendiente_Record_Status orderby prs.CreatedAt descending select prs).FirstOrDefault();
+                    if (status != null)
+                    {
+                        last_status = (int)status.id_Status;
+                    }
+                }
+                GetTerminales();
+                GetSubsistemas();
+                GetPrioridad();
+                GetClasificacion();
+                GetUsuarios();
+                GetTickets();
+                GetStatusEditPending(last_status);
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                GetTerminales();
+                GetSubsistemas();
+                GetPrioridad();
+                GetClasificacion();
+                GetUsuarios();
+                GetTickets();
+                GetStatusEditPending(1);
+                string path = Server.MapPath("~/Logs/Pendientes/");
+                Log oLog = new Log(path);
+                oLog.Add("Catched Excepcion: Get Metod Edit : " + ex.Message);
+                ViewBag.ExceptionMessage = ex.Message;
+                return View(model);
+            }
         }
 
-        // POST: Pendientes/Edit/5
+        /// <summary>
+        /// Metodo que actualiza un pendeinte en la BD
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [AuthorizeUser(idOperacion: 12)]
+        public ActionResult Edit(PendientesViewModel model ,  List<CurrentList> currentLists)
         {
+            string path = Server.MapPath("~/Logs/Pendientes/");
+            Log oLog = new Log(path);
+            int last_status = 1;
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    oLog.Add("Editar Pendiente: " + model.id);
+                    using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                    {
+                        var pendientetoEdit = db.Pendiente.Find(model.id);
+                        oLog.Add("Descripcion: " + pendientetoEdit.Descripcion);
+                        pendientetoEdit.Descripcion = model.Descripcion;
+                        oLog.Add("Terminal: " + pendientetoEdit.id_Terminal);
+                        pendientetoEdit.id_Terminal = model.id_Terminal;
+                        oLog.Add("Clasificacion: " + pendientetoEdit.id_Clasificacion);
+                        pendientetoEdit.id_Clasificacion = model.id_Clasificacion;
+                        oLog.Add("Subsistema: " + pendientetoEdit.id_Subsistema);
+                        pendientetoEdit.id_Subsistema = model.id_Subsistema;
+                        oLog.Add("Usuario relacionado ó editor: " + pendientetoEdit.id_User);
+                        pendientetoEdit.id_User = ((User)Session["User"]).id;
+                        oLog.Add("Status: " + pendientetoEdit.id_status);
+                        if(pendientetoEdit.id_status != model.id_status)
+                        {
+                            var New_Record_status = new Pendiente_Record_Status(){ 
+                                id_Pendiente = model.id,
+                                id_Status = model.id_status,
+                                CreatedAt = DateTime.Now
+                            };
+                            db.Pendiente_Record_Status.Add(New_Record_status);
+                            db.SaveChanges();
+                            pendientetoEdit.id_status = model.id_status;
+                            model.Observacion += GetTemplateNewStatus(model.id_status);
 
-                return RedirectToAction("Index");
+                            //agrega logs
+                            oLog.Add("Se agrega nuevo record status");
+                            oLog.Add("Status: " + model.id_status);
+                        }
+                        oLog.Add("Prioridad: " + pendientetoEdit.id_Prioridad);
+                        pendientetoEdit.id_Prioridad = model.id_Prioridad;
+                        oLog.Add("Actividade pendiente SUSESS: " + pendientetoEdit.Actividades_Pend_Susess);
+                        pendientetoEdit.Actividades_Pend_Susess = model.Actividades_Pend_Susess;
+                        oLog.Add("Avance: " + pendientetoEdit.Avance);
+                        pendientetoEdit.Avance = (int)model.Avance;
+                        oLog.Add("CreatedAt: " + pendientetoEdit.CreatedAt);
+                        pendientetoEdit.CreatedAt = model.CreatedAt;
+                        oLog.Add("Fecha Compromiso: " + pendientetoEdit.Fecha_Compromiso);
+                        pendientetoEdit.Fecha_Compromiso = model.Fecha_Compromiso;
+                        oLog.Add("Es PAS: " + pendientetoEdit.is_PAS);
+                        pendientetoEdit.is_PAS = model.is_PAS;
+                        oLog.Add("Es PAF: " + pendientetoEdit.is_PAF);
+                        pendientetoEdit.is_PAF = model.is_PAF;
+                        oLog.Add("version_where_the_Pending_was_found: " + pendientetoEdit.version_where_the_Pending_was_found);
+                        pendientetoEdit.version_where_the_Pending_was_found = model.version_where_the_Pending_was_found;
+                        oLog.Add("version_where_the_Pending_is_fixed: " + pendientetoEdit.version_where_the_Pending_is_fixed);
+                        pendientetoEdit.version_where_the_Pending_is_fixed = model.version_where_the_Pending_is_fixed;
+                        oLog.Add("Responsable: " + pendientetoEdit.Responsable);
+                        pendientetoEdit.Responsable = model.Responsable;
+                        oLog.Add("Observacion: " + pendientetoEdit.Observacion);
+                        pendientetoEdit.Observacion = model.Observacion;
+
+                        //Guarda cambios
+                        db.Entry(pendientetoEdit).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                        //agrega logs
+                        oLog.Add("Se guardan cambios en el Pendiente");
+                        oLog.Add("Nuevo Descripcion: " + model.Descripcion);
+                        oLog.Add("Nuevo Terminal: " + model.id_Terminal);
+                        oLog.Add("Nuevo Clasificacion: " + model.id_Clasificacion);
+                        oLog.Add("Nuevo Subsistema: " + model.id_Subsistema);
+                        oLog.Add("Nuevo Usuario: " + ((User)Session["User"]).nombre);
+                        oLog.Add("Nuevo status: " + model.id_status);
+                        oLog.Add("Nuevo Actividades_Pend_Susess: " + model.Actividades_Pend_Susess);
+                        oLog.Add("Nuevo Avance " + model.Avance);
+                        oLog.Add("CreatedAt: " + model.CreatedAt);                        
+                        oLog.Add("Nuevo Fecha_Compromiso: " + model.Fecha_Compromiso);
+                        oLog.Add("Nuevo is_PAS: " + model.is_PAS);
+                        oLog.Add("Nuevo is_PAF: " + model.is_PAF);
+                        oLog.Add("Nuevo version_where_the_Pending_was_found: " + model.version_where_the_Pending_was_found);
+                        oLog.Add("Nuevo version_where_the_Pending_is_fixed: " + model.version_where_the_Pending_is_fixed);
+                        oLog.Add("Nuevo Responsable: " + model.Responsable);
+                        oLog.Add("Observacion: " + model.Observacion);
+
+                    }
+                }
+                else
+                {
+                    GetTerminales();
+                    GetSubsistemas();
+                    GetPrioridad();
+                    GetClasificacion();
+                    GetUsuarios();
+                    GetTickets();
+                    GetStatusEditPending(last_status);
+                    ViewBag.warning = "Modelo no valido para guardar";
+                    oLog.Add("Modelo no valido para guardar");
+                    return View(model);
+                }               
+                
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                GetTerminales();
+                GetSubsistemas();
+                GetPrioridad();
+                GetClasificacion();
+                GetUsuarios();
+                GetTickets();
+                GetStatusEditPending(last_status);
+                ViewBag.ExceptionMessage = ex.Message;
+                oLog.Add("Excepcion: " + ex.Message);
+                return View(model);
             }
+            GetTerminales();
+            GetSubsistemas();
+            GetPrioridad();
+            GetClasificacion();
+            GetUsuarios();
+            GetTickets();
+            GetStatusEditPending(model.id_status);
+
+            // Objeto a enviar
+            string encodedCurrentList = "";
+            // Serialización y codificación
+            var serializedObject = JsonConvert.SerializeObject(model.currentList);
+            encodedCurrentList = HttpUtility.UrlEncode(serializedObject);
+            // Creación de la URL con la cadena de consulta
+            var url = "Details/?encodedCurrentList=" + encodedCurrentList + "&id_pendiente=" + model.id;
+            // Redireccionar a la URL
+            return Redirect(url);
         }
 
-        // GET: Pendientes/Delete/5
-        public ActionResult Delete(int id)
+        [AuthorizeUser(idOperacion: 13)]
+        public ActionResult Delete(string encodedCurrentList, int id_pendiente)
         {
-            return View();
-        }
-
-        // POST: Pendientes/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
+            string path = Server.MapPath("~/Logs/Pendientes/");
+            Log oLog = new Log(path);
+            List<CurrentList> Current_List = new List<CurrentList>();
             try
             {
-                // TODO: Add delete logic here
+               
+                var decodedObject = HttpUtility.UrlDecode(encodedCurrentList);
+                Current_List = JsonConvert.DeserializeObject<List<CurrentList>>(decodedObject);
 
-                return RedirectToAction("Index");
+                for(int i = 0;  i < Current_List.Count; i++)
+                {
+                    if (Current_List[i].id == id_pendiente)
+                    {
+                        if(i == Current_List.Count()) 
+                        {
+                            //Current_List[0].is_selected = true;
+                            Current_List.Remove(Current_List[i]);
+                            break;
+                        }
+                        else
+                        {
+                            //Current_List[i + 1].is_selected = true;
+                            Current_List.Remove(Current_List[i]);
+                            break;
+                        }
+                    }
+                }
+                
+                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                {
+                    var PendienteToDelete = db.Pendiente.Find(id_pendiente);
+                    PendienteToDelete.is_deleted = true;//Eliminado 
+
+                    db.Entry(PendienteToDelete).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    oLog.Add("Pendiente : " + id_pendiente + " elimnado por" + ((User)Session["User"]).nombre);
+                }
             }
-            catch
+            catch (Exception ex) 
             {
-                return View();
+                oLog.Add("Catched Excepcion: Get Metod Delete : " + ex.Message);
             }
+           
+            //// Serialización y codificación
+            //var serializedObject = JsonConvert.SerializeObject(Current_List);
+            //encodedCurrentList = HttpUtility.UrlEncode(serializedObject);
+            //// Creación de la URL con la cadena de consulta
+            //var url = "Details/?encodedCurrentList=" + encodedCurrentList + "&id_pendiente=" + Current_List.FirstOrDefault(x => x.is_selected).id;
+            // Redireccionar a la URL
+            return Redirect("../Index");
         }
 
         /// <summary>
@@ -370,7 +608,7 @@ namespace TAS360.Controllers
         }
 
         /// <summary>
-        /// Devuelve a la vista una lista de las Terminales del ticket 
+        /// Devuelve a la vista una lista de las Terminales del Pendiente 
         /// </summary>
         private void GetTerminales()
         {
@@ -402,6 +640,7 @@ namespace TAS360.Controllers
             ViewBag.Terminales = Terminales;
 
         }
+
         /// <summary>
         /// Devuelve a la vista una lista de los usuarios especialistas tecnicos 
         /// </summary>
@@ -553,6 +792,58 @@ namespace TAS360.Controllers
             ViewBag.Tickets = Tickets;
         }
 
+        /// <summary>
+        /// Devuelve a la vista una lista de los status deshabilitada para su edicion 
+        /// </summary>
+        private void GetStatusEditPending(int status)
+        {
 
+            List<SelectListItem> Status = new List<SelectListItem>();
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            {
+                var aux = (from s in db.Status select s);
+                if (aux != null && aux.Any())
+                {
+                    foreach (var a in aux)
+                    {
+                        if (a.Status1 == status)
+                        {
+                            Status.Add(new SelectListItem
+                            {
+                                Text = a.descripcion,
+                                Value = a.Status1.ToString(),
+                                Selected = true,
+                                //Disabled = true                                
+                            });
+                        }
+                        else
+                        {
+                            Status.Add(new SelectListItem
+                            {
+                                Text = a.descripcion,
+                                Value = a.Status1.ToString(),
+                                //Disabled = true
+                            });
+                        }
+                    }
+                }
+            }
+            ViewBag.Status = Status;
+
+        }
+
+        /// <summary>
+        /// establece un salto de linea establece que cambio el Status y fecha 
+        /// </summary>
+        /// <returns></returns>
+        private string GetTemplateNewStatus(int status)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("...................................................");
+            sb.AppendLine("Fecha: " + DateTime.Now);
+            sb.AppendLine("Nuevo Status:" + status);
+            sb.AppendLine("...................................................");
+            return sb.ToString();
+        }
     }
 }

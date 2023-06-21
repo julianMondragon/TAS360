@@ -115,7 +115,7 @@
                 type="button" class="btn btn-primary" data-toggle="tooltip" title="se abrirá el anterior pendiente">
             &laquo; Anterior
         </button>
-        <button onclick="document.location.href = '@Url.Content("~/Pendientes/Create")'"
+        <button onclick="document.location.href = '@Url.Content("~/Pendientes/Edit/?encodedCurrentList="+ encodedCurrentList +"&id_pendiente=" + Model.id)'"
                 type="button" class="btn btn-default" data-toggle="tooltip" title="Editar pendiente">
             &epsilon; Editar
         </button>

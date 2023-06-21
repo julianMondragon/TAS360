@@ -413,7 +413,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Backup_Database\Migraciones\Alter_Pendiente_Add_id_status.sql" />
     <Content Include="Backup_Database\Migraciones\Alter_Pendiente_Add_properties.sql" />
     <Content Include="Backup_Database\Migraciones\Create_Table_Pendiente_Files.sql" />
     <Content Include="Backup_Database\Migraciones\Create_Table_Pendiente_Record_Status.sql" />
@@ -852,6 +851,7 @@
     <Content Include="Views\Pendientes\Create.cshtml" />
     <Content Include="Views\Pendientes\Details.cshtml" />
     <Content Include="Views\Acceso\RetornarVistaAnterior.cshtml" />
+    <Content Include="Views\Pendientes\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

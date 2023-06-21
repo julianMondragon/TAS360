@@ -1,20 +1,21 @@
 ﻿@model TAS360.Models.ViewModel.PendientesViewModel
 @{
-    ViewBag.Title = "Crear Pendiente";
+    ViewBag.Title = "Editar Pendiente";
     List<SelectListItem> Clasificacion = (List<SelectListItem>)ViewBag.Clasificacion;
     List<SelectListItem> Terminales = (List<SelectListItem>)ViewBag.Terminales;
     List<SelectListItem> Prioridad = (List<SelectListItem>)ViewBag.Prioridad;
     List<SelectListItem> Usuarios = (List<SelectListItem>)ViewBag.Usuarios;
     List<SelectListItem> Subsistemas = (List<SelectListItem>)ViewBag.Subsistemas;
-    List<SelectListItem> Tickets = (List<SelectListItem>) ViewBag.Tickets;
+    List<SelectListItem> Tickets = (List<SelectListItem>)ViewBag.Tickets;
     List<SelectListItem> Status = (List<SelectListItem>)ViewBag.Status;
     string exception = ViewBag.ExceptionMessage;
     string Info = ViewBag.InfoMessage;
+    string warning = ViewBag.warning;
+    
 }
-<br />
 <div class="jumbotron">
     <h1 class="section-heading mb-4">
-        <span class="section-heading-lower">Crear Pendiente</span>
+        <span class="section-heading-lower">Editar Pendiente # @Model.id</span>
     </h1>
     @if (exception != null)
     {
@@ -28,18 +29,30 @@
             @Info
         </div>
     }
+    @if (warning != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @warning
+        </div>
+    }
 </div>
 <section class="page-section about-heading">
     <div class="container">
-       <div class="about-heading-content">
+        <div class="about-heading-content">
             <div class="row">
                 <div class="col-xl-9 col-lg-10 mx-auto">
-                    <div class="bg-faded rounded p-5">                       
+                    <div class="bg-faded rounded p-5">
                         <div class="row" style="margin:5px 0 0 0">
                             <div class="col-md-12">
-                                @using (Html.BeginForm("Create", "Pendientes", FormMethod.Post))
+                                @using (Html.BeginForm("Edit", "Pendientes", FormMethod.Post))
                                 {
-                                    @Html.AntiForgeryToken()
+                                    //@Html.AntiForgeryToken();
+                                    @Html.HiddenFor(x => x.id);
+                                    for (int i = 0; i < Model.currentList.Count; i++)
+                                    {
+                                        @Html.HiddenFor(x => x.currentList[i].id)
+                                        @Html.HiddenFor(x => x.currentList[i].is_selected)
+                                    }
                                     <br />
                                     //Renglon 0
                                     <div name="row1" class="row" style="margin:0 0 10px 0">
@@ -67,7 +80,7 @@
                                         <div class="col-md-12">
                                             <div class="col-md-2" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(L => L.id_Prioridad)
-                                                @Html.DropDownListFor(model => model.id_Prioridad, Prioridad, new { @class = "form-control", @style = "color:white ; background:#F39C12; " })
+                                                @Html.DropDownListFor(model => model.id_Prioridad, Prioridad, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(v => v.id_Prioridad, null, new { @class = "red" })
                                             </div>
                                             <div class="col-md-3" style="margin: 10px 0px 0px 0px;">
@@ -99,11 +112,12 @@
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(L => L.Fecha_Compromiso)
                                                 @Html.TextBoxFor(x => x.Fecha_Compromiso, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "dd-MM-yyyy" })
+                                                @*@Html.TextBoxFor(m => m.Fecha_Compromiso, "{0:MM/dd/yyyy}", new { @class = "form-control default-date-picker" })*@
                                                 @Html.ValidationMessageFor(v => v.Fecha_Compromiso, null, new { @class = "red" })
                                             </div>
                                             <div class="col-md-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(l => l.id_status)
-                                                @Html.DropDownListFor(model => model.id_status, Status, new { @class = "form-control", @readonly = "true" })
+                                                @Html.DropDownListFor(model => model.id_status, Status, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(v => v.id_status)
                                             </div>
                                         </div>
@@ -114,8 +128,13 @@
                                         <div class="col-md-12">
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(L => L.version_where_the_Pending_was_found)
-                                                @Html.TextBoxFor(x => x.version_where_the_Pending_was_found, new { @class = "form-control", @placeholder = "Version 2.16.xxx"})
+                                                @Html.TextBoxFor(x => x.version_where_the_Pending_was_found, new { @class = "form-control", @placeholder = "Version 2.16.xxx" })
                                                 @Html.ValidationMessageFor(v => v.version_where_the_Pending_was_found, null, new { @class = "red" })
+                                            </div>
+                                            <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
+                                                @Html.LabelFor(L => L.version_where_the_Pending_is_fixed)
+                                                @Html.TextBoxFor(x => x.version_where_the_Pending_is_fixed, new { @class = "form-control", @placeholder = "Version 2.16.xxx" })
+                                                @Html.ValidationMessageFor(v => v.version_where_the_Pending_is_fixed, null, new { @class = "red" })
                                             </div>
                                             <div class="col-md-2" style="margin: 25px 0px 0px 0px;">
                                                 @Html.CheckBoxFor(m => m.is_PAF)
@@ -149,9 +168,8 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row" style="margin: 5px 0px 0px 0px; text-align:right">
-                                        <input type="submit" class="btn btn-lg btn-primary" value="Crear" />
+                                        <input type="submit" class="btn btn-lg btn-primary" value="Guardar" />
                                     </div>
                                 }
                             </div>
@@ -162,4 +180,3 @@
         </div>
     </div>
 </section>
-

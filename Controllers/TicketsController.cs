@@ -79,7 +79,7 @@ namespace TAS360.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    string path = Server.MapPath("~/Logs/");
+                    string path = Server.MapPath("~/Logs/Tickets/");
                     Log oLog = new Log(path);
                     using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                     {
@@ -152,7 +152,7 @@ namespace TAS360.Controllers
                 }
 
                 //Add Logs
-                string path = Server.MapPath("~/Logs/");
+                string path = Server.MapPath("~/Logs/Tickets/");
                 Log oLog = new Log(path);
                 oLog.Add(Message);
 
@@ -168,7 +168,7 @@ namespace TAS360.Controllers
                 GetSubsistemas();
                 ViewBag.ExceptionMessage = ex.Message;
                 //Add Log
-                string path = Server.MapPath("~/Logs/");
+                string path = Server.MapPath("~/Logs/Tickets/");
                 Log oLog = new Log(path);
                 oLog.Add(ex.Message);
                 return View(model);
@@ -234,7 +234,7 @@ namespace TAS360.Controllers
             catch (Exception ex)
             {
                 //Add Log
-                string path = Server.MapPath("~/Logs/");
+                string path = Server.MapPath("~/Logs/Tickets/");
                 Log oLog = new Log(path);
                 oLog.Add(ex.Message);
                 ViewBag.Exception = ex.Message;
@@ -295,7 +295,7 @@ namespace TAS360.Controllers
             catch (Exception ex)
             {
                 //Add Log
-                string path = Server.MapPath("~/Logs/");
+                string path = Server.MapPath("~/Logs/Tickets/");
                 Log oLog = new Log(path);
                 oLog.Add(ex.Message);
                 ViewBag.Exception = ex.Message;
@@ -356,7 +356,7 @@ namespace TAS360.Controllers
             try
             {
                 
-                string path = Server.MapPath("~/Logs/");
+                string path = Server.MapPath("~/Logs/Tickets/");
                 Log oLog = new Log(path);
                 oLog.Add("Agrega comentario a Ticket: " + ticket.id);
                 bool StatusChanged = false;
@@ -450,7 +450,7 @@ namespace TAS360.Controllers
                 GetStatus((int)ticket.Status);
                 GetUsuarios();
                 //Add Log
-                string path = Server.MapPath("~/Logs/");
+                string path = Server.MapPath("~/Logs/Tickets/");
                 Log oLog = new Log(path);
                 oLog.Add("Excepcion agregando un comentario");
                 oLog.Add(ex.Message);
@@ -508,7 +508,7 @@ namespace TAS360.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    string path = Server.MapPath("~/Logs/");
+                    string path = Server.MapPath("~/Logs/Tickets/");
                     Log oLog = new Log(path);
                     oLog.Add("Edit Ticket: " + ticket.id);
                     using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
@@ -567,7 +567,7 @@ namespace TAS360.Controllers
                 }
                 ViewBag.ExceptionMessage = Message;
                 //Add Logs
-                string path = Server.MapPath("~/Logs/");
+                string path = Server.MapPath("~/Logs/Tickets/");
                 Log oLog = new Log(path);
                 oLog.Add("DbEntityValidationException: " + Message);
 
@@ -582,7 +582,7 @@ namespace TAS360.Controllers
                 GetSubsistemas();
                 ViewBag.ExceptionMessage = ex.Message;
                 //Add Logs
-                string path = Server.MapPath("~/Logs/");
+                string path = Server.MapPath("~/Logs/Tickets/");
                 Log oLog = new Log(path);
                 oLog.Add("Excepcion: " + ex.Message);
                 return View(ticket);
