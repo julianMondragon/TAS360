@@ -397,6 +397,7 @@
     <Compile Include="Models\ViewModel\CreateReportViewModel.cs" />
     <Compile Include="Models\ViewModel\entradasViewModel.cs" />
     <Compile Include="Models\ViewModel\FCV_ViewModel.cs" />
+    <Compile Include="Models\ViewModel\FilterPendientesViewModel.cs" />
     <Compile Include="Models\ViewModel\PendientesViewModel.cs" />
     <Compile Include="Models\ViewModel\PuertoSerialViewModel.cs" />
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
@@ -852,6 +853,7 @@
     <Content Include="Views\Pendientes\Details.cshtml" />
     <Content Include="Views\Acceso\RetornarVistaAnterior.cshtml" />
     <Content Include="Views\Pendientes\Edit.cshtml" />
+    <Content Include="Views\Pendientes\Filter_Pendientes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

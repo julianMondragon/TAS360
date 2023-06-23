@@ -1,0 +1,144 @@
+﻿@model TAS360.Models.ViewModel.FilterPendientesViewModel
+@{
+    ViewBag.Title = "Filtrar Pendientes";
+    List<SelectListItem> Clasificacion = (List<SelectListItem>)ViewBag.Clasificacion;
+    List<SelectListItem> Terminales = (List<SelectListItem>)ViewBag.Terminales;
+    List<SelectListItem> Prioridad = (List<SelectListItem>)ViewBag.Prioridad;
+    List<SelectListItem> Usuarios = (List<SelectListItem>)ViewBag.Usuarios;
+    List<SelectListItem> Subsistemas = (List<SelectListItem>)ViewBag.Subsistemas;
+    List<SelectListItem> Tickets = (List<SelectListItem>)ViewBag.Tickets;
+    List<SelectListItem> Status = (List<SelectListItem>)ViewBag.Status;
+    string exception = ViewBag.ExceptionMessage;
+    string Info = ViewBag.InfoMessage;
+    string warning = ViewBag.warning;
+
+}
+<div class="jumbotron">
+    <h2 class="section-heading mb-4">
+        <span class="section-heading-lower">Filtrar Pendientes por: </span>
+    </h2>
+    @if (exception != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @exception
+        </div>
+    }
+    @if (Info != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @Info
+        </div>
+    }
+    @if (warning != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @warning
+        </div>
+    }
+</div>
+<section class="page-section about-heading">
+    <div class="container">
+        <div class="about-heading-content">
+            <div class="row" style="margin:0 0 0 0">
+                <div class="col-md-12">
+                    @using (Html.BeginForm("Filter_Pendientes", "Pendientes", FormMethod.Post))
+                    {
+
+                        <br />
+                        //Renglon 00
+                        <div name="row1" class="row" style="margin:0 0 10px 0">
+
+                            <div class="col-md-12">
+                                <div class="col-md-3" style="margin: 0px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.isSelected_id)
+                                    @Html.LabelFor(L => L.id)
+                                    @Html.TextBoxFor(model => model.id, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(f => f.id, null, new { @class = "red" })
+                                </div>
+                                <div class="col-md-3" style="margin: 0px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.isSelected_Terminal)
+                                    @Html.LabelFor(L => L.id_Terminal)
+                                    @Html.DropDownListFor(model => model.id_Terminal, Terminales, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(f => f.id_Terminal, null, new { @class = "red" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.CheckBoxFor(m => m.isSelected_Class)
+                                    @Html.LabelFor(l => l.id_Clasificacion)
+                                    @Html.DropDownListFor(model => model.id_Clasificacion, Clasificacion, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(v => v.id_Clasificacion)
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.CheckBoxFor(m => m.isSelected_subsistema)
+                                    @Html.LabelFor(l => l.id_Subsistema)
+                                    @Html.DropDownListFor(model => model.id_Subsistema, Subsistemas, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(v => v.id_Subsistema)
+                                </div>
+                            </div>
+                        </div>
+                        //Renglon 1
+                        <div class="row" style="margin:0 0 10px 0">
+                            <div class="col-md-12">
+                                <div class="col-md-3" style="margin: 10px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.isSelected_Prior)
+                                    @Html.LabelFor(L => L.id_Prioridad)
+                                    @Html.DropDownListFor(model => model.id_Prioridad, Prioridad, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(v => v.id_Prioridad, null, new { @class = "red" })
+                                </div>
+                                <div class="col-md-3" style="margin: 10px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.isSelected_Respons)
+                                    @Html.LabelFor(l => l.Responsable)
+                                    @Html.TextBoxFor(model => model.Responsable, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(f => f.Responsable, null, new { @class = "red" })
+                                </div>
+                                <div class="col-lg-3" style="margin: 10px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.isSelected_advance)
+                                    @Html.LabelFor(L => L.Avance)
+                                    @Html.TextBoxFor(model => model.Avance, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(f => f.Avance, null, new { @class = "red" })
+                                </div>
+                                <div class="col-md-2" style="margin: 25px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.is_PAF)
+                                    @Html.LabelFor(L => L.is_PAF)
+                                </div>
+                                <div class="col-md-2" style="margin: 0px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.is_PAS)
+                                    @Html.LabelFor(l => l.is_PAS)
+                                </div>
+                            </div>
+                        </div>
+                        //Renglo 2
+                        <div name="row3" class="row" style="margin:0 0 10px 0">
+                            <div class="col-md-12">
+                                <div class="col-lg-12" style="margin: 10px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.isSelected_Descrp)
+                                    @Html.LabelFor(l => l.Descripcion)
+                                    @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(f => f.Descripcion, null, new { @class = "red" })
+                                </div>
+                                <div class="col-lg-12" style="margin: 10px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.isSelected_Susess)
+                                    @Html.LabelFor(l => l.Actividades_Pend_Susess)
+                                    @Html.TextAreaFor(model => model.Actividades_Pend_Susess, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(f => f.Actividades_Pend_Susess, null, new { @class = "red" })
+                                </div>
+                                <div class="row" style="margin:0 0 10px 0">
+                                    <div class="col-lg-12" style="margin: 10px 0px 0px 0px;">
+                                        @Html.CheckBoxFor(m => m.isSelected_Observ)
+                                        @Html.LabelFor(l => l.Observacion)
+                                        @Html.TextAreaFor(model => model.Observacion, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(f => f.Observacion, null, new { @class = "red" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin: 5px 0px 0px 0px; text-align:right">
+                            <input type="submit" class="btn btn-lg btn-primary" value="Buscar coincidencias" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

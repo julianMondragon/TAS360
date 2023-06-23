@@ -599,6 +599,37 @@ namespace TAS360.Controllers
             return Redirect("../Index");
         }
 
+
+        public ActionResult Filter_Pendientes()
+        {
+            FilterPendientesViewModel Filtro = new FilterPendientesViewModel();
+            GetTerminales();
+            GetSubsistemas();
+            GetPrioridad();
+            GetClasificacion();
+            GetUsuarios();
+            GetTickets();
+            GetStatusEditPending(1);
+            return View(Filtro);
+        }
+        [HttpPost]
+        public ActionResult Filter_Pendientes(FilterPendientesViewModel Filtro)
+        {
+            if(ModelState.IsValid) 
+            {
+                ViewBag.InfoMessage = "Modelo valido";
+            }
+
+            GetTerminales();
+            GetSubsistemas();
+            GetPrioridad();
+            GetClasificacion();
+            GetUsuarios();
+            GetTickets();
+            GetStatusEditPending(1);
+            return View(Filtro);
+        }
+
         /// <summary>
         /// Devuelve a la vista una lista de las clasificaciones de los pendientes
         /// </summary>
