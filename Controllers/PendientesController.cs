@@ -111,6 +111,10 @@ namespace TAS360.Controllers
                         model.Record_Status.Add(item);
                     }
                     model.currentList = Current_List;
+                    model.version_where_the_Pending_was_found = Pendiente.version_where_the_Pending_was_found;
+                    model.version_where_the_Pending_is_fixed = Pendiente.version_where_the_Pending_is_fixed;
+                    model.is_PAS = Pendiente.is_PAS == null ? false : (bool)Pendiente.is_PAS;
+                    model.is_PAF = Pendiente.is_PAF == null ? false : (bool)Pendiente.is_PAF;
                 }
                 else
                 {
@@ -455,6 +459,12 @@ namespace TAS360.Controllers
                         pendientetoEdit.Responsable = model.Responsable;
                         oLog.Add("Observacion: " + pendientetoEdit.Observacion);
                         pendientetoEdit.Observacion = model.Observacion;
+                        if(model.id_Ticket != 0)
+                        {
+                            oLog.Add("Ticket: " + pendientetoEdit.id_Ticket);
+                            pendientetoEdit.id_Ticket = model.id_Ticket;
+                        }
+                        
 
                         //Guarda cambios
                         db.Entry(pendientetoEdit).State = System.Data.Entity.EntityState.Modified;
@@ -477,7 +487,10 @@ namespace TAS360.Controllers
                         oLog.Add("Nuevo version_where_the_Pending_is_fixed: " + model.version_where_the_Pending_is_fixed);
                         oLog.Add("Nuevo Responsable: " + model.Responsable);
                         oLog.Add("Observacion: " + model.Observacion);
-
+                        if (model.id_Ticket != 0)
+                        {
+                            oLog.Add("Observacion: " + model.id_Ticket);
+                        }
                     }
                 }
                 else
