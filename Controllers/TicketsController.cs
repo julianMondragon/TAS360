@@ -73,6 +73,7 @@ namespace TAS360.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeUser(idOperacion: 1)]
         public ActionResult CreateTicket(TicketViewModel model)
         {
             try
@@ -351,6 +352,7 @@ namespace TAS360.Controllers
         /// <param name="Comentario"></param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeUser(idOperacion: 6)]
         public ActionResult AddCommentTicket(TicketViewModel ticket , Comentarios Comentario)
         {
             try
@@ -502,6 +504,7 @@ namespace TAS360.Controllers
         /// <param name="ticket"></param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeUser(idOperacion: 2)]
         public ActionResult EditTicket(TicketViewModel ticket)
         {
             try

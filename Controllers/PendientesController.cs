@@ -26,6 +26,7 @@ namespace TAS360.Controllers
         ///  Metodo que devuelve a la lista todos los Pendientes que no fueron elimindos
         /// </summary>
         /// <returns></returns>
+        [AuthorizeUser(idOperacion:10)]
         public ActionResult Index()
         {
             List<PendientesViewModel> model = new List<PendientesViewModel>();
@@ -60,12 +61,13 @@ namespace TAS360.Controllers
             }
             return View(model);
         }
-            
+
         /// <summary>
         /// Devuelve a la vista una lista de pendientes con un pendiente seleccionado para mostrar detalles
         /// </summary>
         /// <param name="Current_List"></param>
         /// <returns></returns>
+        [AuthorizeUser(idOperacion: 14)]
         public ActionResult Details(string encodedCurrentList, int id_pendiente)
         {
             PendientesViewModel model = new PendientesViewModel();
@@ -146,6 +148,7 @@ namespace TAS360.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeUser(idOperacion: 11)]
         public ActionResult Create()
         {
             PendientesViewModel model = new PendientesViewModel();
@@ -315,6 +318,7 @@ namespace TAS360.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [AuthorizeUser(idOperacion: 12)]
         public ActionResult Edit(string encodedCurrentList, int id_pendiente)
         {
             PendientesViewModel model = new PendientesViewModel();
@@ -853,6 +857,7 @@ namespace TAS360.Controllers
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("...................................................");
+            sb.AppendLine("Usuario: " + ((User)Session["User"]).nombre);
             sb.AppendLine("Fecha: " + DateTime.Now);
             sb.AppendLine("Nuevo Status:" + status);
             sb.AppendLine("...................................................");
