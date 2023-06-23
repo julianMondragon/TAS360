@@ -112,8 +112,14 @@
             <h3>Sin Status</h3>
             break;
     }
-    
-    <p class="lead">@Model.Descripcion.Substring(0 , 60) ... </p>
+    @if (Model.Descripcion.Count() > 61)
+    {
+        <p class="lead">@Model.Descripcion.Substring(0, 60) ... </p>
+    }
+    else
+    {
+        <p class="lead">@Model.Descripcion</p>
+    }
     <div class="col-md-12" style="margin:0 0 0 0">
         <button onclick="document.location.href = '@Url.Content("~/Pendientes/Details/?encodedCurrentList="+ encodedCurrentList +"&id_pendiente=" + previus)'"
                 type="button" class="btn btn-primary" data-toggle="tooltip" title="se abrirá el anterior pendiente">

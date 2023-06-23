@@ -859,7 +859,6 @@
     <Folder Include="Logs\" />
     <Folder Include="Tablas_CSV\" />
     <Folder Include="TicketFiles\" />
-    <Folder Include="Views\logout\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
