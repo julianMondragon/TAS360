@@ -498,7 +498,9 @@
       <DependentUpon>HelpDesk.edmx</DependentUpon>
     </Content>
     <Content Include="App_Browsers\qt.browser" />
-    <Content Include="Content\img\iso912.pdf" />
+    <Content Include="Content\Documents\iso912.pdf" />
+    <Content Include="Content\Documents\Pasos a seguir para nueva actualización del tas360 versión.pdf" />
+    <Content Include="Content\Documents\TAS360-MDR.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.min.css" />
