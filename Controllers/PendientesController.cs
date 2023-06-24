@@ -600,7 +600,7 @@ namespace TAS360.Controllers
         }
 
         /// <summary>
-        /// Devuelve a la vista 
+        /// Devuelve a la vista un objeto para filtrar el pendiente
         /// </summary>
         /// <returns> FilterPendientesViewModel </returns>
         [HttpGet]
@@ -618,7 +618,7 @@ namespace TAS360.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Metodo que se encarga de filtrar los pendiientes apartir del filtro seleccionado
         /// </summary>
         /// <param name="Filtro"></param>
         /// <returns></returns>
