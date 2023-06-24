@@ -599,7 +599,11 @@ namespace TAS360.Controllers
             return Redirect("../Index");
         }
 
-
+        /// <summary>
+        /// Devuelve a la vista 
+        /// </summary>
+        /// <returns> FilterPendientesViewModel </returns>
+        [HttpGet]
         public ActionResult Filter_Pendientes()
         {
             FilterPendientesViewModel Filtro = new FilterPendientesViewModel();
@@ -612,24 +616,208 @@ namespace TAS360.Controllers
             GetStatusEditPending(1);
             return View(Filtro);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Filtro"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Filter_Pendientes(FilterPendientesViewModel Filtro)
         {
-            if(ModelState.IsValid) 
-            {
-                ViewBag.InfoMessage = "Modelo valido";
-            }
-
             GetTerminales();
             GetSubsistemas();
             GetPrioridad();
             GetClasificacion();
             GetUsuarios();
             GetTickets();
-            GetStatusEditPending(1);
-            return View(Filtro);
+            GetStatusFilter();
+            //se declara la lista en curso que sera llenada con el resultado del filtro
+            List<CurrentList> currentLists = new List<CurrentList>();
+            
+            if (ModelState.IsValid) //Valida el modelo
+            {
+                using (HelpDesk_Entities1 db =  new HelpDesk_Entities1())
+                {                    
+                    if(Filtro.isSelected_id) //si el Id fue seleccionado
+                    {
+                        //realiza la busqueda por el ID
+                        Pendiente filtro = db.Pendiente.Find(Filtro.id);
+                        if(filtro == null) // si la busqueda por el id es nulla
+                        {
+                            //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                            ViewBag.warning = "Ningun registro coicide con el id: " + Filtro.id;
+                            return View(Filtro);
+                        }
+                        //agrega a la lista en curso 
+                        currentLists.Add(new CurrentList() { id = filtro.id });
+                    }
+                    else // entonces busca por el ID ejecuta los demas filtros
+                    {
+                        var listFilter = db.Pendiente.Where(x => x.is_deleted != true).ToList();
+                        if (Filtro.isSelected_Terminal)
+                        {
+                            listFilter = listFilter.Where(t => t.id_Terminal == Filtro.id_Terminal).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con la terminal: " + Filtro.id_Terminal;
+                                return View(Filtro);
+
+                            }
+                        }
+                        if (Filtro.isSelected_Class)
+                        {
+                            listFilter = listFilter.Where(t => t.id_Clasificacion == Filtro.id_Clasificacion).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con la Clasificacion: " + Filtro.id_Clasificacion;
+                                return View(Filtro);
+
+                            }
+                        }
+                        if (Filtro.isSelected_subsistema)
+                        {
+                            listFilter = listFilter.Where(t => t.id_Subsistema == Filtro.id_Subsistema).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con la Subsistema: " + Filtro.id_Subsistema;
+                                return View(Filtro);
+
+                            }
+                        }
+                        if (Filtro.isSelected_Prior)
+                        {
+                            listFilter = listFilter.Where(t => t.id_Prioridad == Filtro.id_Prioridad).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con la id_Prioridad: " + Filtro.id_Prioridad;
+                                return View(Filtro);
+
+                            }
+                        }
+                        if (Filtro.isSelected_Respons)
+                        {
+                            listFilter = listFilter.Where(t => t.Responsable.Contains(Filtro.Responsable)).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con Responsable: " + Filtro.Responsable;
+                                return View(Filtro);
+
+                            }
+                        }
+                        if (Filtro.isSelected_advance)
+                        {
+                            listFilter = listFilter.Where(t => t.Avance == Filtro.Avance).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con Avance: " + Filtro.Avance;
+                                return View(Filtro);
+
+                            }
+                        }
+
+                        if (Filtro.isSelected_Descrp)
+                        {
+                            listFilter = listFilter.Where(t => t.Descripcion.Contains(Filtro.Descripcion)).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con Descripcion: " + Filtro.Descripcion;
+                                return View(Filtro);
+
+                            }
+                        }
+                        if (Filtro.isSelected_Susess)
+                        {
+                            listFilter = listFilter.Where(t => t.Actividades_Pend_Susess.Contains(Filtro.Actividades_Pend_Susess)).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con Actividades_Pend_Susess: " + Filtro.Actividades_Pend_Susess;
+                                return View(Filtro);
+
+                            }
+                        }
+                        if (Filtro.isSelected_Observ)
+                        {
+                            listFilter = listFilter.Where(t => t.Observacion.Contains(Filtro.Observacion)).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con Observacion: " + Filtro.Observacion;
+                                return View(Filtro);
+
+                            }
+                        }
+                        if(Filtro.is_PAF && Filtro.is_PAS)
+                        {
+                            listFilter = listFilter.Where(t => t.is_PAF == true && t.is_PAS == true).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro en la busqueda es PAF y PAF";
+                                return View(Filtro);
+
+                            }
+                        }
+                        else
+                        {
+                            if (Filtro.is_PAF)
+                            {
+                                listFilter = listFilter.Where(t => t.is_PAF == true).ToList();
+                                if (listFilter.Count() < 1)
+                                {
+                                    //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                    ViewBag.warning = "Ningun registro en la busqueda es PAF";
+                                    return View(Filtro);
+
+                                }
+                            }
+                            if (Filtro.is_PAS)
+                            {
+                                listFilter = listFilter.Where(t => t.is_PAS == true).ToList();
+                                if (listFilter.Count() < 1)
+                                {
+                                    //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                    ViewBag.warning = "Ningun registro es PAS: ";
+                                    return View(Filtro);
+
+                                }
+                            }
+                        }                        
+                        //el resultado de la busqueda 
+                        foreach (var item in listFilter)
+                        {
+                            currentLists.Add(new CurrentList() { id = item.id });
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ViewBag.warning = "Filtro no valido";
+                return View(Filtro);
+            }
+
+            
+            // Objeto a enviar
+            string encodedCurrentList = "";
+            // Serialización y codificación
+            var serializedObject = JsonConvert.SerializeObject(currentLists);
+            encodedCurrentList = HttpUtility.UrlEncode(serializedObject);
+            // Creación de la URL con la cadena de consulta
+            var url = "Details/?encodedCurrentList=" + encodedCurrentList + "&id_pendiente=" + currentLists.FirstOrDefault().id;
+            // Redirecciona a la URL 
+            return Redirect(url);
         }
 
+        #region Catalogs for views
         /// <summary>
         /// Devuelve a la vista una lista de las clasificaciones de los pendientes
         /// </summary>
@@ -894,5 +1082,32 @@ namespace TAS360.Controllers
             sb.AppendLine("...................................................");
             return sb.ToString();
         }
+
+        /// <summary>
+        /// Devuelve a la vista de filtro una lista de los status 
+        /// </summary>
+        private void GetStatusFilter()
+        {
+
+            List<SelectListItem> Status = new List<SelectListItem>();
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            {
+                var aux = (from s in db.Status select s);
+                if (aux != null && aux.Any())
+                {
+                    foreach (var a in aux)
+                    {
+                        Status.Add(new SelectListItem
+                        {
+                            Text = a.descripcion,
+                            Value = a.Status1.ToString()
+                        });
+                    }
+                }
+            }
+            ViewBag.Status = Status;
+
+        }
+        #endregion Catalogs for views
     }
 }
