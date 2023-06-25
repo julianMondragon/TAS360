@@ -98,7 +98,7 @@
                                             </div>
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(L => L.Fecha_Compromiso)
-                                                @Html.TextBoxFor(x => x.Fecha_Compromiso, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "dd-MM-yyyy" })
+                                                @Html.TextBoxFor(x => x.Fecha_Compromiso, "{0:dd-MM-yyyy}", new { @class = "form-control", @title = "Format: MES / DIA / AÑO", @placeholder = "MES-DAY-YEAR" })
                                                 @Html.ValidationMessageFor(v => v.Fecha_Compromiso, null, new { @class = "red" })
                                             </div>
                                             <div class="col-md-4" style="margin: 10px 0px 0px 0px;">

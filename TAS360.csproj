@@ -499,8 +499,16 @@
     </Content>
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Content\Documents\iso912.pdf" />
-    <Content Include="Content\Documents\Pasos a seguir para nueva actualización del tas360 versión.pdf" />
-    <Content Include="Content\Documents\TAS360-MDR.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\Pasos a seguir para nueva actualización del tas360 versión.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-GDI.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-MDA.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-MDC.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-MDO.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-MDR.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-SCA-MDI.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-SCA-REI[2050].pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-SQL-MDI.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-SQL-MDR.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.min.css" />
