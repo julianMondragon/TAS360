@@ -864,12 +864,14 @@
     <Content Include="Views\Acceso\RetornarVistaAnterior.cshtml" />
     <Content Include="Views\Pendientes\Edit.cshtml" />
     <Content Include="Views\Pendientes\Filter_Pendientes.cshtml" />
+    <Content Include="Prototipo_Tabla\Lista_de_Pendientes_.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ArchivosASA\" />
     <Folder Include="Logs\" />
     <Folder Include="Tablas_CSV\" />
+    <Folder Include="Tablas_Pendientes\" />
     <Folder Include="TicketFiles\" />
   </ItemGroup>
   <ItemGroup>

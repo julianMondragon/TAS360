@@ -22,7 +22,7 @@
         <button onclick="document.location.href = '@Url.Content("~/Pendientes/Filter_Pendientes")'" type="button" class="btn btn-warning" data-toggle="tooltip" title="Realiza un filtrado personalizado de los pendientes ">
             Filtrado &fnof;
         </button>
-        <button type="button" class="btn btn-info" data-toggle="tooltip" title="funcionalidad futura --> exporta la tabla actual ">
+        <button onclick="document.location.href = '@Url.Content("~/Pendientes/ExportTablePendientes/?encodedCurrentList="+ encodedCurrentList)'" type="button" class="btn btn-info" data-toggle="tooltip" title="Exporta la tabla actual ">
             Exportar &pound;
         </button>
     </div>

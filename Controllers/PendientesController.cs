@@ -1,11 +1,14 @@
 ﻿using DocumentFormat.OpenXml.Drawing.Diagrams;
 using DocumentFormat.OpenXml.EMMA;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using SpreadsheetLight;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -58,6 +61,43 @@ namespace TAS360.Controllers
 
                 }
                 
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [AuthorizeUser(idOperacion: 10)]
+        public ActionResult Index(string encodedCurrentList)
+        {
+            List<PendientesViewModel> model = new List<PendientesViewModel>();
+            List<CurrentList> currentList = new List<CurrentList>();
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            {
+                //db.Configuration.ProxyCreationEnabled = false;
+                var ListPendientes = from p in db.Pendiente where p.is_deleted == false select p;
+                if (ListPendientes.Any())
+                {
+                    foreach (var p in ListPendientes)
+                    {
+                        currentList.Add(new CurrentList() { id = p.id, is_selected = false });
+                    }
+                    foreach (var p in ListPendientes)
+                    {
+                        model.Add(new PendientesViewModel()
+                        {
+                            id = p.id,
+                            Descripcion = p.Descripcion,
+                            Clasificacion_Pendiente = db.Clasificacion_Pendiente.FirstOrDefault(cp => cp.id == p.id_Clasificacion),
+                            Responsable = p.Responsable,
+                            id_Terminal = (int)p.id_Terminal,
+                            Avance = (double)p.Avance,
+                            Subsistema = db.Subsistema.FirstOrDefault(cp => cp.id == p.id_Subsistema),
+                            currentList = currentList
+                        });
+                    }
+
+                }
+
             }
             return View(model);
         }
@@ -815,6 +855,74 @@ namespace TAS360.Controllers
             var url = "Details/?encodedCurrentList=" + encodedCurrentList + "&id_pendiente=" + currentLists.FirstOrDefault().id;
             // Redirecciona a la URL 
             return Redirect(url);
+        }
+
+        /// <summary>
+        /// Metodo que se encarga de 
+        /// </summary>
+        /// <param name="NameFile"></param>
+        /// <returns></returns>
+        public FileResult ExportTablePendientes(string encodedCurrentList)
+        {
+            //Variables
+            int Row = 8;
+            //Lista de Pendientes
+            List<CurrentList> current_List = new List<CurrentList>();
+            //Se deserializa el objeto
+            var decodedObject = HttpUtility.UrlDecode(encodedCurrentList);
+            current_List = JsonConvert.DeserializeObject<List<CurrentList>>(decodedObject);
+            
+            //Path
+            //string NameFile = "Lista_de_Pendientes_" + DateTime.Now.ToString("dd-MM-yyyy");
+            string NameFile = "Lista_de_Pendientes_.xlsx";
+            string path = Server.MapPath("~/Prototipo_Tabla/");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            SLDocument NewTablaPendientes = new SLDocument(path + NameFile);
+            SLStyle style1 = NewTablaPendientes.CreateStyle();
+            style1.Fill.SetPattern(PatternValues.Solid, SLThemeColorIndexValues.Accent2Color, SLThemeColorIndexValues.Accent4Color);
+            foreach (var item in current_List)
+            {
+                using(HelpDesk_Entities1 db = new HelpDesk_Entities1()) 
+                {
+                    var pendiente = db.Pendiente.Find(item.id);
+                    NewTablaPendientes.SetCellValue(Row,  1, pendiente.id);
+                    NewTablaPendientes.SetCellValue(Row,  2, pendiente.Terminal.Nombre);
+                    NewTablaPendientes.SetCellValue(Row,  3, pendiente.Subsistema.Nombre);
+                    NewTablaPendientes.SetCellValue(Row,  4, pendiente.Clasificacion_Pendiente.Nombre);
+                    NewTablaPendientes.SetCellValue(Row,  5, pendiente.Status.Status1);
+                    NewTablaPendientes.SetCellValue(Row,  6, pendiente.Responsable);
+                    NewTablaPendientes.SetCellValue(Row,  7, pendiente.User.nombre);
+                    NewTablaPendientes.SetCellValue(Row,  8, pendiente.version_where_the_Pending_was_found);
+                    NewTablaPendientes.SetCellValue(Row,  9, pendiente.version_where_the_Pending_is_fixed);
+                    NewTablaPendientes.SetCellValue(Row, 10, pendiente.Prioridad_de_Pendiente.Nombre);
+                    NewTablaPendientes.SetCellValue(Row, 11, pendiente.Avance.ToString());
+                    NewTablaPendientes.SetCellValue(Row, 12, pendiente.CreatedAt.ToString());
+                    NewTablaPendientes.SetCellValue(Row, 13, pendiente.Fecha_Compromiso.ToString());
+                    NewTablaPendientes.SetCellValue(Row, 14, pendiente.Descripcion);
+                    NewTablaPendientes.SetCellValue(Row, 15, pendiente.Actividades_Pend_Susess);
+                    NewTablaPendientes.SetCellValue(Row, 16, pendiente.Observacion);
+                    if((bool)pendiente.is_PAS)
+                    {
+                        NewTablaPendientes.SetCellValue(Row, 17, "Es PAS");
+                        NewTablaPendientes.SetCellStyle(Row, 17, style1);
+                    }
+                    if ((bool)pendiente.is_PAF)
+                    {
+                        NewTablaPendientes.SetCellValue(Row, 18, "Es PAF");
+                        NewTablaPendientes.SetCellStyle(Row, 18, style1);
+                    }
+                    Row++;
+                }
+                
+            }
+            path = Server.MapPath("~/Tablas_Pendientes/");
+            NameFile = NameFile + DateTime.Now.ToString("dd-MM-yyyy") + "_" + ((User)Session["User"]).nombre + ".xlsx";
+            NewTablaPendientes.SaveAs(path + NameFile ); 
+            string rute = Server.MapPath("~/Tablas_Pendientes/" + NameFile);
+            return File(rute, "application/xlsx", NameFile);
         }
 
         #region Catalogs for views

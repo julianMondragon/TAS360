@@ -120,20 +120,24 @@
     {
         <p class="lead">@Model.Descripcion</p>
     }
-    <div class="col-md-12" style="margin:0 0 0 0">
-        <button onclick="document.location.href = '@Url.Content("~/Pendientes/Details/?encodedCurrentList="+ encodedCurrentList +"&id_pendiente=" + previus)'"
-                type="button" class="btn btn-primary" data-toggle="tooltip" title="se abrirá el anterior pendiente">
-            &laquo; Anterior
-        </button>
-        <button onclick="document.location.href = '@Url.Content("~/Pendientes/Edit/?encodedCurrentList="+ encodedCurrentList +"&id_pendiente=" + Model.id)'"
-                type="button" class="btn btn-default" data-toggle="tooltip" title="Editar pendiente">
-            &epsilon; Editar
-        </button>
-        <button onclick="document.location.href = '@Url.Content("~/Pendientes/Details/?encodedCurrentList="+ encodedCurrentList +"&id_pendiente=" + Next)'"
-                type="button" class="btn btn-primary" data-toggle="tooltip" title="se abrirá el anterior pendiente">
-            Siguiente &raquo;
-        </button>
-    </div>
+<div class="col-md-12" style="margin:0 0 0 0">
+    <button onclick="document.location.href = '@Url.Content("~/Pendientes/Details/?encodedCurrentList="+ encodedCurrentList +"&id_pendiente=" + previus)'"
+            type="button" class="btn btn-primary" data-toggle="tooltip" title="se abrirá el anterior pendiente">
+        &laquo; Anterior
+    </button>
+    <button onclick="document.location.href = '@Url.Content("~/Pendientes/Edit/?encodedCurrentList="+ encodedCurrentList +"&id_pendiente=" + Model.id)'"
+            type="button" class="btn btn-default" data-toggle="tooltip" title="Editar pendiente">
+        &epsilon; Editar
+    </button>
+    <button onclick="document.location.href = '@Url.Content("~/Pendientes/Details/?encodedCurrentList="+ encodedCurrentList +"&id_pendiente=" + Next)'"
+            type="button" class="btn btn-primary" data-toggle="tooltip" title="se abrirá el anterior pendiente">
+        Siguiente &raquo;
+    </button>
+    <button onclick="document.location.href = '@Url.Content("~/Pendientes/ExportTablePendientes/?encodedCurrentList="+ encodedCurrentList)'" 
+            type="button" class="btn btn-default" data-toggle="tooltip" title="Exporta la tabla actual ">
+        Exportar Listado &pound;
+    </button>
+</div>
 </div>
 <!--Page section -->
 <section class="page-section about-heading">
