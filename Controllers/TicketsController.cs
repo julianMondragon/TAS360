@@ -40,7 +40,8 @@ namespace TAS360.Controllers
                             usuario_name = t.Ticket_User.OrderByDescending(x => x.CreatedAt).FirstOrDefault().User.nombre,
                             categoria_name = t.Categoria.nombre,
                             status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion,
-                            Subsistema_name = t.Subsistema.Nombre
+                            Subsistema_name = t.Subsistema.Nombre,
+                            Status =  t.status
                         });
                     }
                 }
@@ -197,6 +198,7 @@ namespace TAS360.Controllers
                     myticket.usuario_name = ticket.Ticket_User.OrderByDescending(u => u.CreatedAt).FirstOrDefault().User.nombre;
                     myticket.categoria_name = ticket.Categoria.nombre;
                     myticket.status_name = db.Ticket_Record_Status.Where(x => x.id_Ticket == id).OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion;
+                    myticket.terminal_name = db.Terminal.Where(x => x.id == ticket.id_Terminal).FirstOrDefault().Nombre;
                     //Lista de status
                     myticket.RecordStatus = new List<string>();
                     foreach (var status in db.Ticket_Record_Status.Where(x => x.id_Ticket == id))
@@ -258,6 +260,7 @@ namespace TAS360.Controllers
                     myticket.usuario_name = ticket.Ticket_User.OrderByDescending(u => u.CreatedAt).FirstOrDefault().User.nombre;
                     myticket.categoria_name = ticket.Categoria.nombre;
                     myticket.status_name = db.Ticket_Record_Status.Where(x => x.id_Ticket == id).OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion;
+                    myticket.terminal_name = db.Terminal.Where(x => x.id == ticket.id_Terminal).FirstOrDefault().Nombre;
                     //Lista de status
                     myticket.RecordStatus = new List<string>();
                     foreach (var status in db.Ticket_Record_Status.Where(x => x.id_Ticket == id))

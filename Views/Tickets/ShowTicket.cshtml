@@ -4,6 +4,7 @@
     int count = 0;
     int count1 = 0;
     string exception = ViewBag.Exception;
+    string Info = ViewBag.Info;
 }
 <div class="jumbotron">
     @switch (Model.status_name)
@@ -21,13 +22,13 @@
             <h2 style="color:orange">@Model.status_name</h2>
             break;
         case "Implementa":
-            <h2 style="color:yellow">@Model.status_name</h2>
+            <h2 style="color:darkgreen">@Model.status_name</h2>
             break;
         case "Pend_Pmx  ":
             <h2 style="color:red">@Model.status_name</h2>
             break;
         case "Cerrado   ":
-            <h2 style="color:blue">@Model.status_name</h2>
+            <h2 style="color:green">@Model.status_name</h2>
             break;
         default:
             <h2>@Model.status_name</h2>
@@ -37,10 +38,38 @@
     @*<p class="lead">Reporte de volumen totalizado por islas en la TAD del día 20/10/2020</p>*@
     @if (exception != null)
     {
-        <br />
-        <pre style="font-size:2rem; color:red">@exception</pre>
+        <div class="alert alert-danger" role="alert">
+            @exception
+        </div>
     }
-</div>
+    @if (Info != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @Info
+        </div>
+    }
+    <div class="row">
+            <div class="col-md-7">
+
+            </div>
+            <div class="col-md-5">
+
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-default " href="@Url.Content("~/Tickets/index")">Regresar</a>
+                    <a class="btn btn-warning " href="@Url.Content("~/Tickets/AddCommentTicket/" + (int)Model.id)">Agregar comentario</a>
+                    <a class="btn btn-info " href="@Url.Content("~/Tickets/PrintTicketReport/" + (int)Model.id)">Generar Reporte</a>
+                    @*<button onclick="document.location.href = '@Url.Content("~/Pendientes/IndexWithFilter/?encodedCurrentList="+ encodedCurrentList)'"
+                                type="button" class="btn btn-warning" data-toggle="tooltip" title="Regresar al ventana general de pendientes">
+                            Vista General &crarr;
+                        </button>
+                        <button onclick="document.location.href = '@Url.Content("~/Pendientes/ExportTablePendientes/?encodedCurrentList="+ encodedCurrentList)'"
+                                type="button" class="btn btn-info" data-toggle="tooltip" title="Exporta a excel la tabla actual ">
+                            Exportar Listado &pound;
+                        </button>*@
+                </div>
+            </div>
+        </div>
+    </div>
 <!--Heathers -->
 <div class="row">
     <div class="col-md-12">
@@ -49,7 +78,8 @@
                 @*<th class="alert-success">Status</th>*@
                 <th class="alert-success">Subsistema</th>
                 <th class="alert-success">Categoria</th>
-                <th class="alert-success">Usuario</th>
+                <th class="alert-success">Responsable</th>
+                <th class="alert-success">Terminal</th>
                 @*<th class="alert-info">Sobrante(-) faltante(+)</th>*@
 
             </tr>
@@ -58,6 +88,7 @@
                 <td>@Model.Subsistema_name</td>
                 <td> @Model.categoria_name</td>
                 <td>@Model.usuario_name</td>
+                <td>@Model.terminal_name</td>
             </tr>
         </table>
     </div>
@@ -77,9 +108,7 @@
                             <input class="btn btn-success" type="submit" value="Agregar evidencia" />
                         }
                         <br />
-                        <a class="btn btn-default " href="@Url.Content("~/Tickets/index")">Regresar</a>
-                        <a class="btn btn-warning " href="@Url.Content("~/Tickets/AddCommentTicket/" + (int)Model.id)">Agregar comentario</a>
-                        <a class="btn btn-info "    href="@Url.Content("~/Tickets/PrintTicketReport/" + (int)Model.id)">Generar Reporte</a>
+                        
                     </div>
                 </div>
             </div>
@@ -105,7 +134,7 @@
 <div class="row" style="margin:05px 0px 0px 0px">
     @foreach (var photo in Model.Files)
     {
-        <div class="col-md-5 mx-auto">
+        <div class="col-lg-4">
             <div class="thumbnail">
                 <img src="@photo.URL" />
                 <div class="caption">

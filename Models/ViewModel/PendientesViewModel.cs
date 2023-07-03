@@ -16,6 +16,7 @@ namespace TAS360.Models.ViewModel
 
         [Required]
         [Display(Name = "Descripción")]
+        [MaxLength(length: 250, ErrorMessage = "La Descripcion debe contener menos de 250 caracteres")]
         public string Descripcion { get; set; }
 
         [Required]
@@ -23,6 +24,7 @@ namespace TAS360.Models.ViewModel
         public int id_Clasificacion { get; set; }
 
         [Display(Name = "Observación")]
+        [MaxLength(length: 3000, ErrorMessage = "La Observacion debe contener menos de 3000 caracteres")]
         public string Observacion { get; set; }
 
         [Required]
@@ -36,10 +38,12 @@ namespace TAS360.Models.ViewModel
 
         [Required]
         [Display(Name = "Acitividades pendientes por el fabricante (SUSESS)")]
+        [MaxLength(length: 3000, ErrorMessage = "Las Acitividades pendientes por el fabricante (SUSESS) debe contener menos de 3000 caracteres")]
         public string Actividades_Pend_Susess { get; set; }
 
         [Required]
         [Display(Name = "Responsable")]
+        [MaxLength(length: 100, ErrorMessage = "El campo Responsable debe contener menos de 100 caracteres")]
         public string Responsable { get; set; }
 
         [Required]

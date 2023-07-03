@@ -11,8 +11,9 @@
     string exception = ViewBag.ExceptionMessage;
     string Info = ViewBag.InfoMessage;
     string warning = ViewBag.warning;
-    
+
 }
+
 <div class="jumbotron">
     <h1 class="section-heading mb-4">
         <span class="section-heading-lower">Editar Pendiente # @Model.id</span>
@@ -105,13 +106,13 @@
 
                                         <div class="col-md-12">
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
-                                                @Html.LabelFor(L => L.CreatedAt) 
-                                                @Html.TextBoxFor(x => x.CreatedAt, "{0:dd-MM-yyyy}", new { @class = "form-control" , @title = "Format: MES / DIA / AÑO", @readonly = "true" })
+                                                @Html.LabelFor(L => L.CreatedAt)
+                                                @Html.TextBoxFor(x => x.CreatedAt, "{0:MM-dd-yyyy}", new { @class = "form-control", @title = "Format: MES / DIA / AÑO", @readonly = "true" })
                                                 @Html.ValidationMessageFor(v => v.CreatedAt, null, new { @class = "red" })
                                             </div>
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(L => L.Fecha_Compromiso)
-                                                @Html.TextBoxFor(x => x.Fecha_Compromiso, "{0:dd-MM-yyyy}", new { @class = "form-control", @title = "Format: MES / DIA / AÑO", @placeholder = "MES-DAY-YEAR" })
+                                                @Html.TextBoxFor(x => x.Fecha_Compromiso, "{0:MM-dd-yyyy}", new { @class = "form-control", @title = "Format: MES / DIA / AÑO", @placeholder = "MES-DAY-YEAR" })
                                                 @Html.ValidationMessageFor(v => v.Fecha_Compromiso, null, new { @class = "red" })
                                             </div>
                                             <div class="col-md-4" style="margin: 10px 0px 0px 0px;">
@@ -151,18 +152,19 @@
                                         <div class="col-md-12">
                                             <div class="col-lg-12" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(l => l.Descripcion)
-                                                @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control" })
+                                                @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control autosize-textarea" })
                                                 @Html.ValidationMessageFor(f => f.Descripcion, null, new { @class = "red" })
                                             </div>
                                             <div class="col-lg-12" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(l => l.Actividades_Pend_Susess)
-                                                @Html.TextAreaFor(model => model.Actividades_Pend_Susess, new { @class = "form-control" })
+                                                @Html.TextAreaFor(model => model.Actividades_Pend_Susess, new { @class = "form-control autosize-textarea" })
                                                 @Html.ValidationMessageFor(f => f.Actividades_Pend_Susess, null, new { @class = "red" })
                                             </div>
                                             <div class="row" style="margin:0 0 10px 0">
                                                 <div class="col-lg-12" style="margin: 10px 0px 0px 0px;">
                                                     @Html.LabelFor(l => l.Observacion)
-                                                    @Html.TextAreaFor(model => model.Observacion, new { @class = "form-control" })
+                                                    @Html.TextAreaFor(model => model.Observacion, new { @class = "form-control autosize-textarea" })
+                                                    @Html.ValidationMessageFor(f => f.Observacion, null, new { @class = "red" })
                                                 </div>
                                             </div>
                                         </div>
@@ -179,3 +181,9 @@
         </div>
     </div>
 </section>
+<script>
+    $(document).ready(function () {
+        $('.autosize-textarea').autosize();
+    });
+</script>
+

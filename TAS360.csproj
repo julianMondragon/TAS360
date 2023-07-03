@@ -469,6 +469,8 @@
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
+    <Content Include="Scripts\autosize.js" />
+    <Content Include="Scripts\autosize.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\AditivoBD.edmx">
@@ -865,6 +867,7 @@
     <Content Include="Views\Pendientes\Edit.cshtml" />
     <Content Include="Views\Pendientes\Filter_Pendientes.cshtml" />
     <Content Include="Prototipo_Tabla\Lista_de_Pendientes_.xlsx" />
+    <Content Include="Views\Pendientes\IndexWithFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -104,30 +104,37 @@
                                     @Html.CheckBoxFor(m => m.is_PAS)
                                     @Html.LabelFor(l => l.is_PAS)
                                 </div>
+                                
                             </div>
                         </div>
                         //Renglo 2
                         <div name="row3" class="row" style="margin:0 0 10px 0">
                             <div class="col-md-12">
-                                <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
+                                <div class="col-lg-3" style="margin: 10px 0px 0px 0px;">
                                     @Html.CheckBoxFor(m => m.isSelected_Descrp)
                                     @Html.LabelFor(l => l.Descripcion)
                                     @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(f => f.Descripcion, null, new { @class = "red" })
                                 </div>
-                                <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
+                                <div class="col-lg-3" style="margin: 10px 0px 0px 0px;">
                                     @Html.CheckBoxFor(m => m.isSelected_Susess)
                                     @Html.LabelFor(l => l.Actividades_Pend_Susess)
                                     @Html.TextAreaFor(model => model.Actividades_Pend_Susess, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(f => f.Actividades_Pend_Susess, null, new { @class = "red" })
                                 </div>
-                                <div class="row" style="margin:0 0 10px 0">
-                                    <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
-                                        @Html.CheckBoxFor(m => m.isSelected_Observ)
-                                        @Html.LabelFor(l => l.Observacion)
-                                        @Html.TextAreaFor(model => model.Observacion, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(f => f.Observacion, null, new { @class = "red" })
-                                    </div>
+                                <div class="col-lg-3" style="margin: 10px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.isSelected_Observ)
+                                    @Html.LabelFor(l => l.Observacion)
+                                    @Html.TextAreaFor(model => model.Observacion, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(f => f.Observacion, null, new { @class = "red" })
+                                </div>
+                                <div class="col-md-3" style="margin: 25px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.is_closed)
+                                    @Html.LabelFor(L => L.is_closed)
+                                </div>
+                                <div class="col-md-3" style="margin: 0px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.just_closed)
+                                    @Html.LabelFor(l => l.just_closed)
                                 </div>
                             </div>
                         </div>

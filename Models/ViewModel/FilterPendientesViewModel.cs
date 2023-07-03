@@ -86,6 +86,12 @@ namespace TAS360.Models.ViewModel
 
         [Display(Name = "Es PAF")]
         public bool is_PAF { get; set; }
+        [Display(Name = "Incluir Pendientes cerrados")]
+        public bool is_closed { get; set; }
+
+        [Display(Name = "Solo Pendientes cerrados")]
+        public bool just_closed { get; set; }
+
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

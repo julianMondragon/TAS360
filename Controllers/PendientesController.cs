@@ -37,7 +37,7 @@ namespace TAS360.Controllers
             using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
             {
                 //db.Configuration.ProxyCreationEnabled = false;
-                var ListPendientes = from p in db.Pendiente where p.is_deleted == false select p;
+                var ListPendientes = from p in db.Pendiente where p.is_deleted == false && p.id_status != 12 select p;
                 if(ListPendientes.Any())
                 {
                     foreach(var  p in ListPendientes)
@@ -50,6 +50,7 @@ namespace TAS360.Controllers
                         {
                             id = p.id,
                             Descripcion = p.Descripcion,
+                            id_status = p.Status.Status1,
                             Clasificacion_Pendiente = db.Clasificacion_Pendiente.FirstOrDefault(cp => cp.id == p.id_Clasificacion),
                             Responsable = p.Responsable,
                             id_Terminal = (int) p.id_Terminal,
@@ -65,40 +66,35 @@ namespace TAS360.Controllers
             return View(model);
         }
 
-        [HttpPost]
         [AuthorizeUser(idOperacion: 10)]
-        public ActionResult Index(string encodedCurrentList)
+        public ActionResult IndexWithFilter(string encodedCurrentList)
         {
             List<PendientesViewModel> model = new List<PendientesViewModel>();
             List<CurrentList> currentList = new List<CurrentList>();
-            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            var decodedObject = HttpUtility.UrlDecode(encodedCurrentList);
+            currentList = JsonConvert.DeserializeObject<List<CurrentList>>(decodedObject);
+            foreach (var item in currentList)
             {
-                //db.Configuration.ProxyCreationEnabled = false;
-                var ListPendientes = from p in db.Pendiente where p.is_deleted == false select p;
-                if (ListPendientes.Any())
+                item.is_selected = false;
+                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                 {
-                    foreach (var p in ListPendientes)
+                    var p = db.Pendiente.FirstOrDefault(pen => pen.id == item.id);
+                    model.Add(new PendientesViewModel()
                     {
-                        currentList.Add(new CurrentList() { id = p.id, is_selected = false });
-                    }
-                    foreach (var p in ListPendientes)
-                    {
-                        model.Add(new PendientesViewModel()
-                        {
-                            id = p.id,
-                            Descripcion = p.Descripcion,
-                            Clasificacion_Pendiente = db.Clasificacion_Pendiente.FirstOrDefault(cp => cp.id == p.id_Clasificacion),
-                            Responsable = p.Responsable,
-                            id_Terminal = (int)p.id_Terminal,
-                            Avance = (double)p.Avance,
-                            Subsistema = db.Subsistema.FirstOrDefault(cp => cp.id == p.id_Subsistema),
-                            currentList = currentList
-                        });
-                    }
+                        id = p.id,
+                        Descripcion = p.Descripcion,
+                        id_status = p.Status.Status1,
+                        Clasificacion_Pendiente = db.Clasificacion_Pendiente.FirstOrDefault(cp => cp.id == p.id_Clasificacion),
+                        Responsable = p.Responsable,
+                        id_Terminal = (int)p.id_Terminal,
+                        Avance = (double)p.Avance,
+                        Subsistema = db.Subsistema.FirstOrDefault(cp => cp.id == p.id_Subsistema),
+                        currentList = currentList
+                    });
 
                 }
-
             }
+            
             return View(model);
         }
 
@@ -391,7 +387,7 @@ namespace TAS360.Controllers
                     model.Actividades_Pend_Susess = PendienteToEdit.Actividades_Pend_Susess;
                     model.Avance = (double)PendienteToEdit.Avance;
                     model.Observacion = PendienteToEdit.Observacion;
-                    model.CreatedAt = (DateTime)PendienteToEdit.CreatedAt;
+                    model.CreatedAt = (DateTime) PendienteToEdit.CreatedAt;
                     model.Fecha_Compromiso = (DateTime)PendienteToEdit.Fecha_Compromiso;
                     model.Responsable = PendienteToEdit.Responsable;
                     model.id_status = (int)PendienteToEdit.id_status;
@@ -644,6 +640,7 @@ namespace TAS360.Controllers
         /// </summary>
         /// <returns> FilterPendientesViewModel </returns>
         [HttpGet]
+        [AuthorizeUser(idOperacion: 15)]
         public ActionResult Filter_Pendientes()
         {
             FilterPendientesViewModel Filtro = new FilterPendientesViewModel();
@@ -663,6 +660,7 @@ namespace TAS360.Controllers
         /// <param name="Filtro"></param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeUser(idOperacion: 15)]
         public ActionResult Filter_Pendientes(FilterPendientesViewModel Filtro)
         {
             GetTerminales();
@@ -677,6 +675,12 @@ namespace TAS360.Controllers
             
             if (ModelState.IsValid) //Valida el modelo
             {
+                if (Filtro.just_closed && Filtro.is_closed)
+                {
+                    //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                    ViewBag.warning = "Query Error: No puedes seleccionar los dos ultimos checkbox juntos para realizar una busqueda ";
+                    return View(Filtro);
+                }
                 using (HelpDesk_Entities1 db =  new HelpDesk_Entities1())
                 {                    
                     if(Filtro.isSelected_id) //si el Id fue seleccionado
@@ -694,7 +698,19 @@ namespace TAS360.Controllers
                     }
                     else // entonces busca por el ID ejecuta los demas filtros
                     {
-                        var listFilter = db.Pendiente.Where(x => x.is_deleted != true).ToList();
+                        var listFilter = new List<Pendiente>();
+                        if (Filtro.is_closed)
+                        {
+                            listFilter = db.Pendiente.Where(x => x.is_deleted != true).ToList();
+                        }
+                        else if (Filtro.just_closed)
+                        {
+                            listFilter = db.Pendiente.Where(x => x.is_deleted != true && x.id_status == 12).ToList();
+                        }
+                        else
+                        {
+                            listFilter = db.Pendiente.Where(x => x.is_deleted != true && x.id_status != 12).ToList();
+                        }
                         if (Filtro.isSelected_Terminal)
                         {
                             listFilter = listFilter.Where(t => t.id_Terminal == Filtro.id_Terminal).ToList();
@@ -761,7 +777,6 @@ namespace TAS360.Controllers
 
                             }
                         }
-
                         if (Filtro.isSelected_Descrp)
                         {
                             listFilter = listFilter.Where(t => t.Descripcion.Contains(Filtro.Descripcion)).ToList();
@@ -852,9 +867,10 @@ namespace TAS360.Controllers
             var serializedObject = JsonConvert.SerializeObject(currentLists);
             encodedCurrentList = HttpUtility.UrlEncode(serializedObject);
             // Creación de la URL con la cadena de consulta
-            var url = "Details/?encodedCurrentList=" + encodedCurrentList + "&id_pendiente=" + currentLists.FirstOrDefault().id;
+            var url = "IndexWithFilter/?encodedCurrentList=" + encodedCurrentList;
             // Redirecciona a la URL 
             return Redirect(url);
+            //return View("IndexWithFilter", encodedCurrentList);
         }
 
         /// <summary>
