@@ -212,8 +212,3 @@
 
 	module.exports = autosize;
 });
-<script>
-	$(document).ready(function() {
-		$('.autosize-textarea').autosize();
-    });
-</script>

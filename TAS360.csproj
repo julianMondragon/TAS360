@@ -803,6 +803,7 @@
     <Content Include="Scripts\datatables\Select-1.4.0\js\select.jqueryui.min.js" />
     <Content Include="Scripts\datatables\Select-1.4.0\js\select.semanticui.js" />
     <Content Include="Scripts\datatables\Select-1.4.0\js\select.semanticui.min.js" />
+    <Content Include="Scripts\helper.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
