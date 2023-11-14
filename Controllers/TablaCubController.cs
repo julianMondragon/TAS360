@@ -81,7 +81,7 @@ namespace TAS360.Controllers
                     row = 9;
                     column = 3;
                     tabla.Fondo_Rango1 = 0;
-                    tabla.Fondo_Rango2 = TablaCub.GetCellValueAsDouble(row, column);
+                    tabla.Fondo_Rango2 = Math.Round(TablaCub.GetCellValueAsDouble(row, column),3);
                     row++;
                     column--;
                     tabla.ZonaCritica_Rango1 = TablaCub.GetCellValueAsDouble(row, column);
@@ -113,7 +113,7 @@ namespace TAS360.Controllers
                     stringbuilder.AppendLine("Nivel (mm),Volumen (Bls), Volumen (m3)");
 
                     //Obtiene el fondo y lo escribe en escribe en el nuevo archivo 
-                    while (tabla.Fondo_Rango2 != TablaCub.GetCellValueAsDouble(row, column))
+                    while (tabla.Fondo_Rango2 != Math.Round(TablaCub.GetCellValueAsDouble(row, column), 3))
                     {
                         //obtiene los valores por cada renglon de la tabla actual
                         //VALOR A - Nivel 
