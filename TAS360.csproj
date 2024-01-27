@@ -160,6 +160,7 @@
     <Compile Include="Controllers\PendientesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TablaCubController.cs" />
+    <Compile Include="Controllers\TerminalController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\WebAPIPemexController.cs" />
     <Compile Include="Filters\AuthorizeUser.cs" />
@@ -405,6 +406,7 @@
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
     <Compile Include="Models\ViewModel\SocketViewModel.cs" />
     <Compile Include="Models\ViewModel\TablaCubViewModel.cs" />
+    <Compile Include="Models\ViewModel\TerminalViewModel.cs" />
     <Compile Include="Models\ViewModel\TicketViewModel.cs" />
     <Compile Include="Models\ViewModel\TramaViewModel.cs" />
     <Compile Include="Models\ViewModel\WebAPIPemexViewModel.cs" />
@@ -869,6 +871,9 @@
     <Content Include="Views\Pendientes\Filter_Pendientes.cshtml" />
     <Content Include="Prototipo_Tabla\Lista_de_Pendientes_.xlsx" />
     <Content Include="Views\Pendientes\IndexWithFilter.cshtml" />
+    <Content Include="Views\Terminal\Index.cshtml" />
+    <Content Include="Views\Terminal\Create.cshtml" />
+    <Content Include="Views\Terminal\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
