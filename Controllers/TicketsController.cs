@@ -606,33 +606,43 @@ namespace TAS360.Controllers
         [AuthorizeUser(idOperacion: 7)]
         public ActionResult AddFiles(int IdTicket , HttpPostedFileBase postedFile)
         {
-            string filepath = string.Empty;
-            if (postedFile != null)
+            try
             {
-                string path = Server.MapPath("~/TicketFiles/");
-                if (!Directory.Exists(path))
+                string filepath = string.Empty;
+                if (postedFile != null)
                 {
-                    Directory.CreateDirectory(path);
+                    string path = Server.MapPath("~/TicketFiles/" + IdTicket + "/");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    filepath = path + Path.GetFileName(postedFile.FileName);
+                    postedFile.SaveAs(filepath);
                 }
-                filepath = path + Path.GetFileName(postedFile.FileName);
-                postedFile.SaveAs(filepath);
+                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                {
+                    Files file = new Files();
+                    file.Nombre = postedFile.FileName;
+                    file.URL = filepath;
+                    file.Tipo = postedFile.GetType().Name;
+
+                    db.Files.Add(file);
+                    db.SaveChanges();
+
+                    Tickets_Files tickets_Files = new Tickets_Files();
+                    tickets_Files.id_Ticket = IdTicket;
+                    tickets_Files.id_File = db.Files.FirstOrDefault(f => f.Nombre == postedFile.FileName).id;
+
+                    db.Tickets_Files.Add(tickets_Files);
+                    db.SaveChanges();
+                }
             }
-            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            catch (Exception ex)
             {
-                Files file = new Files();
-                file.Nombre = postedFile.FileName;
-                file.URL = filepath;
-                file.Tipo = postedFile.GetType().Name;
-
-                db.Files.Add(file);
-                db.SaveChanges();
-
-                Tickets_Files tickets_Files = new Tickets_Files();
-                tickets_Files.id_Ticket = IdTicket;
-                tickets_Files.id_File = db.Files.FirstOrDefault(f => f.Nombre == postedFile.FileName).id;
-
-                db.Tickets_Files.Add(tickets_Files);
-                db.SaveChanges();
+                string path = Server.MapPath("~/Logs/Tickets/");
+                Log oLog = new Log(path);
+                oLog.Add("Excepcion on ticket " + IdTicket + ": " + ex.Message);
+                ViewBag.Exception = ex.Message;
             }
             return Redirect("~/Tickets/ShowTicket/"+IdTicket);
         }
