@@ -154,9 +154,11 @@
     <Compile Include="Controllers\AditivoController.cs" />
     <Compile Include="Controllers\Calculo_FCVController.cs" />
     <Compile Include="Controllers\DanloadController.cs" />
+    <Compile Include="Controllers\DocumentacionController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\logoutController.cs" />
+    <Compile Include="Controllers\LSAController.cs" />
     <Compile Include="Controllers\PendientesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TablaCubController.cs" />
@@ -513,6 +515,9 @@
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-SCA-REI[2050].pdf" />
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-SQL-MDI.pdf" />
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-SQL-MDR.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-MDI.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-SCA-MODBUS.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-SCA-REI.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.min.css" />
@@ -874,10 +879,14 @@
     <Content Include="Views\Terminal\Index.cshtml" />
     <Content Include="Views\Terminal\Create.cshtml" />
     <Content Include="Views\Terminal\Edit.cshtml" />
+    <Content Include="Views\Documentacion\Procedimientos.cshtml" />
+    <Content Include="Views\Documentacion\Manuales.cshtml" />
+    <Content Include="Views\LSA\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ArchivosASA\" />
+    <Folder Include="Content\Documents\Procedimientos_TAS360\" />
     <Folder Include="Logs\" />
     <Folder Include="Tablas_CSV\" />
     <Folder Include="Tablas_Pendientes\" />

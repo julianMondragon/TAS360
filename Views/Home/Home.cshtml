@@ -1,10 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "HelpDesk";
+    ViewBag.Title = "HelpDesk TAS360";
 }
 
 <div class="jumbotron">
-    <h1>HelpDesk de PTS </h1>
+    <h1 style="font-family: Monotype Corsiva ">HelpDesk TAS360 - PTS </h1>
 
     @*<p><a href="" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
     <div class="row">
@@ -30,40 +30,37 @@
             <br />
         </div>
         <div class="col-md-2" style="margin:0 0px 0px 0px">
-            <h3><strong>Manuales TAS360</strong></h3>
+            <h3><strong style="font-family: Monotype Corsiva ">Documentación</strong></h3>
             <table class="table table-success">
                 <tr>
-                    <th class="alert-success">Operación</th>
+                    <td><a onclick="document.location.href = '@Url.Content("~/Documentacion/Procedimientos")'" class="btn btn-success" title="Ver procedimientos">Procedimientos &raquo;</a></td>
                 </tr>
                 <tr>
-                    <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-MDO.pdf")'" class="btn btn-success" title="Manual de Operacion">TAS360-MDO &raquo;</a></td>
-                </tr>
-                <tr>
-                    <th class="alert-info">Administración</th>
-                </tr>
-                <tr>
-                    <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-MDA.pdf")'" class="btn btn-info" title="Manual de Adminisración">TAS360-MDA &raquo;</a></td>
-                </tr>
-                <tr>
-                    <th class="alert-warning">Configuración</th>
-                </tr>
-                <tr>
-                    <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-MDC.pdf")'" class="btn btn-warning" title="Manual de Configuración">TAS360-MDC &raquo;</a></td>
-                </tr>
-                <tr>
-                    <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-GDI.pdf")'" class="btn btn-warning" title="Guía de Instalación -Configuración">TAS360-GDI &raquo;</a></td>
-                </tr>
-                <tr>
-                    <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-MDR.pdf")'" class="btn btn-warning" title="Manual de Redundancia -Configuración">TAS360-MDR &raquo;</a></td>
-                </tr>
-                <tr>
-                    <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-SCA-MODBUS.pdf")'" class="btn btn-warning" title="Manual de Mapeo MODBUS -Configuración">TAS360-SCA-MODBUS &raquo;</a></td>
+                    <td><a onclick="document.location.href = '@Url.Content("~/Documentacion/Manuales")'" class="btn btn-info" title="ver manuales">Manuales &raquo;</a></td>
                 </tr>
             </table>
-        </div>
+            <h3><strong style="font-family: Monotype Corsiva ">Resumen</strong></h3>
+            <table class="table table-success">
+                <tr>
+                    <th class="alert-success">TKs Abiertos: X</th>
+                </tr>
+                <tr>
+                    <th class="alert-danger">TKs Cerrados: Y</th>
+                </tr>
+            </table>
+            <h3><strong style="font-family: Monotype Corsiva ">Contacto</strong></h3>
+            <table class="table table-success">
+                <tr>
+                    <td>(442) XXX-XX-XX</td>
+                </tr>
+                <tr>
+                    <td>soporte@pts.mx</td>
+                </tr>
+            </table>
+        </div>        
     </div>
     <div class="row">
-        <h2>Objetivo </h2>
+        <h2 style="font-family: Monotype Corsiva "> <strong>Objetivo</strong> </h2>
         <p class="lead">
             Distribuir una falla del sistema TAS360 al personal interno mejor
             capacitado para resolver el problema o darle seguimiento al
@@ -73,53 +70,60 @@
     </div>
 
     <div class="row">
-                <img src="~/Content/img/Home_BG.jpg" class="img-responsive" alt="Responsive image">
-                <br />
+        <img src="~/Content/img/Home_BG.jpg" class="img-responsive" alt="Responsive image">
+        <br />
 
-            </div>
+    </div>
 
-<!--Manejo de Tickets segun categorias  -->
-@*            <div class="row">
-                <h2>Manejo de categorías de Tickets</h2>
-                <p class="lead">
-                    1.-Atención Prioritaria (Detiene la operación)
-                </p>
-                <p class="lead">
-                    5.-Dudas sobre la funcionalidad del TAS
-                </p>
-                <br />
+    <div class="row">
+        <p class="lead" style="font-family: Monotype Corsiva ">
+           <strong> Para los incidentes vía telefónica: XXXXXXXXXX </strong>
+        </p>
+        <br />
+    </div>
+
+    <!--Manejo de Tickets segun categorias  -->
+    @*            <div class="row">
+                    <h2>Manejo de categorías de Tickets</h2>
+                    <p class="lead">
+                        1.-Atención Prioritaria (Detiene la operación)
+                    </p>
+                    <p class="lead">
+                        5.-Dudas sobre la funcionalidad del TAS
+                    </p>
+                    <br />
+                </div>
+                <div class="row">
+                    <img src="~/Content/img/Home_BG_2.png" class="img-responsive" alt="Responsive image">
+                    <br />
+                </div>
+                <div class="row">
+                    <h2>Manejo de categorías de Tickets</h2>
+                    <p class="lead">
+                        ▪2.-Error ó Alerta (No detiene la operación pero debe atenderse)
+                    </p>
+                    <p class="lead">
+                        ▪3.-Nuevo requerimiento (Debe realizarse cambio)
+                    </p>
+                    <br />
+                </div>
+                <div class="row">
+                    <img src="~/Content/img/Home_BG_3.png" class="img-responsive" alt="Responsive image">
+                    <br />
+                </div>
+                <div class="row">
+                    <h2>Manejo de categorías de Tickets</h2>
+                    <p class="lead">
+                        ▪4.-Fuera de Alcance
+                    </p>
+                    <br />
+                </div>
+                <div class="row">
+                    <img src="~/Content/img/Home_BG_4.png" class="img-responsive" alt="Responsive image">
+                    <br />
+                </div>
             </div>
-            <div class="row">
-                <img src="~/Content/img/Home_BG_2.png" class="img-responsive" alt="Responsive image">
-                <br />
-            </div>
-            <div class="row">
-                <h2>Manejo de categorías de Tickets</h2>
-                <p class="lead">
-                    ▪2.-Error ó Alerta (No detiene la operación pero debe atenderse)
-                </p>
-                <p class="lead">
-                    ▪3.-Nuevo requerimiento (Debe realizarse cambio)
-                </p>
-                <br />
-            </div>
-            <div class="row">
-                <img src="~/Content/img/Home_BG_3.png" class="img-responsive" alt="Responsive image">
-                <br />
-            </div>
-            <div class="row">
-                <h2>Manejo de categorías de Tickets</h2>
-                <p class="lead">
-                    ▪4.-Fuera de Alcance
-                </p>
-                <br />
-            </div>
-            <div class="row">
-                <img src="~/Content/img/Home_BG_4.png" class="img-responsive" alt="Responsive image">
-                <br />
-            </div>
-        </div>
-*@
+    *@
 
 
 
