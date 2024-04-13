@@ -12,6 +12,7 @@ namespace TAS360.Controllers
     {
         public ActionResult Home()
         {
+            GetSummaryTKs();
             return View();
         }
         public ActionResult Index()
@@ -470,6 +471,30 @@ namespace TAS360.Controllers
             });
             ViewBag.ListProducto = ListProducto;
 
+        }
+
+        private void GetSummaryTKs()
+        {
+            int tksopen = 0;
+            int tksclose = 0;
+            List<TicketViewModel> tickets = new List<TicketViewModel>();
+            using (Models.HelpDesk_Entities1 db = new Models.HelpDesk_Entities1())
+            {
+                var Tickets = (from s in db.Ticket select s);
+                if (Tickets != null && Tickets.Any())
+                {
+                    foreach (var t in Tickets)
+                    {
+                        if (t.status == 12)
+                            tksclose++;
+                        else
+                            tksopen++;
+
+                    }
+                }
+            }
+            ViewBag.tksopen = tksopen;
+            ViewBag.tksclose = tksclose;
         }
         
         [HttpPost]  
