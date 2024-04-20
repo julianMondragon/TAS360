@@ -3,56 +3,181 @@
     ViewBag.Title = "SLA";
 }
 <div class="jumbotron">
-    <h2>Acuerdo de Nivel de Servicio (SLA) </h2>    
-    
+    <h2>Acuerdo de Nivel de Servicio (SLA) </h2>
+    <h3><strong style="font-family: Monotype Corsiva ">Resumen</strong></h3>
 </div>
-<div class="row">
+<div class="row">    
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><b>Reporte Tickts por categoria</b> </div>
+            <div class="panel-body">
+                <canvas id="myPieChart" width="50" height="50"></canvas>
+            </div>
+        </div>
+    </div>
     <div class="col-md-6">
-        <p class="lead">
-            Los SLA se utilizan para establecer indicadores medibles del servicio que brindamos y así asegurar el cumplimiento de las expectativas de nuestros clientes.
-        </p>
-        <p class="lead">
-            Para expresar un compromiso de calidad de servicio, esta debe ser medible con facilidad. Esta medición puede ser, muchas veces, subjetiva por parte de los clientes finales, como en el caso de un departamento de atención al cliente, o un servicio de reparaciones a domicilio.
-        </p>
-        <p class="lead">
-            A continuacion se muestra las tablas y graficas midiendo la eficiencia de respuesta del servicio: 
-        </p>
+        <div class="panel panel-default">
+            <div class="panel-heading"><b>Reporte Tickets</b> </div>
+            <div class="panel-body">
+                <table class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tickets</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Abiertos</th>
+                            <td>@ViewBag.tksopen</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Cerrados</th>
+                            <td>@ViewBag.tksclose</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6" style="margin:0px 0px 0px 0px">
-        <img src="~/Content/img/SLA.jpg" class="img-responsive" alt="Responsive image">
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <table class="table table-success table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>xx</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>xxx</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>twitter</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><b>Reporte Status de Tickets: ultimo mes</b> </div>
+                <div class="panel-body">
+                    <canvas id="myBarChart" width="100" height="50"></canvas>
+                </div>
+        </div>
     </div>
 </div>
+
+        @*Documentacion SLA*@
+        <div class="row">
+            <div class="col-md-6">
+                <p class="lead">
+                    Los SLA se utilizan para establecer indicadores medibles del servicio que brindamos y así asegurar el cumplimiento de las expectativas de nuestros clientes.
+                </p>
+                <p class="lead">
+                    Para expresar un compromiso de calidad de servicio, esta debe ser medible con facilidad. Esta medición puede ser, muchas veces, subjetiva por parte de los clientes finales, como en el caso de un departamento de atención al cliente, o un servicio de reparaciones a domicilio.
+                </p>
+                <p class="lead">
+                    A continuacion se muestra las tablas y graficas midiendo la eficiencia de respuesta del servicio:
+                </p>
+            </div>
+            <div class="col-md-6" style="margin:0px 0px 0px 0px">
+                <img src="~/Content/img/SLA.jpg" class="img-responsive" alt="Responsive image">
+            </div>
+        </div>
+
+
+@section scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        jQuery.ajax({
+                url: '@Url.Action("GetTicktsByStatus", "LSA")',
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    /*console.log(data);*/
+
+                    var arraystatus = [];
+                    var arrayCantidad = [];
+
+                    for (var i = 0; i < data.length; i++) {
+
+                        /*console.log(data[i].mes)*/
+                        arraystatus.push(data[i].Estado)
+                        arrayCantidad.push(data[i].Cantidad)
+                    }
+
+                    console.log(arraystatus)
+                    console.log(arrayCantidad)
+
+                    var controlBar1 = document.getElementById("myBarChart");
+
+                    var graficoBar1 = new Chart(controlBar1, {
+                        type: 'bar',
+                        data: {
+                            labels: arraystatus,
+                            datasets: [{
+                                label: "Status",
+                                /*backgroundColor: "#0800B1",*/
+                                backgroundColor: ["#BB2100", "#03B100", "#0083B1", "#0800B1", "#EBFA00", "#FA00D8"],
+                                borderColor: "#000000",
+                                borderWidth: 0,
+                                data: arrayCantidad,
+                            }],
+                        },
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    gridLines: {
+                                        display: true
+                                    },
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        min: 0,
+                                    },
+                                    gridLines: {
+                                        display: true
+                                    }
+                                }],
+                            },
+                            legend: {
+                                display: true
+                            }
+                        }
+                    });
+
+
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+        });
+
+
+        //Pie Chart Example
+        jQuery.ajax({
+            url: '@Url.Action("GetTicketsByCategoria", "LSA")',
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+
+                var arrayCategorias = [];
+                var arrayCantidad = [];
+
+                for (var x = 0; x < data.length; x++) 
+                {
+                    arrayCategorias.push(data[x].Categoria)
+                    arrayCantidad.push(data[x].Cantidad)
+                }
+
+                console.log(arrayCategorias)
+                console.log(arrayCantidad)
+
+                var controlPie1 = document.getElementById("myPieChart");
+                var graficoPie1 = new Chart(controlPie1, {
+                    type: 'pie',
+                    data: {
+                        labels: arrayCategorias,
+                        datasets: [{
+                            data: arrayCantidad,
+                            backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
+                        }],
+                    },
+                });
+
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+  </script>
+}
+
 

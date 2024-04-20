@@ -401,6 +401,8 @@
     <Compile Include="Models\ViewModel\entradasViewModel.cs" />
     <Compile Include="Models\ViewModel\FCV_ViewModel.cs" />
     <Compile Include="Models\ViewModel\FilterPendientesViewModel.cs" />
+    <Compile Include="Models\ViewModel\G_TicketsByCategoriaViewModel.cs" />
+    <Compile Include="Models\ViewModel\G_TicketsByStatusViewModel.cs" />
     <Compile Include="Models\ViewModel\PendientesViewModel.cs" />
     <Compile Include="Models\ViewModel\PuertoSerialViewModel.cs" />
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
@@ -416,6 +418,7 @@
       <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StorProc\LSA_Reportes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Backup_Database\Migraciones\Alter_Pendiente_Add_properties.sql" />
@@ -518,60 +521,29 @@
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-MDI.pdf" />
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-SCA-MODBUS.pdf" />
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-SCA-REI.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\A\A1 PTS-ATAD-P-PCM-004.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\A\A2 PTS-ATAD-P-PCM-002.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\A\A3 PTS-ATAD-P-PCM-005.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\A\A4 PTS-ATAD-P-PCM-006.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\A\A5 PTS-ATAD-P-PCM-003.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\A\A6 PTS-ATAD-P-PCM-007.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B11 PTS-ATAD-SAB-P-PCM-123.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B12 PTS-ATAD-SAB-P-PCM-130.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B12 PTS-ATAD-SAB-P-PCM-130.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B13 PTS-ATAD-SAB-P-PCM-105.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B13 PTS-ATAD-SAB-P-PCM-105.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B14 PTS-ATAD-SAB-P-PCM-106.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B14 PTS-ATAD-SAB-P-PCM-106.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B15 PTS-ATAD-SAB-P-PCM-107.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B15 PTS-ATAD-SAB-P-PCM-107.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B2 PTS-ATAD-SAB-P-PCM-111.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B2 PTS-ATAD-SAB-P-PCM-111.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B3 PTS-ATAD-SAB-P-PCM-102.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B3 PTS-ATAD-SAB-P-PCM-102.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B4 PTS-ATAD-SAB-P-PCM-103.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B4 PTS-ATAD-SAB-P-PCM-103.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B6 PTS-ATAD-SAB-P-PCM-121.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B6 PTS-ATAD-SAB-P-PCM-121.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B7 PTS-ATAD-SAB-P-PCM-108.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B7 PTS-ATAD-SAB-P-PCM-108.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B8 PTS-ATAD-SAB-P-PCM-109.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B8 PTS-ATAD-SAB-P-PCM-109.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B9 PTS-ATAD-SAB-P-PCM-110.docx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\B\B9 PTS-ATAD-SAB-P-PCM-110.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\C\C1 PTS-ATAD-P-PCM-126 %28A%29.docx" />
     <Content Include="Content\Documents\Procedimientos_TAS360\C\C1 PTS-ATAD-P-PCM-126 %28A%29.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\D\D1 PTS-ATAD-SAB-P-PCM-127 %28AA%29.docx" />
     <Content Include="Content\Documents\Procedimientos_TAS360\D\D1 PTS-ATAD-SAB-P-PCM-127 %28AA%29.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\E\E1 PTS-ATAD-SAB-P-PCM-128.docx" />
     <Content Include="Content\Documents\Procedimientos_TAS360\E\E1 PTS-ATAD-SAB-P-PCM-128.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\E\E2-PTS-ATAD-SAB-P-LS-005.xlsx" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\F\F11 PTS-ATAD-SAB-P-PCM-118_rev1M.docx" />
     <Content Include="Content\Documents\Procedimientos_TAS360\F\F11 PTS-ATAD-SAB-P-PCM-118_rev1M.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\F\F16  PTS-ATAD-SAB-P-PCM-100_rev1M.docx" />
     <Content Include="Content\Documents\Procedimientos_TAS360\F\F16  PTS-ATAD-SAB-P-PCM-100_rev1M.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\F\F5 PTS-ATAD-SAB-P-PCM-017_rev1M.docx" />
     <Content Include="Content\Documents\Procedimientos_TAS360\F\F5 PTS-ATAD-SAB-P-PCM-017_rev1M.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\F\F6  PTS-ATAD-SAB-P-PCM-018_rev1M.docx" />
     <Content Include="Content\Documents\Procedimientos_TAS360\F\F6  PTS-ATAD-SAB-P-PCM-018_rev1M.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\G\G1 PTS-ATAD-P-PCM-129.docx" />
     <Content Include="Content\Documents\Procedimientos_TAS360\G\G1 PTS-ATAD-P-PCM-129.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\H\H1 PTS-ATAD-P-PCM-007.docx" />
     <Content Include="Content\Documents\Procedimientos_TAS360\H\H1 PTS-ATAD-P-PCM-007.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\I\I1 PTS-ATAD-P-PCM-104.docx" />
     <Content Include="Content\Documents\Procedimientos_TAS360\I\I1 PTS-ATAD-P-PCM-104.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\I\I2 PTS-ATAD-P-PCM-008.docx" />
     <Content Include="Content\Documents\Procedimientos_TAS360\I\I2 PTS-ATAD-P-PCM-008.pdf" />
-    <Content Include="Content\Documents\Procedimientos_TAS360\J\J1 PTS-ATAD-P-PCM-009.docx" />
     <Content Include="Content\Documents\Procedimientos_TAS360\J\J1 PTS-ATAD-P-PCM-009.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B13 PTS-ATAD-P-PCM-105.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B12 PTS-ATAD-P-PCM-130.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B14 PTS-ATAD-P-PCM-106.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B15 PTS-ATAD-P-PCM-107.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B2 PTS-ATAD-P-PCM-111.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B3 PTS-ATAD-P-PCM-102.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B4 PTS-ATAD-P-PCM-103.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B6 PTS-ATAD-P-PCM-121.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B7 PTS-ATAD-P-PCM-108.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B8 PTS-ATAD-P-PCM-109.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B9 PTS-ATAD-P-PCM-110.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.min.css" />
@@ -940,6 +912,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ArchivosASA\" />
+    <Folder Include="Content\Documents\Procedimientos_TAS360\A\" />
     <Folder Include="Logs\" />
     <Folder Include="Tablas_CSV\" />
     <Folder Include="Tablas_Pendientes\" />
