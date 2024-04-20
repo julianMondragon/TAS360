@@ -13,6 +13,19 @@ namespace TAS360.Controllers
         // GET: LSA
         public ActionResult Index()
         {
+            List<TicketViewModel> tickets = new List<TicketViewModel>();
+            using (Models.HelpDesk_Entities1 db = new Models.HelpDesk_Entities1())
+            {
+                var Tickets = (from s in db.Ticket select s);
+                if (Tickets != null && Tickets.Any())
+                {
+                    foreach (var t in Tickets)
+                    {
+                        
+
+                    }
+                }
+            }
             GetSummaryTKs();
             return View();
         }
