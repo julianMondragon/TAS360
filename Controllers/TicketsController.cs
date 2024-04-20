@@ -32,17 +32,36 @@ namespace TAS360.Controllers
                 {
                     foreach (var t in Tickets)
                     {
-                        tickets.Add(new TicketViewModel
+                        try
                         {
-                            id = t.id,
-                            titulo = t.titulo,
-                            mensaje = t.mensaje,
-                            usuario_name = t.Ticket_User.OrderByDescending(x => x.CreatedAt).FirstOrDefault().User.nombre,
-                            categoria_name = t.Categoria.nombre,
-                            status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion,
-                            Subsistema_name = t.Subsistema.Nombre,
-                            Status =  t.status
-                        });
+                            TicketViewModel ticketViewModel = new TicketViewModel
+                            {
+                                id = t.id,
+                                titulo = t.titulo,
+                                mensaje = t.mensaje,
+                                usuario_name = t.Ticket_User.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.User.nombre,
+                                categoria_name = t.Categoria.nombre,
+                                terminal_name = t.Terminal.Nombre,
+                                status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.Status.descripcion,
+                                Subsistema_name = t.Subsistema.Nombre,
+                                Status = t.status
+                            };
+
+                            var lastComment = t.Ticket_Comentario.OrderByDescending(x => x.id).FirstOrDefault();
+                            if (lastComment != null)
+                            {
+                                ticketViewModel.LastComent = lastComment.Comentario.Comentario1;
+                            }
+                            else
+                            {
+                                ticketViewModel.LastComent = "Sin respuesta ...";
+                            }
+
+                            tickets.Add(ticketViewModel);
+                        }
+                        catch(Exception ex) 
+                        {
+                        }
                     }
                 }
             }

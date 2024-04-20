@@ -16,18 +16,31 @@ namespace TAS360.Controllers
             List<TicketViewModel> tickets = new List<TicketViewModel>();
             using (Models.HelpDesk_Entities1 db = new Models.HelpDesk_Entities1())
             {
-                var Tickets = (from s in db.Ticket select s);
+                var Tickets = (from s in db.Ticket where s.status != 12 orderby s.CreatedAt descending select s);
                 if (Tickets != null && Tickets.Any())
                 {
                     foreach (var t in Tickets)
                     {
-                        
+                        tickets.Add(new TicketViewModel
+                        {
+                            id = t.id,
+                            titulo = t.titulo,
+                            mensaje = t.mensaje,
+                            usuario_name = t.Ticket_User.OrderByDescending(x => x.CreatedAt).FirstOrDefault().User.nombre,
+                            categoria_name = t.Categoria.nombre,
+                            terminal_name = t.Terminal.Nombre,                            
+                            status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion,
+                            Subsistema_name = t.Subsistema.Nombre,
+                            Status = t.status,
+                            Date = t.CreatedAt,
+                            Datetobedone = t.CreatedAt.HasValue ? t.CreatedAt.Value.AddDays(15) : DateTime.MinValue
+                        });
 
                     }
                 }
             }
             GetSummaryTKs();
-            return View();
+            return View(tickets);
         }
         [HttpGet]
         public JsonResult GetTicktsByStatus()
