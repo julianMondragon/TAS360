@@ -1,4 +1,4 @@
-﻿
+﻿@model List<TAS360.Models.ViewModel.TicketViewModel>
 @{
     ViewBag.Title = "SLA";
 }
@@ -70,11 +70,55 @@
     </div>
 </div>
 @*tabla de tickets *@
-
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading"><b>Tickets y fecha compromiso</b> </div>
+            <div class="panel-body">
+                <table class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th colspan="2">Titulo</th>
+                            <th scope="col">TAD</th>
+                            <th scope="col">Status</th>                            
+                            <th scope="col">Creado</th>
+                            <th scope="col">Compromiso</th>
+                            <th scope="col">Tiempo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var ticket in Model)
+                            {
+                                <tr>
+                                    <td colspan="1"> @ticket.id</td>
+                                    <td colspan="2"> @ticket.titulo</td>
+                                    <td colspan="1"> @ticket.terminal_name</td>
+                                    <td colspan="1"> @ticket.status_name</td>
+                                    <td colspan="1"> @ticket.Date.Value.ToString("dd-MMM-yy")</td>
+                                    <td colspan="1"> @ticket.Datetobedone.Value.ToString("dd-MMM-yy")</td>
+                                    <td colspan="1">
+                                        @if (ticket.Datetobedone != null)
+                                        {
+                                            @(DateTime.Now.Subtract(ticket.Datetobedone.Value).Days)
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts
 {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        //Bar Chart
         jQuery.ajax({
                 url: '@Url.Action("GetTicktsByStatus", "LSA")',
                 type: "GET",
@@ -141,8 +185,7 @@
                 }
         });
 
-
-        //Pie Chart Example
+        //Pie Chart
         jQuery.ajax({
             url: '@Url.Action("GetTicketsByCategoria", "LSA")',
             type: "GET",
