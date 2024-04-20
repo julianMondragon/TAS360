@@ -18,6 +18,7 @@ namespace TAS360.Models.ViewModel
         [Display(Name = "Reporte")]
         [StringLength(3000)]
         public string mensaje { get; set; }
+        public string LastComent { get; set; }
         [Required]
         [Display(Name = "Estado")]
         public int? Status { get; set; }
@@ -37,10 +38,16 @@ namespace TAS360.Models.ViewModel
         public int? id_Categoria { get; set; }
         public string categoria_name { get; set; }
         [Required]
+        [Display(Name = "Prioridad")]
+        public int? id_Prioridad { get; set; }
+        public string Prioridad_name { get; set; }
+        [Required]
         [Display(Name = "Subsistema")]
         public int? id_Subsistema { get; set; }
         public string Subsistema_name { get; set; }
         public DateTime? Date { get; set; }
+        [Display(Name = "Fecha Compromiso")]
+        public DateTime? Datetobedone { get; set; }
         public List<Archivos> Files { get; set; }
         public List<Comentarios> Comentarios { get; set; }
         public List<string> RecordStatus { get; set; }
