@@ -27,7 +27,7 @@ namespace TAS360.Controllers
               List<TicketViewModel> tickets = new List<TicketViewModel>();
             using (Models.HelpDesk_Entities1 db = new Models.HelpDesk_Entities1())
             {
-                var Tickets = (from s in db.Ticket select s);
+                var Tickets = (from s in db.Ticket where s.status != 12 orderby s.CreatedAt descending select s);
                 if (Tickets != null && Tickets.Any())
                 {
                     foreach (var t in Tickets)

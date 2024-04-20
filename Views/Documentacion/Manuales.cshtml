@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Docs";
+}
+
+<div class="jumbotron">
+    <h2>Manuales TAS360 </h2>
+    <p class="lead">
+        En esta pagina podras encontrar los manuales del software TAS360.
+    </p>
+    <a class="btn btn-default " href="@Url.Content("~/Home/Home")">Regresar</a>
+</div>
+<div class="row">
+    <div class="col-md-4" style="margin:0 0px 0px 0px">
+        <h3><strong style="font-family: Monotype Corsiva ">Ultima actualizacion: Marzo 2024</strong></h3>
+        <table class="table table-success">
+            <tr>
+                <th class="alert-success">Operación</th>
+                <th class="alert-success"></th>
+            </tr>
+            <tr>
+                <td>Manual de Operacion</td>
+                <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-MDO.pdf")'" class="btn btn-success" title="Manual de Operaciones">TAS360-MDO &raquo;</a></td>
+            </tr>
+            <tr>
+                <th class="alert-info">Administración</th>
+                <th class="alert-info"></th>
+            </tr>
+            <tr>
+                <td>Manual de Adminisración</td>
+                <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-MDA.pdf")'" class="btn btn-info" title="Manual de Adminisración">TAS360-MDA &raquo;</a></td>
+            </tr>
+            <tr>
+                <th class="alert-warning">Configuración</th>
+                <th class="alert-warning"></th>
+            </tr>
+            <tr>
+                <td>Manual de Configuración</td>
+                <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-MDC.pdf")'" class="btn btn-warning" title="Manual de Configuración">TAS360-MDC &raquo;</a></td>
+            </tr>
+            <tr>
+                <td>Manual de Instalación</td>
+                <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-MDI.pdf")'" class="btn btn-warning" title="Manual de Instalación -Configuración">TAS360-MDI &raquo;</a></td>
+            </tr>
+            <tr>
+                <td>Manual Config de Reinos</td>
+                <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-SCA-REI.pdf")'" class="btn btn-warning" title="Manual de Configuración de reinos del Modulo VTSCADA -Configuración">TAS360-SCA-REI &raquo;</a></td>
+            </tr>
+            <tr>
+                <td>Manual de Redundancia</td>
+                <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-MDR.pdf")'" class="btn btn-warning" title="Manual de Redundancia -Configuración">TAS360-MDR &raquo;</a></td>
+            </tr>
+            <tr>
+                <td>Manual de Mapeo MODBUS</td>
+                <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-SCA-MODBUS.pdf")'" class="btn btn-warning" title="Manual de Mapeo MODBUS -Configuración">TAS360-SCA-MODBUS &raquo;</a></td>
+            </tr>
+            <tr>
+                <td>Manual de Ins. SQL</td>
+                <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-SQL-MDI.pdf")'" class="btn btn-warning" title="Manual de Ins. SQL -Configuración">TAS360-SQL-MDI &raquo;</a></td>
+            </tr>
+            <tr>
+                <td>Manual de Respaldo de Base de Datos</td>
+                <td><a onclick="document.location.href = '@Url.Content("~/Content/Documents/Manuales_TAS360/TAS360-SQL-MDR.pdf")'" class="btn btn-warning" title="Manual de Respaldo de BD -Configuración">TAS360-SQL-MDR &raquo;</a></td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-8" style="margin:0 0px 0px 0px">
+        <img src="~/Content/img/ManualesTAS360.jpg" class="img-responsive" alt="Responsive image">
+    </div>
+ </div>
+
