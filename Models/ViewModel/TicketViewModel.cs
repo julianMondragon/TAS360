@@ -37,7 +37,7 @@ namespace TAS360.Models.ViewModel
         [Display(Name = "Categoria")]
         public int? id_Categoria { get; set; }
         public string categoria_name { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Prioridad")]
         public int? id_Prioridad { get; set; }
         public string Prioridad_name { get; set; }
