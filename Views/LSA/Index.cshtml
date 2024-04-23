@@ -1,6 +1,7 @@
 ﻿@model List<TAS360.Models.ViewModel.TicketViewModel>
 @{
     ViewBag.Title = "SLA";
+    int total = ViewBag.tksclose + @ViewBag.tksopen;
 }
 <div class="jumbotron">
     <h2>Acuerdo de Nivel de Servicio (SLA) </h2>
@@ -29,7 +30,7 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="panel panel-default">
-            <div class="panel-heading"><b>Reporte Tickts por categoria</b> </div>
+            <div class="panel-heading"><b>Reporte total de Tickets por categoria</b> </div>
             <div class="panel-body">
                 <canvas id="myPieChart" width="50" height="50"></canvas>
             </div>
@@ -54,6 +55,10 @@
                         <tr>
                             <th scope="row">Cerrados</th>
                             <td>@ViewBag.tksclose</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total</th>
+                            <td>@total</td>
                         </tr>
                     </tbody>
                 </table>

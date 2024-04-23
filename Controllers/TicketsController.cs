@@ -150,6 +150,10 @@ namespace TAS360.Controllers
                 }
                 else
                 {
+                    string path = Server.MapPath("~/Logs/Tickets/");
+                    Log oLog = new Log(path);
+                    oLog.Add("Formulaio no valido");                    
+                    ViewBag.ExceptionMessage = "Formulaio no valido...";
                     GetCategories();
                     GetTerminales();
                     GetUsuarios();
