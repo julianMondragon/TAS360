@@ -403,6 +403,7 @@
     <Compile Include="Models\ViewModel\FilterPendientesViewModel.cs" />
     <Compile Include="Models\ViewModel\G_TicketsByCategoriaViewModel.cs" />
     <Compile Include="Models\ViewModel\G_TicketsByStatusViewModel.cs" />
+    <Compile Include="Models\ViewModel\G_TicketsByTerminalViewModel.cs" />
     <Compile Include="Models\ViewModel\PendientesViewModel.cs" />
     <Compile Include="Models\ViewModel\PuertoSerialViewModel.cs" />
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />

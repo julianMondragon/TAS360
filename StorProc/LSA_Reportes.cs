@@ -42,10 +42,10 @@ namespace TAS360.StorProc
                     }
                     catch(Exception ex)
                     {
-
-                    }
-                    
+                    }                    
                 }
+
+                oconexion.Close();
             }
 
             return objLista;
@@ -84,8 +84,84 @@ namespace TAS360.StorProc
                     {
 
                     }
-
                 }
+                oconexion.Close();
+            }
+
+            return objLista;
+        }
+        public List<G_TicketsByTerminalViewModel> GetTicketsByTerminal()
+        {
+
+            List<G_TicketsByTerminalViewModel> objLista = new List<G_TicketsByTerminalViewModel>();
+
+
+            using (SqlConnection oconexion = new SqlConnection("data source=65.99.205.97;initial catalog=ptstools_HelpDesk;persist security info=True;user id=ptstools_Jmondragon;password=x4fr73E*0;MultipleActiveResultSets=True"))
+            {
+                string query = "SP_GetTicketsByTerminal";
+
+                SqlCommand cmd = new SqlCommand(query, oconexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                oconexion.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    try
+                    {
+                        while (dr.Read())
+                        {
+                            objLista.Add(new G_TicketsByTerminalViewModel()
+                            {
+                                Terminal = dr["Terminal"].ToString(),
+                                Cantidad = int.Parse(dr["Cantidad_Tickets"].ToString())
+                            });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+                oconexion.Close();
+            }
+
+            return objLista;
+        }
+        public List<G_TicketsByTerminalViewModel> GetTicketsByTerminalOnLastMonth()
+        {
+
+            List<G_TicketsByTerminalViewModel> objLista = new List<G_TicketsByTerminalViewModel>();
+
+
+            using (SqlConnection oconexion = new SqlConnection("data source=65.99.205.97;initial catalog=ptstools_HelpDesk;persist security info=True;user id=ptstools_Jmondragon;password=x4fr73E*0;MultipleActiveResultSets=True"))
+            {
+                string query = "SP_GetTicketsByTerminalOnLastMonth";
+
+                SqlCommand cmd = new SqlCommand(query, oconexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                oconexion.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    try
+                    {
+                        while (dr.Read())
+                        {
+                            objLista.Add(new G_TicketsByTerminalViewModel()
+                            {
+                                Terminal = dr["Terminal"].ToString(),
+                                Cantidad = int.Parse(dr["Cantidad_Tickets"].ToString())
+                            });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+                oconexion.Close();
             }
 
             return objLista;

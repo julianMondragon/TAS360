@@ -58,6 +58,20 @@ namespace TAS360.Controllers
 
             return Json(listTksbyCategoria, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetTicketsByTerminal()
+        {
+            LSA_Reportes Tickets = new LSA_Reportes();
+            List<G_TicketsByTerminalViewModel> listTksbyCategoria = Tickets.GetTicketsByTerminal();
+
+            return Json(listTksbyCategoria, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetTicketsByTerminalOnLastMonth()
+        {
+            LSA_Reportes Tickets = new LSA_Reportes();
+            List<G_TicketsByTerminalViewModel> listTksbyCategoria = Tickets.GetTicketsByTerminalOnLastMonth();
+
+            return Json(listTksbyCategoria, JsonRequestBehavior.AllowGet);
+        }
         private void GetSummaryTKs()
         {
             int tksopen = 0;

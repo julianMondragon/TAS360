@@ -42,10 +42,6 @@ namespace TAS360.Models.ViewModel
         public int? id_Prioridad { get; set; }
         public string Prioridad_name { get; set; }
         [Required]
-        [Display(Name = "Prioridad")]
-        public int? id_Prioridad { get; set; }
-        public string Prioridad_name { get; set; }
-        [Required]
         [Display(Name = "Subsistema")]
         public int? id_Subsistema { get; set; }
         public string Subsistema_name { get; set; }
