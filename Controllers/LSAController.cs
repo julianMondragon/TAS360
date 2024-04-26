@@ -21,7 +21,7 @@ namespace TAS360.Controllers
                 {
                     foreach (var t in Tickets)
                     {
-                        tickets.Add(new TicketViewModel
+                        TicketViewModel ticket = new TicketViewModel()
                         {
                             id = t.id,
                             titulo = t.titulo,
@@ -29,13 +29,41 @@ namespace TAS360.Controllers
                             usuario_name = t.Ticket_User.OrderByDescending(x => x.CreatedAt).FirstOrDefault().User.nombre,
                             categoria_name = t.Categoria.nombre,
                             terminal_name = t.Terminal.Nombre,                            
-                            status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion,
                             Subsistema_name = t.Subsistema.Nombre,
                             Status = t.status,
                             Date = t.CreatedAt,
                             Datetobedone = t.CreatedAt.HasValue ? t.CreatedAt.Value.AddDays(15) : DateTime.MinValue
-                        });
+                        };
 
+                        switch (t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion)
+                        {
+                            case "Pendiente ":
+                                ticket.status_name = "Capturado";
+                                break;
+                            case "Analisis  ":
+                                ticket.status_name = "Espera de info";
+                                break;
+                            case "Correccion":
+                                ticket.status_name = "En Proceso";
+                                break;
+                            case "Pruebas   ":
+                                ticket.status_name = "En Proceso";
+                                break;
+                            case "Implementa":
+                                ticket.status_name = "En Proceso";
+                                break;
+                            case "Pend_Pmx  ":
+                                ticket.status_name = "Espera de info";
+                                break;
+                            case "Cerrado   ":
+                                ticket.status_name = "Espera de info";
+                                break;
+                            default:
+                                ticket.status_name = "Undefineded";
+                                break;
+                        }
+
+                        tickets.Add(ticket);
                     }
                 }
             }
