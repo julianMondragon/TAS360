@@ -433,7 +433,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\Ej_Tabla_Cub_LLenado_2.JPG" />
     <Content Include="Content\img\ERROR-500-CABECERA.jpg" />
-    <Content Include="Content\img\Home_BG.JPG" />
     <Content Include="Content\img\Home_BG_1.png" />
     <Content Include="Content\img\Home_BG_2.png" />
     <Content Include="Content\img\Home_BG_3.png" />
