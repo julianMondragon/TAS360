@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "SLA";
     int total = ViewBag.tksclose + @ViewBag.tksopen;
+    
+
 }
 <div class="jumbotron">
     <h2>Acuerdo de Nivel de Servicio (SLA) </h2>
@@ -116,7 +118,9 @@
                         @if (Model != null)
                         {
                             foreach (var ticket in Model)
+
                             {
+                                int dias = (ticket.Datetobedone.Value - DateTime.Now).Days;
                                 <tr>
                                     <td colspan="1"> @ticket.id</td>
                                     <td colspan="2"> @ticket.titulo</td>
@@ -124,13 +128,27 @@
                                     <td colspan="1"> @ticket.status_name</td>
                                     <td colspan="1"> @ticket.Date.Value.ToString("dd-MMM-yy")</td>
                                     <td colspan="1"> @ticket.Datetobedone.Value.ToString("dd-MMM-yy")</td>
-                                    <td colspan="1">
-                                        @if (ticket.Datetobedone != null)
+                                    <td colspan="1"> @{
+
+                                        if (DateTime.Now.ToShortDateString() == ticket.Datetobedone.Value.ToShortDateString())
                                         {
-                                            @(DateTime.Now.Subtract(ticket.Datetobedone.Value).Days)
+                                            <a style="color:darkblue"> Hoy es la entrega </a>
+
                                         }
-                                    </td>
-                                </tr>
+                                        else if (DateTime.Now < ticket.Datetobedone)
+                                        {
+                                            <a style="color:blue"> Quedan @dias días</a>
+                                            
+                                        }
+                                        else
+                                        {
+                                            dias = Math.Abs(dias);
+                                            <a style="color:red"> Atrasado @dias días </a>
+                                        }
+                                    }
+                                       
+                                        </td>
+                                    </tr>
                             }
                         }
                     </tbody>
