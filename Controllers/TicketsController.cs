@@ -27,22 +27,41 @@ namespace TAS360.Controllers
               List<TicketViewModel> tickets = new List<TicketViewModel>();
             using (Models.HelpDesk_Entities1 db = new Models.HelpDesk_Entities1())
             {
-                var Tickets = (from s in db.Ticket select s);
+                var Tickets = (from s in db.Ticket where s.status != 12 orderby s.CreatedAt descending select s);
                 if (Tickets != null && Tickets.Any())
                 {
                     foreach (var t in Tickets)
                     {
-                        tickets.Add(new TicketViewModel
+                        try
                         {
-                            id = t.id,
-                            titulo = t.titulo,
-                            mensaje = t.mensaje,
-                            usuario_name = t.Ticket_User.OrderByDescending(x => x.CreatedAt).FirstOrDefault().User.nombre,
-                            categoria_name = t.Categoria.nombre,
-                            status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion,
-                            Subsistema_name = t.Subsistema.Nombre,
-                            Status =  t.status
-                        });
+                            TicketViewModel ticketViewModel = new TicketViewModel
+                            {
+                                id = t.id,
+                                titulo = t.titulo,
+                                mensaje = t.mensaje,
+                                usuario_name = t.Ticket_User.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.User.nombre,
+                                categoria_name = t.Categoria.nombre,
+                                terminal_name = t.Terminal.Nombre,
+                                status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.Status.descripcion,
+                                Subsistema_name = t.Subsistema.Nombre,
+                                Status = t.status
+                            };
+
+                            var lastComment = t.Ticket_Comentario.OrderByDescending(x => x.id).FirstOrDefault();
+                            if (lastComment != null)
+                            {
+                                ticketViewModel.LastComent = lastComment.Comentario.Comentario1;
+                            }
+                            else
+                            {
+                                ticketViewModel.LastComent = "Sin respuesta ...";
+                            }
+
+                            tickets.Add(ticketViewModel);
+                        }
+                        catch(Exception ex) 
+                        {
+                        }
                     }
                 }
             }
@@ -131,6 +150,10 @@ namespace TAS360.Controllers
                 }
                 else
                 {
+                    string path = Server.MapPath("~/Logs/Tickets/");
+                    Log oLog = new Log(path);
+                    oLog.Add("Formulaio no valido");                    
+                    ViewBag.ExceptionMessage = "Formulaio no valido...";
                     GetCategories();
                     GetTerminales();
                     GetUsuarios();
@@ -606,33 +629,43 @@ namespace TAS360.Controllers
         [AuthorizeUser(idOperacion: 7)]
         public ActionResult AddFiles(int IdTicket , HttpPostedFileBase postedFile)
         {
-            string filepath = string.Empty;
-            if (postedFile != null)
+            try
             {
-                string path = Server.MapPath("~/TicketFiles/");
-                if (!Directory.Exists(path))
+                string filepath = string.Empty;
+                if (postedFile != null)
                 {
-                    Directory.CreateDirectory(path);
+                    string path = Server.MapPath("~/TicketFiles/" + IdTicket + "/");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    filepath = path + Path.GetFileName(postedFile.FileName);
+                    postedFile.SaveAs(filepath);
                 }
-                filepath = path + Path.GetFileName(postedFile.FileName);
-                postedFile.SaveAs(filepath);
+                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                {
+                    Files file = new Files();
+                    file.Nombre = postedFile.FileName;
+                    file.URL = filepath;
+                    file.Tipo = postedFile.GetType().Name;
+
+                    db.Files.Add(file);
+                    db.SaveChanges();
+
+                    Tickets_Files tickets_Files = new Tickets_Files();
+                    tickets_Files.id_Ticket = IdTicket;
+                    tickets_Files.id_File = db.Files.FirstOrDefault(f => f.Nombre == postedFile.FileName).id;
+
+                    db.Tickets_Files.Add(tickets_Files);
+                    db.SaveChanges();
+                }
             }
-            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            catch (Exception ex)
             {
-                Files file = new Files();
-                file.Nombre = postedFile.FileName;
-                file.URL = filepath;
-                file.Tipo = postedFile.GetType().Name;
-
-                db.Files.Add(file);
-                db.SaveChanges();
-
-                Tickets_Files tickets_Files = new Tickets_Files();
-                tickets_Files.id_Ticket = IdTicket;
-                tickets_Files.id_File = db.Files.FirstOrDefault(f => f.Nombre == postedFile.FileName).id;
-
-                db.Tickets_Files.Add(tickets_Files);
-                db.SaveChanges();
+                string path = Server.MapPath("~/Logs/Tickets/");
+                Log oLog = new Log(path);
+                oLog.Add("Excepcion on ticket " + IdTicket + ": " + ex.Message);
+                ViewBag.Exception = ex.Message;
             }
             return Redirect("~/Tickets/ShowTicket/"+IdTicket);
         }
