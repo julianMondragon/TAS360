@@ -154,12 +154,15 @@
     <Compile Include="Controllers\AditivoController.cs" />
     <Compile Include="Controllers\Calculo_FCVController.cs" />
     <Compile Include="Controllers\DanloadController.cs" />
+    <Compile Include="Controllers\DocumentacionController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\logoutController.cs" />
+    <Compile Include="Controllers\LSAController.cs" />
     <Compile Include="Controllers\PendientesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TablaCubController.cs" />
+    <Compile Include="Controllers\TerminalController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\WebAPIPemexController.cs" />
     <Compile Include="Filters\AuthorizeUser.cs" />
@@ -398,6 +401,9 @@
     <Compile Include="Models\ViewModel\entradasViewModel.cs" />
     <Compile Include="Models\ViewModel\FCV_ViewModel.cs" />
     <Compile Include="Models\ViewModel\FilterPendientesViewModel.cs" />
+    <Compile Include="Models\ViewModel\G_TicketsByCategoriaViewModel.cs" />
+    <Compile Include="Models\ViewModel\G_TicketsByStatusViewModel.cs" />
+    <Compile Include="Models\ViewModel\G_TicketsByTerminalViewModel.cs" />
     <Compile Include="Models\ViewModel\PendientesViewModel.cs" />
     <Compile Include="Models\ViewModel\PuertoSerialViewModel.cs" />
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
@@ -405,6 +411,7 @@
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
     <Compile Include="Models\ViewModel\SocketViewModel.cs" />
     <Compile Include="Models\ViewModel\TablaCubViewModel.cs" />
+    <Compile Include="Models\ViewModel\TerminalViewModel.cs" />
     <Compile Include="Models\ViewModel\TicketViewModel.cs" />
     <Compile Include="Models\ViewModel\TramaViewModel.cs" />
     <Compile Include="Models\ViewModel\WebAPIPemexViewModel.cs" />
@@ -412,6 +419,7 @@
       <DependentUpon>AditivoBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StorProc\LSA_Reportes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Backup_Database\Migraciones\Alter_Pendiente_Add_properties.sql" />
@@ -424,12 +432,19 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\Ej_Tabla_Cub_LLenado_2.JPG" />
-    <Content Include="Content\img\Home_BG.png" />
+    <Content Include="Content\img\ERROR-500-CABECERA.jpg" />
     <Content Include="Content\img\Home_BG_1.png" />
     <Content Include="Content\img\Home_BG_2.png" />
     <Content Include="Content\img\Home_BG_3.png" />
     <Content Include="Content\img\Home_BG_4.png" />
+    <Content Include="Content\img\Home_BG_old.png" />
+    <Content Include="Content\img\IndiceProcedimientos.JPG" />
+    <Content Include="Content\img\IndiceProcedimientos2.JPG" />
+    <Content Include="Content\img\IndiceProcedimientos3.JPG" />
+    <Content Include="Content\img\IndiceProcedimientos4.JPG" />
+    <Content Include="Content\img\ManualesTAS360.JPG" />
     <Content Include="Content\img\NoAuthorizado.jpg" />
+    <Content Include="Content\img\SLA.jpg" />
     <Content Include="Content\img\TanqueAditivo.JPG" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -502,15 +517,57 @@
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Content\Documents\iso912.pdf" />
     <Content Include="Content\Documents\Manuales_TAS360\Pasos a seguir para nueva actualización del tas360 versión.pdf" />
-    <Content Include="Content\Documents\Manuales_TAS360\TAS360-GDI.pdf" />
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-MDA.pdf" />
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-MDC.pdf" />
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-MDO.pdf" />
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-MDR.pdf" />
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-SCA-MDI.pdf" />
-    <Content Include="Content\Documents\Manuales_TAS360\TAS360-SCA-REI[2050].pdf" />
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-SQL-MDI.pdf" />
     <Content Include="Content\Documents\Manuales_TAS360\TAS360-SQL-MDR.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-MDI.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-SCA-MODBUS.pdf" />
+    <Content Include="Content\Documents\Manuales_TAS360\TAS360-SCA-REI.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\G\G1 PTS-ATAD-P-PCM-129.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\H\H1 PTS-ATAD-P-PCM-007.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\I\I1 PTS-ATAD-P-PCM-104.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\I\I2 PTS-ATAD-P-PCM-008.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\J\J1 PTS-ATAD-P-PCM-009.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B13 PTS-ATAD-P-PCM-105.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B12 PTS-ATAD-P-PCM-130.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B14 PTS-ATAD-P-PCM-106.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B15 PTS-ATAD-P-PCM-107.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B2 PTS-ATAD-P-PCM-111.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B3 PTS-ATAD-P-PCM-102.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B4 PTS-ATAD-P-PCM-103.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B6 PTS-ATAD-P-PCM-121.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B7 PTS-ATAD-P-PCM-108.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B8 PTS-ATAD-P-PCM-109.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B9 PTS-ATAD-P-PCM-110.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\C\C1 PTS-ATAD-P-PCM-126.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\D\D1 PTS-ATAD-P-PCM-127.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\E\E1 PTS-ATAD-P-PCM-128.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\E\E2-PTS-ATAD-P-LS-005.xlsx" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\0. PTS-ATAD-P-PLA-001 %28ASBUILT%29.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\0. PTS-ATAD-P-PLA-002 %28ASBUILT%29.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\0. PTS-ATAD-P-PLA-003 %28ASBUILT%29.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\F11 PTS-ATAD-P-PCM-118.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\F15 PTS-ATAD-P-PCM-016.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\F16 PTS-ATAD-P-PCM-100.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\F17 PTS-ATAD-P-PCM-102.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\F18 PTS-ATAD-P-PCM-103.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\F19 PTS-ATAD-P-PCM-140.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\F20  PTS-ATAD-P-PCM-141.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\F21 PTS-ATAD-P-PCM-142.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\F5 PTS-ATAD-P-PCM-017.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\F\F6  PTS-ATAD-P-PCM-018.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B16 PTS-ATAD-P-PCM-116.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\B\B11 PTS-ATAD-P-PCM-123.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\A\A1 PTS -ATAD-P-PCM-004.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\A\A2 PTS -ATAD-P-PCM-002.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\A\A3 PTS -ATAD-P-PCM-005.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\A\A4 PTS -ATAD-P-PCM-006.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\A\A5 PTS -ATAD-P-PCM-003.pdf" />
+    <Content Include="Content\Documents\Procedimientos_TAS360\A\A6 PTS -ATAD-P-PCM-007.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.min.css" />
@@ -869,6 +926,12 @@
     <Content Include="Views\Pendientes\Filter_Pendientes.cshtml" />
     <Content Include="Prototipo_Tabla\Lista_de_Pendientes_.xlsx" />
     <Content Include="Views\Pendientes\IndexWithFilter.cshtml" />
+    <Content Include="Views\Terminal\Index.cshtml" />
+    <Content Include="Views\Terminal\Create.cshtml" />
+    <Content Include="Views\Terminal\Edit.cshtml" />
+    <Content Include="Views\Documentacion\Procedimientos.cshtml" />
+    <Content Include="Views\Documentacion\Manuales.cshtml" />
+    <Content Include="Views\LSA\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

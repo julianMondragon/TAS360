@@ -1,0 +1,68 @@
+﻿
+@model TAS360.Models.ViewModel.TerminalViewModel
+@{
+    ViewBag.Title = "Crear Terminal";
+    string exception = ViewBag.ExceptionMessage;
+    string Info = ViewBag.InfoMessage;
+}
+<br />
+<div class="jumbotron">
+    <h1 class="section-heading mb-4">
+        <span class="section-heading-lower">Crear Terminal</span>
+    </h1>
+    @if (exception != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @exception
+        </div>
+    }
+    @if (Info != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @Info
+        </div>
+    }
+</div>
+<section class="page-section about-heading">
+    <div class="container">
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <div class="row" style="margin:5px 0 0 0">
+                            <div class="col-md-12">
+                                @using (Html.BeginForm("Create", "Terminal", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <br />
+                                    //Renglo 0
+                                    <div name="row2" class="row" style="margin:0 0 10px 0">
+
+                                        <div class="col-md-12">
+                                            <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
+                                                @Html.LabelFor(T => T._Nombre)
+                                                @Html.TextBoxFor(x => x._Nombre, new { @class = "form-control", @placeholder = "TAD Cadereyta" })
+                                                @Html.ValidationMessageFor(v => v._Nombre, null, new { @class = "red" })
+                                            </div>
+                                            <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
+                                                @Html.LabelFor(T => T._Clave)
+                                                @Html.TextBoxFor(x => x._Clave, new { @class = "form-control", @placeholder = "602" })
+                                                @Html.ValidationMessageFor(v => v._Clave, null, new { @class = "red" })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin: 5px 0px 0px 0px; text-align:right">
+                                        <input type="submit" class="btn btn-lg btn-primary" value="Crear" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
