@@ -894,8 +894,6 @@ namespace TAS360.Controllers
             sb.AppendLine("->Problematica: ");
             sb.AppendLine(".........");
             sb.AppendLine(".........");
-            sb.AppendLine("->Acciones a realizar: ");
-            sb.AppendLine(".........");
             return sb.ToString();
         }
 
