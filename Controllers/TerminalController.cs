@@ -149,6 +149,9 @@ namespace TAS360.Controllers
                     oLog.Add("Se guardan cambios en el Terminal");
                     oLog.Add("Nuevo Nombre: " + model._Nombre);
                     oLog.Add("Nuevo clave: " + model._Clave);
+                    if((User)Session["User"] != null)
+                            oLog.Add("Usuario que modificó: " + ((User)Session["User"]).nombre);
+
                 }
 
 
@@ -156,7 +159,7 @@ namespace TAS360.Controllers
             }
             catch (Exception ex)
             {
-                string path = Server.MapPath("~/Logs/Pendientes/");
+                string path = Server.MapPath("~/Logs/Terminal/");
                 Log oLog = new Log(path);
                 oLog.Add("Catched Excepcion: Get Metod Edit : " + ex.Message);
                 ViewBag.ExceptionMessage = ex.Message;
