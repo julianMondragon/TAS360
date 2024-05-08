@@ -382,8 +382,7 @@ namespace TAS360.Controllers
         public ActionResult AddCommentTicket(TicketViewModel ticket , Comentarios Comentario)
         {
             try
-            {
-                
+            {                
                 string path = Server.MapPath("~/Logs/Tickets/");
                 Log oLog = new Log(path);
                 oLog.Add("Agrega comentario a Ticket: " + ticket.id);
@@ -887,22 +886,19 @@ namespace TAS360.Controllers
             StringBuilder sb = new StringBuilder();
           
             sb.Append("");
-            sb.AppendLine("Fecha: dd/mm/yyyy");
-            sb.AppendLine("Reportado por: .....");
+            sb.AppendLine("->Fecha: dd/mm/yyyy");
+            sb.AppendLine("->Reportado por: .....");
             sb.AppendLine("");
-            sb.AppendLine("Reporte: .....");
+            sb.AppendLine("->Reporte: .....");
             sb.AppendLine("..............");
-            sb.AppendLine("Problematica: ");
-            sb.AppendLine(".........");
-            sb.AppendLine(".........");
-            sb.AppendLine("Acciones a realizar: ");
+            sb.AppendLine("->Problematica: ");
             sb.AppendLine(".........");
             sb.AppendLine(".........");
             return sb.ToString();
         }
 
         /// <summary>
-        /// establece un template del comentario a ser agregadp
+        /// Establece un template del comentario a ser agregadp
         /// </summary>
         /// <returns></returns>
         private string GetTemplateComent()
@@ -910,12 +906,12 @@ namespace TAS360.Controllers
             StringBuilder sb = new StringBuilder();
 
             sb.Append("");
-            sb.AppendLine("Fecha: dd/mm/yyyy");
+            sb.AppendLine("->Fecha: dd/mm/yyyy");
             sb.AppendLine("");
-            sb.AppendLine("Reporte:");
+            sb.AppendLine("->Reporte:");
             sb.AppendLine(".......");
             sb.AppendLine(".......");
-            sb.AppendLine("Acciones a realizar: ");
+            sb.AppendLine("->Acciones a realizar: ");
             sb.AppendLine(".........");
             sb.AppendLine(".........");
             return sb.ToString();
