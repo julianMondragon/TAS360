@@ -44,21 +44,22 @@
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(model => model.nombre)
                                                 @Html.TextBoxFor(model => model.nombre, new { @class = "form-control", @placeholder = "Nombre del Usuario" })
-                                                @Html.ValidationMessageFor(model => model.nombre, null, new { @class = "red" })
+                                                @Html.ValidationMessageFor(model => model.nombre, null, new { @class = "text-danger" })
                                             </div>
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(model => model.email)
                                                 @Html.TextBoxFor(model => model.email, new { @class = "form-control", @placeholder = "correo@example.com" })
-                                                @Html.ValidationMessageFor(model => model.email, null, new { @class = "red" })
+                                                @Html.ValidationMessageFor(model => model.email, null, new { @class = "text-danger" })
                                             </div>
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(model => model.password)
                                                 @Html.PasswordFor(model => model.password, new { @class = "form-control", @placeholder = "Contraseña" })
-                                                @Html.ValidationMessageFor(model => model.password, null, new { @class = "red" })
+                                                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
                                             </div>
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(model => model.confirmPassword)
-                                                @Html.Password("confirmPassword", null, new { @class = "form-control", @placeholder = "Confirmar Contraseña" })
+                                                @Html.PasswordFor(model => model.confirmPassword, new { @class = "form-control", @placeholder = "Confirmar Contraseña" })
+                                                @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @class = "text-danger" })
                                             </div>
 
                                         </div>
@@ -75,3 +76,4 @@
         </div>
     </div>
 </section>
+

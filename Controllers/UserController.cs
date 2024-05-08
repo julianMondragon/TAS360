@@ -53,18 +53,32 @@ namespace TAS360.Controllers
             {
                 using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                 {
+                    string path = Server.MapPath("~/Logs/Usuarios/");
+                    Log oLog = new Log(path);
+                    
+
                     var userToEdit = db.User.Find(model.id);
                     if (userToEdit != null)
                     {
+                        oLog.Add($"Usuario con ID {userToEdit.id} editado por {((User)Session["User"]).nombre}");
+                        oLog.Add($"Nombre anterior: {userToEdit.nombre}");
+                        oLog.Add($"Email anterior: {userToEdit.email}");
                         userToEdit.nombre = model.nombre;
                         userToEdit.email = model.email;
 
+
                         if (model.password != confirmPassword)
                         {
-                            ModelState.AddModelError("confirmPassword", "No coincide la contraseña");
+                            ModelState.AddModelError("confirmPassword", "Las contraseñas no coinciden");
+                            ModelState.AddModelError("Password", "Las contraseñas no coinciden");
                             return View(model);
                         }
                         userToEdit.password = model.password;
+
+                        // Guardar log de la edición del usuario                       
+                        oLog.Add($"Nuevo nombre: {userToEdit.nombre}");
+                        oLog.Add($"Nuevo email: {userToEdit.email}");
+                        oLog.Add($"--------------------------------");
                     }
                     else
                     {
@@ -111,6 +125,7 @@ namespace TAS360.Controllers
                     if (model.password != model.confirmPassword)
                     {
                         ModelState.AddModelError("confirmPassword", "Las contraseñas no coinciden");
+                        ModelState.AddModelError("Password", "Las contraseñas no coinciden");
                         return View(model);
                     }
 
@@ -157,9 +172,17 @@ namespace TAS360.Controllers
                 using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                 {
                     var UserToDelete = db.User.Find(id);
-                    db.User.Remove(UserToDelete);
-                    db.SaveChanges();
-                    if (UserToDelete == null)
+                    if (UserToDelete != null)
+                    {
+                        db.User.Remove(UserToDelete);
+                        db.SaveChanges();
+
+                        // Guardar log de la eliminación del usuario
+                        string path = Server.MapPath("~/Logs/Usuarios/");
+                        Log oLog = new Log(path);
+                        oLog.Add($"Usuario con ID {id} eliminado por {((User)Session["User"]).nombre}");
+                    }
+                    else
                     {
                         return HttpNotFound();
                     }
