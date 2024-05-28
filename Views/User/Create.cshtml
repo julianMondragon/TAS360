@@ -1,0 +1,73 @@
+﻿@model TAS360.Models.ViewModel.ListUsuarioViewModel
+@{
+    ViewBag.Title = "Crear Usuario";
+    string exception = ViewBag.ExceptionMessage;
+    string Info = ViewBag.InfoMessage;
+}
+<br />
+<div class="jumbotron">
+    <h1 class="section-heading mb-4">
+        <span class="section-heading-lower">Crear Usuario</span>
+    </h1>
+    @if (exception != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @exception
+        </div>
+    }
+    @if (Info != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @Info
+        </div>
+    }
+</div>
+<section class="page-section about-heading">
+    <div class="container">
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <div class="row" style="margin:5px 0 0 0">
+                            <div class="col-md-12">
+                                @using (Html.BeginForm("Create", "User", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <br />
+                                    <div name="row2" class="row" style="margin:0 0 10px 0">
+
+                                        <div class="col-md-12">
+                                            <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
+                                                @Html.LabelFor(model => model.nombre)
+                                                @Html.TextBoxFor(model => model.nombre, new { @class = "form-control", @placeholder = "Nombre del Usuario" })
+                                                @Html.ValidationMessageFor(model => model.nombre, null, new { @class = "text-danger" })
+                                            </div>
+                                            <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
+                                                @Html.LabelFor(model => model.email)
+                                                @Html.TextBoxFor(model => model.email, new { @class = "form-control", @placeholder = "correo@example.com" })
+                                                @Html.ValidationMessageFor(model => model.email, null, new { @class = "text-danger" })
+                                            </div>
+                                            <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
+                                                @Html.LabelFor(model => model.password)
+                                                @Html.PasswordFor(model => model.password, new { @class = "form-control", @placeholder = "Contraseña" })
+                                                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
+                                                @Html.LabelFor(model => model.confirmPassword)
+                                                @Html.PasswordFor(model => model.confirmPassword, new { @class = "form-control", @placeholder = "Confirmar Contraseña" })
+                                                @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin: 5px 0px 0px 0px; text-align:right">
+                                        <input type="submit" class="btn btn-lg btn-primary" value="Guardar" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
