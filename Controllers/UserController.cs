@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using TAS360.Filters;
 using TAS360.Models;
 using TAS360.Models.ViewModel;
 
@@ -10,6 +11,7 @@ namespace TAS360.Controllers
     public class UserController : Controller
     {
         // GET: User/Index
+        [AuthorizeUser(idOperacion: 17)]
         public ActionResult Index()
         {
             List<ListUsuarioViewModel> lst;
@@ -29,6 +31,7 @@ namespace TAS360.Controllers
 
         // GET: User/Edit/5
         [HttpGet]
+        [AuthorizeUser(idOperacion: 18)]
         public ActionResult Edit(int id)
         {
             ListUsuarioViewModel model = new ListUsuarioViewModel();
@@ -47,6 +50,7 @@ namespace TAS360.Controllers
 
         // POST: User/Edit/5
         [HttpPost]
+        [AuthorizeUser(idOperacion: 18)]
         public ActionResult Edit(ListUsuarioViewModel model, string confirmPassword)
         {
             try
@@ -100,6 +104,7 @@ namespace TAS360.Controllers
         }
 
         // GET: User/Create
+        [AuthorizeUser(idOperacion: 20)]
         public ActionResult Create()
         {
             ListUsuarioViewModel usuario = new ListUsuarioViewModel();
@@ -108,6 +113,7 @@ namespace TAS360.Controllers
 
         // POST: User/Create
         [HttpPost]
+        [AuthorizeUser(idOperacion: 20)]
         public ActionResult Create(ListUsuarioViewModel model)
         {
             try
@@ -165,6 +171,7 @@ namespace TAS360.Controllers
 
         // GET: User/Delete/5
         [HttpGet]
+        [AuthorizeUser(idOperacion: 19)]
         public ActionResult Delete(int id)
         {
             try
