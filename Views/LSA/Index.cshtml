@@ -1,8 +1,7 @@
 ﻿@model List<TAS360.Models.ViewModel.TicketViewModel>
 @{
-    ViewBag.Title = "SLA";
+    ViewBag.Title = "Service Level Agreement";
     int total = ViewBag.tksclose + @ViewBag.tksopen;
-    
 
 }
 <div class="jumbotron">
@@ -10,23 +9,6 @@
     @*<h3><strong style="font-family: Monotype Corsiva ">Resumen</strong></h3>*@
     <a class="btn btn-default " href="@Url.Content("~/Home/Home")">Regresar</a>
     <a class="btn btn-info">Generar Reporte</a>
-</div>
-@*Documentacion SLA*@
-<div class="row">
-    <div class="col-md-6">
-        <p class="lead">
-            Los SLA se utilizan para establecer indicadores medibles del servicio que brindamos y así asegurar el cumplimiento de las expectativas de nuestros clientes.
-        </p>
-        <p class="lead">
-            Para expresar un compromiso de calidad de servicio, esta debe ser medible con facilidad. Esta medición puede ser, muchas veces, subjetiva por parte de los clientes finales, como en el caso de un departamento de atención al cliente.
-        </p>
-        <p class="lead">
-            A continuacion se muestra las tablas y graficas midiendo la eficiencia de respuesta del servicio:
-        </p>
-    </div>
-    <div class="col-md-6" style="margin:0px 0px 0px 0px">
-        <img src="~/Content/img/SLA.jpg" class="img-responsive" alt="Responsive image">
-    </div>
 </div>
 @*Graficas *@
 <div class="row">
@@ -75,7 +57,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 <div class="row">
     <div class="col-md-6">
@@ -108,10 +90,11 @@
                             <th scope="col">#</th>
                             <th colspan="2">Titulo</th>
                             <th scope="col">TAD</th>
-                            <th scope="col">Status</th>                            
-                            <th scope="col">Creado</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Categoria</th>
                             <th scope="col">Compromiso</th>
                             <th scope="col">Tiempo</th>
+                            <th colspan="1">Accion</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,39 +105,62 @@
                             {
                                 int dias = (ticket.Datetobedone.Value - DateTime.Now).Days;
                                 <tr>
-                                    <td colspan="1"> @ticket.id</td>
+                                    <td colspan="1"> <a href="@Url.Content("~/Tickets/ShowTicket/"  + ticket.id)">@ticket.id</a> </td>
                                     <td colspan="2"> @ticket.titulo</td>
                                     <td colspan="1"> @ticket.terminal_name</td>
                                     <td colspan="1"> @ticket.status_name</td>
-                                    <td colspan="1"> @ticket.Date.Value.ToString("dd-MMM-yy")</td>
+                                    <td colspan="1"> @ticket.categoria_name</td>
                                     <td colspan="1"> @ticket.Datetobedone.Value.ToString("dd-MMM-yy")</td>
-                                    <td colspan="1"> @{
+                                    <td colspan="1">
+                                        @{
 
-                                        if (DateTime.Now.ToShortDateString() == ticket.Datetobedone.Value.ToShortDateString())
-                                        {
-                                            <a style="color:darkblue"> Hoy es la entrega </a>
+                                            if (DateTime.Now.ToShortDateString() == ticket.Datetobedone.Value.ToShortDateString())
+                                            {
+                                                <a style="color:darkblue"> Hoy es la entrega </a>
 
+                                            }
+                                            else if (DateTime.Now < ticket.Datetobedone)
+                                            {
+                                                <a style="color:blue"> Quedan @dias días</a>
+
+                                            }
+                                            else
+                                            {
+                                                dias = Math.Abs(dias);
+                                                <a style="color:red"> Atrasado @dias días </a>
+                                            }
                                         }
-                                        else if (DateTime.Now < ticket.Datetobedone)
-                                        {
-                                            <a style="color:blue"> Quedan @dias días</a>
-                                            
-                                        }
-                                        else
-                                        {
-                                            dias = Math.Abs(dias);
-                                            <a style="color:red"> Atrasado @dias días </a>
-                                        }
-                                    }
-                                       
-                                        </td>
-                                    </tr>
+
+                                    </td>
+                                    <td colspan="1">
+                                        <button onclick="document.location.href = '@Url.Content("~/Tickets/TicketReport/" + ticket.id)'" class="btn btn-default" data-toggle="tooltip" title="Detalles el Ticket">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" /></svg> Ver
+                                        </button>
+                                    </td>
+                                </tr>
                             }
                         }
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
+</div>
+@*Documentacion SLA*@
+<div class="row">
+    <div class="col-md-6">
+        <p class="lead">
+            Los SLA se utilizan para establecer indicadores medibles del servicio que brindamos y así asegurar el cumplimiento de las expectativas de nuestros clientes.
+        </p>
+        <p class="lead">
+            Para expresar un compromiso de calidad de servicio, esta debe ser medible con facilidad. Esta medición puede ser, muchas veces, subjetiva por parte de los clientes finales, como en el caso de un departamento de atención al cliente.
+        </p>
+        <p class="lead">
+            Anteriormente se muestra las tablas y graficas midiendo la eficiencia de respuesta del servicio.
+        </p>
+    </div>
+    <div class="col-md-6" style="margin:0px 0px 0px 0px">
+        <img src="~/Content/img/SLA.jpg" class="img-responsive" alt="Responsive image">
     </div>
 </div>
 @section scripts
