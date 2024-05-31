@@ -24,7 +24,7 @@
         <div class="panel panel-default">
             <div class="panel-heading"><b>Reporte Total de Tickets</b> </div>
             <div class="panel-body">
-                <table class="table table-success table-striped">
+                <table id="summaryTable" class="table table-success table-striped">
                     <thead>
                         <tr>
                             <th scope="col">Tickets</th>
@@ -82,9 +82,20 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading"><b>Tickets abiertos y su fecha compromiso</b> </div>
+            <div class="panel-heading">
+                <b>Tickets abiertos y su fecha compromiso</b>
+                <div class="row">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end">
+                            <input type="text" id="searchInput" placeholder="Busqueda global" title="Busca cualquier concidencia del cuadro de busqueda con los tickets actuales">
+                            <button onclick="filterTable()" class="btn btn-primary" title="Busca cualquier concidencia del cuadro de busqueda con los tickets actuales">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="panel-body">
-                <table class="table table-success table-striped">
+                <table id="ticketsTable" class="table table-success table-striped">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -166,6 +177,34 @@
 @section scripts
 {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function filterTable() {
+            var input, filter, table, tr, td, i, j, txtValue, found;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("ticketsTable");  // Cambiar aquí para seleccionar la tabla correcta
+            tr = table.getElementsByTagName("tr");
+
+            // Iterar sobre todas las filas de la tabla, comenzando desde el índice 1 para omitir los encabezados
+            for (i = 1; i < tr.length; i++) {
+                found = false; // Reiniciamos el indicador de coincidencia para cada fila
+                // Obtener todas las celdas de la fila
+                td = tr[i].getElementsByTagName("td");
+                // Iterar sobre todas las celdas de la fila
+                for (j = 0; j < td.length; j++) {
+                    // Obtener el contenido de la celda y convertirlo a mayúsculas para la comparación
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        // Si el texto coincide con el filtro, marcar como encontrado y salir del bucle interno
+                        found = true;
+                        break;
+                    }
+                }
+                // Mostrar u ocultar la fila de datos dependiendo de si se encontró una coincidencia
+                tr[i].style.display = found ? "" : "none";
+            }
+        }
+    </script>
     <script>
         //Bar Chart ticketes por status
         jQuery.ajax({
