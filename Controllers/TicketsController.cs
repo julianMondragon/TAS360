@@ -11,6 +11,9 @@ using System.Web.Mvc;
 using TAS360.Filters;
 using TAS360.Models;
 using TAS360.Models.ViewModel;
+using System.Net;
+using System.Net.Mail;
+
 
 namespace TAS360.Controllers
 {
@@ -54,13 +57,14 @@ namespace TAS360.Controllers
                             }
                             else
                             {
-                                ticketViewModel.LastComent = "Sin respuesta ...";
+                                ticketViewModel.LastComent = ticketViewModel.mensaje.Substring(0,220) + "...";
                             }
 
                             tickets.Add(ticketViewModel);
                         }
                         catch(Exception ex) 
                         {
+                            ViewBag.ExceptionMessage = ex.Message;
                         }
                     }
                 }
@@ -269,6 +273,11 @@ namespace TAS360.Controllers
             return View(myticket);
         }
 
+        /// <summary>
+        /// Metodo que se encarga de hacer la plantilla del reporte del ticket para ser impreso
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult TicketReport(int id)
         {
             TicketViewModel myticket = new TicketViewModel();
@@ -331,6 +340,11 @@ namespace TAS360.Controllers
             return View(myticket);
         }
 
+        /// <summary>
+        /// Metodo encargado de imprimir el reporte de un ticket por su id. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult PrintTicketReport(int id)
         {
             return new ActionAsPdf($"TicketReport/{id}")
@@ -935,5 +949,71 @@ namespace TAS360.Controllers
             }         
             return sb.ToString();
         }
+
+        /// <summary>
+        /// Metodo encargado de enviar correos
+        /// </summary>
+        /// <param name="destinatario"></param>
+        /// <param name="asunto"></param>
+        /// <param name="cuerpo"></param>
+        public void EnviarCorreo(string destinatario, string asunto, string cuerpo)
+        {
+            try
+            {
+                //logs
+                string path = Server.MapPath("~/Logs/Emails/");
+                Log oLog = new Log(path);
+
+                // Configuración del cliente SMTP
+                SmtpClient clienteSmtp = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    Credentials = new NetworkCredential("soporte.tas360@pts.mx", "*******"),
+                    EnableSsl = true
+                };
+
+                // Crear el mensaje de correo
+                MailMessage mensaje = new MailMessage
+                {
+                    From = new MailAddress("soporte.tas360@pts.mx"),
+                    Subject = asunto,
+                    Body = cuerpo,
+                    IsBodyHtml = false // Si el cuerpo del correo es HTML
+                };
+
+                // Añadir destinatario
+                mensaje.To.Add(destinatario);
+
+                // Enviar el correo
+                clienteSmtp.Send(mensaje);
+                oLog.Add("---------------------------");
+                oLog.Add($"Correo enviado exitosamente a {destinatario} sobre actualización del ticket.");
+                oLog.Add($"Asunto: {asunto} ");
+                oLog.Add($"Cuerpo: {cuerpo} ");
+                //Devuelve un mensaje exitoso a la vista 
+                ViewBag.InfoMessage = $"Correo enviado exitosamente a {destinatario} sobre actualización del ticket.";
+            }
+            catch (SmtpException smtpEx)
+            {
+                //logs
+                string path = Server.MapPath("~/Logs/Emails/");
+                Log oLog = new Log(path);
+                oLog.Add($"SMTP Error al enviar el correo: {smtpEx.Message}  Status Code: {smtpEx.StatusCode}");
+                ViewBag.ExceptionMessage = "SMTP Error al enviar el correo: " + smtpEx.Message + " Status Code: " + smtpEx.StatusCode;
+                if (smtpEx.InnerException != null)
+                {
+                    oLog.Add(" Inner Exception: " + smtpEx.InnerException.Message);
+                    ViewBag.ExceptionMessage += " Inner Exception: " + smtpEx.InnerException.Message;
+                }
+            }
+            catch (Exception ex)
+            {
+                //logs
+                string path = Server.MapPath("~/Logs/Emails/");
+                Log oLog = new Log(path);
+                oLog.Add($"Exception al enviar el correo: {ex.Message}");
+                ViewBag.ExceptionMessage = "Exception al enviar el correo: " +  ex.Message;
+            }
+        }
+
     }
 }
