@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rotativa;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -70,6 +71,72 @@ namespace TAS360.Controllers
             GetSummaryTKs();
             return View(tickets);
         }
+        public ActionResult SLAReport()
+        {
+            List<TicketViewModel> tickets = new List<TicketViewModel>();
+            using (Models.HelpDesk_Entities1 db = new Models.HelpDesk_Entities1())
+            {
+                var Tickets = (from s in db.Ticket where s.status != 12 orderby s.CreatedAt descending select s);
+                if (Tickets != null && Tickets.Any())
+                {
+                    foreach (var t in Tickets)
+                    {
+                        TicketViewModel ticket = new TicketViewModel()
+                        {
+                            id = t.id,
+                            titulo = t.titulo,
+                            mensaje = t.mensaje,
+                            usuario_name = t.Ticket_User.OrderByDescending(x => x.CreatedAt).FirstOrDefault().User.nombre,
+                            categoria_name = t.Categoria.nombre,
+                            terminal_name = t.Terminal.Nombre,
+                            Subsistema_name = t.Subsistema.Nombre,
+                            Status = t.status,
+                            Date = t.CreatedAt,
+                            Datetobedone = t.CreatedAt.HasValue ? t.CreatedAt.Value.AddDays(15) : DateTime.MinValue
+                        };
+                        switch (t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion)
+                        {
+                            case "Pendiente ":
+                                ticket.status_name = "Capturado";
+                                break;
+                            case "Analisis  ":
+                                ticket.status_name = "Espera de info";
+                                break;
+                            case "Correccion":
+                                ticket.status_name = "En Proceso";
+                                break;
+                            case "Pruebas   ":
+                                ticket.status_name = "En Proceso";
+                                break;
+                            case "Implementa":
+                                ticket.status_name = "En Proceso";
+                                break;
+                            case "Pend_Pmx  ":
+                                ticket.status_name = "Espera de info";
+                                break;
+                            case "Cerrado   ":
+                                ticket.status_name = "Espera de info";
+                                break;
+                            default:
+                                ticket.status_name = "Undefineded";
+                                break;
+                        }
+
+                        tickets.Add(ticket);
+                    }
+                }
+            }
+            GetSummaryTKs();
+            return View(tickets);
+        }
+
+        public ActionResult PrintSLAReport()
+        {
+            return new ActionAsPdf($"SLAReport/")
+            {
+                FileName = $"Reporte_de_SLA_{DateTime.Now.Date.ToShortDateString()}.pdf"
+            };
+        }
         [HttpGet]
         public JsonResult GetTicktsByStatus()
         {
@@ -86,6 +153,7 @@ namespace TAS360.Controllers
 
             return Json(listTksbyCategoria, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
         public JsonResult GetTicketsByTerminal()
         {
             LSA_Reportes Tickets = new LSA_Reportes();
@@ -93,6 +161,7 @@ namespace TAS360.Controllers
 
             return Json(listTksbyCategoria, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
         public JsonResult GetTicketsByTerminalOnLastMonth()
         {
             LSA_Reportes Tickets = new LSA_Reportes();

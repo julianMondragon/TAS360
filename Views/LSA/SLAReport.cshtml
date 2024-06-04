@@ -1,25 +1,29 @@
-﻿@model List<TAS360.Models.ViewModel.TicketViewModel>
+﻿
+@model List<TAS360.Models.ViewModel.TicketViewModel>
 @{
     ViewBag.Title = "Service Level Agreement";
     int total = ViewBag.tksclose + @ViewBag.tksopen;
+    Layout = "~/Views/Shared/_LayoutReport.cshtml";
 
 }
 <div class="jumbotron">
-    <h2>Acuerdo de Nivel de Servicio (SLA) </h2>
-    @*<h3><strong style="font-family: Monotype Corsiva ">Resumen</strong></h3>*@
-    <a class="btn btn-default " href="@Url.Content("~/Home/Home")">Regresar</a>
-    <a class="btn btn-info" href="@Url.Content("~/LSA/PrintSLAReport")">Generar Reporte</a>
+    <div class="col-xs-3">
+        <div class="thumbnail">
+            <img src="https://pts-tools.com.mx/Content/img/proftech-logo-01.png" />
+        </div>
+    </div>
+    <h1>Acuerdo de Nivel de Servicio (SLA) </h1>
 </div>
 @*Graficas *@
 <div class="row">
-    <div class="col-lg-6">
+    @*<div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading"><b>Reporte total de Tickets por categoria</b> </div>
             <div class="panel-body">
                 <canvas id="myPieChart" width="100" height="50"></canvas>
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading"><b>Reporte Total de Tickets</b> </div>
@@ -49,17 +53,17 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    @*<div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading"><b>Reporte Status de Tickets: ultimo mes</b> </div>
             <div class="panel-body">
                 <canvas id="myBarChart" width="100" height="50"></canvas>
             </div>
         </div>
-    </div>
+    </div>*@
 
 </div>
-<div class="row">
+@*<div class="row">
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading"><b>Reporte total de Tickets por TAD: ultimo mes</b> </div>
@@ -77,22 +81,13 @@
         </div>
     </div>
 
-</div>
+</div>*@
 @*tabla de tickets *@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <b>Tickets abiertos y su fecha compromiso</b>
-                <div class="row">
-                    <div class="col-md-8"></div>
-                    <div class="col-md-4">
-                        <div class="d-flex justify-content-end">
-                            <input type="text" id="searchInput" placeholder="Busqueda global" title="Busca cualquier concidencia del cuadro de busqueda con los tickets actuales">
-                            <button onclick="filterTable()" class="btn btn-primary" title="Busca cualquier concidencia del cuadro de busqueda con los tickets actuales">Buscar</button>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="panel-body">
                 <table id="ticketsTable" class="table table-success table-striped">
@@ -105,7 +100,6 @@
                             <th scope="col">Categoria</th>
                             <th scope="col">Compromiso</th>
                             <th scope="col">Tiempo</th>
-                            <th colspan="1">Accion</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -142,11 +136,6 @@
                                             }
                                         }
 
-                                    </td>
-                                    <td colspan="1">
-                                        <button onclick="document.location.href = '@Url.Content("~/Tickets/TicketReport/" + ticket.id)'" class="btn btn-default" data-toggle="tooltip" title="Detalles el Ticket">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" /></svg> Ver
-                                        </button>
                                     </td>
                                 </tr>
                             }
@@ -417,5 +406,4 @@
         });
     </script>
 }
-
 
