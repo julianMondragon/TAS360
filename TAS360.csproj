@@ -910,15 +910,9 @@
     <Content Include="Views\Reports\CreateRequest.cshtml" />
     <Content Include="Views\WebAPIPemex\Index.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
-    <Content Include="Views\Tickets\Index.cshtml" />
-    <Content Include="Views\Tickets\CreateTicket.cshtml" />
     <Content Include="Views\Acceso\Login.cshtml" />
     <Content Include="Views\Error\UnauthorizedOperation.cshtml" />
-    <Content Include="Views\Tickets\ShowTicket.cshtml" />
-    <Content Include="Views\Tickets\EditTicket.cshtml" />
-    <Content Include="Views\Tickets\AddCommentTicket.cshtml" />
     <Content Include="Views\Pendientes\Index.cshtml" />
-    <Content Include="Views\Tickets\TicketReport.cshtml" />
     <Content Include="Views\Shared\_LayoutReport.cshtml" />
     <Content Include="Views\Pendientes\Create.cshtml" />
     <Content Include="Views\Pendientes\Details.cshtml" />
@@ -944,6 +938,7 @@
     <Folder Include="Tablas_CSV\" />
     <Folder Include="Tablas_Pendientes\" />
     <Folder Include="TicketFiles\" />
+    <Folder Include="Views\Tickets\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
