@@ -12,6 +12,7 @@ html {
 body {
   margin: 0;
 }
+   
 article,
 aside,
 details,
@@ -5075,17 +5076,26 @@ a.badge:focus {
   }
 }
 .thumbnail {
-  display: block;
-  padding: 4px;
-  margin-bottom: 20px;
-  line-height: 1.42857143;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  -webkit-transition: border 0.2s ease-in-out;
-  -o-transition: border 0.2s ease-in-out;
-  transition: border 0.2s ease-in-out;
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border 0.2s ease-in-out;
+    -o-transition: border 0.2s ease-in-out;
+    transition: border 0.2s ease-in-out;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    max-width: 150px;
+    height: auto;
 }
+    .thumbnail img {
+        max-width: 150px;
+        height: auto;
+    }
 .thumbnail > img,
 .thumbnail a > img {
   margin-right: auto;
@@ -6831,4 +6841,109 @@ button.close {
     display: none !important;
   }
 }
-/*# sourceMappingURL=bootstrap.css.map */
+
+/* Centrar el contenedor de inicio de sesión */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa;
+}
+
+/* Cuadro de inicio de sesión */
+.login-box {
+    position: relative;
+    background: white;
+    padding: 8rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+    /* Encabezado de inicio de sesión */
+    .login-box h2 {
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+/* Mensaje de error */
+.error-message {
+    font-size: 1rem;
+    color: red;
+}
+
+/* Alinear texto a la izquierda */
+.form-group label {
+    text-align: left;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* Estilo para el enlace de recuperar contraseña */
+.forgot-password {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* Estilos para el contenedor de la contraseña */
+.password-container {
+    position: relative;
+}
+
+    .password-container input {
+        width: 100%;
+        padding-right: 40px; /* Espacio para el botón del ojo */
+    }
+
+.toggle-password {
+    position: absolute;
+    top: 70%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Hacer el botón más largo */
+.btn-largo {
+    width: 100%;
+}
+
+.btn-translucent {
+    display: inline-block;
+    padding: 7px 15px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background-color: #C8D6BF;
+    color: #fff;
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+    .btn-translucent:hover {
+        background-color: #B4D39F; /* Color traslúcido al pasar el cursor */
+    }
+
+.btn-plain {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: -35px; /* Ajusta el margen para alinear el botón con el campo de contraseña */
+    cursor: pointer;
+}
+
+    .btn-plain i {
+        font-size: 1.2rem;
+        color: #495057; /* Color del icono */
+    }
+
+        .btn-plain i:hover {
+            color: #000; /* Color del icono al pasar el cursor */
+        }
+
+
