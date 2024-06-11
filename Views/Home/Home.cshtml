@@ -38,15 +38,7 @@
                     <td><a onclick="document.location.href = '@Url.Content("~/Documentacion/Manuales")'" class="btn btn-info" title="Ver manuales">Manuales &raquo;</a></td>
                 </tr>
             </table>
-            <h3><strong style="font-family: Monotype Corsiva ">Resumen de tickets</strong></h3>
-            <table class="table table-success">
-                <tr>
-                    <th class="alert-success">Abiertos: @ViewBag.tksopen</th>
-                </tr>
-                <tr>
-                    <th class="alert-danger">Cerrados: @ViewBag.tksclose</th>
-                </tr>
-            </table>
+
             <h3><strong style="font-family: Monotype Corsiva ">Contacto</strong></h3>
             <table class="table table-success">
                 <tr>
@@ -55,6 +47,18 @@
                 <tr>
                     <td>soporte.tas360@pts.mx</td>
                 </tr>
+
+            </table>
+
+            <h3><strong style="font-family: Monotype Corsiva ">Horarios de atención: </strong></h3>
+            <table class="table table-success">
+                <tr>
+                    <td>Lun-Vie: 9:00-17:00 </td>
+                </tr>
+                <tr>
+                    <td>Sab: 9:00 - 13:00</td>
+                </tr>
+
             </table>
         </div>        
     </div>
@@ -80,6 +84,7 @@
         </p>
         <br />
     </div>
+
 
     <!--Manejo de Tickets segun categorias  -->
     @*            <div class="row">
