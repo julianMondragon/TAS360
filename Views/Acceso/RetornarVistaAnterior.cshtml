@@ -1,5 +1,54 @@
-﻿
-<script>
-    window.history.go(-2);
-</script>
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Retornar Vista Anterior</title>
+</head>
+<body>
+    <script>
+         document.addEventListener("DOMContentLoaded", function() {
+            // Verificar si se debe limpiar sessionStorage
+            if ('@TempData["ClearSessionStorage"]' === 'True') {
+                // Limpiar el historial almacenado
+                sessionStorage.removeItem("previousUrl1");
+                sessionStorage.removeItem("previousUrl2");
+                // Redirigir a Home
+                window.location.href = "@Url.Action("Home", "Home")";
+            } else {
+                // Obtener las URLs previas almacenadas en sessionStorage
+                const previousUrl1 = sessionStorage.getItem("previousUrl1");
+                const previousUrl2 = sessionStorage.getItem("previousUrl2");
+
+                // Actualizar las URLs anteriores en sessionStorage
+                sessionStorage.setItem("previousUrl2", previousUrl1);
+                sessionStorage.setItem("previousUrl1", document.referrer);
+
+                // Función para redirigir o refrescar según las URLs anteriores
+                function handleNavigation() {
+                    if (previousUrl1 && previousUrl2) {
+                        switch (true) {
+                            case previousUrl1.includes("Acceso/Login") && previousUrl2.includes("Acceso/Login"):
+                                window.location.href = "@Url.Action("Home", "Home")";
+                                break;
+                            case previousUrl1.includes("Home/Home") && previousUrl2.includes("Home/Home"):
+                                window.location.reload();
+                                break;
+                            default:
+                                window.history.go(-2);
+                                break;
+                        }
+                    } else {
+                        window.location.href = "@Url.Action("Home", "Home")";
+                    }
+                }
+
+                handleNavigation();
+            }
+        });
+    </script>
+</body>
+</html>
+
+@*<script>
+        window.history.go(-2);
+    </script>*@
 
