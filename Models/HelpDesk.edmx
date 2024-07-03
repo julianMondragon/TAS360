@@ -156,7 +156,9 @@
           <Property Name="id_Terminal" Type="int" />
           <Property Name="id_Subsistema" Type="int" />
           <Property Name="status" Type="int" />
-          <Property Name="CreatedAt" Type="date" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="id_externo" Type="varchar" MaxLength="60" />
+          <Property Name="id_prioridad" Type="int" />
         </EntityType>
         <EntityType Name="Ticket_Comentario">
           <Key>
@@ -184,7 +186,7 @@
           <Property Name="id_Ticket" Type="int" Nullable="false" />
           <Property Name="id_User" Type="int" Nullable="false" />
           <Property Name="funcion" Type="varchar" MaxLength="80" />
-          <Property Name="CreatedAt" Type="date" />
+          <Property Name="CreatedAt" Type="datetime" />
         </EntityType>
         <EntityType Name="Tickets_Files">
           <Key>
@@ -422,6 +424,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Ticket_Prioridad_de_Pendiente">
+          <End Role="Prioridad_de_Pendiente" Type="Self.Prioridad_de_Pendiente" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prioridad_de_Pendiente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="id_prioridad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Ticket_Record_Status_Status">
           <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
           <End Role="Ticket_Record_Status" Type="Self.Ticket_Record_Status" Multiplicity="*" />
@@ -530,6 +544,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        
+        
+        
+        
         <EntityContainer Name="HelpDeskModelStoreContainer">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clasificacion_Pendiente" EntityType="Self.Clasificacion_Pendiente" Schema="dbo" store:Type="Tables" />
@@ -623,6 +641,10 @@
           <AssociationSet Name="FK_Ticket_Comentario_Ticket" Association="Self.FK_Ticket_Comentario_Ticket">
             <End Role="Ticket" EntitySet="Ticket" />
             <End Role="Ticket_Comentario" EntitySet="Ticket_Comentario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Prioridad_de_Pendiente" Association="Self.FK_Ticket_Prioridad_de_Pendiente">
+            <End Role="Prioridad_de_Pendiente" EntitySet="Prioridad_de_Pendiente" />
+            <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
           <AssociationSet Name="FK_Ticket_Record_Status_Status" Association="Self.FK_Ticket_Record_Status_Status">
             <End Role="Status" EntitySet="Status" />
@@ -784,6 +806,10 @@
           <AssociationSet Name="FK_Pendiente_Record_Status_Status" Association="HelpDeskModel.FK_Pendiente_Record_Status_Status">
             <End Role="Status" EntitySet="Status" />
             <End Role="Pendiente_Record_Status" EntitySet="Pendiente_Record_Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Prioridad_de_Pendiente" Association="HelpDeskModel.FK_Ticket_Prioridad_de_Pendiente">
+            <End Role="Prioridad_de_Pendiente" EntitySet="Prioridad_de_Pendiente" />
+            <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
           <AssociationSet Name="FK_Roll_Operacion_Roll" Association="HelpDeskModel.FK_Roll_Operacion_Roll">
             <End Role="Roll" EntitySet="Roll" />
@@ -960,6 +986,7 @@
           <Property Name="Descripcion" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="clave" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Prioridad_de_Pendiente" FromRole="Prioridad_de_Pendiente" ToRole="Pendiente" />
+          <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Ticket_Prioridad_de_Pendiente" FromRole="Prioridad_de_Pendiente" ToRole="Ticket" />
         </EntityType>
         <EntityType Name="Roll">
           <Key>
@@ -1022,9 +1049,12 @@
           <Property Name="id_Terminal" Type="Int32" />
           <Property Name="id_Subsistema" Type="Int32" />
           <Property Name="status" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="0" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="id_externo" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="id_prioridad" Type="Int32" />
           <NavigationProperty Name="Categoria" Relationship="HelpDeskModel.FK_Ticket_Categoria" FromRole="Ticket" ToRole="Categoria" />
           <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_Ticket" FromRole="Ticket" ToRole="Pendiente" />
+          <NavigationProperty Name="Prioridad_de_Pendiente" Relationship="HelpDeskModel.FK_Ticket_Prioridad_de_Pendiente" FromRole="Ticket" ToRole="Prioridad_de_Pendiente" />
           <NavigationProperty Name="Subsistema" Relationship="HelpDeskModel.FK_Ticket_Subsistema" FromRole="Ticket" ToRole="Subsistema" />
           <NavigationProperty Name="Terminal" Relationship="HelpDeskModel.FK_Ticket_Terminal" FromRole="Ticket" ToRole="Terminal" />
           <NavigationProperty Name="Ticket_Comentario" Relationship="HelpDeskModel.FK_Ticket_Comentario_Ticket" FromRole="Ticket" ToRole="Ticket_Comentario" />
@@ -1062,7 +1092,7 @@
           <Property Name="id_Ticket" Type="Int32" Nullable="false" />
           <Property Name="id_User" Type="Int32" Nullable="false" />
           <Property Name="funcion" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="0" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Ticket" Relationship="HelpDeskModel.FK_Ticket_User" FromRole="Ticket_User" ToRole="Ticket" />
           <NavigationProperty Name="User" Relationship="HelpDeskModel.FK_Ticket_User_User" FromRole="Ticket_User" ToRole="User" />
         </EntityType>
@@ -1293,6 +1323,18 @@
             </Principal>
             <Dependent Role="Pendiente_Record_Status">
               <PropertyRef Name="id_Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Prioridad_de_Pendiente">
+          <End Type="HelpDeskModel.Prioridad_de_Pendiente" Role="Prioridad_de_Pendiente" Multiplicity="0..1" />
+          <End Type="HelpDeskModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prioridad_de_Pendiente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="id_prioridad" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1579,6 +1621,8 @@
           <EntitySetMapping Name="Ticket">
             <EntityTypeMapping TypeName="HelpDeskModel.Ticket">
               <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="id_prioridad" ColumnName="id_prioridad" />
+                <ScalarProperty Name="id_externo" ColumnName="id_externo" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="id_Subsistema" ColumnName="id_Subsistema" />

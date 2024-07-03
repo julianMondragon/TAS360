@@ -16,6 +16,7 @@ using System.Net.Mail;
 using DocumentFormat.OpenXml.EMMA;
 
 
+
 namespace TAS360.Controllers
 {
     public class TicketsController : Controller
@@ -88,7 +89,8 @@ namespace TAS360.Controllers
                                 terminal_name = t.Terminal.Nombre,
                                 status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.Status.descripcion,
                                 Subsistema_name = t.Subsistema.Nombre,
-                                Status = t.status
+                                Status = t.status,
+                                id_externo = t.id_externo
                             };
 
                             var lastComment = t.Ticket_Comentario.OrderByDescending(x => x.id).FirstOrDefault();
@@ -163,6 +165,7 @@ namespace TAS360.Controllers
                         ticket.status = model.Status;
                         ticket.mensaje = model.mensaje;
                         ticket.CreatedAt = DateTime.Now;
+                        ticket.id_externo = model.id_externo;
 
                         //db.Entry(ticket).State = System.Data.Entity.EntityState.Modified;
                         db.Ticket.Add(ticket);
@@ -272,6 +275,7 @@ namespace TAS360.Controllers
                     myticket.id = id;
                     myticket.titulo = ticket.titulo;
                     myticket.mensaje = ticket.mensaje;
+                    myticket.id_externo = ticket.id_externo;
                     myticket.usuario_name = ticket.Ticket_User.OrderByDescending(u => u.CreatedAt).FirstOrDefault().User.nombre;
                     myticket.categoria_name = ticket.Categoria.nombre;
                     myticket.status_name = db.Ticket_Record_Status.Where(x => x.id_Ticket == id).OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion;
@@ -578,6 +582,7 @@ namespace TAS360.Controllers
                 ticket.id_Terminal = t.id_Terminal;
                 ticket.id_Categoria = t.id_Categoria;
                 ticket.id_Subsistema = t.id_Subsistema;
+                ticket.id_externo = t.id_externo;
                 ticket.id_Resp = t.Ticket_User.OrderByDescending(u => u.CreatedAt).First().id_User;
                 ticket.Status = t.Ticket_Record_Status.Where(s => s.id_Ticket == t.id).OrderByDescending(s => s.CreatedAt).FirstOrDefault().id_Status;
                 ticket.mensaje = t.mensaje;
@@ -626,6 +631,8 @@ namespace TAS360.Controllers
                         Ticket.status = ticket.Status;
                         oLog.Add("Mensaje: " + Ticket.mensaje);
                         Ticket.mensaje = ticket.mensaje;
+                        oLog.Add("Identificador: " + Ticket.id_externo);
+                        Ticket.id_externo = ticket.id_externo;
 
                         db.Entry(Ticket).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
@@ -636,6 +643,7 @@ namespace TAS360.Controllers
                         oLog.Add("Nuevo Subsistema: " + ticket.id_Subsistema);
                         oLog.Add("Nuevo Usuario: " + Ticket.id_User);
                         oLog.Add("Nuevo Mensaje: " + ticket.mensaje);
+                        oLog.Add("Nuevo Identificador: " + ticket.id_externo);
                     }
                     //Envia correo sobre la actualizacion del ticket
                     sendEmailUpdateTK(ticket.id, (int)ticket.id_Resp, ((User)Session["User"]).id);
