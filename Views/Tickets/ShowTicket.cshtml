@@ -49,27 +49,27 @@
         </div>
     }
     <div class="row">
-            <div class="col-md-7">
+        <div class="col-md-7">
 
-            </div>
-            <div class="col-md-5">
+        </div>
+        <div class="col-md-5">
 
-                <div class="d-flex justify-content-end">
-                    <a class="btn btn-default " href="@Url.Content("~/Tickets/index")">Regresar</a>
-                    <a class="btn btn-warning " href="@Url.Content("~/Tickets/AddCommentTicket/" + (int)Model.id)">Agregar comentario</a>
-                    <a class="btn btn-info " href="@Url.Content("~/Tickets/PrintTicketReport/" + (int)Model.id)">Generar Reporte</a>
-                    @*<button onclick="document.location.href = '@Url.Content("~/Pendientes/IndexWithFilter/?encodedCurrentList="+ encodedCurrentList)'"
-                                type="button" class="btn btn-warning" data-toggle="tooltip" title="Regresar al ventana general de pendientes">
-                            Vista General &crarr;
-                        </button>
-                        <button onclick="document.location.href = '@Url.Content("~/Pendientes/ExportTablePendientes/?encodedCurrentList="+ encodedCurrentList)'"
-                                type="button" class="btn btn-info" data-toggle="tooltip" title="Exporta a excel la tabla actual ">
-                            Exportar Listado &pound;
-                        </button>*@
-                </div>
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-default " href="@Url.Content("~/Tickets/index")">Regresar</a>
+                <a class="btn btn-warning " href="@Url.Content("~/Tickets/AddCommentTicket/" + (int)Model.id)">Agregar comentario</a>
+                <a class="btn btn-info " href="@Url.Content("~/Tickets/PrintTicketReport/" + (int)Model.id)">Generar Reporte</a>
+                @*<button onclick="document.location.href = '@Url.Content("~/Pendientes/IndexWithFilter/?encodedCurrentList="+ encodedCurrentList)'"
+                            type="button" class="btn btn-warning" data-toggle="tooltip" title="Regresar al ventana general de pendientes">
+                        Vista General &crarr;
+                    </button>
+                    <button onclick="document.location.href = '@Url.Content("~/Pendientes/ExportTablePendientes/?encodedCurrentList="+ encodedCurrentList)'"
+                            type="button" class="btn btn-info" data-toggle="tooltip" title="Exporta a excel la tabla actual ">
+                        Exportar Listado &pound;
+                    </button>*@
             </div>
         </div>
     </div>
+</div>
 <!--Heathers -->
 <div class="row">
     <div class="col-md-12">
@@ -80,7 +80,7 @@
                 <th class="alert-success">Categoria</th>
                 <th class="alert-success">Responsable</th>
                 <th class="alert-success">Terminal</th>
-                @*<th class="alert-info">Sobrante(-) faltante(+)</th>*@
+                <th class="alert-success">Identificador</th>
 
             </tr>
             <tr>
@@ -89,6 +89,7 @@
                 <td> @Model.categoria_name</td>
                 <td>@Model.usuario_name</td>
                 <td>@Model.terminal_name</td>
+                <td>@Model.id_externo</td>
             </tr>
         </table>
     </div>
@@ -108,7 +109,7 @@
                             <input class="btn btn-success" type="submit" value="Agregar evidencia" />
                         }
                         <br />
-                        
+
                     </div>
                 </div>
             </div>
@@ -116,14 +117,14 @@
                 @*<h3>Record Status</h3>*@
                 <table class="table table-success table-striped">
                     <tr>
-                        <th class="alert-info">Record Status</th>                
+                        <th class="alert-info">Record Status</th>
                     </tr>
-                        @foreach (var status in Model.RecordStatus)
-                        {
-                            <tr>
-                                <td>@status</td>
-                            </tr>
-                        }                    
+                    @foreach (var status in Model.RecordStatus)
+                    {
+                        <tr>
+                            <td>@status</td>
+                        </tr>
+                    }
                 </table>
             </div>
         </div>

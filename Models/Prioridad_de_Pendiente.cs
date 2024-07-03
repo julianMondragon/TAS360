@@ -18,6 +18,7 @@ namespace TAS360.Models
         public Prioridad_de_Pendiente()
         {
             this.Pendiente = new HashSet<Pendiente>();
+            this.Ticket = new HashSet<Ticket>();
         }
     
         public int id { get; set; }
@@ -27,5 +28,7 @@ namespace TAS360.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pendiente> Pendiente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ticket> Ticket { get; set; }
     }
 }
