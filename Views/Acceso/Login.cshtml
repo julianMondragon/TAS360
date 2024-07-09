@@ -1,62 +1,65 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout2.cshtml";
     string exception = ViewBag.exception;
 }
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
 
-<div class="jumbotron">
-    <h2>Iniciar Sesion</h2>
-    @if (exception != null)
-    {
-        <br />
-        <pre style="font-size:2rem; color:red">@exception</pre>
-    }
-    <div class="row">
-        <button onclick="document.location.href = '@Url.Content("~/Home/home")'" type="button" class="btn btn-success" data-toggle="tooltip" title="se abrirá un la pagina principal de HELP DESK de PTS">
-            &oplus; Home
-        </button>
+<div class="login-container">
+    <div class="login-box">
+        <div class="thumbnail">
+            <a href="@Url.Action("Home", "Home")">
+                <img src="https://pts-tools.com.mx/Content/img/proftech-logo-01.png" alt="PTS-TOOLS Logo" />
+            </a>
+        </div>
+
+        <h2>Iniciar Sesión</h2>
+
+        @using (Html.BeginForm("Login", "Acceso", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label for="user">E-mail:</label>
+                <input class="form-control" type="email" id="user" name="user" required />
+            </div>
+
+            <div class="form-group password-container">
+                <label for="pass">Contraseña:</label>
+                <input class="form-control" type="password" id="pass" name="pass" required />
+                <span id="togglePassword" class="toggle-password">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </span>
+            </div>
+
+            <!-- Boton de ingresar -->
+            <div class="button-container">
+                <input type="submit" class="btn btn-primary btn-largo" value="Ingresar" />
+            </div>
+
+            <!-- Enlace para recuperar contraseña -->
+            <div class="forgot-password">
+                @if (exception != null)
+                {
+                    <pre class="error-message">@exception</pre>
+                }
+                <a href="@Url.Action("RecuperarContraseña", "Acceso")">¿Olvidaste tu contraseña?</a>
+            </div>
+        }
     </div>
 </div>
-<section class="page-section about-heading">
-    <div class="container">
-       <div class="about-heading-content">
-            <div class="row">
-                <div class="col-xl-9 col-lg-10 mx-auto">
-                    <div class="bg-faded rounded p-5">
-                        <div class="row">
-                            <div class="col-md-12">
-                                @using (Html.BeginForm("Login", "Acceso", FormMethod.Post))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <br />
 
-                                    <div class="row">
-                                        <div class="col-md-12" >
-                                            <div class="col-md-5">
-                                                <label>Usuario: </label>
-                                                <input class="form-control" type="email" name="user" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="col-md-5">
-                                                <label>Contraseña: </label>
-                                                <input class="form-control" type="password" name="pass" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="col-md-5">
-                                                <br />
-                                                <input type="submit" class="btn btn-primary" value="Ingresar" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                 }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const togglePassword = document.querySelector("#togglePassword");
+        const password = document.querySelector("#pass");
+
+        togglePassword.addEventListener("click", function (e) {
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
+            this.querySelector("i").classList.toggle("fa-eye-slash");
+        });
+    });
+</script>

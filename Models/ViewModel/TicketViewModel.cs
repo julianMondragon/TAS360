@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace TAS360.Models.ViewModel
 {
@@ -23,6 +24,7 @@ namespace TAS360.Models.ViewModel
         [Required]
         [Display(Name = "Reporte")]
         [StringLength(3000)]
+        [AllowHtml]
         public string mensaje { get; set; }
         public string LastComent { get; set; }
         [Required]
@@ -57,6 +59,8 @@ namespace TAS360.Models.ViewModel
         public List<Archivos> Files { get; set; }
         public List<Comentarios> Comentarios { get; set; }
         public List<string> RecordStatus { get; set; }
+        [Display(Name = "Identificador")]
+        public string id_externo { get; set; }
 
         public bool is_selected { get; set; }
         public List<CurrentList2> CurrentList2 { get; set; }
