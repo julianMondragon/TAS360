@@ -118,8 +118,13 @@ namespace TAS360.Controllers
             }
             return View(tickets);
         }
-        //Método que genera la lista de tickets filtrados para posteriormente enviarlos 
-        //a la vista de IndexWithFilter
+        /// <summary>
+        /// Método que genera la lista de tickets filtrados para posteriormente enviarlos 
+        /// a la vista de IndexWithFilter
+        /// </summary>
+        /// <param name="encodedCurrentList"></param>
+        /// <returns></returns>
+        [AuthorizeUser(idOperacion: 5)]
         public ActionResult IndexWithFilter(string encodedCurrentList)
         {
             // Inicializa la lista
