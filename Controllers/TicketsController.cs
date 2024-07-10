@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.IO;
+using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -116,6 +117,58 @@ namespace TAS360.Controllers
                 }
             }
             return View(tickets);
+        }
+        /// <summary>
+        /// Método que genera la lista de tickets filtrados para posteriormente enviarlos 
+        /// a la vista de IndexWithFilter
+        /// </summary>
+        /// <param name="encodedCurrentList"></param>
+        /// <returns></returns>
+        [AuthorizeUser(idOperacion: 5)]
+        public ActionResult IndexWithFilter(string encodedCurrentList)
+        {
+            // Inicializa la lista
+            List<TicketViewModel> model = new List<TicketViewModel>();
+            List<CurrentList> currentList = new List<CurrentList>();
+            // Decodifica el objeto que recibe
+            var decodedObject = HttpUtility.UrlDecode(encodedCurrentList);
+            currentList = JsonConvert.DeserializeObject<List<CurrentList>>(decodedObject);
+            // Aquí itera sobre cada elemento para crear la lista
+            foreach (var item in currentList)
+            {
+                item.is_selected = false;
+                // Se conecta a la bd
+                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                {
+                    // Busca el ticket correspondiente en la base de datos
+                    var t = db.Ticket.FirstOrDefault(tic => tic.id == item.id);
+                    if (t != null)
+                    {
+                        // Busca el usuario asociado al ticket
+                        var User = db.User.FirstOrDefault(usr => usr.id == t.id_User);
+                        // Va añadiendo a la lista cada TicketViewModel de los tickets existentes
+                        model.Add(new TicketViewModel()
+                        {
+                            id = t.id,
+                            titulo = t.titulo,
+                            mensaje = t.mensaje,
+                            usuario_name = User != null ? User.nombre : "Usuario no encontrado",
+                            categoria_name = t.Categoria != null ? t.Categoria.nombre : "Categoría no encontrada",
+                            terminal_name = t.Terminal != null ? t.Terminal.Nombre : "Terminal no encontrada",
+                            status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.Status.descripcion ?? "Estado no encontrado",
+                            Subsistema_name = t.Subsistema != null ? t.Subsistema.Nombre : "Subsistema no encontrado",
+                            Status = t.status,
+                            currentList = currentList
+                        });
+                    }
+                    else
+                    {
+                        // No hace nada si el ticket no se encuentra
+                    }
+                }
+            }
+            // Devuelve la vista con la lista de modelos de tickets
+            return View(model);
         }
 
         /// <summary>
@@ -1013,6 +1066,165 @@ namespace TAS360.Controllers
                 sb.AppendLine("*****************************************************");
             }         
             return sb.ToString();
+        }
+
+
+        /// <summary>
+        /// Este metodo obtiene los datos de los tickets existentes
+        /// </summary>
+        /// <returns> FilterTicketsViewModel </returns>
+        [HttpGet]
+        public ActionResult Filter_Tickets()
+        {
+            FilterTicketsViewModel Filter = new FilterTicketsViewModel() { id_Terminal = 1};
+            GetTerminales();
+            GetSubsistemas();
+            GetStatus(1);
+            GetCategories();
+            GetUsuarios();
+            return View(Filter);
+        }
+
+        /// <summary>
+        /// Devuelve a la vista un objeto para filtrar el ticket
+        /// </summary>
+        /// <param name="Filter"></param>
+        /// <returns></returns>
+
+        [HttpPost]
+        public ActionResult Filter_Tickets(FilterTicketsViewModel Filter)
+        {
+            GetTerminales();
+            GetSubsistemas();
+            GetStatus(1);
+            GetCategories();
+            GetUsuarios();
+            //se declara la lista que sera llenada con el resultado del filtro
+            List<CurrentList> currentLists = new List<CurrentList>();
+
+            if (ModelState.IsValid) //Valida el modelo
+            {
+                if (Filter.just_closed && Filter.is_closed)
+                {
+                    //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                    ViewBag.warning = "Query Error: No puedes seleccionar los dos ultimos checkbox juntos para realizar una busqueda ";
+                    return View(Filter);
+                }
+                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                {
+                    if (Filter.isSelected_id) //si el Id fue seleccionado
+                    {
+                        //realiza la busqueda por el ID
+                        Ticket filter = db.Ticket.Find(Filter.id);
+                        if (filter == null) // si la busqueda por el id es null
+                        {
+                            //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                            ViewBag.warning = "Ningun registro coicide con el id: " + Filter.id;
+                            return View(Filter);
+                        }
+                        //agrega a la lista en curso 
+                        currentLists.Add(new CurrentList() { id = filter.id });
+                    }
+                    else // entonces busca por el ID ejecuta los demas filtros
+                    {
+                        var listFilter = new List<Ticket>();
+                        //En los siguientes filtros se establece un límite para los tickets
+                        //que se enviarán a la vista para que el url no rebase el másximo de
+                        //longitud permitida, se sugiere posteriormente usar paginación
+                        if (Filter.is_closed)
+                        {
+                            listFilter = db.Ticket.Take(40).ToList();
+                        }
+                        else if (Filter.just_closed)
+                        {
+                            listFilter = db.Ticket.Where(x => x.status == 12).Take(40).ToList();
+                        }
+                        else
+                        {
+                            listFilter = db.Ticket.Where(x => x.status != 12).Take(40).ToList();
+                        }
+                        if (Filter.isSelected_Terminal)
+                        {
+                            listFilter = listFilter.Where(t => t.id_Terminal == Filter.id_Terminal).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con la terminal: " + Filter.id_Terminal;
+                                return View(Filter);
+
+                            }
+                        }
+                        if (Filter.isSelected_Categ)
+                        {
+                            listFilter = listFilter.Where(t => t.id_Categoria == Filter.id_Categoria).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con la Categoría: " + Filter.id_Categoria;
+                                return View(Filter);
+
+                            }
+                        }
+                        if (Filter.isSelected_subsistema)
+                        {
+                            listFilter = listFilter.Where(t => t.id_Subsistema == Filter.id_Subsistema).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con el Subsistema: " + Filter.id_Subsistema;
+                                return View(Filter);
+
+                            }
+                        }
+                        if (Filter.isSelected_Status)
+                        {
+                            listFilter = listFilter.Where(t => t.status == Filter.status).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con el estatus: " + Filter.status;
+                                return View(Filter);
+
+                            }
+                        }
+
+                        if (Filter.isSelected_User)
+                        {
+                            //Aquí también se establece un límite de 40 tickets a enviar a la lista de la vista
+                            listFilter = listFilter.Where(t => t.id_User == Filter.id_User).Take(40).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con usuario: " + Filter.id_User;
+                                return View(Filter);
+
+                            }
+                        }
+
+                        //el resultado de la busqueda
+                        foreach (var item in listFilter)
+                        {
+                            currentLists.Add(new CurrentList() { id = item.id });
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ViewBag.warning = "Filtro no valido";
+                return View(Filter);
+            }
+            
+            // Objeto a enviar
+            string encodedCurrentList = "";
+            // Serialización y codificación
+            var serializedObject = JsonConvert.SerializeObject(currentLists);
+            encodedCurrentList = HttpUtility.UrlEncode(serializedObject);
+            // Creación de la URL con la cadena de consulta
+            var url = "IndexWithFilter/?encodedCurrentList=" + encodedCurrentList;
+            // Redirecciona a la URL 
+            return Redirect(url);
+            //return View("IndexWithFilter", encodedCurrentList);
         }
 
         /// <summary>

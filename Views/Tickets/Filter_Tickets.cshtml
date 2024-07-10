@@ -1,0 +1,122 @@
+﻿@model TAS360.Models.ViewModel.FilterTicketsViewModel
+@{
+    ViewBag.Title = "Filtrar Tickets";
+    List<SelectListItem> Categoria = (List<SelectListItem>)ViewBag.Categorias;
+    List<SelectListItem> Terminal = (List<SelectListItem>)ViewBag.Terminales;
+    List<SelectListItem> Estatus = (List<SelectListItem>)ViewBag.Estatus;
+    List<SelectListItem> Titulo = (List<SelectListItem>)ViewBag.Titulo;
+    List<SelectListItem> Subsistema = (List<SelectListItem>)ViewBag.Subsistemas;
+    List<SelectListItem> Tickets = (List<SelectListItem>)ViewBag.Tickets;
+    List<SelectListItem> Prioridad = (List<SelectListItem>)ViewBag.Prioridad;
+    List<SelectListItem> Usuario = (List<SelectListItem>)ViewBag.Usuarios;
+    string exception = ViewBag.ExceptionMessage;
+    string Info = ViewBag.InfoMessage;
+    string warning = ViewBag.warning;
+}
+}
+@*Esta es la vista del filtro de los tickets*@
+<div class="jumbotron">
+    <h2 class="section-heading mb-4">
+        <span class="section-heading-lower">Filtrar tickets por: </span>
+    </h2>
+    @if (exception != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @exception
+        </div>
+    }
+    @if (Info != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @Info
+        </div>
+    }
+    @if (warning != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @warning
+        </div>
+    }
+</div>
+<section class="page-section about-heading">
+    <div class="container">
+        <div class="about-heading-content">
+            <div class="row" style="margin:0 0 0 0">
+                <div class="col-md-12">
+                    @using (Html.BeginForm("Filter_Tickets", "Tickets", FormMethod.Post))
+                    {
+                        //Muestra las checkbox de cada filtro y una lista desplegable para cada uno de los elementos
+                        //a seleccionar en cada filtro
+                        <br />
+                        //Renglon 01
+
+                        <div name="row1" class="row" style="margin:0 0 10px 0">
+
+                            <div class="col-md-12">
+                                <div class="col-md-3" style="margin: 0px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.isSelected_id)
+                                    @Html.LabelFor(L => L.id)
+                                    @Html.TextBoxFor(model => model.id, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(f => f.id, null, new { @class = "red" })
+                                </div>
+                                <div class="col-md-3" style="margin: 0px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.isSelected_Terminal)
+                                    @Html.LabelFor(L => L.id_Terminal)
+                                    @Html.DropDownListFor(model => model.id_Terminal, Terminal, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(f => f.id_Terminal, null, new { @class = "red" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.CheckBoxFor(m => m.isSelected_Categ)
+                                    @Html.LabelFor(l => l.id_Categoria)
+                                    @Html.DropDownListFor(model => model.id_Categoria, Categoria, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(v => v.id_Categoria, null, new { @class = "red" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.CheckBoxFor(m => m.isSelected_subsistema)
+                                    @Html.LabelFor(l => l.id_Subsistema)
+                                    @Html.DropDownListFor(model => model.id_Subsistema, Subsistema, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(v => v.id_Subsistema, null, new { @class = "red" })
+                                </div>
+                            </div>
+                        </div>
+                        //Renglon 1
+                        <div class="row" style="margin:0 0 10px 0">
+                            <div class="col-md-12">
+                                <div class="col-md-3" style="margin: 10px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.isSelected_Status)
+                                    @Html.LabelFor(L => L.status)
+                                    @Html.DropDownListFor(model => model.status, Estatus, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(v => v.status, null, new { @class = "red" })
+                                </div>
+
+                                <div class="col-md-3" style="margin: 10px 0px 0px 0px;">
+                                    @Html.CheckBoxFor(m => m.isSelected_User)
+                                    @Html.LabelFor(l => l.id_User)
+                                    @Html.DropDownListFor(model => model.id_User, Usuario, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(f => f.id_User, null, new { @class = "red" })
+                                </div>
+
+                                <div class="col-md-3" style="margin: 25px 0px 0px 0px;">
+                                    <div style="margin-bottom: 10px;">
+                                        @Html.CheckBoxFor(m => m.is_closed)
+                                        @Html.LabelFor(L => L.is_closed)
+                                    </div>
+                                    <div>
+                                        @Html.CheckBoxFor(m => m.just_closed)
+                                        @Html.LabelFor(l => l.just_closed)
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        //Agrega el boton para hacer la busqueda de acuerdo al filtro seleccionado
+                        <div class="row" style="margin: 5px 0px 0px 0px; text-align:right">
+                            <input type="submit" class="btn btn-lg btn-primary" value="Buscar tickets" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

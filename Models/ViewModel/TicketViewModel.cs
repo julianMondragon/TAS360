@@ -7,9 +7,15 @@ using System.Web.Mvc;
 
 namespace TAS360.Models.ViewModel
 {
+    // Clase que representa el modelo de vista para un ticket
     public class TicketViewModel
     {
- 
+
+        internal List<CurrentList> currentList;
+        public TicketViewModel()
+        {
+            CurrentList2 = new List<CurrentList2>();
+        }
         public int id { get; set; }
         [Required]
         [Display(Name = "Titulo")]
@@ -56,6 +62,8 @@ namespace TAS360.Models.ViewModel
         [Display(Name = "Identificador")]
         public string id_externo { get; set; }
 
+        public bool is_selected { get; set; }
+        public List<CurrentList2> CurrentList2 { get; set; }
     }
 
     public class Archivos
@@ -73,5 +81,11 @@ namespace TAS360.Models.ViewModel
         public string Comentario1 { get; set; }
         public int? id_User { get; set; }
         public DateTime? CreatedAt { get; set; }
+    }
+    // Clase que representa un elemento de la lista CurrentList2
+    public class CurrentList2
+    {
+        public int id { get; set; }
+        public bool is_selected { get; set; }
     }
 }
