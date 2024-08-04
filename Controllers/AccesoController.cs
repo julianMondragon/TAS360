@@ -63,7 +63,7 @@ namespace TAS360.Controllers
                 oLog.Add("Excepción en el controlador de acceso");
                 oLog.Add(ex.Message);
                 oLog = null;
-                ViewBag.exception = ex.Message;
+                ViewBag.exception = ex.Message + "\n Por Favor informar al administrador del sistema";
                 return View();
             }
         }

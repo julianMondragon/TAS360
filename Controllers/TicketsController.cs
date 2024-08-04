@@ -160,11 +160,7 @@ namespace TAS360.Controllers
                             Status = t.status,
                             currentList = currentList
                         });
-                    }
-                    else
-                    {
-                        // No hace nada si el ticket no se encuentra
-                    }
+                    }                    
                 }
             }
             // Devuelve la vista con la lista de modelos de tickets
@@ -1018,9 +1014,8 @@ namespace TAS360.Controllers
             StringBuilder sb = new StringBuilder();
           
             sb.Append("");
-            sb.AppendLine("->Fecha: dd/mm/yyyy");
-            sb.AppendLine("->Reportado por: .....");
-            sb.AppendLine("");
+            sb.AppendLine("->Fecha: " + DateTime.Now);
+            sb.AppendLine("->Reportado por:" + ((User)Session["User"]).nombre);
             sb.AppendLine("->Reporte: .....");
             sb.AppendLine("..............");
             sb.AppendLine("->Problematica: ");
@@ -1038,8 +1033,8 @@ namespace TAS360.Controllers
             StringBuilder sb = new StringBuilder();
 
             sb.Append("");
-            sb.AppendLine("->Fecha: dd/mm/yyyy");
-            sb.AppendLine("");
+            sb.AppendLine("->Fecha: " + DateTime.Now);
+            sb.AppendLine("->Reportado por:" + ((User)Session["User"]).nombre);
             sb.AppendLine("->Reporte:");
             sb.AppendLine(".......");
             sb.AppendLine(".......");
@@ -1090,7 +1085,6 @@ namespace TAS360.Controllers
         /// </summary>
         /// <param name="Filter"></param>
         /// <returns></returns>
-
         [HttpPost]
         public ActionResult Filter_Tickets(FilterTicketsViewModel Filter)
         {
@@ -1100,7 +1094,7 @@ namespace TAS360.Controllers
             GetCategories();
             GetUsuarios();
             //se declara la lista que sera llenada con el resultado del filtro
-            List<CurrentList> currentLists = new List<CurrentList>();
+            List<ListbyFilterTicket> currentLists = new List<ListbyFilterTicket>();
 
             if (ModelState.IsValid) //Valida el modelo
             {
@@ -1123,25 +1117,23 @@ namespace TAS360.Controllers
                             return View(Filter);
                         }
                         //agrega a la lista en curso 
-                        currentLists.Add(new CurrentList() { id = filter.id });
+                        currentLists.Add(new ListbyFilterTicket() { id = filter.id });
                     }
-                    else // entonces busca por el ID ejecuta los demas filtros
+                    else
                     {
                         var listFilter = new List<Ticket>();
-                        //En los siguientes filtros se establece un límite para los tickets
-                        //que se enviarán a la vista para que el url no rebase el másximo de
-                        //longitud permitida, se sugiere posteriormente usar paginación
+
                         if (Filter.is_closed)
                         {
-                            listFilter = db.Ticket.Take(40).ToList();
+                            listFilter = db.Ticket.Take(92).ToList();
                         }
                         else if (Filter.just_closed)
                         {
-                            listFilter = db.Ticket.Where(x => x.status == 12).Take(40).ToList();
+                            listFilter = db.Ticket.Where(x => x.status == 12).Take(92).ToList();
                         }
                         else
                         {
-                            listFilter = db.Ticket.Where(x => x.status != 12).Take(40).ToList();
+                            listFilter = db.Ticket.Where(x => x.status != 12).Take(92).ToList();
                         }
                         if (Filter.isSelected_Terminal)
                         {
@@ -1204,7 +1196,7 @@ namespace TAS360.Controllers
                         //el resultado de la busqueda
                         foreach (var item in listFilter)
                         {
-                            currentLists.Add(new CurrentList() { id = item.id });
+                            currentLists.Add(new ListbyFilterTicket() { id = item.id });
                         }
                     }
                 }
@@ -1214,7 +1206,7 @@ namespace TAS360.Controllers
                 ViewBag.warning = "Filtro no valido";
                 return View(Filter);
             }
-            
+
             // Objeto a enviar
             string encodedCurrentList = "";
             // Serialización y codificación
