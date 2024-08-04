@@ -49,23 +49,27 @@
         </div>
     }
     <div class="row">
-        <div class="col-md-7">
-
-        </div>
         <div class="col-md-5">
 
+        </div>
+        <div class="col-md-7">
+
             <div class="d-flex justify-content-end">
-                <a class="btn btn-default " href="@Url.Content("~/Tickets/index")">Regresar</a>
+                <a class="btn btn-default " href="@Url.Content("~/Tickets/index")">Regresar a Tks</a>
+                @if (Model.status_name != "Cerrado   ")
+                {
+                   <a class="btn btn-primary " href="@Url.Content("~/Tickets/EditTicket/" + (int)Model.id)">Editar</a>
+                }
                 <a class="btn btn-warning " href="@Url.Content("~/Tickets/AddCommentTicket/" + (int)Model.id)">Agregar comentario</a>
                 <a class="btn btn-info " href="@Url.Content("~/Tickets/PrintTicketReport/" + (int)Model.id)">Generar Reporte</a>
                 @*<button onclick="document.location.href = '@Url.Content("~/Pendientes/IndexWithFilter/?encodedCurrentList="+ encodedCurrentList)'"
-                            type="button" class="btn btn-warning" data-toggle="tooltip" title="Regresar al ventana general de pendientes">
-                        Vista General &crarr;
-                    </button>
-                    <button onclick="document.location.href = '@Url.Content("~/Pendientes/ExportTablePendientes/?encodedCurrentList="+ encodedCurrentList)'"
-                            type="button" class="btn btn-info" data-toggle="tooltip" title="Exporta a excel la tabla actual ">
-                        Exportar Listado &pound;
-                    </button>*@
+                type="button" class="btn btn-warning" data-toggle="tooltip" title="Regresar al ventana general de pendientes">
+            Vista General &crarr;
+        </button>
+        <button onclick="document.location.href = '@Url.Content("~/Pendientes/ExportTablePendientes/?encodedCurrentList="+ encodedCurrentList)'"
+                type="button" class="btn btn-info" data-toggle="tooltip" title="Exporta a excel la tabla actual ">
+            Exportar Listado &pound;
+        </button>*@
             </div>
         </div>
     </div>
