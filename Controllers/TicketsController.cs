@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.IO;
+using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -11,11 +12,56 @@ using System.Web.Mvc;
 using TAS360.Filters;
 using TAS360.Models;
 using TAS360.Models.ViewModel;
+using System.Net;
+using System.Net.Mail;
+using DocumentFormat.OpenXml.EMMA;
+
+
 
 namespace TAS360.Controllers
 {
     public class TicketsController : Controller
     {
+        private string contenidoHtml = @"
+                                        <!DOCTYPE html>
+                                        <html lang='es'>
+                                        <head>
+                                            <meta charset='UTF-8'>
+                                            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                                            <title>Actualización de Ticket</title>
+                                            <style>
+                                                body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+                                                .container { width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #dddddd; border-radius: 5px; overflow: hidden; }
+                                                .header { background-color: #4CAF50; color: #ffffff; padding: 20px; text-align: center; }
+                                                .content { padding: 20px; }
+                                                .footer { background-color: #f1f1f1; color: #888888; padding: 10px; text-align: center; }
+                                                .button { display: inline-block; background-color: #4CAF50; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+                                            </style>
+                                        </head>
+                                        <body>
+                                            <div class='container'>
+                                                <div class='header'>
+                                                    <h1>Actualización de Ticket</h1>
+                                                </div>
+                                                <div class='content'>
+                                                    <p>Estimado/a <strong>{usuarioName}</strong>,</p>
+                                                    <p>El ticket <strong>{ticketId}</strong> ha sido actualizado. A continuación se muestran los detalles:</p>
+                                                    <ul>
+                                                        <li><strong>Título:</strong> {titulo}</li>
+                                                        <li><strong>Estado:</strong> {estado}</li>
+                                                        <li><strong>Último Comentario:</strong> {ultimoComentario}</li>
+                                                    </ul>
+                                                    <p>Para más detalles, por favor accede a tu cuenta.</p>
+                                                    <p><a href='{enlaceTicket}' class='button'>Ver Ticket</a></p>
+                                                </div>
+                                                <div class='footer'>
+                                                    <p>Este es un mensaje automático, por favor no responda a este correo.</p>
+                                                    <p>&copy; 2024 HelpDesk PTS</p>
+                                                </div>
+                                            </div>
+                                        </body>
+                                        </html>";
+
         /// <summary>
         /// Devuelve a la vista un listados de los tickets 
         /// Se asigna al  modelo el ultimo registro del ticket a los campos User , RecortStatus, nombre de categoria y subsistema
@@ -44,7 +90,8 @@ namespace TAS360.Controllers
                                 terminal_name = t.Terminal.Nombre,
                                 status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.Status.descripcion,
                                 Subsistema_name = t.Subsistema.Nombre,
-                                Status = t.status
+                                Status = t.status,
+                                id_externo = t.id_externo
                             };
 
                             var lastComment = t.Ticket_Comentario.OrderByDescending(x => x.id).FirstOrDefault();
@@ -54,18 +101,70 @@ namespace TAS360.Controllers
                             }
                             else
                             {
-                                ticketViewModel.LastComent = "Sin respuesta ...";
+                                if (ticketViewModel.mensaje.Count() >= 220)
+                                    ticketViewModel.LastComent = ticketViewModel.mensaje.Substring(0, 220) + "...";
+                                else
+                                    ticketViewModel.LastComent = ticketViewModel.mensaje;
                             }
 
                             tickets.Add(ticketViewModel);
                         }
                         catch(Exception ex) 
                         {
+                            ViewBag.ExceptionMessage = ex.Message;
                         }
                     }
                 }
             }
             return View(tickets);
+        }
+        /// <summary>
+        /// Método que genera la lista de tickets filtrados para posteriormente enviarlos 
+        /// a la vista de IndexWithFilter
+        /// </summary>
+        /// <param name="encodedCurrentList"></param>
+        /// <returns></returns>
+        [AuthorizeUser(idOperacion: 5)]
+        public ActionResult IndexWithFilter(string encodedCurrentList)
+        {
+            // Inicializa la lista
+            List<TicketViewModel> model = new List<TicketViewModel>();
+            List<CurrentList> currentList = new List<CurrentList>();
+            // Decodifica el objeto que recibe
+            var decodedObject = HttpUtility.UrlDecode(encodedCurrentList);
+            currentList = JsonConvert.DeserializeObject<List<CurrentList>>(decodedObject);
+            // Aquí itera sobre cada elemento para crear la lista
+            foreach (var item in currentList)
+            {
+                item.is_selected = false;
+                // Se conecta a la bd
+                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                {
+                    // Busca el ticket correspondiente en la base de datos
+                    var t = db.Ticket.FirstOrDefault(tic => tic.id == item.id);
+                    if (t != null)
+                    {
+                        // Busca el usuario asociado al ticket
+                        var User = db.User.FirstOrDefault(usr => usr.id == t.id_User);
+                        // Va añadiendo a la lista cada TicketViewModel de los tickets existentes
+                        model.Add(new TicketViewModel()
+                        {
+                            id = t.id,
+                            titulo = t.titulo,
+                            mensaje = t.mensaje,
+                            usuario_name = User != null ? User.nombre : "Usuario no encontrado",
+                            categoria_name = t.Categoria != null ? t.Categoria.nombre : "Categoría no encontrada",
+                            terminal_name = t.Terminal != null ? t.Terminal.Nombre : "Terminal no encontrada",
+                            status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.Status.descripcion ?? "Estado no encontrado",
+                            Subsistema_name = t.Subsistema != null ? t.Subsistema.Nombre : "Subsistema no encontrado",
+                            Status = t.status,
+                            currentList = currentList
+                        });
+                    }                    
+                }
+            }
+            // Devuelve la vista con la lista de modelos de tickets
+            return View(model);
         }
 
         /// <summary>
@@ -102,10 +201,11 @@ namespace TAS360.Controllers
                 {
                     string path = Server.MapPath("~/Logs/Tickets/");
                     Log oLog = new Log(path);
+                    int idTicket = 0;
                     using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                     {
                         Ticket ticket = new Ticket();
-                                               
+
                         ticket.titulo = model.titulo;
                         ticket.id_Terminal = model.id_Terminal;
                         ticket.id_Categoria = model.id_Categoria;
@@ -114,13 +214,14 @@ namespace TAS360.Controllers
                         ticket.status = model.Status;
                         ticket.mensaje = model.mensaje;
                         ticket.CreatedAt = DateTime.Now;
+                        ticket.id_externo = model.id_externo;
 
                         //db.Entry(ticket).State = System.Data.Entity.EntityState.Modified;
                         db.Ticket.Add(ticket);
                         db.SaveChanges();
 
-                        int idTicket = db.Ticket.FirstOrDefault(a => a.titulo == model.titulo).id;
-                        oLog.Add("Se creo el Ticket: " + idTicket );
+                        idTicket = db.Ticket.FirstOrDefault(a => a.titulo == model.titulo && a.id_Terminal == model.id_Terminal && a.id_Categoria == model.id_Categoria && a.mensaje == model.mensaje).id;
+                        oLog.Add("Se creo el Ticket: " + idTicket);
                         oLog.Add("Titulo del Ticket: " + model.titulo);
                         oLog.Add("Usuario creador: " + ((User)Session["User"]).nombre);
                         if (idTicket != 0)
@@ -128,6 +229,7 @@ namespace TAS360.Controllers
                             Ticket_Record_Status New_ticket_Record = new Ticket_Record_Status();
                             New_ticket_Record.id_Ticket = idTicket;
                             New_ticket_Record.id_Status = ticket.status;
+                            New_ticket_Record.CreatedAt = DateTime.Now;
 
                             db.Ticket_Record_Status.Add(New_ticket_Record);
                             db.SaveChanges();
@@ -138,13 +240,17 @@ namespace TAS360.Controllers
                             ticket_User.id_Ticket = ticket.id;
                             ticket_User.id_User = (int)model.id_Resp;
                             ticket_User.CreatedAt = DateTime.Now;
-                            
+
                             db.Ticket_User.Add(ticket_User);
                             db.SaveChanges();
                             oLog.Add("Se agrega nuevo usuario asociado al ticket: " + model.id_Resp);
-                            
+
                         }
                     }
+
+                    //Envia correo
+                    //EnviarCorreo("emiliano.garcia@pts.mx", "Actualización de Ticket", contenidoHtml);
+                    sendEmailUpdateTK(idTicket,(int)model.id_Resp, ((User)Session["User"]).id);
 
                     return Redirect("~/Tickets/Index");
                 }
@@ -218,6 +324,7 @@ namespace TAS360.Controllers
                     myticket.id = id;
                     myticket.titulo = ticket.titulo;
                     myticket.mensaje = ticket.mensaje;
+                    myticket.id_externo = ticket.id_externo;
                     myticket.usuario_name = ticket.Ticket_User.OrderByDescending(u => u.CreatedAt).FirstOrDefault().User.nombre;
                     myticket.categoria_name = ticket.Categoria.nombre;
                     myticket.status_name = db.Ticket_Record_Status.Where(x => x.id_Ticket == id).OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion;
@@ -269,6 +376,11 @@ namespace TAS360.Controllers
             return View(myticket);
         }
 
+        /// <summary>
+        /// Metodo que se encarga de hacer la plantilla del reporte del ticket para ser impreso
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult TicketReport(int id)
         {
             TicketViewModel myticket = new TicketViewModel();
@@ -331,6 +443,11 @@ namespace TAS360.Controllers
             return View(myticket);
         }
 
+        /// <summary>
+        /// Metodo encargado de imprimir el reporte de un ticket por su id. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult PrintTicketReport(int id)
         {
             return new ActionAsPdf($"TicketReport/{id}")
@@ -356,6 +473,8 @@ namespace TAS360.Controllers
                 ticket.Status = T.status;
                 ticket.titulo = T.titulo;
                 ticket.mensaje = T.mensaje;
+                //Asignar el usuario.
+                ticket.id_Usuario = db.Ticket_User.Where(a => a.id_Ticket == id).OrderByDescending(a => a.CreatedAt).FirstOrDefault().id_User;
             }
 
             Comentarios comentario = new Comentarios();
@@ -389,10 +508,7 @@ namespace TAS360.Controllers
                 bool StatusChanged = false;
                 using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                 {
-                    var t = db.Ticket.Find(ticket.id);                    
-                    ticket.id_Resp = t.Ticket_User.OrderByDescending(a => a.CreatedAt).FirstOrDefault().id_User;
-                    
-
+                    var t = db.Ticket.Find(ticket.id);  
                     oLog.Add("Status actual del Ticket: " + t.status );
                     oLog.Add("Nuevo Status para el Ticket: " + ticket.Status);
                     oLog.Add("Valida status");
@@ -448,22 +564,29 @@ namespace TAS360.Controllers
                         oLog.Add("Guardo una relacion entre el ticket y el comentario");
                     }
 
-                    if (ticket.id_Resp != db.Ticket_User.OrderByDescending(a => a.CreatedAt).FirstOrDefault().id_User)
+                    if (ticket.id_Usuario != db.Ticket_User.Where(x => x.id_Ticket == ticket.id).OrderByDescending(a => a.CreatedAt).FirstOrDefault().id_User)
                     {
                         
                         Ticket_User ticket_User = new Ticket_User();
                         ticket_User.id_Ticket = ticket.id;
-                        ticket_User.id_User = (int)ticket.id_Resp;
+                        ticket_User.id_User = (int)ticket.id_Usuario;
                         ticket_User.CreatedAt = DateTime.Now;
 
                         db.Ticket_User.Add(ticket_User);
+                        db.SaveChanges();
+                        
+                        var Ticket = db.Ticket.Find(ticket.id);
+                        oLog.Add("id_User: " + ticket.id_Resp);
+                        Ticket.id_User = ticket.id_Resp;
+                        db.Entry(Ticket).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
                         //Logs
                         oLog.Add("actual Responsable user id : " + db.Ticket_User.OrderByDescending(a => a.CreatedAt).FirstOrDefault().id_User);
                         oLog.Add("Se agrega una relacion entre usuario responsable y ticket");                                             
                         oLog.Add("Nuevo id User: " + ticket_User.id_User);
                     }
-                    
+
+                    sendEmailUpdateTK(ticket.id, (int)ticket.id_Usuario, ((User)Session["User"]).id);
                 }
             }
             catch(Exception ex)
@@ -508,6 +631,7 @@ namespace TAS360.Controllers
                 ticket.id_Terminal = t.id_Terminal;
                 ticket.id_Categoria = t.id_Categoria;
                 ticket.id_Subsistema = t.id_Subsistema;
+                ticket.id_externo = t.id_externo;
                 ticket.id_Resp = t.Ticket_User.OrderByDescending(u => u.CreatedAt).First().id_User;
                 ticket.Status = t.Ticket_Record_Status.Where(s => s.id_Ticket == t.id).OrderByDescending(s => s.CreatedAt).FirstOrDefault().id_Status;
                 ticket.mensaje = t.mensaje;
@@ -556,6 +680,8 @@ namespace TAS360.Controllers
                         Ticket.status = ticket.Status;
                         oLog.Add("Mensaje: " + Ticket.mensaje);
                         Ticket.mensaje = ticket.mensaje;
+                        oLog.Add("Identificador: " + Ticket.id_externo);
+                        Ticket.id_externo = ticket.id_externo;
 
                         db.Entry(Ticket).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
@@ -566,8 +692,10 @@ namespace TAS360.Controllers
                         oLog.Add("Nuevo Subsistema: " + ticket.id_Subsistema);
                         oLog.Add("Nuevo Usuario: " + Ticket.id_User);
                         oLog.Add("Nuevo Mensaje: " + ticket.mensaje);
+                        oLog.Add("Nuevo Identificador: " + ticket.id_externo);
                     }
-
+                    //Envia correo sobre la actualizacion del ticket
+                    sendEmailUpdateTK(ticket.id, (int)ticket.id_Resp, ((User)Session["User"]).id);
                     return Redirect("~/Tickets/ShowTicket/" + ticket.id);
                 }
                 else
@@ -886,9 +1014,8 @@ namespace TAS360.Controllers
             StringBuilder sb = new StringBuilder();
           
             sb.Append("");
-            sb.AppendLine("->Fecha: dd/mm/yyyy");
-            sb.AppendLine("->Reportado por: .....");
-            sb.AppendLine("");
+            sb.AppendLine("->Fecha: " + DateTime.Now);
+            sb.AppendLine("->Reportado por:" + ((User)Session["User"]).nombre);
             sb.AppendLine("->Reporte: .....");
             sb.AppendLine("..............");
             sb.AppendLine("->Problematica: ");
@@ -906,8 +1033,8 @@ namespace TAS360.Controllers
             StringBuilder sb = new StringBuilder();
 
             sb.Append("");
-            sb.AppendLine("->Fecha: dd/mm/yyyy");
-            sb.AppendLine("");
+            sb.AppendLine("->Fecha: " + DateTime.Now);
+            sb.AppendLine("->Reportado por:" + ((User)Session["User"]).nombre);
             sb.AppendLine("->Reporte:");
             sb.AppendLine(".......");
             sb.AppendLine(".......");
@@ -935,5 +1062,254 @@ namespace TAS360.Controllers
             }         
             return sb.ToString();
         }
+
+
+        /// <summary>
+        /// Este metodo obtiene los datos de los tickets existentes
+        /// </summary>
+        /// <returns> FilterTicketsViewModel </returns>
+        [HttpGet]
+        public ActionResult Filter_Tickets()
+        {
+            FilterTicketsViewModel Filter = new FilterTicketsViewModel() { id_Terminal = 1};
+            GetTerminales();
+            GetSubsistemas();
+            GetStatus(1);
+            GetCategories();
+            GetUsuarios();
+            return View(Filter);
+        }
+
+        /// <summary>
+        /// Devuelve a la vista un objeto para filtrar el ticket
+        /// </summary>
+        /// <param name="Filter"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Filter_Tickets(FilterTicketsViewModel Filter)
+        {
+            GetTerminales();
+            GetSubsistemas();
+            GetStatus(1);
+            GetCategories();
+            GetUsuarios();
+            //se declara la lista que sera llenada con el resultado del filtro
+            List<ListbyFilterTicket> currentLists = new List<ListbyFilterTicket>();
+
+            if (ModelState.IsValid) //Valida el modelo
+            {
+                if (Filter.just_closed && Filter.is_closed)
+                {
+                    //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                    ViewBag.warning = "Query Error: No puedes seleccionar los dos ultimos checkbox juntos para realizar una busqueda ";
+                    return View(Filter);
+                }
+                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                {
+                    if (Filter.isSelected_id) //si el Id fue seleccionado
+                    {
+                        //realiza la busqueda por el ID
+                        Ticket filter = db.Ticket.Find(Filter.id);
+                        if (filter == null) // si la busqueda por el id es null
+                        {
+                            //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                            ViewBag.warning = "Ningun registro coicide con el id: " + Filter.id;
+                            return View(Filter);
+                        }
+                        //agrega a la lista en curso 
+                        currentLists.Add(new ListbyFilterTicket() { id = filter.id });
+                    }
+                    else
+                    {
+                        var listFilter = new List<Ticket>();
+
+                        if (Filter.is_closed)
+                        {
+                            listFilter = db.Ticket.Take(92).ToList();
+                        }
+                        else if (Filter.just_closed)
+                        {
+                            listFilter = db.Ticket.Where(x => x.status == 12).Take(92).ToList();
+                        }
+                        else
+                        {
+                            listFilter = db.Ticket.Where(x => x.status != 12).Take(92).ToList();
+                        }
+                        if (Filter.isSelected_Terminal)
+                        {
+                            listFilter = listFilter.Where(t => t.id_Terminal == Filter.id_Terminal).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con la terminal: " + Filter.id_Terminal;
+                                return View(Filter);
+
+                            }
+                        }
+                        if (Filter.isSelected_Categ)
+                        {
+                            listFilter = listFilter.Where(t => t.id_Categoria == Filter.id_Categoria).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con la Categoría: " + Filter.id_Categoria;
+                                return View(Filter);
+
+                            }
+                        }
+                        if (Filter.isSelected_subsistema)
+                        {
+                            listFilter = listFilter.Where(t => t.id_Subsistema == Filter.id_Subsistema).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con el Subsistema: " + Filter.id_Subsistema;
+                                return View(Filter);
+
+                            }
+                        }
+                        if (Filter.isSelected_Status)
+                        {
+                            listFilter = listFilter.Where(t => t.status == Filter.status).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con el estatus: " + Filter.status;
+                                return View(Filter);
+
+                            }
+                        }
+
+                        if (Filter.isSelected_User)
+                        {
+                            //Aquí también se establece un límite de 40 tickets a enviar a la lista de la vista
+                            listFilter = listFilter.Where(t => t.id_User == Filter.id_User).Take(40).ToList();
+                            if (listFilter.Count() < 1)
+                            {
+                                //devuelve a la vista el modelo y un mensaje de busqueda sin resultados
+                                ViewBag.warning = "Ningun registro coicide con usuario: " + Filter.id_User;
+                                return View(Filter);
+
+                            }
+                        }
+
+                        //el resultado de la busqueda
+                        foreach (var item in listFilter)
+                        {
+                            currentLists.Add(new ListbyFilterTicket() { id = item.id });
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ViewBag.warning = "Filtro no valido";
+                return View(Filter);
+            }
+
+            // Objeto a enviar
+            string encodedCurrentList = "";
+            // Serialización y codificación
+            var serializedObject = JsonConvert.SerializeObject(currentLists);
+            encodedCurrentList = HttpUtility.UrlEncode(serializedObject);
+            // Creación de la URL con la cadena de consulta
+            var url = "IndexWithFilter/?encodedCurrentList=" + encodedCurrentList;
+            // Redirecciona a la URL 
+            return Redirect(url);
+            //return View("IndexWithFilter", encodedCurrentList);
+        }
+
+        /// <summary>
+        /// Metodo que envia correo de un nuevo ticket
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="id_subjet"></param>
+        /// <param name="id_from"></param>
+        public void sendEmailUpdateTK(int idtk , int id_subjet , int id_from)
+        {
+            try
+            {
+                //logs
+                string path = Server.MapPath("~/Logs/Emails/");
+            Log oLog = new Log(path);
+            TicketViewModel ticket = new TicketViewModel();
+            string origen, destinatario;
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            {
+                var subjet = (from u in db.User where u.id == id_subjet select u).FirstOrDefault();
+                destinatario = subjet.email;
+                var from = (from u in db.User where u.id == id_from select u).FirstOrDefault();
+                origen = from.email;
+                var tk = db.Ticket.Find(idtk);
+                ticket.titulo = tk.titulo;
+                    // Obtener el último comentario del ticket
+                    var lastComment = db.Ticket_Comentario
+                                        .Where(x => x.id_Ticket == tk.id)
+                                        .OrderByDescending(x => x.id)
+                                        .FirstOrDefault();
+
+                    // Asignar el mensaje del ticket basado en la existencia del último comentario
+                    ticket.mensaje = lastComment?.Comentario.Comentario1 ?? tk.mensaje;
+                    //Remplaza el contenido del mensaje. 
+                    contenidoHtml = contenidoHtml.Replace("{usuarioName}", subjet.nombre)
+                             .Replace("{ticketId}", tk.id.ToString())
+                             .Replace("{titulo}", tk.titulo.ToString())
+                             .Replace("{estado}", "Pendiente")
+                             .Replace("{ultimoComentario}", tk.mensaje)
+                             .Replace("{enlaceTicket}", "https://pts-tools.com.mx/Tickets/ShowTicket/" + tk.id);                
+            }
+
+            // Configuración del cliente SMTP
+            SmtpClient clienteSmtp = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new NetworkCredential("soporte.tas360@pts.mx", "03Jun#2024"),
+                EnableSsl = true
+            };
+
+            // Crear el mensaje de correo
+            MailMessage mensaje = new MailMessage
+            {
+                From = new MailAddress("soporte.tas360@pts.mx"),
+                Subject = ticket.titulo,
+                Body = contenidoHtml,
+                IsBodyHtml = true // Si el cuerpo del correo es HTML
+            };
+
+            // Añadir destinatario
+            mensaje.To.Add(destinatario);
+            // Añadir en copia (CC)
+            mensaje.CC.Add(origen);
+            // Enviar el correo
+            clienteSmtp.Send(mensaje);
+            oLog.Add("---------------------------");
+            oLog.Add($"Correo enviado exitosamente a {destinatario} sobre actualización del ticket.");
+            oLog.Add($"Asunto: {ticket.titulo} ");
+            oLog.Add($"Cuerpo: {ticket.mensaje} ");
+            //Devuelve un mensaje exitoso a la vista 
+            ViewBag.InfoMessage = $"Correo enviado exitosamente a {destinatario} sobre actualización del ticket.";
+            }
+            catch (SmtpException smtpEx)
+            {
+                //logs
+                string path = Server.MapPath("~/Logs/Emails/");
+                Log oLog = new Log(path);
+                oLog.Add($"SMTP Error al enviar el correo: {smtpEx.Message}  Status Code: {smtpEx.StatusCode}");
+                ViewBag.ExceptionMessage = "SMTP Error al enviar el correo: " + smtpEx.Message + " Status Code: " + smtpEx.StatusCode;
+                if (smtpEx.InnerException != null)
+                {
+                    oLog.Add(" Inner Exception: " + smtpEx.InnerException.Message);
+                    ViewBag.ExceptionMessage += " Inner Exception: " + smtpEx.InnerException.Message;
+                }
+            }
+            catch (Exception ex)
+            {
+                //logs
+                string path = Server.MapPath("~/Logs/Emails/");
+                Log oLog = new Log(path);
+                oLog.Add($"Exception al enviar el correo: {ex.Message}");
+                ViewBag.ExceptionMessage = "Exception al enviar el correo: " + ex.Message;
+            }
+        }
+
     }
 }

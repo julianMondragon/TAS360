@@ -60,10 +60,16 @@
                                                 @Html.DropDownListFor(model => model.id_Resp, Usuarios, new { @class = "form-control" })
                                             </div>
 
-                                            <div class="col-lg-10">
+                                            <div class="col-lg-8">
                                                 @Html.LabelFor(f => f.titulo)
                                                 @Html.TextBoxFor(f => f.titulo, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(f => f.titulo, null, new { @class = "red" })
+                                            </div>
+
+                                            <div class="col-lg-2">
+                                                @Html.LabelFor(f => f.id_externo)
+                                                @Html.TextBoxFor(f => f.id_externo, new { @class = "form-control", @title = "Identificador con el Help Desk de susess" })
+                                                @Html.ValidationMessageFor(f => f.id_externo, null, new { @class = "red" })
                                             </div>
 
                                             <div class="col-md-10">

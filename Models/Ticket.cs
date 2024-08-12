@@ -33,10 +33,13 @@ namespace TAS360.Models
         public Nullable<int> id_Subsistema { get; set; }
         public Nullable<int> status { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
+        public string id_externo { get; set; }
+        public Nullable<int> id_prioridad { get; set; }
     
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pendiente> Pendiente { get; set; }
+        public virtual Prioridad_de_Pendiente Prioridad_de_Pendiente { get; set; }
         public virtual Subsistema Subsistema { get; set; }
         public virtual Terminal Terminal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
