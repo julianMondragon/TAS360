@@ -1,19 +1,38 @@
 ﻿@model List<TAS360.Models.ViewModel.TicketViewModel>
 @{
     ViewBag.Title = "Mis Tickets";
+    string exception = ViewBag.ExceptionMessage;
+    string Info = ViewBag.InfoMessage;
 }
 
 <div class="jumbotron">
     <h1>Mis Tickets</h1>
     <p class="lead">Todos los tickets abiertos ( @Model.Count() ) ordenados por fecha descendente</p>
-    <p class="lead">
-        <a onclick="document.location.href = '@Url.Content("~/Tickets/CreateTicket")'" class="btn btn-success">Crear un Ticket &raquo;</a>
-    </p>
+<p class="lead">
+    <a onclick="document.location.href = '@Url.Content("~/Tickets/CreateTicket")'" class="btn btn-success">Crear un Ticket &raquo;</a>
+    @*Se agrega un botón para que de Index de tickets te envíe a la vista del 
+    filtro de tickets*@ 
+    <button onclick="document.location.href = '@Url.Content("~/Tickets/Filter_Tickets")'" type="button" class="btn btn-warning" data-toggle="tooltip" title="Realiza un filtrado personalizado de los pendientes ">
+        Filtrado &fnof;
+    </button>
+</p>
+    @if (exception != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @exception
+        </div>
+    }
+    @if (Info != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @Info
+        </div>
+    }
     <div class="row">
         <div class="col-md-8"></div>
         <div class="col-md-4">
             <div class="d-flex justify-content-end">
-                <input type="text" id="searchInput" placeholder="Busqueda global"  title="Busca cualquier concidencia del cuadro de busqueda con los tickets actuales">
+                <input type="text" id="searchInput" placeholder="Busqueda global" title="Busca cualquier concidencia del cuadro de busqueda con los tickets actuales">
                 <button onclick="filterTable()" class="btn btn-primary" title="Busca cualquier concidencia del cuadro de busqueda con los tickets actuales">Buscar</button>
             </div>
         </div>

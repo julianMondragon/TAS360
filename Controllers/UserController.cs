@@ -142,7 +142,8 @@ namespace TAS360.Controllers
                             createdAt = DateTime.Now,
                             nombre = model.nombre,
                             email = model.email,
-                            password = model.password
+                            password = model.password,
+                            id_Roll = 3
                         };
 
                         db.User.Add(newUser);

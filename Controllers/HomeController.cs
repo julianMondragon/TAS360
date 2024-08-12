@@ -12,7 +12,6 @@ namespace TAS360.Controllers
     {
         public ActionResult Home()
         {
-            GetSummaryTKs();
             return View();
         }
         public ActionResult Index()
