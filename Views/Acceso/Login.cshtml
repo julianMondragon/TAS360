@@ -15,90 +15,16 @@
         </div>
 
         <h2>Iniciar Sesión</h2>
-<style>
-    /* Centrar el contenedor de inicio de sesión */
-    .login-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f8f9fa;
-    }
 
-    /* Cuadro de inicio de sesión */
-    .login-box {
-        position: relative;
-        background: white;
-        padding: 10rem;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 600px;
-        text-align: center;
-    }
-
-    /* Imagen en la esquina superior izquierda */
-    .thumbnail {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-    }
-
-        .thumbnail img {
-            max-width: 150px;
-            height: auto;
-        }
-
-    /* Encabezado de inicio de sesión */
-    .login-box h2 {
-        margin-bottom: 1.5rem;
-        text-align: center;
-    }
-
-    /* Mensaje de error */
-    .error-message {
-        font-size: 1rem;
-        color: red;
-    }
-
-    /* Alinear texto a la izquierda */
-    .form-group label {
-        text-align: left;
-        display: block;
-        margin-bottom: 0.5rem;
-    }
-
-    /* Botones en la misma línea */
-    .button-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 1rem;
-    }
-
-    /* Estilo para el enlace de recuperar contraseña */
-    .forgot-password {
-        margin-top: 1rem;
-        text-align: center;
-    }
-</style>
-
-<div class="login-container">
-    <div class="login-box">
-        <div class="thumbnail">
-            <img src="https://pts-tools.com.mx/Content/img/proftech-logo-01.png" alt="PTS-TOOLS Logo" />
-        </div>
-        <button onclick="document.location.href = '@Url.Content("~/Home/home")'" type="button" class="btn btn-success" data-toggle="tooltip" title="Se abrirá la página principal de HELP DESK de PTS">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="22" height="22"><!--!Font Awesome Free 6.5.2 by fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" /></svg> Home
-        </button>
-        @*<h2>Iniciar Sesión</h2>*@
         @using (Html.BeginForm("Login", "Acceso", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
+
             <div class="form-group">
                 <label for="user">E-mail:</label>
                 <input class="form-control" type="email" id="user" name="user" required />
             </div>
+
             <div class="form-group password-container">
                 <label for="pass">Contraseña:</label>
                 <input class="form-control" type="password" id="pass" name="pass" required />
@@ -114,18 +40,6 @@
 
             <!-- Enlace para recuperar contraseña -->
             <div class="forgot-password">
-            <!-- Contraseña -->
-            <div class="form-group">
-                <label for="pass">Contraseña:</label>
-                <input class="form-control" type="password" id="pass" name="pass" required />
-            </div>
-            <!-- Botones de Ingresar y Home en la misma línea -->
-            <div class="button-container">
-                <input type="submit" class="btn btn-primary" value="Ingresar" />
-            </div>
-            <!-- Enlace para recuperar contraseña -->
-            <div class="forgot-password">
-
                 @if (exception != null)
                 {
                     <pre class="error-message">@exception</pre>
@@ -135,11 +49,11 @@
         }
     </div>
 </div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const togglePassword = document.querySelector("#togglePassword");
         const password = document.querySelector("#pass");
-
         togglePassword.addEventListener("click", function (e) {
             const type = password.getAttribute("type") === "password" ? "text" : "password";
             password.setAttribute("type", type);
@@ -147,4 +61,3 @@
         });
     });
 </script>
-
