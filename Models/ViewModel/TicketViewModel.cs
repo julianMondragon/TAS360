@@ -88,4 +88,9 @@ namespace TAS360.Models.ViewModel
         public int id { get; set; }
         public bool is_selected { get; set; }
     }
+
+    public class ListbyFilterTicket 
+    {
+        public int id { get; set; }
+    }
 }
