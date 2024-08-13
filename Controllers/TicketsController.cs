@@ -15,6 +15,7 @@ using TAS360.Models.ViewModel;
 using System.Net;
 using System.Net.Mail;
 using DocumentFormat.OpenXml.EMMA;
+using System.EnterpriseServices.Internal;
 
 
 
@@ -328,9 +329,13 @@ namespace TAS360.Controllers
                     myticket.usuario_name = ticket.Ticket_User.OrderByDescending(u => u.CreatedAt).FirstOrDefault().User.nombre;
                     myticket.categoria_name = ticket.Categoria.nombre;
                     myticket.status_name = db.Ticket_Record_Status.Where(x => x.id_Ticket == id).OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion;
-                    myticket.terminal_name = db.Terminal.Where(x => x.id == ticket.id_Terminal).FirstOrDefault().Nombre;
+                    myticket.terminal_name = db.Terminal.Where(x => x.id == ticket.id_Terminal).FirstOrDefault().Nombre; 
+                    
+
+
                     //Lista de status
                     myticket.RecordStatus = new List<string>();
+
                     foreach (var status in db.Ticket_Record_Status.Where(x => x.id_Ticket == id))
                     {
                         myticket.RecordStatus.Add(status.Status.descripcion);
@@ -340,7 +345,9 @@ namespace TAS360.Controllers
                     //Lista de Files
                     myticket.Files = new List<Archivos>();
                     foreach (var file in files)
+
                     {
+
 
                         myticket.Files.Add(new Archivos
                         {
@@ -396,6 +403,9 @@ namespace TAS360.Controllers
                     myticket.categoria_name = ticket.Categoria.nombre;
                     myticket.status_name = db.Ticket_Record_Status.Where(x => x.id_Ticket == id).OrderByDescending(x => x.CreatedAt).FirstOrDefault().Status.descripcion;
                     myticket.terminal_name = db.Terminal.Where(x => x.id == ticket.id_Terminal).FirstOrDefault().Nombre;
+
+
+                  
                     //Lista de status
                     myticket.RecordStatus = new List<string>();
                     foreach (var status in db.Ticket_Record_Status.Where(x => x.id_Ticket == id))
@@ -413,20 +423,38 @@ namespace TAS360.Controllers
                         {
                             id = file.Files.id,
                             Nombre = file.Files.Nombre,
-                            //Local
+                           //Local
                             //URL = (file.Files.URL.Replace("C:\\Projects\\PTS\\TAS360", "")).Replace("\\","/")
-                            //Plesk
+                           //Plesk
                             URL = (file.Files.URL.Replace("C:\\Inetpub\\vhosts\\pts-tools.com.mx\\httpdocs\\softwaretool", "")).Replace("\\", "/")
-                        });
+                        }); 
                     }
                     //Comentarios
+
+                                     
                     if (db.Ticket_Comentario.Where(c => c.id_Ticket == id).Any())
                     {
                         var coms = db.Ticket_Comentario.Where(c => c.id_Ticket == id);
+
+
                         foreach (var com in coms)
                         {
-
-                            myticket.mensaje += ("\n" + com.Comentario.Comentario1);
+                            
+                            if (com.Comentario.Comentario1.Contains("Cambio de Status a:"))
+                            {
+                                myticket.mensaje += (com.Comentario.Comentario1);
+                            }
+                            else
+                            {
+                                string formattedDate = "********";
+                                if (com.Comentario.CreatedAt != null)
+                                {
+                                    var Date = (DateTime)com.Comentario.CreatedAt;
+                                    formattedDate = Date.ToString("dd-MM-yyyy");
+                                }
+                                myticket.mensaje += ("\n*****************************************************" + "\n----------------------------------------- " + formattedDate + "\n * Sin cambio de Status." + "\n" + "---------------------------------------------------- \n" + "***************************************************** \n" + com.Comentario.Comentario1 + "\n");
+                            }
+                            
                         }
                     }
                 }
