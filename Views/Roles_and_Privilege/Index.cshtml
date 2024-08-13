@@ -1,0 +1,274 @@
+﻿@model TAS360.Models.ViewModel.RolesPrivilegesViewModel
+@{
+    ViewBag.Title = "Roles & Privilegos";
+    string exception = ViewBag.ExceptionMessage;
+    string Info = ViewBag.InfoMessage;
+    List<SelectListItem> Usuarios = (List<SelectListItem>)ViewBag.Usuarios;
+}
+
+<div class="jumbotron">
+    <h1>Roles & Privilegos</h1>
+    <p class="lead">Tod@s las Operaciones, Modulos, Usuarios, Roles & Privilegios del sistema </p>
+    <p class="lead">
+        @*<a onclick="document.location.href = '@Url.Content("~/Tickets/CreateTicket")'" class="btn btn-success">Crear un Ticket &raquo;</a>*@
+        @*Se agrega un botón para que de Index de tickets te envíe a la vista del
+            filtro de tickets*@
+        @*<button onclick="document.location.href = '@Url.Content("~/Tickets/Filter_Tickets")'" type="button" class="btn btn-warning" data-toggle="tooltip" title="Realiza un filtrado personalizado de los pendientes ">
+                Filtrado &fnof;
+            </button>*@
+    </p>
+    @if (exception != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @exception
+        </div>
+    }
+    @if (Info != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @Info
+        </div>
+    }
+    @*<div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="d-flex justify-content-end">
+                    <input type="text" id="searchInput" placeholder="Busqueda global" title="Busca cualquier concidencia del cuadro de busqueda con los tickets actuales">
+                    <button onclick="filterTable()" class="btn btn-primary" title="Busca cualquier concidencia del cuadro de busqueda con los tickets actuales">Buscar</button>
+                </div>
+            </div>
+        </div>*@
+</div>
+<!--Tablas -->
+<div class="row">
+    @*tabla Operaciones *@
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <b>Operaciones</b>
+            </div>
+            <div class="panel-body">
+                <table id="ticketsTable" class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var operacion in Model.Operacions)
+
+                            {
+                                <tr>
+                                    <td colspan="1"> <a href="@Url.Content("~/"  + operacion.id)">@operacion.id</a> </td>
+                                    <td colspan="1"> @operacion.nombre</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @*tabla Rol_Operacion Administrador *@
+    <div class="col-md-3">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <b>Privilegios Administrador (@Model.Rol_OperacionAdmin.Count)</b>
+            </div>
+            <div class="panel-body">
+                <table id="ticketsTable" class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            @*<th colspan="2">Rol</th>*@
+                            <th scope="col">Operacion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var RO in Model.Rol_OperacionAdmin)
+
+                            {
+                                int i = (int)RO.id_Roll;
+                                int e = (int)RO.id_Operacion;
+                                <tr>
+                                    <td>@RO.id</td>
+                                    @*<td colspan="2"> @Model.Rolls.Find(x => x.id == i).nombre</td>*@
+                                    <td colspan="2"> @Model.Operacions.Find(x => x.id == e).nombre </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @*tabla Rol_Operacion Responsable*@
+    <div class="col-md-3">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <b>Privilegios de Responsable (@Model.Rol_OperacionResp.Count)</b>
+            </div>
+            <div class="panel-body">
+                <table id="ticketsTable" class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            @*<th colspan="2">Rol</th>*@
+                            <th scope="col">Operacion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var RO in Model.Rol_OperacionResp)
+
+                            {
+                                int i = (int)RO.id_Roll;
+                                int e = (int)RO.id_Operacion;
+                                <tr>
+                                    <td>@RO.id</td>
+                                    @*<td colspan="2"> @Model.Rolls.Find(x => x.id == i).nombre</td>*@
+                                    <td colspan="2"> @Model.Operacions.Find(x => x.id == e).nombre </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @*tabla Rol_Operacion Contacto*@
+    <div class="col-md-3">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <b>Privilegios de Contacto (@Model.Rol_OperacionContac.Count)</b>
+            </div>
+            <div class="panel-body">
+                <table id="ticketsTable" class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            @*<th colspan="2">Rol</th>*@
+                            <th scope="col">Operacion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var RO in Model.Rol_OperacionContac)
+
+                            {
+                                int i = (int)RO.id_Roll;
+                                int e = (int)RO.id_Operacion;
+                                <tr>
+                                    <td>@RO.id</td>
+                                    @*<td colspan="2"> @Model.Rolls.Find(x => x.id == i).nombre</td>*@
+                                    <td colspan="2"> @Model.Operacions.Find(x => x.id == e).nombre </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @*tabla Modulos *@
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <b>Modulos</b>
+            </div>
+            <div class="panel-body">
+                <table id="ticketsTable" class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th colspan="2">Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var module in Model.Modules)
+
+                            {
+                                <tr>
+                                    <td colspan="1"> <a href="@Url.Content("~/"  + module.id)">@module.id</a> </td>
+                                    <td colspan="2"> @module.nombre</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @*Tabla de Roles*@
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <b>Roles</b>
+            </div>
+            <div class="panel-body">
+                <table id="ticketsTable" class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th colspan="2">Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var roll in Model.Rolls)
+
+                            {
+                                <tr>
+                                    <td colspan="1"> <a href="@Url.Content("~/"  + roll.id)">@roll.id</a> </td>
+                                    <td colspan="2"> @roll.nombre</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @*Tabla de Usuarios*@
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <b>Usuarios</b>
+            </div>
+            <div class="panel-body">
+                <table id="ticketsTable" class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Usuario</th>
+                            <th colspan="2">Rol</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var user in Usuarios)
+
+                            {
+                                <tr>
+                                    <td colspan="1"> <a href="@Url.Content("~/")">@user.Value</a> </td>
+                                    <td colspan="2"> @user.Text</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

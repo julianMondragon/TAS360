@@ -162,6 +162,7 @@
     <Compile Include="Controllers\LSAController.cs" />
     <Compile Include="Controllers\PendientesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\Roles_and_PrivilegeController.cs" />
     <Compile Include="Controllers\TablaCubController.cs" />
     <Compile Include="Controllers\TerminalController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
@@ -412,6 +413,7 @@
     <Compile Include="Models\ViewModel\PuertoSerialViewModel.cs" />
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
     <Compile Include="Models\ViewModel\RepTotalizadoViewModel.cs" />
+    <Compile Include="Models\ViewModel\RolesPrivilegesViewModel.cs" />
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
     <Compile Include="Models\ViewModel\SocketViewModel.cs" />
     <Compile Include="Models\ViewModel\TablaCubViewModel.cs" />
@@ -943,6 +945,7 @@
     <Content Include="Views\Tickets\IndexWithFilter.cshtml" />
     <Content Include="Views\LSA\SLAReport.cshtml" />
     <Content Include="Views\Acceso\RecuperarContraseña.cshtml" />
+    <Content Include="Views\Roles_and_Privilege\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
