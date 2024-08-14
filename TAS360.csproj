@@ -409,6 +409,7 @@
     <Compile Include="Models\ViewModel\G_TicketsByStatusViewModel.cs" />
     <Compile Include="Models\ViewModel\G_TicketsByTerminalViewModel.cs" />
     <Compile Include="Models\ViewModel\ListUsuarioViewModel.cs" />
+    <Compile Include="Models\ViewModel\ModuloViewModel.cs" />
     <Compile Include="Models\ViewModel\PendientesViewModel.cs" />
     <Compile Include="Models\ViewModel\PuertoSerialViewModel.cs" />
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
@@ -946,6 +947,9 @@
     <Content Include="Views\LSA\SLAReport.cshtml" />
     <Content Include="Views\Acceso\RecuperarContraseña.cshtml" />
     <Content Include="Views\Roles_and_Privilege\Index.cshtml" />
+    <Content Include="Views\Roles_and_Privilege\AddModule.cshtml" />
+    <Content Include="Views\Roles_and_Privilege\AddOperation.cshtml" />
+    <Content Include="Views\Roles_and_Privilege\AddRol.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

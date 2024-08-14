@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Agregar Roles";
+    string exception = ViewBag.ExceptionMessage;
+    string Info = ViewBag.InfoMessage;
+}
+<div class="jumbotron">
+    <h1>Agregar Rol</h1>
+    <p class="lead"></p>
+    <p class="lead">
+    </p>
+    @if (exception != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @exception
+        </div>
+    }
+    @if (Info != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @Info
+        </div>
+    }
+</div>
