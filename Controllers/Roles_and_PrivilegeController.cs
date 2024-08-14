@@ -86,7 +86,7 @@ namespace TAS360.Controllers
                 else
                 {
                     int count = 0;
-                    while (count < 4)
+                    while (count < 3)
                     {
                         rolesPrivileges.Rol_OperacionVist.Add(new Roll_Operacion()
                         {
@@ -131,7 +131,7 @@ namespace TAS360.Controllers
                         ViewBag.InfoMessage = "Inicia sesion para crear un pendiente ";
                         return View(model);
                     }
-                    string path = Server.MapPath("~/Logs/RolesPriv/");
+                    string path = Server.MapPath("~/Logs/RolesPriv/AddModule/");
                     Log oLog = new Log(path);
                     using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                     {
@@ -189,9 +189,67 @@ namespace TAS360.Controllers
         [HttpGet]
         public ActionResult AddRol()
         {
-            return View();
+            RollViewModel model = new RollViewModel();
+            return View(model);
         }
-       
+        /// <summary>
+        /// Metodo Post para agregar roles.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AddRol(RollViewModel model)
+        {
+            User user = (User)Session["User"];
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (user == null)
+                    {
+                        ViewBag.InfoMessage = "Inicia sesion para crear un pendiente ";
+                        return View(model);
+                    }
+                    string path = Server.MapPath("~/Logs/RolesPriv/AddRol/");
+                    Log oLog = new Log(path);
+                    using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                    {
+                        var result = db.Roll.FirstOrDefault(m => m.nombre.Contains(model.nombre));
+                        if (result != null && result.nombre != null)
+                        {
+                            ViewBag.ExceptionMessage = "Rol ya existente: " + result.nombre;
+                            return View(model);
+                        }
+                        db.Roll.Add(new Roll()
+                        {
+                            nombre = model.nombre
+                        });
+                        //Guarda los cambios en la BD
+                        db.SaveChanges();
+                        //Agrega logs
+                        oLog.Add("Se agrega un nuevo Modulo  por id user: " + user.id + " Con Nombre: " + user.nombre);
+                        oLog.Add("Nombre: " + model.nombre);
+                    }
+                }
+                else
+                {
+                    return View(model);
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                string path = Server.MapPath("~/Logs/RolesPriv/");
+                Log oLog = new Log(path);
+                oLog.Add("------------------------");
+                oLog.Add("Se detecta una excepcion al agrega un nuevo Modulo  por id user: " + user.id + " Con Nombre: " + user.nombre);
+                oLog.Add("Nombre del modulo: " + model.nombre);
+                oLog.Add("exeption: " + ex.Message);
+                oLog.Add("------------------------");
+
+                ViewBag.ExceptionMessage = ex.Message;
+                return View(model);
+            }
+        }
 
         /// <summary>
         /// Devuelve a la vista una lista de los usuarios especialistas tecnicos 

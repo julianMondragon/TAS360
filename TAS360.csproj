@@ -415,6 +415,7 @@
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
     <Compile Include="Models\ViewModel\RepTotalizadoViewModel.cs" />
     <Compile Include="Models\ViewModel\RolesPrivilegesViewModel.cs" />
+    <Compile Include="Models\ViewModel\RollViewModel.cs" />
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
     <Compile Include="Models\ViewModel\SocketViewModel.cs" />
     <Compile Include="Models\ViewModel\TablaCubViewModel.cs" />

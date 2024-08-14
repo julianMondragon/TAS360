@@ -1,13 +1,19 @@
-﻿
+﻿@model TAS360.Models.ViewModel.RollViewModel
+@using TAS360.Models.ViewModel;
 @{
-    ViewBag.Title = "Agregar Roles";
+    ViewBag.Title = "Agregar Rol";
     string exception = ViewBag.ExceptionMessage;
     string Info = ViewBag.InfoMessage;
 }
 <div class="jumbotron">
     <h1>Agregar Rol</h1>
-    <p class="lead"></p>
+    <p class="lead">Un Rol del sistema es una <strong>caracteristica</strong> que contiene privilegios especiales dentro del sistema </p>
     <p class="lead">
+        Por ejemplo:<br />
+        El rol <strong>Administrador</strong> tiene las todas operaciones del sistema. <br />
+        El rol <strong>Contacto</strong> solo tiene las operaciones: Mostrar_Ticket, <strong>Agregar_Coment_Tk</strong> <br />
+        Listar_Ticket, <strong>Mostrar_Procedimiento</strong><br />
+
     </p>
     @if (exception != null)
     {
@@ -22,3 +28,43 @@
         </div>
     }
 </div>
+<section class="page-section about-heading">
+    <div class="container">
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @using (Html.BeginForm("AddRol", "Roles_and_Privilege", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <div name="row2" class="row" style="margin:0 0 10px 0">
+
+                                        <div class="col-md-12">
+                                            <div class="col-lg-10" style="margin: 10px 0px 0px 0px;">
+                                                @Html.LabelFor(T => T.nombre)
+                                                @Html.TextBoxFor(x => x.nombre, new { @class = "form-control", @placeholder = "Admin, Responsable, Invitado" })
+                                                @Html.ValidationMessageFor(v => v.nombre, null, new { @class = "red" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin: 5px 0px 0px 0px; text-align:right">
+                                        <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Agregar Rol">
+                                            <b>Crear  </b>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ui-checks-grid" viewBox="0 0 16 16">
+                                                <path d="M2 10h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1m9-9h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1m0 9a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zm0-10a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM2 9a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2zm7 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2zM0 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.354.854a.5.5 0 1 0-.708-.708L3 3.793l-.646-.647a.5.5 0 1 0-.708.708l1 1a.5.5 0 0 0 .708 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
