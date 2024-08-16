@@ -410,6 +410,7 @@
     <Compile Include="Models\ViewModel\G_TicketsByTerminalViewModel.cs" />
     <Compile Include="Models\ViewModel\ListUsuarioViewModel.cs" />
     <Compile Include="Models\ViewModel\ModuloViewModel.cs" />
+    <Compile Include="Models\ViewModel\OperacionViewModel.cs" />
     <Compile Include="Models\ViewModel\PendientesViewModel.cs" />
     <Compile Include="Models\ViewModel\PuertoSerialViewModel.cs" />
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />

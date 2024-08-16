@@ -160,7 +160,7 @@ namespace TAS360.Controllers
             }
             catch(Exception ex) 
             {
-                string path = Server.MapPath("~/Logs/RolesPriv/");
+                string path = Server.MapPath("~/Logs/RolesPriv/AddModule/");
                 Log oLog = new Log(path);
                 oLog.Add("------------------------");
                 oLog.Add("Se detecta una excepcion al agrega un nuevo Modulo  por id user: " + user.id + " Con Nombre: " + user.nombre);
@@ -174,16 +174,79 @@ namespace TAS360.Controllers
         }
 
         /// <summary>
-        /// Metodo que agrega Operaciones.
+        /// Metodo GET que muestra el formulario para agregar Operaciones.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public ActionResult AddOperation()
         {
-            return View();
+            OperacionViewModel model = new OperacionViewModel();
+            GetModulos();
+            return View(model);
         }
         /// <summary>
-        /// Metodo que agrega Roles.
+        /// Metodo Post para agregar roles.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AddOperation(OperacionViewModel model)
+        {
+            User user = (User)Session["User"];
+            GetModulos();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (user == null)
+                    {
+                        ViewBag.InfoMessage = "Inicia sesion para crear una operacion";
+                        return View(model);
+                    }
+                    string path = Server.MapPath("~/Logs/RolesPriv/AddOperacion/");
+                    Log oLog = new Log(path);
+                    using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                    {
+                        var result = db.Operacion.FirstOrDefault(m => m.nombre.Contains(model.nombre));
+                        if (result != null && result.nombre != null)
+                        {
+                            ViewBag.ExceptionMessage = "Operacion ya existente: " + result.nombre;
+                            return View(model);
+                        }
+                        db.Operacion.Add(new Operacion()
+                        {
+                            nombre = model.nombre,
+                            id_Modulo = model.id_modulo,
+                        });
+                        //Guarda los cambios en la BD
+                        db.SaveChanges();
+                        //Agrega logs
+                        oLog.Add("Se agrega una nueva Operacion  por id user: " + user.id + " Con Nombre: " + user.nombre);
+                        oLog.Add("Nombre: " + model.nombre);
+                    }
+                }
+                else
+                {
+                    return View(model);
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                GetModulos();
+                string path = Server.MapPath("~/Logs/RolesPriv/AddOperacion/");
+                Log oLog = new Log(path);
+                oLog.Add("------------------------");
+                oLog.Add("Se detecta una excepcion al agrega una operacion  por id user: " + user.id + " Con Nombre: " + user.nombre);
+                oLog.Add("Nombre del operacion: " + model.nombre);
+                oLog.Add("exeption: " + ex.Message);
+                oLog.Add("------------------------");
+
+                ViewBag.ExceptionMessage = ex.Message;
+                return View(model);
+            }
+        }
+        /// <summary>
+        /// Metodo GET que muestra el formulario para agregar roles.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -238,10 +301,10 @@ namespace TAS360.Controllers
             }
             catch (Exception ex)
             {
-                string path = Server.MapPath("~/Logs/RolesPriv/");
+                string path = Server.MapPath("~/Logs/RolesPriv/AddRol");
                 Log oLog = new Log(path);
                 oLog.Add("------------------------");
-                oLog.Add("Se detecta una excepcion al agrega un nuevo Modulo  por id user: " + user.id + " Con Nombre: " + user.nombre);
+                oLog.Add("Se detecta una excepcion al agrega un nuevo rol  por id user: " + user.id + " Con Nombre: " + user.nombre);
                 oLog.Add("Nombre del modulo: " + model.nombre);
                 oLog.Add("exeption: " + ex.Message);
                 oLog.Add("------------------------");
@@ -276,6 +339,32 @@ namespace TAS360.Controllers
             }
             ViewBag.Usuarios = Usuarios;
 
+        }
+
+        /// <summary>
+        /// Devuelve a la vista una lista de los Modulos del sistema 
+        /// </summary>
+        private void GetModulos()
+        {
+
+            List<SelectListItem> Modulos = new List<SelectListItem>();
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            {
+                var aux = (from s in db.Modulo select s);
+                if (aux != null && aux.Any())
+                {
+                    foreach (var a in aux)
+                    {
+                        Modulos.Add(new SelectListItem
+                        {
+                            Text = a.nombre,
+                            Value = a.id.ToString()
+
+                        });
+                    }
+                }
+            }
+            ViewBag.Modulos = Modulos;
         }
     }
 }

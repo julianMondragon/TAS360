@@ -1,12 +1,17 @@
-﻿@{
+﻿@model TAS360.Models.ViewModel.OperacionViewModel
+@using TAS360.Models.ViewModel;
+@{
     ViewBag.Title = "Agregar Operacion";
     string exception = ViewBag.ExceptionMessage;
     string Info = ViewBag.InfoMessage;
+    List<SelectListItem> Modulos = (List<SelectListItem>)ViewBag.Modulos;
 }
 <div class="jumbotron">
-    <h1>Agregar Operacion</h1>
-    <p class="lead"></p>
+    <h1>Agregar Operación</h1>
+    <p class="lead">Una operacion del sistema es una <strong>acción</strong> que se realiza dentro de un Modulo </p>
     <p class="lead">
+        Por ejemplo:<br />
+        Mostrar Ticket, Editar Ticket, Actualizar Ticket dentro del modulo Tickets
     </p>
     @if (exception != null)
     {
@@ -21,4 +26,46 @@
         </div>
     }
 </div>
+<section class="page-section about-heading">
+    <div class="container">
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <div class="row">
+                            <div class="col-md-8">
+                                @using (Html.BeginForm("AddOperation", "Roles_and_Privilege", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
 
+                                    <div name="row2" class="row" style="margin:0 0 10px 0">
+
+                                        <div class="col-md-12">
+                                            <div class="col-lg-7" style="margin: 0px 0px 0px 0px;">
+                                                @Html.LabelFor(T => T.nombre)
+                                                @Html.TextBoxFor(x => x.nombre, new { @class = "form-control", @placeholder = "Agregar_Terminal, Listar_Pendiente, Eliminar_Usuario" })
+                                                @Html.ValidationMessageFor(v => v.nombre, null, new { @class = "red" })
+                                            </div>
+                                            <div class="col-md-5">
+                                                @Html.LabelFor(f => f.id_modulo)
+                                                @Html.DropDownListFor(model => model.id_modulo, Modulos, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin: 0px 0px 0px 0px; text-align:right">
+                                        <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Agregar Operacion">
+                                            <b>Crear</b>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
+                                                <path d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
