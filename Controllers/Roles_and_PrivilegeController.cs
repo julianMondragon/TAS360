@@ -315,6 +315,86 @@ namespace TAS360.Controllers
         }
 
         /// <summary>
+        /// Metodo GET que muestra el formulario para agregar operaciones.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult AddRol_Operacion()
+        {
+            GetRoles();
+            GetOperaciones();
+            Rol_OperacionViewModel model = new Rol_OperacionViewModel();
+            return View(model);
+        }
+        /// <summary>
+        /// Metodo Post para agregar roles.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AddRol_Operacion(Rol_OperacionViewModel model)
+        {
+            GetRoles();
+            GetOperaciones();
+            User user = (User)Session["User"];
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (user == null)
+                    {
+                        GetRoles();
+                        GetOperaciones();
+                        ViewBag.InfoMessage = "Inicia sesion para crear un pendiente ";
+                        return View(model);
+                    }
+                    string path = Server.MapPath("~/Logs/RolesPriv/AddRol_operacion/");
+                    Log oLog = new Log(path);
+                    using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                    {
+                        var result = db.Roll_Operacion.Where(r => r.id_Roll == model.id_rol && r.id_Operacion == model.id_operacion);
+                        if (result != null && result.Any())
+                        {
+                            ViewBag.ExceptionMessage = "Privilegio ya existente con id: " + result.FirstOrDefault().id;
+                            return View(model);
+                        }
+                        db.Roll_Operacion.Add(new Roll_Operacion()
+                        {
+                            id_Roll = model.id_rol,
+                            id_Operacion = model.id_operacion
+                        });
+                        //Guarda los cambios en la BD
+                        //db.SaveChanges();
+                        //Agrega logs
+                        oLog.Add("Se agrega un nuevo rol_operacion  por id user: " + user.id + " Con Nombre: " + user.nombre);
+                        oLog.Add("Rol: " + model.id_rol + " Operacion: " + model.id_operacion);
+                    }
+                }
+                else
+                {
+                    GetRoles();
+                    GetOperaciones();
+                    return View(model);
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                GetRoles();
+                GetOperaciones();
+                string path = Server.MapPath("~/Logs/RolesPriv/AddRol_operacion");
+                Log oLog = new Log(path);
+                oLog.Add("------------------------");
+                oLog.Add("Se detecta una excepcion al agrega un nuevo rol_operacion  por id user: " + user.id + " Con Nombre: " + user.nombre);
+                oLog.Add("Rol: " + model.id_rol + " Operacion: " + model.id_operacion);
+                oLog.Add("exeption: " + ex.Message);
+                oLog.Add("------------------------");
+
+                ViewBag.ExceptionMessage = ex.Message;
+                return View(model);
+            }
+        }
+
+        /// <summary>
         /// Devuelve a la vista una lista de los usuarios especialistas tecnicos 
         /// </summary>
         private void GetUsuarios()
@@ -365,6 +445,58 @@ namespace TAS360.Controllers
                 }
             }
             ViewBag.Modulos = Modulos;
+        }
+
+        /// <summary>
+        /// Devuelve a la vista una lista de los Roles del sistema 
+        /// </summary>
+        private void GetRoles()
+        {
+
+            List<SelectListItem> Roles = new List<SelectListItem>();
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            {
+                var aux = (from s in db.Roll select s);
+                if (aux != null && aux.Any())
+                {
+                    foreach (var a in aux)
+                    {
+                        Roles.Add(new SelectListItem
+                        {
+                            Text = a.nombre,
+                            Value = a.id.ToString()
+
+                        });
+                    }
+                }
+            }
+            ViewBag.Roles = Roles;
+        }
+
+        /// <summary>
+        /// Devuelve a la vista una lista de los operaciones del sistema 
+        /// </summary>
+        private void GetOperaciones()
+        {
+
+            List<SelectListItem> Operaciones = new List<SelectListItem>();
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            {
+                var aux = (from s in db.Operacion select s);
+                if (aux != null && aux.Any())
+                {
+                    foreach (var a in aux)
+                    {
+                        Operaciones.Add(new SelectListItem
+                        {
+                            Text = a.nombre,
+                            Value = a.id.ToString()
+
+                        });
+                    }
+                }
+            }
+            ViewBag.Operaciones = Operaciones;
         }
     }
 }
