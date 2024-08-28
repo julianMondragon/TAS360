@@ -363,7 +363,7 @@ namespace TAS360.Controllers
                             id_Operacion = model.id_operacion
                         });
                         //Guarda los cambios en la BD
-                        //db.SaveChanges();
+                        db.SaveChanges();
                         //Agrega logs
                         oLog.Add("Se agrega un nuevo rol_operacion  por id user: " + user.id + " Con Nombre: " + user.nombre);
                         oLog.Add("Rol: " + model.id_rol + " Operacion: " + model.id_operacion);
