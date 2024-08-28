@@ -4,6 +4,7 @@
     string exception = ViewBag.ExceptionMessage;
     string Info = ViewBag.InfoMessage;
     List<SelectListItem> Usuarios = (List<SelectListItem>)ViewBag.Usuarios;
+    List<SelectListItem> Modulos = (List<SelectListItem>)ViewBag.Modulos;
 }
 
 <div class="jumbotron">
@@ -91,7 +92,7 @@
         </div>
     </div>
     @*tabla Operaciones *@
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <div class="pull-left">
@@ -111,6 +112,7 @@
                         <tr>
                             <th>#</th>
                             <th>Nombre</th>
+                            <th>Modulo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,6 +124,7 @@
                                 <tr>
                                     <td colspan="1"> <a href="@Url.Content("~/"  + operacion.id)">@operacion.id</a> </td>
                                     <td colspan="1"> @operacion.nombre</td>
+                                    <td colspan="1"> @Modulos.FirstOrDefault(x=> x.Value == operacion.id_Modulo.ToString()).Text</td>
                                 </tr>
                             }
                         }
@@ -131,7 +134,7 @@
         </div>
     </div>
     @*tabla Modulos *@
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <div class="pull-left">
@@ -172,7 +175,7 @@
         </div>
     </div>
     @*Tabla de Roles*@
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <div class="pull-left">

@@ -100,6 +100,7 @@ namespace TAS360.Controllers
 
             }
             GetUsuarios();
+            GetModulos();
             return View(rolesPrivileges);
         }
 
