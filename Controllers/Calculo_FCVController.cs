@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TAS360.Filters;
 using TAS360.Models.ViewModel;
 using static System.Math;
 
@@ -10,11 +11,13 @@ namespace TAS360.Controllers
 {
     public class Calculo_FCVController : Controller
     {
-        /// <summary>
+		/// <summary>
 		/// GET: Calculo_FCV
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
+		[HttpGet]
+        [AuthorizeUser(idOperacion: 24)]
         public ActionResult Index(FCV_ViewModel model)
         {
             if(model == null)
