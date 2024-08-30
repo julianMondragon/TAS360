@@ -15,6 +15,7 @@ namespace TAS360.Models.ViewModel
         public TicketViewModel()
         {
             CurrentList2 = new List<CurrentList2>();
+            ListbyFilterTicket = new List<ListbyFilterTicket>();
         }
         public int id { get; set; }
         [Required]
@@ -64,6 +65,7 @@ namespace TAS360.Models.ViewModel
 
         public bool is_selected { get; set; }
         public List<CurrentList2> CurrentList2 { get; set; }
+        public List<ListbyFilterTicket> ListbyFilterTicket { get; set; }
     }
 
     public class Archivos

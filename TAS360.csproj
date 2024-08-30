@@ -572,6 +572,7 @@
     <Content Include="Content\Documents\Procedimientos_TAS360\A\A4 PTS -ATAD-P-PCM-006.pdf" />
     <Content Include="Content\Documents\Procedimientos_TAS360\A\A5 PTS -ATAD-P-PCM-003.pdf" />
     <Content Include="Content\Documents\Procedimientos_TAS360\A\A6 PTS -ATAD-P-PCM-007.pdf" />
+    <Content Include="Prototipo_Tabla\Lista_de_tickets_.xlsx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.min.css" />
@@ -950,6 +951,7 @@
     <Folder Include="Logs\" />
     <Folder Include="Tablas_CSV\" />
     <Folder Include="Tablas_Pendientes\" />
+    <Folder Include="Tablas_Tickets\" />
     <Folder Include="TicketFiles\" />
   </ItemGroup>
   <ItemGroup>

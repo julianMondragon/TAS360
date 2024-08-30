@@ -31,6 +31,9 @@
         <button onclick="document.location.href = '@Url.Content("~/Tickets/Filter_Tickets")'" type="button" class="btn btn-warning" data-toggle="tooltip" title="Realiza un filtrado personalizado de los Tickets ">
             Filtrado &fnof;
         </button>
+        <button onclick="document.location.href = '@Url.Content("~/Tickets/ExportTableTickets/?encodedCurrentList=" + ViewBag.EncodedCurrentList)'" type="button" class="btn btn-info" data-toggle="tooltip" title="Exporta la tabla actual ">
+            Exportar &pound;
+        </button>
     </div>
 
 </div>
