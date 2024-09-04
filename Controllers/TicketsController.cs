@@ -1240,7 +1240,8 @@ namespace TAS360.Controllers
         /// </summary>
         /// <param name="NameFile"></param>
         /// <returns></returns>
-        ///      
+        ///
+        [AuthorizeUser(idOperacion: 40)]
         public FileResult ExportTableTickets(string encodedCurrentList)
         {
             //Variables
@@ -1251,44 +1252,52 @@ namespace TAS360.Controllers
             var decodedObject = HttpUtility.UrlDecode(encodedCurrentList);
             currentLists = JsonConvert.DeserializeObject<List<ListbyFilterTicket>>(decodedObject);
 
-            // Ruta del prototipo de la tabla
+            string newFileName = "Lista_de_tickets_" + DateTime.Now.ToString("dd-MM-yyyy") + "_" + ((User)Session["User"]).nombre + ".xlsx";
             string prototypePath = Server.MapPath("~/Prototipo_Tabla/Lista_de_tickets_.xlsx");
 
-            // Construye el nombre del archivo sin repetir ".xlsx"
-            string newFileName = "Lista_de_tickets_" + DateTime.Now.ToString("dd-MM-yyyy") + "_" + ((User)Session["User"]).nombre + ".xlsx";
-            string savePath = Server.MapPath("~/Tablas_Tickets/");
-
-            if (!Directory.Exists(savePath))
+            using (MemoryStream stream = new MemoryStream())
             {
-                Directory.CreateDirectory(savePath);
-            }
+                SLDocument NewTablaTickets = new SLDocument(prototypePath);
+                SLStyle style1 = NewTablaTickets.CreateStyle();
+                style1.Fill.SetPattern(PatternValues.Solid, SLThemeColorIndexValues.Accent2Color, SLThemeColorIndexValues.Accent4Color);
 
-            string newFilePath = Path.Combine(savePath, newFileName);
-
-            SLDocument NewTablaTickets = new SLDocument(prototypePath);
-            SLStyle style1 = NewTablaTickets.CreateStyle();
-            style1.Fill.SetPattern(PatternValues.Solid, SLThemeColorIndexValues.Accent2Color, SLThemeColorIndexValues.Accent4Color);
-            foreach (var item in currentLists)
-            {
-                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                // Llenar el archivo Excel con los datos de la lista de tickets
+                foreach (var item in currentLists)
                 {
-                    var ticket = db.Ticket.Find(item.id);
-                    NewTablaTickets.SetCellValue(Row, 1, ticket.id);
-                    NewTablaTickets.SetCellValue(Row, 2, ticket.titulo);
-                    NewTablaTickets.SetCellValue(Row, 3, ticket.mensaje);
-                    NewTablaTickets.SetCellValue(Row, 4, ticket.Terminal.Nombre);
-                    NewTablaTickets.SetCellValue(Row, 5, ticket.Subsistema.Nombre);
-                    NewTablaTickets.SetCellValue(Row, 6, ticket.Ticket_User.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.User.nombre);
-                    NewTablaTickets.SetCellValue(Row, 7, ticket.Categoria.nombre);
-                    NewTablaTickets.SetCellValue(Row, 8, ticket.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.Status.descripcion);
-                    NewTablaTickets.SetCellValue(Row, 9, ticket.id_externo);
-                    Row++;
+                    using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                    {
+                        var ticket = db.Ticket.Find(item.id);
+                        NewTablaTickets.SetCellValue(Row, 1, ticket.id);
+                        NewTablaTickets.SetCellValue(Row, 2, ticket.titulo);
+                        NewTablaTickets.SetCellValue(Row, 3, ticket.mensaje);
+                        NewTablaTickets.SetCellValue(Row, 4, ticket.Terminal.Nombre);
+                        NewTablaTickets.SetCellValue(Row, 5, ticket.Subsistema.Nombre);
+                        NewTablaTickets.SetCellValue(Row, 6, ticket.Ticket_User.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.User.nombre);
+                        NewTablaTickets.SetCellValue(Row, 7, ticket.Categoria.nombre);
+                        NewTablaTickets.SetCellValue(Row, 8, ticket.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.Status.descripcion);
+                        NewTablaTickets.SetCellValue(Row, 9, ticket.id_externo);
+                        Row++;
+                    }
+
                 }
-
+                NewTablaTickets.SaveAs(stream);
+                stream.Position = 0;
+                try
+                {
+                    string Message = $" {((User)Session["User"]).nombre} exportó una tabla de tickets. La tabla contiene {currentLists.Count} tickets.";
+                    string Path = Server.MapPath("~/Logs/Tickets/");
+                    Log oLog = new Log(Path);
+                    oLog.Add(Message);
+                }
+                catch (Exception ex)
+                {
+                    string logPath = Server.MapPath("~/Logs/Tickets/");
+                    Log oLog = new Log(logPath);
+                    oLog.Add(ex.Message);
+                    ViewBag.Exception = ex.Message;
+                }
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", newFileName);
             }
-            NewTablaTickets.SaveAs(newFilePath);
-
-            return File(newFilePath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", newFileName);
         }
 
         /// <summary>

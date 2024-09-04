@@ -22,7 +22,7 @@
         <button onclick="document.location.href = '@Url.Content("~/Tickets/Filter_Tickets")'" type="button" class="btn btn-warning" data-toggle="tooltip" title="Realiza un filtrado personalizado de los pendientes ">
             Filtrado &fnof;
         </button>
-        <button onclick="document.location.href = '@Url.Content("~/Tickets/ExportTableTickets/?encodedCurrentList="+ encodedCurrentList)'" type="button" class="btn btn-info" data-toggle="tooltip" title="Exporta la tabla actual ">
+        <button onclick="document.location.href = '@Url.Content("~/Tickets/ExportTableTickets/?encodedCurrentList="+ encodedCurrentList)'" type="button" class="btn btn-info" data-toggle="tooltip" title="Exporta todos los tickets abiertos ( @Model.Count() )">
             Exportar &pound;
         </button>
     </p>
