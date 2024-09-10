@@ -3,6 +3,7 @@
     ViewBag.Title = "Crear Usuario";
     string exception = ViewBag.ExceptionMessage;
     string Info = ViewBag.InfoMessage;
+    
 }
 <br />
 <div class="jumbotron">
@@ -49,12 +50,12 @@
                                             </div>
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(model => model.password)
-                                                @Html.PasswordFor(model => model.password, new { @class = "form-control", @placeholder = "Contraseña" })
+                                                @Html.PasswordFor(model => model.password, new { @class = "form-control", @placeholder = "Contraseña",  @value = "Alfer3z" })
                                                 @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
                                             </div>
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(model => model.confirmPassword)
-                                                @Html.PasswordFor(model => model.confirmPassword, new { @class = "form-control", @placeholder = "Confirmar Contraseña" })
+                                                @Html.PasswordFor(model => model.confirmPassword, new { @class = "form-control", @placeholder = "Confirmar Contraseña", @value = "Alfer3z" })
                                                 @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -71,3 +72,9 @@
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    // Mostrar un alert con la contraseña cuando se carga la página
+    window.onload = function() {
+        alert("La contraseña defaul es: Alfer3z");
+    };
+</script>
