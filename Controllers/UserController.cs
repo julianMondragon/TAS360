@@ -104,8 +104,13 @@ namespace TAS360.Controllers
                 {
                     string path = Server.MapPath("~/Logs/Usuarios/");
                     Log oLog = new Log(path);
-                    
-
+                    var usr = db.User.FirstOrDefault(x => x.email == model.email && x.id != model.id);
+                    if (usr != null)
+                    {
+                        ModelState.AddModelError("email", "Este correo ya exite !!!");
+                        return View(model);
+                    }
+                    string passencripted = ComputeSha256Hash(model.password);
                     var userToEdit = db.User.Find(model.id);
                     if (userToEdit != null)
                     {
@@ -122,11 +127,13 @@ namespace TAS360.Controllers
                             ModelState.AddModelError("Password", "Las contraseñas no coinciden");
                             return View(model);
                         }
-                        userToEdit.password = model.password;
+                        userToEdit.password = passencripted;
 
                         // Guardar log de la edición del usuario                       
                         oLog.Add($"Nuevo nombre: {userToEdit.nombre}");
                         oLog.Add($"Nuevo email: {userToEdit.email}");
+                        oLog.Add($"Nuevo passencripted: {passencripted}");
+                        oLog.Add($"Nuevo password: {model.password}");
                         oLog.Add($"--------------------------------");
                     }
                     else
