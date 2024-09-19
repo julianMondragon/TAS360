@@ -1,0 +1,119 @@
+﻿@model TAS360.Models.ViewModel.PuertoSerialViewModel
+@{
+    ViewBag.Title = "Comunicacion RiceLake 920i";
+    List<SelectListItem> ListCOMs = (List<SelectListItem>)ViewBag.ListCOMs;
+    bool IsOpen = (bool)ViewBag.IsOpen;
+    string warning = ViewBag.Warning;
+    string transacciones = "";
+    if (ViewBag.trasacciones != null)
+    {
+        transacciones = ViewBag.trasacciones;
+    }
+}
+
+<div class="jumbotron">
+    <h1>Comunicación con RiceLake 920i</h1>
+    <p class="lead">
+        En esta página puedes establecer la comunicación con la báscula RiceLake 920i.
+        Los comandos serán enviados en formato ASCII por el puerto serial seleccionado.
+    </p>
+    <div id="peso-actual">
+        Peso actual: <span id="valor-peso">0.00</span> kg
+    </div>
+    @if (warning != null)
+    {
+        <h3 style="color:sandybrown">@warning</h3>
+    }
+    @if (IsOpen)
+    {
+        <button id="leer-peso">Leer Peso</button>
+        <a onclick="document.location.href = '@Url.Content("~/Rice_Lake920i/ReadCommandPort")'" class="btn btn-info">Leer puerto &raquo;</a>
+        <a onclick="document.location.href = '@Url.Content("~/Rice_Lake920i/ClosePort")'" class="btn btn-danger">Cerrar puerto Serial &raquo;</a>
+    }
+</div>
+
+@if (!IsOpen)
+{
+    <section class="page-section about-heading">
+        <div class="container">
+            <div class="about-heading-content">
+                <div class="row">
+                    <div class="col-xl-9 col-lg-10 mx-auto">
+                        <div class="bg-faded rounded p-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @using (Html.BeginForm("OpenPort", "Rice_Lake920i", FormMethod.Post, new { role = "form", @class = "" }))
+                                    {
+                                        <div style="text-align:right">
+                                            <input type="submit" class="btn btn-success" value="Abrir Puerto" />
+                                        </div>
+                                        <br />
+                                        @Html.LabelFor(f => f.Name)
+                                        @Html.DropDownListFor(model => model.Name, ListCOMs, new { @class = "form-control" })
+                                        <br />
+                                        @Html.LabelFor(f => f.BaudRate)
+                                        @Html.TextBoxFor(f => f.BaudRate, new { @class = "form-control" })
+                                        <br />
+                                        @Html.LabelFor(f => f.DataBits)
+                                        @Html.TextBoxFor(f => f.DataBits, new { @class = "form-control" })
+                                        <br />
+                                        @Html.LabelFor(f => f.StopBits)
+                                        @Html.TextBoxFor(f => f.StopBits, new { @class = "form-control" })
+                                        <br />
+                                        @Html.LabelFor(f => f.Parity)
+                                        @Html.TextBoxFor(f => f.Parity, new { @class = "form-control" })
+                                        <br />
+                                        @Html.LabelFor(f => f.Handshake)
+                                        @Html.TextBoxFor(f => f.Handshake, new { @class = "form-control" })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <div class="form-floating">
+        @using (Html.BeginForm("SendCommand", "Rice_Lake920i", FormMethod.Post, new { role = "form", @class = "" }))
+        {
+            @Html.LabelFor(f => f.Commant_Send, "Comando a enviar en ASCII")
+            @Html.TextBoxFor(f => f.Commant_Send, new { @class = "form-control", placeholder = "Escribe tu comando en ASCII" })
+            <br />
+            <div style="text-align:right">
+                <input type="submit" class="btn btn-info" value="Enviar Comando" />
+            </div>
+        }
+
+        <label for="floatingTextarea">Transacciones</label>
+        @if (!string.IsNullOrEmpty(transacciones))
+        {
+            <textarea class="form-control" id="floatingTextarea" rows="5" readonly>@transacciones</textarea>
+        }
+        else
+        {
+            <textarea class="form-control" id="floatingTextarea" rows="5" placeholder="No hay transacciones aún" readonly></textarea>
+        }
+    </div>
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#leer-peso").click(function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("LeerPeso", "Rice_Lake920i")',
+                success: function (data) {
+                    if (data.error) {
+                        alert("Error: " + data.error);
+                    } else {
+                        $("#valor-peso").text(data.peso);
+                    }
+                }
+            });
+        });
+    });
+</script>
