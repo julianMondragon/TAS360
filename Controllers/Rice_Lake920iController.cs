@@ -9,6 +9,8 @@ using TAS360.Models.ViewModel;
 using System.Threading.Tasks;
 using System.Text;
 using Newtonsoft.Json;
+using DocumentFormat.OpenXml.EMMA;
+using TAS360.Models;
 
 namespace TAS360.Controllers
 {
@@ -125,7 +127,6 @@ namespace TAS360.Controllers
         /// <returns></returns>
         public ActionResult OpenPort(PuertoSerialViewModel Port)
         {
-
             try
             {
                 _serialPort.PortName = Port.Name;
@@ -142,7 +143,6 @@ namespace TAS360.Controllers
                 warnings = "";
                 //_continue = true;
                 //readThread.Start();
-
             }
             catch (Exception ex)
             {
@@ -232,31 +232,65 @@ namespace TAS360.Controllers
         [HttpPost]
         public ActionResult LeerPeso()
         {
+            PuertoSerialViewModel PuertoserialViewModel = new PuertoSerialViewModel();
+            string path = Server.MapPath("~/Logs/RiceLake/");
+            Log oLog = new Log(path);
             try
             {
-                // Abrir puerto serial
-                using (SerialPort serialPort = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One))
+                if (_serialPort != null && _serialPort.IsOpen)
                 {
-                    serialPort.Open();
-
+                    ViewBag.IsOpen = true;
                     // Trama para solicitar el peso
-                    string comandoPeso = "P\r"; // Usar el comando correcto según el manual
+                    //string comandoPeso = "/P"; // Usar el comando correcto según el manual
+                    string comandoPeso = "     120*       0*&\r\n      80*       0*&\r\n     100*       0*&\r\n      70*       0*&\r\n     120*       0*&\r\n      60*       0*&\r\n     120*       0*&\r\n      70*       0*&\r\n      80*       0*&\r\n       0*       0*&\r\n       0*       0*&\r\n       0*       0*&";
 
                     // Enviar el comando
-                    serialPort.WriteLine(comandoPeso);
+                    _serialPort.WriteLine(comandoPeso);
+                    oLog.Add("Se envio el comando por el puerto serial: " + comandoPeso );
 
                     // Leer la respuesta de la báscula
-                    string respuesta = serialPort.ReadLine();
+                    string respuesta = _serialPort.ReadLine();
+                    oLog.Add("Se lee la respuesta por el puerto serial: " + respuesta );
 
                     // Aquí procesas la respuesta para obtener el peso en el formato correcto
-                    string peso = ProcesarRespuestaPeso(respuesta);
-
-                    // Cerrar el puerto
-                    serialPort.Close();
+                    string peso1 = ProcesarRespuestaPeso(respuesta);
+                    string peso2 = ProcesarRespuestaPeso2(respuesta);
+                    oLog.Add("peso1: " + peso1);
+                    oLog.Add("peso2: " + peso2);
+                    if(((User)Session["User"]) != null && ((User)Session["User"]).nombre != null)
+                            oLog.Add("Usuario : " + ((User)Session["User"]).nombre);
 
                     // Devuelves el peso a la vista
-                    return Json(new { peso = peso }, JsonRequestBehavior.AllowGet);
+                    return Json(new { 
+                        peso = peso1,
+                        peso2 = peso2
+                    }, JsonRequestBehavior.AllowGet);
+                    
                 }
+                else
+                {
+                    ViewBag.IsOpen = false;
+                    if (warnings != null)
+                    {
+                        ViewBag.Warning = warnings;
+                    }
+                    // Create a new SerialPort object with default settings.
+                    _serialPort = new SerialPort();
+                    GetCatalogos();
+                    if (_serialPort.BaudRate != 0)
+                        PuertoserialViewModel.BaudRate = _serialPort.BaudRate;
+                    if (_serialPort.DataBits != 0)
+                        PuertoserialViewModel.DataBits = _serialPort.DataBits;
+                    if (_serialPort.Parity != 0)
+                        PuertoserialViewModel.Parity = _serialPort.Parity;
+                    if (_serialPort.StopBits != 0)
+                        PuertoserialViewModel.StopBits = _serialPort.StopBits;
+                    if (_serialPort.Handshake != 0)
+                        PuertoserialViewModel.Handshake = _serialPort.Handshake;
+
+                    return View("Index",PuertoserialViewModel);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -268,6 +302,27 @@ namespace TAS360.Controllers
         {
             // Aquí puedes procesar la trama que recibes de la báscula
             // Dependiendo del formato, ajusta la lógica para extraer el peso
+            var valor1 = respuesta.Split('*');
+            if (valor1.Length >= 1)
+            {
+                respuesta = valor1[0];
+            }
+
+
+            return respuesta; // Por ahora, solo devuelve la respuesta
+        }
+
+        private string ProcesarRespuestaPeso2(string respuesta)
+        {
+            // Aquí puedes procesar la trama que recibes de la báscula
+            // Dependiendo del formato, ajusta la lógica para extraer el peso
+            var valor1 = respuesta.Split('*');
+            if (valor1.Length >= 1)
+            {
+                respuesta = valor1[1];
+            }
+
+
             return respuesta; // Por ahora, solo devuelve la respuesta
         }
     }

@@ -17,16 +17,13 @@
         En esta página puedes establecer la comunicación con la báscula RiceLake 920i.
         Los comandos serán enviados en formato ASCII por el puerto serial seleccionado.
     </p>
-    <div id="peso-actual">
-        Peso actual: <span id="valor-peso">0.00</span> kg
-    </div>
     @if (warning != null)
     {
         <h3 style="color:sandybrown">@warning</h3>
     }
     @if (IsOpen)
     {
-        <button id="leer-peso">Leer Peso</button>
+        <button class="btn btn-default" id="leer-peso">Leer Peso</button>
         <a onclick="document.location.href = '@Url.Content("~/Rice_Lake920i/ReadCommandPort")'" class="btn btn-info">Leer puerto &raquo;</a>
         <a onclick="document.location.href = '@Url.Content("~/Rice_Lake920i/ClosePort")'" class="btn btn-danger">Cerrar puerto Serial &raquo;</a>
     }
@@ -77,17 +74,43 @@
 }
 else
 {
-    <div class="form-floating">
-        @using (Html.BeginForm("SendCommand", "Rice_Lake920i", FormMethod.Post, new { role = "form", @class = "" }))
-        {
-            @Html.LabelFor(f => f.Commant_Send, "Comando a enviar en ASCII")
-            @Html.TextBoxFor(f => f.Commant_Send, new { @class = "form-control", placeholder = "Escribe tu comando en ASCII" })
-            <br />
-            <div style="text-align:right">
-                <input type="submit" class="btn btn-info" value="Enviar Comando" />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><b>Bascula RiceLake</b> </div>
+                <div class="panel-body">
+                    <table id="summaryTable" class="table table-success table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Peso 1</th>
+                                <th scope="col">Peso 2</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span id="valor-peso">0.00</span> kg</td>
+                                <td><span id="valor-peso2">0.00</span> kg</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        }
-
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating">
+                @using (Html.BeginForm("SendCommand", "Rice_Lake920i", FormMethod.Post, new { role = "form", @class = "" }))
+                {
+                    @Html.LabelFor(f => f.Commant_Send, "Comando a enviar en ASCII")
+                    @Html.TextBoxFor(f => f.Commant_Send, new { @class = "form-control", placeholder = "Escribe tu comando en ASCII" })
+                    <br />
+                    <div style="text-align:right">
+                        <input type="submit" class="btn btn-info" value="Enviar Comando" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <label for="floatingTextarea">Transacciones</label>
         @if (!string.IsNullOrEmpty(transacciones))
         {
@@ -98,22 +121,41 @@ else
             <textarea class="form-control" id="floatingTextarea" rows="5" placeholder="No hay transacciones aún" readonly></textarea>
         }
     </div>
+    
 }
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        var intervalId;  // Variable para almacenar el ID del intervalo
+
         $("#leer-peso").click(function () {
+            // Ejecuta la función de leer peso inmediatamente
+            leerPeso();
+
+            // Inicia un intervalo para que la función se ejecute cada 5 segundos
+            if (!intervalId) {  // Evita crear múltiples intervalos si ya está corriendo uno
+                intervalId = setInterval(leerPeso, 3000);
+            }
+        });
+
+        function leerPeso() {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("LeerPeso", "Rice_Lake920i")',
                 success: function (data) {
                     if (data.error) {
                         alert("Error: " + data.error);
+                        clearInterval(intervalId);  // Detiene el intervalo si hay un error
                     } else {
                         $("#valor-peso").text(data.peso);
+                        $("#valor-peso2").text(data.peso2);
+                        $("#floatingTextarea").val(function (index, currentValue) {
+                            return "recibiendo: " + data.peso + " Kg " + " " + data.peso2 + " Kg\n" + currentValue;
+                        });
+
                     }
                 }
             });
-        });
+        }
     });
 </script>
