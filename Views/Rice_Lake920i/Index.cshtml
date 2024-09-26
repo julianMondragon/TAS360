@@ -23,9 +23,9 @@
     }
     @if (IsOpen)
     {
-        <button class="btn btn-default" id="leer-peso">Leer Peso</button>
-        <a onclick="document.location.href = '@Url.Content("~/Rice_Lake920i/ReadCommandPort")'" class="btn btn-info">Leer puerto &raquo;</a>
+        <button class="btn btn-default" id="leer-peso">Real Time</button>
         <a onclick="document.location.href = '@Url.Content("~/Rice_Lake920i/ClosePort")'" class="btn btn-danger">Cerrar puerto Serial &raquo;</a>
+        <a onclick="document.location.href = '@Url.Content("~/Rice_Lake920i/Info")'" class="btn btn-info">Info sobre comandos RiceLake &raquo;</a>
     }
 </div>
 
@@ -77,19 +77,19 @@ else
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><b>Bascula RiceLake</b> </div>
+                <div class="panel-heading"><b>Pesaje en tiempo real</b> </div>
                 <div class="panel-body">
                     <table id="summaryTable" class="table table-success table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">Peso 1</th>
-                                <th scope="col">Peso 2</th>
+                                <th scope="col">Entrada</th>
+                                <th scope="col">Salida </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><span id="valor-peso">0.00</span> kg</td>
-                                <td><span id="valor-peso2">0.00</span> kg</td>
+                                <td><span id="valor-peso" style="font-size: 3.5rem; font-weight: bold; color:limegreen">0.00</span> kg</td>
+                                <td><span id="valor-peso2" style="font-size: 3.5rem; font-weight: bold; color:red">0.00</span> kg</td>
                             </tr>
                         </tbody>
                     </table>
@@ -101,10 +101,11 @@ else
                 @using (Html.BeginForm("SendCommand", "Rice_Lake920i", FormMethod.Post, new { role = "form", @class = "" }))
                 {
                     @Html.LabelFor(f => f.Commant_Send, "Comando a enviar en ASCII")
-                    @Html.TextBoxFor(f => f.Commant_Send, new { @class = "form-control", placeholder = "Escribe tu comando en ASCII" })
+                    @Html.TextAreaFor(f => f.Commant_Send, new { @class = "form-control", rows = "8", placeholder = "Escribe tu comando en ASCII; \r\nLos pesos brutos, netos, tara, acumulador, camión y puntos de corte pueden ser impresas en cualquieras unidades de peso configuradas por medio de añadir los siguientes modificadores a los comandos bruto, neto, y tara: /P (unidades primarias), /D (unidades visualizadas), /S (unidades secundarias), /T (unidades terciarias). Si no se especifican, se asume que quieren las unidades visualizadas (/D). \r\nEjemplo: Para formatear un rótulo para mostrar el peso neto de la Báscula #3 en unidades secundarias, utilizar el siguiente comando: <N#3/S>" })
                     <br />
                     <div style="text-align:right">
-                        <input type="submit" class="btn btn-info" value="Enviar Comando" />
+                        <a onclick="document.location.href = '@Url.Content("~/Rice_Lake920i/ReadCommandPort")'" class="btn btn-warning">Leer puerto &raquo;</a>
+                        <input type="submit" class="btn btn-success" value="Enviar Comando &raquo;" />
                     </div>
                 }
             </div>
@@ -134,7 +135,7 @@ else
 
             // Inicia un intervalo para que la función se ejecute cada 5 segundos
             if (!intervalId) {  // Evita crear múltiples intervalos si ya está corriendo uno
-                intervalId = setInterval(leerPeso, 3000);
+                intervalId = setInterval(leerPeso, 1000);
             }
         });
 
@@ -149,8 +150,10 @@ else
                     } else {
                         $("#valor-peso").text(data.peso);
                         $("#valor-peso2").text(data.peso2);
+                        var currentDate = new Date();
+                        var date = currentDate.toLocaleString();
                         $("#floatingTextarea").val(function (index, currentValue) {
-                            return "recibiendo: " + data.peso + " Kg " + " " + data.peso2 + " Kg\n" + currentValue;
+                            return "recibiendo: " + data.peso + " Kg " + " " + data.peso2 + " Kg   " + date + "\n" + currentValue;
                         });
 
                     }

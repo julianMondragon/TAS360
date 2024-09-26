@@ -97,9 +97,13 @@ namespace TAS360.Controllers
         {
             try
             {
+                //Logs
+                string path = Server.MapPath("~/Logs/RiceLake/");
+                Log oLog = new Log(path);
+                
                 // Buffer para recibir los datos
                 string result = _serialPort.ReadExisting(); // Leer los datos recibidos como cadena ASCII
-
+                oLog.Add("Datos recibidos ReadCommandPort: \r\n" + result);
                 if (!string.IsNullOrEmpty(result))
                 {
                     // Almacenar las transacciones leídas
@@ -227,8 +231,14 @@ namespace TAS360.Controllers
 
             return bytes;
         }
-
-
+        /// <summary>
+        /// Metodo que devuelve una vista con informacion correspondiente a la bascula.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Info()
+        {
+            return View();
+        }
         [HttpPost]
         public ActionResult LeerPeso()
         {
@@ -241,16 +251,28 @@ namespace TAS360.Controllers
                 {
                     ViewBag.IsOpen = true;
                     // Trama para solicitar el peso
-                    //string comandoPeso = "/P"; // Usar el comando correcto según el manual
-                    string comandoPeso = "     120*       0*&\r\n      80*       0*&\r\n     100*       0*&\r\n      70*       0*&\r\n     120*       0*&\r\n      60*       0*&\r\n     120*       0*&\r\n      70*       0*&\r\n      80*       0*&\r\n       0*       0*&\r\n       0*       0*&\r\n       0*       0*&";
+                    string comandoPeso = "/P"; // Usar el comando correcto según el manual
+                    //string comandoPeso = "     120*       0*&\r\n      80*       0*&\r\n     100*       0*&\r\n      70*       0*&\r\n     120*       0*&\r\n      60*       0*&\r\n     120*       0*&\r\n      70*       0*&\r\n      80*       0*&\r\n       0*       0*&\r\n       0*       0*&\r\n       0*       0*&";
 
+
+                    _serialPort.DiscardInBuffer();
+                    _serialPort.DiscardOutBuffer();
                     // Enviar el comando
                     _serialPort.WriteLine(comandoPeso);
                     oLog.Add("Se envio el comando por el puerto serial: " + comandoPeso );
 
                     // Leer la respuesta de la báscula
                     string respuesta = _serialPort.ReadLine();
-                    oLog.Add("Se lee la respuesta por el puerto serial: " + respuesta );
+                    if (respuesta == "/P")
+                    {
+                        oLog.Add("se limpia el buffer");
+                        _serialPort.DiscardInBuffer();
+                        _serialPort.DiscardOutBuffer();
+                        
+                        _serialPort.WriteLine("/P");
+                        oLog.Add("Se envio nuevamente el comando por el puerto serial: " + comandoPeso);
+                        respuesta = _serialPort.ReadLine();
+                    }
 
                     // Aquí procesas la respuesta para obtener el peso en el formato correcto
                     string peso1 = ProcesarRespuestaPeso(respuesta);
@@ -294,28 +316,27 @@ namespace TAS360.Controllers
             }
             catch (Exception ex)
             {
+                oLog.Add("excepcion encontrada:"  + ex.Message);
                 return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
         private string ProcesarRespuestaPeso(string respuesta)
         {
-            // Aquí puedes procesar la trama que recibes de la báscula
-            // Dependiendo del formato, ajusta la lógica para extraer el peso
+            //string path = Server.MapPath("~/Logs/RiceLake/");
+            //Log oLog = new Log(path);
+            //oLog.Add("Procesar respuesta Peso: " + respuesta);
             var valor1 = respuesta.Split('*');
             if (valor1.Length >= 1)
             {
                 respuesta = valor1[0];
             }
 
-
-            return respuesta; // Por ahora, solo devuelve la respuesta
+            return respuesta; 
         }
 
         private string ProcesarRespuestaPeso2(string respuesta)
         {
-            // Aquí puedes procesar la trama que recibes de la báscula
-            // Dependiendo del formato, ajusta la lógica para extraer el peso
             var valor1 = respuesta.Split('*');
             if (valor1.Length >= 1)
             {
@@ -323,7 +344,7 @@ namespace TAS360.Controllers
             }
 
 
-            return respuesta; // Por ahora, solo devuelve la respuesta
+            return respuesta; 
         }
     }
 }

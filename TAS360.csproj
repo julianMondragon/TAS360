@@ -436,6 +436,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\Bascula-Info\img_1.jpg" />
+    <Content Include="Content\img\Bascula-Info\img_2.jpg" />
+    <Content Include="Content\img\Bascula-Info\img_3.jpg" />
+    <Content Include="Content\img\Bascula-Info\img_4.jpg" />
     <Content Include="Content\img\Ej_Tabla_Cub_LLenado_2.JPG" />
     <Content Include="Content\img\ERROR-500-CABECERA.jpg" />
     <Content Include="Content\img\Home_BG_1.png" />
@@ -945,6 +949,7 @@
     <Content Include="Views\LSA\SLAReport.cshtml" />
     <Content Include="Views\Acceso\RecuperarContraseña.cshtml" />
     <Content Include="Views\Rice_Lake920i\Index.cshtml" />
+    <Content Include="Views\Rice_Lake920i\Info.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
