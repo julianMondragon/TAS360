@@ -250,30 +250,13 @@ namespace TAS360.Controllers
                 if (_serialPort != null && _serialPort.IsOpen)
                 {
                     ViewBag.IsOpen = true;
-                    // Trama para solicitar el peso
-                    string comandoPeso = "/P"; // Usar el comando correcto según el manual
-                    //string comandoPeso = "     120*       0*&\r\n      80*       0*&\r\n     100*       0*&\r\n      70*       0*&\r\n     120*       0*&\r\n      60*       0*&\r\n     120*       0*&\r\n      70*       0*&\r\n      80*       0*&\r\n       0*       0*&\r\n       0*       0*&\r\n       0*       0*&";
-
-
+                  
                     _serialPort.DiscardInBuffer();
                     _serialPort.DiscardOutBuffer();
-                    // Enviar el comando
-                    _serialPort.WriteLine(comandoPeso);
-                    oLog.Add("Se envio el comando por el puerto serial: " + comandoPeso );
-
-                    // Leer la respuesta de la báscula
+                   
+                    // Leer el buffer
                     string respuesta = _serialPort.ReadLine();
-                    if (respuesta == "/P")
-                    {
-                        oLog.Add("se limpia el buffer");
-                        _serialPort.DiscardInBuffer();
-                        _serialPort.DiscardOutBuffer();
-                        
-                        _serialPort.WriteLine("/P");
-                        oLog.Add("Se envio nuevamente el comando por el puerto serial: " + comandoPeso);
-                        respuesta = _serialPort.ReadLine();
-                    }
-
+                    
                     // Aquí procesas la respuesta para obtener el peso en el formato correcto
                     string peso1 = ProcesarRespuestaPeso(respuesta);
                     string peso2 = ProcesarRespuestaPeso2(respuesta);
