@@ -1,0 +1,72 @@
+﻿@model TAS360.Models.ViewModel.ModuloViewModel
+@using TAS360.Models.ViewModel;
+@{
+    ViewBag.Title = "Agregar Modulo";
+    string exception = ViewBag.ExceptionMessage;
+    string Info = ViewBag.InfoMessage;
+}
+<div class="jumbotron">
+    <h1>Agregar Módulo</h1>
+    <p class="lead">Un módulo del sistema es una <strong>entidad</strong> con propiedades y metodos a realizar </p>
+    <p class="lead">
+        Por ejemplo:<br />
+        El módulo <strong>Terminales</strong> tiene las operaciones CRUD. <br />
+        (Create, Edit, Update & Delete)<br />
+        El módulo <strong>Tickets</strong> tiene las operaciones CRUD mas metodos adicionales <br />
+        (Create, Edit, Update, Delete, AddComment, AddFiles)<br />
+
+    </p>
+    @if (exception != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @exception
+        </div>
+    }
+    @if (Info != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @Info
+        </div>
+    }
+</div>
+<section class="page-section about-heading">
+    <div class="container">
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-xl-9 col-lg-10 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @using (Html.BeginForm("AddModule", "Roles_and_Privilege", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                   
+                                    <div name="row2" class="row" style="margin:0 0 10px 0">
+
+                                        <div class="col-md-12">
+                                            <div class="col-lg-10" style="margin: 10px 0px 0px 0px;">
+                                                @Html.LabelFor(T => T.nombre)
+                                                @Html.TextBoxFor(x => x.nombre, new { @class = "form-control", @placeholder = "SLA, Ticket, CalculoFCV" })
+                                                @Html.ValidationMessageFor(v => v.nombre, null, new { @class = "red" })
+                                            </div>
+                                         </div>
+                                    </div>
+                                    <div class="row" style="margin: 5px 0px 0px 0px; text-align:right">
+                                        <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Agregar Modulo">
+                                            <b>Crear</b>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+                                                <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5" />
+                                                <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

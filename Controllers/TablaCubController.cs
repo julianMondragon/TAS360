@@ -9,6 +9,7 @@ using SpreadsheetLight;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Text;
 using System.Data;
+using TAS360.Filters;
 
 namespace TAS360.Controllers
 {
@@ -19,6 +20,7 @@ namespace TAS360.Controllers
         /// </summary>
         /// <returns>La vista principal</returns>
         [HttpGet]
+        [AuthorizeUser(idOperacion: 24)]
         public ActionResult Index()
         {
             ViewBag.IsVisbleDlcsv = false;
@@ -33,6 +35,7 @@ namespace TAS360.Controllers
         /// <param name="postedFile"></param>
         /// <returns>La vista principal con la informacion </returns>
         [HttpPost]
+        [AuthorizeUser(idOperacion: 24)]
         public ActionResult Index(HttpPostedFileBase postedFile)
         {
             TablaCubViewModel tabla = new TablaCubViewModel();

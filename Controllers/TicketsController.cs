@@ -1113,6 +1113,7 @@ namespace TAS360.Controllers
         /// </summary>
         /// <returns> FilterTicketsViewModel </returns>
         [HttpGet]
+        [AuthorizeUser(idOperacion: 23)]
         public ActionResult Filter_Tickets()
         {
             FilterTicketsViewModel Filter = new FilterTicketsViewModel() { id_Terminal = 1};
@@ -1130,6 +1131,7 @@ namespace TAS360.Controllers
         /// <param name="Filter"></param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeUser(idOperacion: 23)]
         public ActionResult Filter_Tickets(FilterTicketsViewModel Filter)
         {
             GetTerminales();

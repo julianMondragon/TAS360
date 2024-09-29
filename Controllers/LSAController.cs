@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TAS360.Filters;
 using TAS360.Models.ViewModel;
 using TAS360.StorProc;
 
@@ -11,7 +12,8 @@ namespace TAS360.Controllers
 {
     public class LSAController : Controller
     {
-        // GET: LSA
+        [HttpGet]
+        [AuthorizeUser(idOperacion: 26)]
         public ActionResult Index()
         {
             List<TicketViewModel> tickets = new List<TicketViewModel>();
@@ -29,7 +31,7 @@ namespace TAS360.Controllers
                             mensaje = t.mensaje,
                             usuario_name = t.Ticket_User.OrderByDescending(x => x.CreatedAt).FirstOrDefault().User.nombre,
                             categoria_name = t.Categoria.nombre,
-                            terminal_name = t.Terminal.Nombre,                            
+                            terminal_name = t.Terminal.Nombre,
                             Subsistema_name = t.Subsistema.Nombre,
                             Status = t.status,
                             Date = t.CreatedAt,
@@ -71,6 +73,7 @@ namespace TAS360.Controllers
             GetSummaryTKs();
             return View(tickets);
         }
+       
         public ActionResult SLAReport()
         {
             List<TicketViewModel> tickets = new List<TicketViewModel>();
@@ -129,7 +132,8 @@ namespace TAS360.Controllers
             GetSummaryTKs();
             return View(tickets);
         }
-
+        [HttpGet]
+        [AuthorizeUser(idOperacion: 27)]
         public ActionResult PrintSLAReport()
         {
             return new ActionAsPdf($"SLAReport/")
