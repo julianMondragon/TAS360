@@ -15,6 +15,10 @@ using TAS360.Models.ViewModel;
 using System.Net;
 using System.Net.Mail;
 using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.Spreadsheet;
+using SpreadsheetLight;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using System.Web.Services.Description;
 using System.EnterpriseServices.Internal;
 
 
@@ -71,12 +75,17 @@ namespace TAS360.Controllers
         [AuthorizeUser(idOperacion:5)]
         public ActionResult Index()
         {
-              List<TicketViewModel> tickets = new List<TicketViewModel>();
+            List<TicketViewModel> tickets = new List<TicketViewModel>();
+            List<ListbyFilterTicket> currentLists = new List<ListbyFilterTicket>();
             using (Models.HelpDesk_Entities1 db = new Models.HelpDesk_Entities1())
             {
                 var Tickets = (from s in db.Ticket where s.status != 12 orderby s.CreatedAt descending select s);
                 if (Tickets != null && Tickets.Any())
                 {
+                    foreach (var t in Tickets)
+                    {
+                        currentLists.Add(new ListbyFilterTicket() { id = t.id });
+                    }
                     foreach (var t in Tickets)
                     {
                         try
@@ -92,7 +101,8 @@ namespace TAS360.Controllers
                                 status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.Status.descripcion,
                                 Subsistema_name = t.Subsistema.Nombre,
                                 Status = t.status,
-                                id_externo = t.id_externo
+                                id_externo = t.id_externo,
+                                ListbyFilterTicket = currentLists
                             };
 
                             var lastComment = t.Ticket_Comentario.OrderByDescending(x => x.id).FirstOrDefault();
@@ -164,6 +174,12 @@ namespace TAS360.Controllers
                     }                    
                 }
             }
+            // Serializa y codifica la lista de tickets filtrados
+            var serializedObject = JsonConvert.SerializeObject(currentList);
+            encodedCurrentList = HttpUtility.UrlEncode(serializedObject);
+
+            // Pasa la lista codificada a la vista
+            ViewBag.EncodedCurrentList = encodedCurrentList;
             // Devuelve la vista con la lista de modelos de tickets
             return View(model);
         }
@@ -1097,6 +1113,7 @@ namespace TAS360.Controllers
         /// </summary>
         /// <returns> FilterTicketsViewModel </returns>
         [HttpGet]
+        [AuthorizeUser(idOperacion: 23)]
         public ActionResult Filter_Tickets()
         {
             FilterTicketsViewModel Filter = new FilterTicketsViewModel() { id_Terminal = 1};
@@ -1114,6 +1131,7 @@ namespace TAS360.Controllers
         /// <param name="Filter"></param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeUser(idOperacion: 23)]
         public ActionResult Filter_Tickets(FilterTicketsViewModel Filter)
         {
             GetTerminales();
@@ -1245,6 +1263,71 @@ namespace TAS360.Controllers
             // Redirecciona a la URL 
             return Redirect(url);
             //return View("IndexWithFilter", encodedCurrentList);
+        }
+
+        /// <summary>
+        /// Metodo que se encarga de exportar la tabla tickets
+        /// </summary>
+        /// <param name="NameFile"></param>
+        /// <returns></returns>
+        ///
+        [AuthorizeUser(idOperacion: 40)]
+        public FileResult ExportTableTickets(string encodedCurrentList)
+        {
+            //Variables
+            int Row = 8;
+            //Lista de tickets
+            List<ListbyFilterTicket> currentLists = new List<ListbyFilterTicket>();
+            //Se deserializa el objeto
+            var decodedObject = HttpUtility.UrlDecode(encodedCurrentList);
+            currentLists = JsonConvert.DeserializeObject<List<ListbyFilterTicket>>(decodedObject);
+
+            string newFileName = "Lista_de_tickets_" + DateTime.Now.ToString("dd-MM-yyyy") + "_" + ((User)Session["User"]).nombre + ".xlsx";
+            string prototypePath = Server.MapPath("~/Prototipo_Tabla/Lista_de_tickets_.xlsx");
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                SLDocument NewTablaTickets = new SLDocument(prototypePath);
+                SLStyle style1 = NewTablaTickets.CreateStyle();
+                style1.Fill.SetPattern(PatternValues.Solid, SLThemeColorIndexValues.Accent2Color, SLThemeColorIndexValues.Accent4Color);
+
+                // Llenar el archivo Excel con los datos de la lista de tickets
+                foreach (var item in currentLists)
+                {
+                    using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                    {
+                        var ticket = db.Ticket.Find(item.id);
+                        NewTablaTickets.SetCellValue(Row, 1, ticket.id);
+                        NewTablaTickets.SetCellValue(Row, 2, ticket.titulo);
+                        NewTablaTickets.SetCellValue(Row, 3, ticket.mensaje);
+                        NewTablaTickets.SetCellValue(Row, 4, ticket.Terminal.Nombre);
+                        NewTablaTickets.SetCellValue(Row, 5, ticket.Subsistema.Nombre);
+                        NewTablaTickets.SetCellValue(Row, 6, ticket.Ticket_User.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.User.nombre);
+                        NewTablaTickets.SetCellValue(Row, 7, ticket.Categoria.nombre);
+                        NewTablaTickets.SetCellValue(Row, 8, ticket.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.Status.descripcion);
+                        NewTablaTickets.SetCellValue(Row, 9, ticket.id_externo);
+                        Row++;
+                    }
+
+                }
+                NewTablaTickets.SaveAs(stream);
+                stream.Position = 0;
+                try
+                {
+                    string Message = $" {((User)Session["User"]).nombre} exportó una tabla de tickets. La tabla contiene {currentLists.Count} tickets.";
+                    string Path = Server.MapPath("~/Logs/Tickets/");
+                    Log oLog = new Log(Path);
+                    oLog.Add(Message);
+                }
+                catch (Exception ex)
+                {
+                    string logPath = Server.MapPath("~/Logs/Tickets/");
+                    Log oLog = new Log(logPath);
+                    oLog.Add(ex.Message);
+                    ViewBag.Exception = ex.Message;
+                }
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", newFileName);
+            }
         }
 
         /// <summary>

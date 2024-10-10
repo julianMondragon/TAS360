@@ -1,21 +1,31 @@
-﻿@model List<TAS360.Models.ViewModel.TicketViewModel>
+﻿@using TAS360.Models.ViewModel;
+@using Newtonsoft.Json;
+@model List<TAS360.Models.ViewModel.TicketViewModel>
 @{
     ViewBag.Title = "Mis Tickets";
     string exception = ViewBag.ExceptionMessage;
     string Info = ViewBag.InfoMessage;
+    // Objeto a enviar
+    string encodedCurrentList = "";
+    // Serialización y codificación
+    var serializedObject = JsonConvert.SerializeObject(Model.FirstOrDefault().ListbyFilterTicket);
+    encodedCurrentList = HttpUtility.UrlEncode(serializedObject);
 }
 
 <div class="jumbotron">
     <h1>Mis Tickets</h1>
     <p class="lead">Todos los tickets abiertos ( @Model.Count() ) ordenados por fecha descendente</p>
-<p class="lead">
-    <a onclick="document.location.href = '@Url.Content("~/Tickets/CreateTicket")'" class="btn btn-success">Crear un Ticket &raquo;</a>
-    @*Se agrega un botón para que de Index de tickets te envíe a la vista del 
-    filtro de tickets*@ 
-    <button onclick="document.location.href = '@Url.Content("~/Tickets/Filter_Tickets")'" type="button" class="btn btn-warning" data-toggle="tooltip" title="Realiza un filtrado personalizado de los pendientes ">
-        Filtrado &fnof;
-    </button>
-</p>
+    <p class="lead">
+        <a onclick="document.location.href = '@Url.Content("~/Tickets/CreateTicket")'" class="btn btn-success">Crear un Ticket &raquo;</a>
+        @*Se agrega un botón para que de Index de tickets te envíe a la vista del
+            filtro de tickets*@
+        <button onclick="document.location.href = '@Url.Content("~/Tickets/Filter_Tickets")'" type="button" class="btn btn-warning" data-toggle="tooltip" title="Realiza un filtrado personalizado de los pendientes ">
+            Filtrado &fnof;
+        </button>
+        <button onclick="document.location.href = '@Url.Content("~/Tickets/ExportTableTickets/?encodedCurrentList="+ encodedCurrentList)'" type="button" class="btn btn-info" data-toggle="tooltip" title="Exporta todos los tickets abiertos ( @Model.Count() )">
+            Exportar &pound;
+        </button>
+    </p>
     @if (exception != null)
     {
         <div class="alert alert-danger" role="alert">

@@ -163,6 +163,7 @@
     <Compile Include="Controllers\PendientesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\Rice_Lake920iController.cs" />
+    <Compile Include="Controllers\Roles_and_PrivilegeController.cs" />
     <Compile Include="Controllers\TablaCubController.cs" />
     <Compile Include="Controllers\TerminalController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
@@ -409,10 +410,15 @@
     <Compile Include="Models\ViewModel\G_TicketsByStatusViewModel.cs" />
     <Compile Include="Models\ViewModel\G_TicketsByTerminalViewModel.cs" />
     <Compile Include="Models\ViewModel\ListUsuarioViewModel.cs" />
+    <Compile Include="Models\ViewModel\ModuloViewModel.cs" />
+    <Compile Include="Models\ViewModel\OperacionViewModel.cs" />
     <Compile Include="Models\ViewModel\PendientesViewModel.cs" />
     <Compile Include="Models\ViewModel\PuertoSerialViewModel.cs" />
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
     <Compile Include="Models\ViewModel\RepTotalizadoViewModel.cs" />
+    <Compile Include="Models\ViewModel\RolesPrivilegesViewModel.cs" />
+    <Compile Include="Models\ViewModel\RollViewModel.cs" />
+    <Compile Include="Models\ViewModel\Rol_OperacionViewModel.cs" />
     <Compile Include="Models\ViewModel\salidasViewModel.cs" />
     <Compile Include="Models\ViewModel\SocketViewModel.cs" />
     <Compile Include="Models\ViewModel\TablaCubViewModel.cs" />
@@ -577,6 +583,7 @@
     <Content Include="Content\Documents\Procedimientos_TAS360\A\A4 PTS -ATAD-P-PCM-006.pdf" />
     <Content Include="Content\Documents\Procedimientos_TAS360\A\A5 PTS -ATAD-P-PCM-003.pdf" />
     <Content Include="Content\Documents\Procedimientos_TAS360\A\A6 PTS -ATAD-P-PCM-007.pdf" />
+    <Content Include="Prototipo_Tabla\Lista_de_tickets_.xlsx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.min.css" />
@@ -950,6 +957,11 @@
     <Content Include="Views\Acceso\RecuperarContraseña.cshtml" />
     <Content Include="Views\Rice_Lake920i\Index.cshtml" />
     <Content Include="Views\Rice_Lake920i\Info.cshtml" />
+    <Content Include="Views\Roles_and_Privilege\Index.cshtml" />
+    <Content Include="Views\Roles_and_Privilege\AddModule.cshtml" />
+    <Content Include="Views\Roles_and_Privilege\AddOperation.cshtml" />
+    <Content Include="Views\Roles_and_Privilege\AddRol.cshtml" />
+    <Content Include="Views\Roles_and_Privilege\AddRol_Operacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -957,6 +969,7 @@
     <Folder Include="Logs\" />
     <Folder Include="Tablas_CSV\" />
     <Folder Include="Tablas_Pendientes\" />
+    <Folder Include="Tablas_Tickets\" />
     <Folder Include="TicketFiles\" />
   </ItemGroup>
   <ItemGroup>

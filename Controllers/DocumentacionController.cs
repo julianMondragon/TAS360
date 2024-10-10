@@ -22,6 +22,7 @@ namespace TAS360.Controllers
         /// Muestra la pagina de los manuales del TAS360.
         /// </summary>
         /// <returns></returns>
+        [AuthorizeUser(idOperacion: 22)]
         public ActionResult Manuales()
         {
             return View();
