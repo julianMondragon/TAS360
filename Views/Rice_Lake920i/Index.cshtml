@@ -1,0 +1,164 @@
+﻿@model TAS360.Models.ViewModel.PuertoSerialViewModel
+@{
+    ViewBag.Title = "Comunicacion RiceLake 920i";
+    List<SelectListItem> ListCOMs = (List<SelectListItem>)ViewBag.ListCOMs;
+    bool IsOpen = (bool)ViewBag.IsOpen;
+    string warning = ViewBag.Warning;
+    string transacciones = "";
+    if (ViewBag.trasacciones != null)
+    {
+        transacciones = ViewBag.trasacciones;
+    }
+}
+
+<div class="jumbotron">
+    <h1>Comunicación con RiceLake 920i</h1>
+    <p class="lead">
+        En esta página puedes establecer la comunicación con la báscula RiceLake 920i.
+        Los comandos serán enviados en formato ASCII por el puerto serial seleccionado.
+    </p>
+    @if (warning != null)
+    {
+        <h3 style="color:sandybrown">@warning</h3>
+    }
+    @if (IsOpen)
+    {
+        <button class="btn btn-default" id="leer-peso">Real Time</button>
+        <a onclick="document.location.href = '@Url.Content("~/Rice_Lake920i/ClosePort")'" class="btn btn-danger">Cerrar puerto Serial &raquo;</a>
+        <a onclick="document.location.href = '@Url.Content("~/Rice_Lake920i/Info")'" class="btn btn-info">Info sobre comandos RiceLake &raquo;</a>
+    }
+</div>
+
+@if (!IsOpen)
+{
+    <section class="page-section about-heading">
+        <div class="container">
+            <div class="about-heading-content">
+                <div class="row">
+                    <div class="col-xl-9 col-lg-10 mx-auto">
+                        <div class="bg-faded rounded p-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @using (Html.BeginForm("OpenPort", "Rice_Lake920i", FormMethod.Post, new { role = "form", @class = "" }))
+                                    {
+                                        <div style="text-align:right">
+                                            <input type="submit" class="btn btn-success" value="Abrir Puerto" />
+                                        </div>
+                                        <br />
+                                        @Html.LabelFor(f => f.Name)
+                                        @Html.DropDownListFor(model => model.Name, ListCOMs, new { @class = "form-control" })
+                                        <br />
+                                        @Html.LabelFor(f => f.BaudRate)
+                                        @Html.TextBoxFor(f => f.BaudRate, new { @class = "form-control" })
+                                        <br />
+                                        @Html.LabelFor(f => f.DataBits)
+                                        @Html.TextBoxFor(f => f.DataBits, new { @class = "form-control" })
+                                        <br />
+                                        @Html.LabelFor(f => f.StopBits)
+                                        @Html.TextBoxFor(f => f.StopBits, new { @class = "form-control" })
+                                        <br />
+                                        @Html.LabelFor(f => f.Parity)
+                                        @Html.TextBoxFor(f => f.Parity, new { @class = "form-control" })
+                                        <br />
+                                        @Html.LabelFor(f => f.Handshake)
+                                        @Html.TextBoxFor(f => f.Handshake, new { @class = "form-control" })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><b>Pesaje en tiempo real</b> </div>
+                <div class="panel-body">
+                    <table id="summaryTable" class="table table-success table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Entrada</th>
+                                <th scope="col">Salida </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span id="valor-peso" style="font-size: 3.5rem; font-weight: bold; color:limegreen">0.00</span> kg</td>
+                                <td><span id="valor-peso2" style="font-size: 3.5rem; font-weight: bold; color:red">0.00</span> kg</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating">
+                @using (Html.BeginForm("SendCommand", "Rice_Lake920i", FormMethod.Post, new { role = "form", @class = "" }))
+                {
+                    @Html.LabelFor(f => f.Commant_Send, "Comando a enviar en ASCII")
+                    @Html.TextAreaFor(f => f.Commant_Send, new { @class = "form-control", rows = "8", placeholder = "Escribe tu comando en ASCII; \r\nLos pesos brutos, netos, tara, acumulador, camión y puntos de corte pueden ser impresas en cualquieras unidades de peso configuradas por medio de añadir los siguientes modificadores a los comandos bruto, neto, y tara: /P (unidades primarias), /D (unidades visualizadas), /S (unidades secundarias), /T (unidades terciarias). Si no se especifican, se asume que quieren las unidades visualizadas (/D). \r\nEjemplo: Para formatear un rótulo para mostrar el peso neto de la Báscula #3 en unidades secundarias, utilizar el siguiente comando: <N#3/S>" })
+                    <br />
+                    <div style="text-align:right">
+                        <a onclick="document.location.href = '@Url.Content("~/Rice_Lake920i/ReadCommandPort")'" class="btn btn-warning">Leer puerto &raquo;</a>
+                        <input type="submit" class="btn btn-success" value="Enviar Comando &raquo;" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <label for="floatingTextarea">Transacciones</label>
+        @if (!string.IsNullOrEmpty(transacciones))
+        {
+            <textarea class="form-control" id="floatingTextarea" rows="5" readonly>@transacciones</textarea>
+        }
+        else
+        {
+            <textarea class="form-control" id="floatingTextarea" rows="5" placeholder="No hay transacciones aún" readonly></textarea>
+        }
+    </div>
+    
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var intervalId;  // Variable para almacenar el ID del intervalo
+
+        $("#leer-peso").click(function () {
+            // Ejecuta la función de leer peso inmediatamente
+            leerPeso();
+
+            // Inicia un intervalo para que la función se ejecute cada 5 segundos
+            if (!intervalId) {  // Evita crear múltiples intervalos si ya está corriendo uno
+                intervalId = setInterval(leerPeso, 500);
+            }
+        });
+
+        function leerPeso() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("LeerPeso", "Rice_Lake920i")',
+                success: function (data) {
+                    if (data.error) {
+                        alert("Error: " + data.error);
+                        clearInterval(intervalId);  // Detiene el intervalo si hay un error
+                    } else {
+                        $("#valor-peso").text(data.peso);
+                        $("#valor-peso2").text(data.peso2);
+                        var currentDate = new Date();
+                        var date = currentDate.toLocaleString();
+                        $("#floatingTextarea").val(function (index, currentValue) {
+                            return "recibiendo: " + data.peso + " Kg " + " " + data.peso2 + " Kg   " + date + "\n" + currentValue;
+                        });
+
+                    }
+                }
+            });
+        }
+    });
+</script>
