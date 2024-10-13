@@ -573,6 +573,10 @@
     <Content Include="Content\Documents\Procedimientos_TAS360\A\A5 PTS -ATAD-P-PCM-003.pdf" />
     <Content Include="Content\Documents\Procedimientos_TAS360\A\A6 PTS -ATAD-P-PCM-007.pdf" />
     <Content Include="Prototipo_Tabla\Lista_de_tickets_.xlsx" />
+    <Content Include="fonts\7600-fontps.otf" />
+    <Content Include="fonts\Myriad Pro Bold.ttf" />
+    <Content Include="fonts\Myriad Pro Italic.ttf" />
+    <Content Include="fonts\PFBeauSansPro-LightItalic.ttf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\datatables\AutoFill-2.4.0\css\autoFill.bootstrap.min.css" />
