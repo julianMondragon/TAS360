@@ -705,8 +705,10 @@ namespace TAS360.Controllers
                         Ticket.id_Categoria = ticket.id_Categoria;
                         oLog.Add("Subsistema: " + Ticket.id_Subsistema);
                         Ticket.id_Subsistema = ticket.id_Subsistema;
-                        oLog.Add("Usuario: " + Ticket.id_User);
-                        Ticket.id_User = ((User)Session["User"]).id;
+                        oLog.Add("Usuario: " + ticket.id_Resp);
+                        Ticket.id_User = ticket.id_Resp;
+                        //oLog.Add("Usuario: " + Ticket.id_User);
+                        //Ticket.id_User = ((User)Session["User"]).id;
                         oLog.Add("Status: " + Ticket.status);
                         Ticket.status = ticket.Status;
                         oLog.Add("Mensaje: " + Ticket.mensaje);
