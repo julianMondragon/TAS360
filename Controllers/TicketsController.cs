@@ -224,6 +224,7 @@ namespace TAS360.Controllers
                         idTicket = db.Ticket.FirstOrDefault(a => a.titulo == model.titulo && a.id_Terminal == model.id_Terminal && a.id_Categoria == model.id_Categoria && a.mensaje == model.mensaje).id;
                         oLog.Add("Se creo el Ticket: " + idTicket);
                         oLog.Add("Titulo del Ticket: " + model.titulo);
+                        oLog.Add("Usuario creador: " + ((User)Session["User"]).id);
                         oLog.Add("Usuario creador: " + ((User)Session["User"]).nombre);
                         if (idTicket != 0)
                         {
@@ -605,7 +606,9 @@ namespace TAS360.Controllers
                         
                         var Ticket = db.Ticket.Find(ticket.id);
                         oLog.Add("id_User: " + ticket.id_Resp);
-                        Ticket.id_User = ticket.id_Resp;
+                        ticket.id_Resp = Ticket.id_User;
+                        //Ticket.id_User = ticket.id_Resp;
+
                         db.Entry(Ticket).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
                         //Logs
