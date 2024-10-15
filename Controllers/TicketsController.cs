@@ -1354,6 +1354,7 @@ namespace TAS360.Controllers
                 var tk = db.Ticket.Find(idtk);
                 ticket.titulo = tk.titulo;
                     // Obtener el último comentario del ticket
+                    // aqui tienes que revisar este codigo para la correcta funcionamiento.
                     var lastComment = db.Ticket_Comentario
                                         .Where(x => x.id_Ticket == tk.id)
                                         .OrderByDescending(x => x.id)
