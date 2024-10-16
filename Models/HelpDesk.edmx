@@ -208,6 +208,23 @@
           <Property Name="createdAt" Type="date" />
           <Property Name="updateAt" Type="date" />
         </EntityType>
+        <EntityType Name="usr_profile">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="createdAt" Type="date" />
+          <Property Name="updateAt" Type="date" />
+          <Property Name="fecha nacimeinto" Type="datetime" />
+          <Property Name="Cel" Type="varchar" MaxLength="50" />
+          <Property Name="Género" Type="varchar" MaxLength="50" />
+          <Property Name="Estado" Type="varchar" MaxLength="50" />
+          <Property Name="Foto_usuario" Type="image" />
+          <Property Name="id_User" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Comentario_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Comentario" Type="Self.Comentario" Multiplicity="*" />
@@ -544,10 +561,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        
-        
-        
-        
+        <Association Name="FK_usr_profile_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="usr_profile" Type="Self.usr_profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usr_profile">
+              <PropertyRef Name="id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="HelpDeskModelStoreContainer">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clasificacion_Pendiente" EntityType="Self.Clasificacion_Pendiente" Schema="dbo" store:Type="Tables" />
@@ -570,6 +595,7 @@
           <EntitySet Name="Ticket_User" EntityType="Self.Ticket_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tickets_Files" EntityType="Self.Tickets_Files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usr_profile" EntityType="Self.usr_profile" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Comentario_User" Association="Self.FK_Comentario_User">
             <End Role="User" EntitySet="User" />
             <End Role="Comentario" EntitySet="Comentario" />
@@ -682,6 +708,10 @@
             <End Role="Roll" EntitySet="Roll" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
+          <AssociationSet Name="FK_usr_profile_User" Association="Self.FK_usr_profile_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="usr_profile" EntitySet="usr_profile" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -739,6 +769,7 @@
           <EntitySet Name="Ticket_User" EntityType="HelpDeskModel.Ticket_User" />
           <EntitySet Name="Tickets_Files" EntityType="HelpDeskModel.Tickets_Files" />
           <EntitySet Name="User" EntityType="HelpDeskModel.User" />
+          <EntitySet Name="usr_profile" EntityType="HelpDeskModel.usr_profile" />
           <AssociationSet Name="FK_Ticket_Categoria" Association="HelpDeskModel.FK_Ticket_Categoria">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Ticket" EntitySet="Ticket" />
@@ -850,6 +881,10 @@
           <AssociationSet Name="FK_Ticket_User_User" Association="HelpDeskModel.FK_Ticket_User_User">
             <End Role="User" EntitySet="User" />
             <End Role="Ticket_User" EntitySet="Ticket_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usr_profile_User" Association="HelpDeskModel.FK_usr_profile_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="usr_profile" EntitySet="usr_profile" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -1121,6 +1156,25 @@
           <NavigationProperty Name="Pendiente" Relationship="HelpDeskModel.FK_Pendiente_User" FromRole="User" ToRole="Pendiente" />
           <NavigationProperty Name="Roll" Relationship="HelpDeskModel.FK_User_Roll" FromRole="User" ToRole="Roll" />
           <NavigationProperty Name="Ticket_User" Relationship="HelpDeskModel.FK_Ticket_User_User" FromRole="User" ToRole="Ticket_User" />
+          <NavigationProperty Name="usr_profile" Relationship="HelpDeskModel.FK_usr_profile_User" FromRole="User" ToRole="usr_profile" />
+        </EntityType>
+        <EntityType Name="usr_profile">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="createdAt" Type="DateTime" Precision="0" />
+          <Property Name="updateAt" Type="DateTime" Precision="0" />
+          <Property Name="fecha_nacimeinto" Type="DateTime" Precision="3" />
+          <Property Name="Cel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Género" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Foto_usuario" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="id_User" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="HelpDeskModel.FK_usr_profile_User" FromRole="usr_profile" ToRole="User" />
         </EntityType>
         <Association Name="FK_Ticket_Categoria">
           <End Type="HelpDeskModel.Categoria" Role="Categoria" Multiplicity="0..1" />
@@ -1458,6 +1512,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_usr_profile_User">
+          <End Type="HelpDeskModel.User" Role="User" Multiplicity="1" />
+          <End Type="HelpDeskModel.usr_profile" Role="usr_profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usr_profile">
+              <PropertyRef Name="id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1683,6 +1749,24 @@
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="id_Roll" ColumnName="id_Roll" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usr_profile">
+            <EntityTypeMapping TypeName="HelpDeskModel.usr_profile">
+              <MappingFragment StoreEntitySet="usr_profile">
+                <ScalarProperty Name="id_User" ColumnName="id_User" />
+                <ScalarProperty Name="Foto_usuario" ColumnName="Foto_usuario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Género" ColumnName="Género" />
+                <ScalarProperty Name="Cel" ColumnName="Cel" />
+                <ScalarProperty Name="fecha_nacimeinto" ColumnName="fecha nacimeinto" />
+                <ScalarProperty Name="updateAt" ColumnName="updateAt" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

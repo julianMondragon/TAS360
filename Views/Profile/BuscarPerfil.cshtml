@@ -1,0 +1,55 @@
+﻿@model List<TAS360.Models.ViewModel.Perfilusr
+@{
+    ViewBag.Title = "Buscar Perfil";
+}
+
+<h2>Buscar Perfil</h2>
+
+<!-- Formulario de búsqueda -->
+<form method="get" action="@Url.Action("BuscarPerfil", "Profile")">
+    <div class="form-group">
+        <label for="criterio">Buscar por nombre o email:</label>
+        <input type="text" name="criterio" class="form-control" placeholder="Ingrese nombre o correo electrónico" />
+    </div>
+    <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+
+@if (Model.Count > 0)
+{
+    <h3>Resultados de la búsqueda:</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Género</th>
+                <th>Estado</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var perfil in Model)
+            {
+                <tr>
+                    <td>@perfil.id_User</td>
+                    <td>@perfil.nombre</td>
+                    <td>@perfil.email</td>
+                    <td>@perfil.Cel</td>
+                    <td>@perfil.Género</td>
+                    <td>@perfil.Estado</td>
+                    <td>@perfil.fecha_nacimiento.ToShortDateString()</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Profile", new { id = perfil.id_User })" class="btn btn-info">Editar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No se encontraron resultados para la búsqueda.</p>
+}

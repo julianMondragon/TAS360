@@ -12,18 +12,21 @@ namespace TAS360.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Categoria
+    public partial class usr_profile
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Categoria()
-        {
-            this.Ticket = new HashSet<Ticket>();
-        }
-    
         public int id { get; set; }
         public string nombre { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
+        public Nullable<System.DateTime> createdAt { get; set; }
+        public Nullable<System.DateTime> updateAt { get; set; }
+        public Nullable<System.DateTime> fecha_nacimeinto { get; set; }
+        public string Cel { get; set; }
+        public string Género { get; set; }
+        public string Estado { get; set; }
+        public byte[] Foto_usuario { get; set; }
+        public int id_User { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ticket> Ticket { get; set; }
+        public virtual User User { get; set; }
     }
 }

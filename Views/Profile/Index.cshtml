@@ -1,0 +1,55 @@
+﻿
+@using System.Collections.Generic;
+@using TAS360.Models.ViewModel;
+@model TAS360.Models.ViewModel.PerfilusrViewModel
+@{
+    ViewBag.Title = "Perfil del usuario";
+}
+
+<div class="jumbotron">
+    <h1>Usuarios</h1>
+    
+    <div class="row">
+        <button onclick="document.location.href = '@Url.Content("~/Profile/EditProfile")'" type="button" class="btn btn-success" data-toggle="tooltip" title="Editar perfil">
+            editar perfil &raquo;
+        </button>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <table class="table table-success table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th colspan="1" scope="col">Id</th>
+                    <th colspan="3" scope="col">Nombre</th>
+                    <th colspan="1" scope="col">Email</th>
+                    <th colspan="3" scope="col">Cel</th>
+
+                    <th colspan="2">Accion</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    
+                        <tr>
+                            <td colspan="1">@Model.id_User</td>
+                            <td colspan="3">@Model.nombre</td>
+                            <td colspan="1">@Model.email</td>
+                            <td colspan="1">@Model.Cel</td>
+                            <td colspan="2">
+                                <button onclick="location.href='@Url.Action("Edit", "Profile")'" class="btn btn-primary">
+                                    Editar Perfil
+                                </button>
+                                
+
+                            </td>
+                        </tr>
+                    
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

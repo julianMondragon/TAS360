@@ -166,6 +166,7 @@
     <Compile Include="Controllers\TerminalController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\WebAPIPemexController.cs" />
     <Compile Include="Filters\AuthorizeUser.cs" />
     <Compile Include="Filters\VerificaSession.cs" />
@@ -395,6 +396,9 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>HelpDesk.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\usr_profile.cs">
+      <DependentUpon>HelpDesk.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ViewModel\aditivoViewModel.cs" />
     <Compile Include="Models\ViewModel\auditoriaViewModel.cs" />
     <Compile Include="Models\ViewModel\ConfigTanqAditivoViewModel.cs" />
@@ -409,6 +413,7 @@
     <Compile Include="Models\ViewModel\G_TicketsByTerminalViewModel.cs" />
     <Compile Include="Models\ViewModel\ListUsuarioViewModel.cs" />
     <Compile Include="Models\ViewModel\PendientesViewModel.cs" />
+    <Compile Include="Models\ViewModel\PerfilusrViewModel.cs" />
     <Compile Include="Models\ViewModel\PuertoSerialViewModel.cs" />
     <Compile Include="Models\ViewModel\RecetasViewModel.cs" />
     <Compile Include="Models\ViewModel\RepTotalizadoViewModel.cs" />
@@ -424,6 +429,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StorProc\LSA_Reportes.cs" />
+    <Compile Include="Views\Profile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Backup_Database\Migraciones\Alter_Pendiente_Add_properties.sql" />
@@ -943,6 +949,9 @@
     <Content Include="Views\Tickets\IndexWithFilter.cshtml" />
     <Content Include="Views\LSA\SLAReport.cshtml" />
     <Content Include="Views\Acceso\RecuperarContraseña.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\Editprofile.cshtml" />
+    <Content Include="Views\Profile\BuscarPerfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
