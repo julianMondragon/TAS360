@@ -148,7 +148,8 @@ namespace TAS360.Controllers
                         // Busca el usuario asociado al ticket
                         var User = db.User.FirstOrDefault(usr => usr.id == t.id_User);
                         // Va añadiendo a la lista cada TicketViewModel de los tickets existentes
-                        model.Add(new TicketViewModel()
+                        model.Add(new TicketViewModel
+                            ()
                         {
                             id = t.id,
                             titulo = t.titulo,
@@ -240,7 +241,7 @@ namespace TAS360.Controllers
 
                             Ticket_User ticket_User = new Ticket_User();
                             ticket_User.id_Ticket = ticket.id;
-                            ticket_User.id_User = (int)model.id_Resp;
+                            ticket_User.id_User = (int) model.id_Resp;
                             ticket_User.CreatedAt = DateTime.Now;
 
                             db.Ticket_User.Add(ticket_User);
@@ -593,34 +594,36 @@ namespace TAS360.Controllers
                         oLog.Add("Guardo una relacion entre el ticket y el comentario");
                     }
 
-                    if (ticket.id_Usuario != db.Ticket_User.Where(x => x.id_Ticket == ticket.id).OrderByDescending(a => a.CreatedAt).FirstOrDefault().id_User)
+                    var lastTicketUser = db.Ticket_User.Where(x => x.id_Ticket == ticket.id).OrderByDescending(a => a.CreatedAt).FirstOrDefault();
+                    if (lastTicketUser == null || ticket.id_Usuario != lastTicketUser.id_User)
                     {
-                        
-                        Ticket_User ticket_User = new Ticket_User();
-                        ticket_User.id_Ticket = ticket.id;
-                        ticket_User.id_User = (int)ticket.id_Usuario;
-                        ticket_User.CreatedAt = DateTime.Now;
+                        if (lastTicketUser == null || ticket.id_Usuario != lastTicketUser.id_User)
+                        {
+                            Ticket_User ticket_User = new Ticket_User
+                            {
+                                id_Ticket = ticket.id,
+                                id_User = (int)ticket.id_Usuario,
+                                CreatedAt = DateTime.Now
+                            };
 
-                        db.Ticket_User.Add(ticket_User);
-                        db.SaveChanges();
-                        
-                        var Ticket = db.Ticket.Find(ticket.id);
-                        oLog.Add("id_User: " + ticket.id_Resp);
-                        ticket.id_Resp = Ticket.id_User;
-                        //Ticket.id_User = ticket.id_Resp;
+                            db.Ticket_User.Add(ticket_User);
+                            db.SaveChanges();
 
-                        db.Entry(Ticket).State = System.Data.Entity.EntityState.Modified;
-                        db.SaveChanges();
+                            t.id_User = ticket_User.id_User; // Asignar nuevo responsable
+                            db.Entry(t).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+
                         //Logs
                         oLog.Add("actual Responsable user id : " + db.Ticket_User.OrderByDescending(a => a.CreatedAt).FirstOrDefault().id_User);
                         oLog.Add("Se agrega una relacion entre usuario responsable y ticket");                                             
                         oLog.Add("Nuevo id User: " + ticket_User.id_User);
-                    }
+                        }
 
                     sendEmailUpdateTK(ticket.id, (int)ticket.id_Usuario, ((User)Session["User"]).id);
+                    }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Comentarios comentario = new Comentarios();
                 comentario.id_User = ((User)Session["User"]).id;
@@ -696,7 +699,16 @@ namespace TAS360.Controllers
                     oLog.Add("Edit Ticket: " + ticket.id);
                     using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                     {
+
                         var Ticket = db.Ticket.Find(ticket.id);
+                        var Ticket_User = db.Ticket_User.Where(x => x.id_Ticket == ticket.id).OrderByDescending(a => a.CreatedAt).FirstOrDefault();
+
+
+                        if (Ticket == null)
+                        {
+                            oLog.Add("Ticket no encontrado: " + ticket.id);
+                            return HttpNotFound();
+                        }
                         oLog.Add("Titulo: " + Ticket.titulo);
                         Ticket.titulo = ticket.titulo;
                         oLog.Add("Terminal: " + Ticket.id_Terminal);
@@ -705,20 +717,37 @@ namespace TAS360.Controllers
                         Ticket.id_Categoria = ticket.id_Categoria;
                         oLog.Add("Subsistema: " + Ticket.id_Subsistema);
                         Ticket.id_Subsistema = ticket.id_Subsistema;
-                        oLog.Add("Usuario: " + ticket.id_Resp);
+                        // Guardamos el ID del responsable
                         Ticket.id_User = ticket.id_Resp;
-                        //oLog.Add("Usuario: " + Ticket.id_User);
-                        //Ticket.id_User = ((User)Session["User"]).id;
+                        
+                        if (Ticket_User != null)
+                        {
+                            Ticket_User.id_User = (int) ticket.id_Resp; // Guardar id_Resp como id_User en Ticket_User
+                            oLog.Add("Nuevo Usuario Responsable en Ticket_User: " + Ticket_User.id_User);
+                            db.Entry(Ticket_User).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            oLog.Add("No se encontró Ticket_User para el Ticket: " + ticket.id);
+                        }
+
+                        Ticket.id_User = ticket.id_Resp;
+                        oLog.Add("Nuevo Usuario Responsable: " + ticket.id_Resp);
+
+                        oLog.Add("Usuario Modificador: " + ((User)Session["User"]).id); //Valor Anterior
+                        oLog.Add("Usuario Modificador: " + ((User)Session["User"]).nombre); //Valor Anterior
                         oLog.Add("Status: " + Ticket.status);
                         Ticket.status = ticket.Status;
                         oLog.Add("Mensaje: " + Ticket.mensaje);
-                        Ticket.mensaje = ticket.mensaje;
+                        Ticket.mensaje = ticket.mensaje;                        
                         oLog.Add("Identificador: " + Ticket.id_externo);
                         Ticket.id_externo = ticket.id_externo;
 
                         db.Entry(Ticket).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
-                        oLog.Add("Se guardan cambios en el Ticket");
+                        
+                        oLog.Add("Se guardan cambios en el Ticket"  );
                         oLog.Add("Nuevo Titulo: " + ticket.titulo);
                         oLog.Add("Nuevo Terminal: " + ticket.id_Terminal);
                         oLog.Add("Nuevo Categoria: " + ticket.id_Categoria);
