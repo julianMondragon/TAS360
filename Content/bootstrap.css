@@ -6954,3 +6954,61 @@ height: auto;
     height: auto;
 }
 
+/* Fuentes segun manual de identidad */
+
+/* PF Beau Sans Light Italic */
+@font-face {
+    font-family: 'PF Beau Sans';
+    src: url('/fonts/PFBeauSansPro-LightItalic.ttf') format('truetype'), url('/fonts/PFBeauSansPro-LightItalic.woff') format('woff');
+    font-weight: 300; /* Light */
+    font-style: italic;
+}
+
+/* Myriad Pro Regular */
+@font-face {
+    font-family: 'Myriad Pro Regular';
+    src: url('/fonts/MyriadPro-Regular.ttf') format('truetype'), url('/fonts/MyriadPro-Regular.woff') format('woff');
+    font-weight: 400; /* Regular */
+    font-style: normal;
+}
+
+/* Myriad Pro Italic */
+@font-face {
+    font-family: 'Myriad Pro Italic';
+    src: url('/fonts/MyriadPro-Italic.ttf') format('truetype'), url('/fonts/MyriadPro-Italic.woff') format('woff');
+    font-weight: 400; /* Regular */
+    font-style: italic;
+}
+
+/* Myriad Pro Bold */
+@font-face {
+    font-family: 'Myriad Pro Bold';
+    src: url('/fonts/MyriadPro-Bold.ttf') format('truetype'), url('/fonts/MyriadPro-Bold.woff') format('woff');
+    font-weight: 700; /* Bold */
+    font-style: normal;
+}
+
+/* Estilos aplicados a elementos */
+h1 {
+    font-family: 'PF Beau Sans', sans-serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+p {
+    font-family: 'Myriad Pro Regular', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+em {
+    font-family: 'Myriad Pro Italic', sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+strong {
+    font-family: 'Myriad Pro Bold', sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
