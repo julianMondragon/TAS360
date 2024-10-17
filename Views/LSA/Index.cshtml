@@ -5,10 +5,28 @@
 
 }
 <div class="jumbotron">
-    <h2>Acuerdo de Nivel de Servicio (SLA) </h2>
+    <h1>Acuerdo de Nivel de Servicio (SLA) </h1>
     @*<h3><strong style="font-family: Monotype Corsiva ">Resumen</strong></h3>*@
     <a class="btn btn-default " href="@Url.Content("~/Home/Home")">Regresar</a>
     <a class="btn btn-info" href="@Url.Content("~/LSA/PrintSLAReport")">Generar Reporte</a>
+</div>
+
+@*Documentacion SLA*@
+<div class="row">
+    <div class="col-md-6">
+        <p class="lead">
+            Los SLA se utilizan para establecer indicadores medibles del servicio que brindamos y así asegurar el cumplimiento de las expectativas de nuestros clientes.
+        </p>
+        <p class="lead">
+            Para expresar un compromiso de calidad de servicio, esta debe ser medible con facilidad. Esta medición puede ser, muchas veces, subjetiva por parte de los clientes finales, como en el caso de un departamento de atención al cliente.
+        </p>
+        <p class="lead">
+            Anteriormente se muestra las tablas y graficas midiendo la eficiencia de respuesta del servicio.
+        </p>
+    </div>
+    <div class="col-md-6" style="margin:0px 0px 0px 0px">
+        <img src="~/Content/img/SLA.jpg" class="img-responsive" alt="Responsive image">
+    </div>
 </div>
 @*Graficas *@
 <div class="row">
@@ -157,23 +175,7 @@
         </div>
     </div>
 </div>
-@*Documentacion SLA*@
-<div class="row">
-    <div class="col-md-6">
-        <p class="lead">
-            Los SLA se utilizan para establecer indicadores medibles del servicio que brindamos y así asegurar el cumplimiento de las expectativas de nuestros clientes.
-        </p>
-        <p class="lead">
-            Para expresar un compromiso de calidad de servicio, esta debe ser medible con facilidad. Esta medición puede ser, muchas veces, subjetiva por parte de los clientes finales, como en el caso de un departamento de atención al cliente.
-        </p>
-        <p class="lead">
-            Anteriormente se muestra las tablas y graficas midiendo la eficiencia de respuesta del servicio.
-        </p>
-    </div>
-    <div class="col-md-6" style="margin:0px 0px 0px 0px">
-        <img src="~/Content/img/SLA.jpg" class="img-responsive" alt="Responsive image">
-    </div>
-</div>
+
 @section scripts
 {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
