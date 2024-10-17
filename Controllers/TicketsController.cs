@@ -1060,6 +1060,7 @@ namespace TAS360.Controllers
             sb.Append("");
             sb.AppendLine("-> Fecha: " + DateTime.Now.ToString("dd/MMMM/yyyy hh:mm:ss tt", new System.Globalization.CultureInfo("es-ES")));
             sb.AppendLine("-> Reportado por:" + ((User)Session["User"]).nombre);
+            sb.AppendLine("-> Versión: .....");
             sb.AppendLine("-> Reporte: .....");
             sb.AppendLine("..............");
             sb.AppendLine("-> Problematica: ");
