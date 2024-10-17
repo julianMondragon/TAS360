@@ -1058,11 +1058,11 @@ namespace TAS360.Controllers
             StringBuilder sb = new StringBuilder();
           
             sb.Append("");
-            sb.AppendLine("->Fecha: " + DateTime.Now);
-            sb.AppendLine("->Reportado por:" + ((User)Session["User"]).nombre);
-            sb.AppendLine("->Reporte: .....");
+            sb.AppendLine("-> Fecha: " + DateTime.Now.ToString("dd/MMMM/yyyy hh:mm:ss tt", new System.Globalization.CultureInfo("es-ES")));
+            sb.AppendLine("-> Reportado por:" + ((User)Session["User"]).nombre);
+            sb.AppendLine("-> Reporte: .....");
             sb.AppendLine("..............");
-            sb.AppendLine("->Problematica: ");
+            sb.AppendLine("-> Problematica: ");
             sb.AppendLine(".........");
             sb.AppendLine(".........");
             return sb.ToString();
@@ -1077,12 +1077,12 @@ namespace TAS360.Controllers
             StringBuilder sb = new StringBuilder();
 
             sb.Append("");
-            sb.AppendLine("->Fecha: " + DateTime.Now);
-            sb.AppendLine("->Reportado por:" + ((User)Session["User"]).nombre);
-            sb.AppendLine("->Reporte:");
+            sb.AppendLine("-> Fecha: " + DateTime.Now.ToString("dd/MMMM/yyyy hh:mm:ss tt", new System.Globalization.CultureInfo("es-ES")));
+            sb.AppendLine("-> Reportado por:" + ((User)Session["User"]).nombre);
+            sb.AppendLine("-> Reporte:");
             sb.AppendLine(".......");
             sb.AppendLine(".......");
-            sb.AppendLine("->Acciones a realizar: ");
+            sb.AppendLine("-> Acciones a realizar: ");
             sb.AppendLine(".........");
             sb.AppendLine(".........");
             return sb.ToString();
