@@ -1356,9 +1356,11 @@ namespace TAS360.Controllers
                     // Obtener el último comentario del ticket
                     // aqui tienes que revisar este codigo para la correcta funcionamiento.
                     var lastComment = db.Ticket_Comentario
-                                        .Where(x => x.id_Ticket == tk.id)
-                                        .OrderByDescending(x => x.id)
-                                        .FirstOrDefault();
+                         .Where(x => x.id_Ticket == tk.id)
+                         .OrderByDescending(x => x.id) // Asegurarse de que el id refleje el orden cronológico
+                         .FirstOrDefault();
+
+
 
                     // Asignar el mensaje del ticket basado en la existencia del último comentario
                     ticket.mensaje = lastComment?.Comentario.Comentario1 ?? tk.mensaje;
@@ -1367,7 +1369,7 @@ namespace TAS360.Controllers
                              .Replace("{ticketId}", tk.id.ToString())
                              .Replace("{titulo}", tk.titulo.ToString())
                              .Replace("{estado}", "Pendiente")
-                             .Replace("{ultimoComentario}", tk.mensaje)
+                             .Replace("{ultimoComentario}", ticket.mensaje)
                              .Replace("{enlaceTicket}", "https://pts-tools.com.mx/Tickets/ShowTicket/" + tk.id);                
             }
 
