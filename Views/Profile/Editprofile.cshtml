@@ -1,48 +1,44 @@
-﻿@using System.Collections.Generic;
-@using TAS360.Models.ViewModel;
-@model TAS360.Models.ViewModel.PerfilusrViewModel
-
-
+﻿@model TAS360.Models.ViewModel.PerfilusrViewModel
 @{
-    <div>
-        ViewBag.Title = "Editar Perfil";
-    </div>
+    ViewBag.Title = "Editar Perfil";
 }
 
 <h2>Editar Perfil</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Guardar", "Profile", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken() <!-- Para proteger contra ataques CSRF -->
 
     <div class="form-group">
-        @Html.LabelFor(model => model.nombre)
-        @Html.TextBoxFor(model => model.nombre, new { @class = "form-control" })
+        @Html.LabelFor(m => m.nombre)
+        @Html.TextBoxFor(m => m.nombre, new { @class = "form-control", placeholder = "Nombre" })
+        @Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.email)
-        @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
+        @Html.LabelFor(m => m.email)
+        @Html.TextBoxFor(m => m.email, new { @class = "form-control", placeholder = "Email" })
+        @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Cel)
-        @Html.TextBoxFor(model => model.Cel, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Cel)
+        @Html.TextBoxFor(m => m.Cel, new { @class = "form-control", placeholder = "Teléfono Celular" })
+        @Html.ValidationMessageFor(m => m.Cel, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Género)
-        @Html.TextBoxFor(model => model.Género, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Género)
+        @Html.TextBoxFor(m => m.Género, new { @class = "form-control", placeholder = "Género" })
+        @Html.ValidationMessageFor(m => m.Género, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Estado)
-        @Html.TextBoxFor(model => model.Estado, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Estado)
+        @Html.TextBoxFor(m => m.Estado, new { @class = "form-control", placeholder = "Estado" })
+        @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
     </div>
 
-    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Profile")'">Cancelar</button>
 }
-
-<p>
-    <a href="@Url.Action("Index")" class="btn btn-default">Cancelar</a>
-</p>

@@ -213,16 +213,16 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" />
-          <Property Name="email" Type="varchar" MaxLength="50" />
-          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="password" Type="varchar" MaxLength="100" />
           <Property Name="createdAt" Type="date" />
           <Property Name="updateAt" Type="date" />
           <Property Name="fecha nacimeinto" Type="datetime" />
           <Property Name="Cel" Type="varchar" MaxLength="50" />
           <Property Name="Género" Type="varchar" MaxLength="50" />
           <Property Name="Estado" Type="varchar" MaxLength="50" />
-          <Property Name="Foto_usuario" Type="image" />
+          <Property Name="Foto_usuario" Type="varbinary(max)" />
           <Property Name="id_User" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Comentario_User">
@@ -1163,9 +1163,9 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="createdAt" Type="DateTime" Precision="0" />
           <Property Name="updateAt" Type="DateTime" Precision="0" />
           <Property Name="fecha_nacimeinto" Type="DateTime" Precision="3" />

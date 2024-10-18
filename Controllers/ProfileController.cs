@@ -83,8 +83,8 @@ namespace TAS360.Controllers
                 {
                     using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                     {
-
                         int userId = ((User)Session["User"]).id;
+
                         // Buscar el perfil del usuario en la base de datos usando el ID del usuario
                         var usuario = db.usr_profile.FirstOrDefault(u => u.id_User == userId);
 
@@ -93,15 +93,14 @@ namespace TAS360.Controllers
                             return HttpNotFound("Registro no encontrado.");
                         }
 
-                       
+                        // Asignar los valores del perfil al usuario
                         usuario.nombre = perfil.nombre;
                         usuario.email = perfil.email;
                         usuario.Cel = perfil.Cel;
                         usuario.Género = perfil.Género;
                         usuario.Estado = perfil.Estado;
 
-                        // Marcar la entidad como modificada
-                        db.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
+                        // Guardar los cambios en la base de datos
                         db.SaveChanges();
                     }
 
@@ -109,6 +108,7 @@ namespace TAS360.Controllers
                 }
 
                 // Si el modelo no es válido, regresa la vista con el modelo para mostrar los errores
+                ViewBag.ErrorMessage = "Por favor, complete todos los campos requeridos.";
                 return View(perfil);
             }
             catch (Exception ex)
@@ -126,42 +126,5 @@ namespace TAS360.Controllers
 
 
 
-
-        //[HttpPost]
-        //public ActionResult UploadProfilePicture(HttpPostedFileBase profilePicture)
-        //{
-        //    if (profilePicture != null && profilePicture.ContentLength > 0)
-        //    {
-        //        // Generar un nombre de archivo único para la imagen
-        //        string fileName = Path.GetFileName(profilePicture.FileName);
-        //        string uniqueFileName = $"{Guid.NewGuid()}_{fileName}";
-
-        //        // Definir la ruta donde se guardará la imagen
-        //        string path = Path.Combine(Server.MapPath("~/images/"), uniqueFileName);
-
-        //        // Guardar la imagen en la ruta especificada
-        //        profilePicture.SaveAs(path);
-
-        //        // Actualizar la ruta de la imagen en la base de datos para el usuario actual
-        //        //using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
-        //        //{
-        //        //    // Obtén el usuario actual (reemplaza con la lógica adecuada para obtener el usuario)
-        //        //    var userId = GetCurrentUserId(); // Este método debe devolver el ID del usuario actual
-        //        //    var usuario = db.usr_profile.FirstOrDefault(u => u.id_User == userId);
-        //        //    if (usuario != null)
-        //        //    {
-        //        //        usuario.Foto_usuario = "/images/" + uniqueFileName;
-        //        //        db.SaveChanges();
-        //        //    }
-        //        //}
-        //    }
-
-        //    return RedirectToAction("Index");
-        //}
-
-        //private int GetCurrentUserId()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
