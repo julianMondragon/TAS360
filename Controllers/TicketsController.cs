@@ -92,7 +92,7 @@ namespace TAS360.Controllers
                                 status_name = t.Ticket_Record_Status.OrderByDescending(x => x.CreatedAt).FirstOrDefault()?.Status.descripcion,
                                 Subsistema_name = t.Subsistema.Nombre,
                                 Status = t.status,
-                                //id_externo = t.id_externo
+                                id_externo = t.id_externo
                             };
 
                             var lastComment = t.Ticket_Comentario.OrderByDescending(x => x.id).FirstOrDefault();
