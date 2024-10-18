@@ -700,6 +700,7 @@ namespace TAS360.Controllers
         [AuthorizeUser(idOperacion: 2)]
         public ActionResult EditTicket(TicketViewModel ticket)
         {
+            bool tipo = true;
             try
             {
                 if (ModelState.IsValid)
