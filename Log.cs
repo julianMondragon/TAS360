@@ -51,6 +51,11 @@ namespace TAS360
 
             }
         }
+
+        internal static void Error(Exception ex, string v)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

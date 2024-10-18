@@ -1,119 +1,167 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using TAS360.Models;
-using TAS360.Models.ViewModel;  // Asegúrate de que el espacio de nombres sea correcto
+using TAS360.Models.ViewModel;  
+using System.Web;
+using System.IO;
+
 
 namespace TAS360.Controllers
 {
-    //   [Authorize]  // El usuario debe estar autenticado para acceder a estas acciones
+    
     public class ProfileController : Controller
     {
-
-        // Acción para la búsqueda del perfil
-        //public ActionResult BuscarPerfil(string criterio)
-        //{
-        //    if (string.IsNullOrEmpty(criterio))
-        //    {
-        //        return View(new List<PerfilusrViewModel>());
-        //    }
-
-        //    // Buscar perfiles que coincidan con el criterio
-        //    var resultados = _context.usr_profile
-        //        .Where(p => p.nombre.Contains(criterio) || p.email.Contains(criterio))
-        //        .Select(p => new PerfilusrViewModel
-        //        {
-        //            id_User = p.id_User,
-        //            nombre = p.nombre,
-        //            email = p.email,
-        //            Cel = p.Cel,
-        //            Género = p.Género,
-        //            Estado = p.Estado,
-        //            Foto_usuario = p.Foto_usuario,
-        //            fecha_nacimeiento = (DateTime)p.fecha_nacimeinto,
-                    
-        //        }).ToList();
-
-        //    return View(resultados);
-        //}
-
-
-
-
         // GET: Profile/Index
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
             PerfilusrViewModel perfil = new PerfilusrViewModel();
             using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
             {
-                var T = db.usr_profile.Find(id);
+               
+                int userId = ((User)Session["User"]).id; 
+
+                // Buscar el perfil del usuario conectado en la base de datos usando el ID
+                var usuario = db.usr_profile.FirstOrDefault(u => u.id_User == userId);
+
                 
-                perfil.nombre = T.nombre;
-                perfil.email = T.email;
-                perfil.Cel = T.Cel;
-                //Asignar el usuario.
-                // ticket.id_Usuario = db.Ticket_User.Where(a => a.id_Ticket == id).OrderByDescending(a => a.CreatedAt).FirstOrDefault().id_User;
+                if (usuario != null)
+                {
+                    perfil.nombre = usuario.nombre;
+                    perfil.email = usuario.email;
+                    perfil.Cel = usuario.Cel;
+                    perfil.Género = usuario.Género;
+                    perfil.Estado = usuario.Estado;
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Usuario no encontrado.";
+                }
             }
 
-
-
             return View(perfil);
-
         }
 
-        //// GET: Profile/Edit
-        //public ActionResult Edit(int? id)
+        public ActionResult Editprofile()
+        {
+            PerfilusrViewModel perfil = new PerfilusrViewModel();
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            {
+
+                int userId = ((User)Session["User"]).id;
+
+                // Buscar el perfil del usuario en la base de datos usando el ID del usuario
+                var usuario = db.usr_profile.FirstOrDefault(u => u.id_User == userId);
+
+                if (usuario != null)
+                {
+                    perfil.nombre = usuario.nombre;
+                    perfil.email = usuario.email;
+                    perfil.Cel = usuario.Cel;
+                    perfil.Género = usuario.Género;
+                    perfil.Estado = usuario.Estado;
+                }
+                else
+                {
+                    return HttpNotFound("Usuario no encontrado.");
+                }
+            }
+
+            return View(perfil);
+        }
+
+        [HttpPost]
+        public ActionResult Guardar(PerfilusrViewModel perfil)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                    {
+
+                        int userId = ((User)Session["User"]).id;
+                        // Buscar el perfil del usuario en la base de datos usando el ID del usuario
+                        var usuario = db.usr_profile.FirstOrDefault(u => u.id_User == userId);
+
+                        if (usuario == null)
+                        {
+                            return HttpNotFound("Registro no encontrado.");
+                        }
+
+                       
+                        usuario.nombre = perfil.nombre;
+                        usuario.email = perfil.email;
+                        usuario.Cel = perfil.Cel;
+                        usuario.Género = perfil.Género;
+                        usuario.Estado = perfil.Estado;
+
+                        // Marcar la entidad como modificada
+                        db.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    return RedirectToAction("Index"); // Redirige a la acción Index
+                }
+
+                // Si el modelo no es válido, regresa la vista con el modelo para mostrar los errores
+                return View(perfil);
+            }
+            catch (Exception ex)
+            {
+                // Registrar el error
+                System.Diagnostics.Debug.WriteLine("Error al guardar el registro: " + ex.Message);
+
+                // Mostrar un mensaje genérico al usuario
+                ViewBag.ErrorMessage = "Ocurrió un error inesperado. Por favor, inténtelo de nuevo más tarde.";
+
+                // Devolver la vista con el modelo
+                return View(perfil);
+            }
+        }
+
+
+
+
+        //[HttpPost]
+        //public ActionResult UploadProfilePicture(HttpPostedFileBase profilePicture)
         //{
-        //    if (id == null)
+        //    if (profilePicture != null && profilePicture.ContentLength > 0)
         //    {
-        //        return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+        //        // Generar un nombre de archivo único para la imagen
+        //        string fileName = Path.GetFileName(profilePicture.FileName);
+        //        string uniqueFileName = $"{Guid.NewGuid()}_{fileName}";
+
+        //        // Definir la ruta donde se guardará la imagen
+        //        string path = Path.Combine(Server.MapPath("~/images/"), uniqueFileName);
+
+        //        // Guardar la imagen en la ruta especificada
+        //        profilePicture.SaveAs(path);
+
+        //        // Actualizar la ruta de la imagen en la base de datos para el usuario actual
+        //        //using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+        //        //{
+        //        //    // Obtén el usuario actual (reemplaza con la lógica adecuada para obtener el usuario)
+        //        //    var userId = GetCurrentUserId(); // Este método debe devolver el ID del usuario actual
+        //        //    var usuario = db.usr_profile.FirstOrDefault(u => u.id_User == userId);
+        //        //    if (usuario != null)
+        //        //    {
+        //        //        usuario.Foto_usuario = "/images/" + uniqueFileName;
+        //        //        db.SaveChanges();
+        //        //    }
+        //        //}
         //    }
 
-        //    var profile = _context.usr_profile.Find(id);
-
-        //    if (profile == null)
-        //    {
-        //        return HttpNotFound("Perfil no encontrado");
-        //    }
-
-        //    return View(profile);
+        //    return RedirectToAction("Index");
         //}
 
-    //    // POST: Profile/Edit
-    //    [HttpPost]
-    //    [ValidateAntiForgeryToken]
-    //    public async Task<ActionResult> Edit(usr_profile profile)
-    //    {
-    //        if (ModelState.IsValid)
-    //        {
-    //            var existingProfile = _context.usr_profile.Find(profile.id_User);
-
-    //            if (existingProfile == null)
-    //            {
-    //                return HttpNotFound("Perfil no encontrado");
-    //            }
-
-    //            // Actualizar los campos del perfil
-    //            existingProfile.nombre = profile.nombre;
-    //            existingProfile.email = profile.email;
-    //            existingProfile.Cel = profile.Cel;
-    //            existingProfile.Género = profile.Género;
-    //            existingProfile.Estado = profile.Estado;
-    //            existingProfile.Foto_usuario = profile.Foto_usuario;
-    //            existingProfile.updateAt = DateTime.Now;
-
-    //            await _context.SaveChangesAsync();
-
-    //            return RedirectToAction("Index");
-    //        }
-
-    //        return View(profile);
-    //    }
-
-        
+        //private int GetCurrentUserId()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
-
 }
