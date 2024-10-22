@@ -1361,10 +1361,20 @@ namespace TAS360.Controllers
                          .FirstOrDefault();
                     var estado = (from u in db.Status where u.Status1 == tk.status select u).FirstOrDefault();
 
-
-
                     // Asignar el mensaje del ticket basado en la existencia del último comentario
                     ticket.mensaje = lastComment?.Comentario.Comentario1 ?? tk.mensaje;
+                    int indice = ticket.mensaje.IndexOf("->Fecha:");
+                    if (indice != -1)
+                    {
+                        ticket.mensaje = ticket.mensaje.Substring(indice).Trim();
+                    }
+                    else
+                    {
+                        ticket.mensaje = ticket.mensaje;
+                    }
+
+
+
                     //Remplaza el contenido del mensaje. 
                     contenidoHtml = contenidoHtml.Replace("{usuarioName}", subjet.nombre)
                              .Replace("{ticketId}", tk.id.ToString())
@@ -1447,6 +1457,7 @@ namespace TAS360.Controllers
 
                     // Asignar el mensaje del ticket directamente
                     ticket.mensaje = tk.mensaje; // Aquí se toma el último "mensaje" del ticket
+
 
                     //Remplaza el contenido del mensaje. 
                     contenidoHtml = contenidoHtml.Replace("{usuarioName}", subjet.nombre)
