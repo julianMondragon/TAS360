@@ -1,26 +1,21 @@
 ﻿
-@{
-    ViewBag.Title = "HelpDesk TAS360";
-}
+    @{
+        ViewBag.Title = "HelpDesk TAS360";
+    }
 
-<div class="jumbotron">
-    <h1 style="font-family: Monotype Corsiva ">HelpDesk TAS360 - PTS </h1>
-
-    @*<p><a href="" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+    <div class="jumbotron" style="padding: 10px; margin: 25px;">
+        <h1 style="font-family: 'Myriad Pro Bold', sans-serif; font-weight: 700; font-style: normal; background-color: transparent; border: none; margin-bottom: 10px; text-align:center;">
+            HELP DESK TAS360 - PTS
+        </h1>
+    </div>
     <div class="row">
-        <p class="lead">
-            Es un conjunto de recursos
-            tecnológicos y humanos,
-            para prestar servicios con la
-            posibilidad de gestionar y
-            solucionar todas las posibles
-            incidencias de manera
-            integral, junto con la atención
-            de requerimientos
-            relacionados con
-            las incidencias en una
-            Terminal de almacenamiento
-            y despacho.
+        <p class="lead" style="text-align: justify;">
+            Es un conjunto de recursos tecnológicos y humanos,
+            para prestar servicios con la posibilidad de gestionar
+            y solucionar todas las posibles incidencias de manera
+            integral, junto con la atención de requerimientos
+            relacionados con las incidencias en una Terminal de
+            almacenamiento y despacho.
         </p>
     </div>
     <div class="row">
@@ -29,7 +24,7 @@
             <br />
         </div>
         <div class="col-md-2" style="margin:0 0px 0px 0px">
-            <h3><strong style="font-family: Monotype Corsiva ">Documentación</strong></h3>
+            <h3><strong style="font-family: 'Myriad Pro Bold', sans-serif; font-weight: 700; font-style: normal; background-color: transparent; border: none;">Documentación</strong></h3>
             <table class="table table-success">
                 <tr>
                     <td><a onclick="document.location.href = '@Url.Content("~/Documentacion/Procedimientos")'" class="btn btn-success" title="Ver procedimientos">Procedimientos &raquo;</a></td>
@@ -39,7 +34,7 @@
                 </tr>
             </table>
 
-            <h3><strong style="font-family: Monotype Corsiva ">Contacto</strong></h3>
+            <h3><strong style="font-family: 'Myriad Pro Bold', sans-serif; font-weight: 700; font-style: normal; background-color: transparent; border: none;">Contacto</strong></h3>
             <table class="table table-success">
                 <tr>
                     <td>(442) 254-56-03</td>
@@ -50,7 +45,7 @@
 
             </table>
 
-            <h3><strong style="font-family: Monotype Corsiva ">Horarios de atención: </strong></h3>
+            <h3><strong style="font-family: 'Myriad Pro Bold', sans-serif; font-weight: 700; font-style: normal; background-color: transparent; border: none;">Horarios de atención: </strong></h3>
             <table class="table table-success">
                 <tr>
                     <td>Lun-Vie: 9:00-17:00 </td>
@@ -60,7 +55,7 @@
                 </tr>
 
             </table>
-        </div>        
+        </div>
     </div>
     <div class="row">
         <h2 style="font-family: Monotype Corsiva "> <strong>Objetivo</strong> </h2>
@@ -88,47 +83,47 @@
 
     <!--Manejo de Tickets segun categorias  -->
     @*            <div class="row">
-                    <h2>Manejo de categorías de Tickets</h2>
-                    <p class="lead">
-                        1.-Atención Prioritaria (Detiene la operación)
-                    </p>
-                    <p class="lead">
-                        5.-Dudas sobre la funcionalidad del TAS
-                    </p>
-                    <br />
-                </div>
-                <div class="row">
-                    <img src="~/Content/img/Home_BG_2.png" class="img-responsive" alt="Responsive image">
-                    <br />
-                </div>
-                <div class="row">
-                    <h2>Manejo de categorías de Tickets</h2>
-                    <p class="lead">
-                        ▪2.-Error ó Alerta (No detiene la operación pero debe atenderse)
-                    </p>
-                    <p class="lead">
-                        ▪3.-Nuevo requerimiento (Debe realizarse cambio)
-                    </p>
-                    <br />
-                </div>
-                <div class="row">
-                    <img src="~/Content/img/Home_BG_3.png" class="img-responsive" alt="Responsive image">
-                    <br />
-                </div>
-                <div class="row">
-                    <h2>Manejo de categorías de Tickets</h2>
-                    <p class="lead">
-                        ▪4.-Fuera de Alcance
-                    </p>
-                    <br />
-                </div>
-                <div class="row">
-                    <img src="~/Content/img/Home_BG_4.png" class="img-responsive" alt="Responsive image">
-                    <br />
-                </div>
+                <h2>Manejo de categorías de Tickets</h2>
+                <p class="lead">
+                    1.-Atención Prioritaria (Detiene la operación)
+                </p>
+                <p class="lead">
+                    5.-Dudas sobre la funcionalidad del TAS
+                </p>
+                <br />
             </div>
+            <div class="row">
+                <img src="~/Content/img/Home_BG_2.png" class="img-responsive" alt="Responsive image">
+                <br />
+            </div>
+            <div class="row">
+                <h2>Manejo de categorías de Tickets</h2>
+                <p class="lead">
+                    ▪2.-Error ó Alerta (No detiene la operación pero debe atenderse)
+                </p>
+                <p class="lead">
+                    ▪3.-Nuevo requerimiento (Debe realizarse cambio)
+                </p>
+                <br />
+            </div>
+            <div class="row">
+                <img src="~/Content/img/Home_BG_3.png" class="img-responsive" alt="Responsive image">
+                <br />
+            </div>
+            <div class="row">
+                <h2>Manejo de categorías de Tickets</h2>
+                <p class="lead">
+                    ▪4.-Fuera de Alcance
+                </p>
+                <br />
+            </div>
+            <div class="row">
+                <img src="~/Content/img/Home_BG_4.png" class="img-responsive" alt="Responsive image">
+                <br />
+            </div>
+        </div>
     *@
-
+</body>
 
 
 
