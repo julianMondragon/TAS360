@@ -5,7 +5,7 @@
 
 <h2>Editar Perfil</h2>
 
-@using (Html.BeginForm("Guardar", "Profile", FormMethod.Post))
+@using (Html.BeginForm("Guardar", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" })) // Asegúrate de incluir enctype para la carga de archivos
 {
     @Html.AntiForgeryToken() <!-- Para proteger contra ataques CSRF -->
 
@@ -29,16 +29,29 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.Género)
-        @Html.TextBoxFor(m => m.Género, new { @class = "form-control", placeholder = "Género" })
+        @Html.DropDownListFor(m => m.Género, new SelectList(ViewBag.GeneroOptions, "Value", "Text"), "Selecciona tu género", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Género, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Estado)
-        @Html.TextBoxFor(m => m.Estado, new { @class = "form-control", placeholder = "Estado" })
+        @Html.DropDownListFor(m => m.Estado, new SelectList(ViewBag.EstadoOptions, "Value", "Text"), "Selecciona tu estado", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
     </div>
 
+   
+        <!-- Otros campos -->
+
+        @*<div class="form-group">
+            @Html.Label("Foto de Usuario")
+            <input type="file" name="Foto_usuario" class="form-control" accept="image/*" />
+            @Html.ValidationMessage("Foto_usuario", "", new { @class = "text-danger" })
+        </div>*@
+
+        
+    
+
+
     <button type="submit" class="btn btn-success">Guardar</button>
-    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Profile")'">Cancelar</button>
+    <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Index", "Profile")'">Cancelar</button>
 }

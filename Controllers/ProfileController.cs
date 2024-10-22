@@ -6,14 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using TAS360.Models;
-using TAS360.Models.ViewModel;  
+using TAS360.Models.ViewModel;
 using System.Web;
 using System.IO;
-
+using DocumentFormat.OpenXml.EMMA;
 
 namespace TAS360.Controllers
 {
-    
     public class ProfileController : Controller
     {
         // GET: Profile/Index
@@ -22,20 +21,21 @@ namespace TAS360.Controllers
             PerfilusrViewModel perfil = new PerfilusrViewModel();
             using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
             {
-               
-                int userId = ((User)Session["User"]).id; 
+                int userId = ((User)Session["User"]).id;
 
                 // Buscar el perfil del usuario conectado en la base de datos usando el ID
                 var usuario = db.usr_profile.FirstOrDefault(u => u.id_User == userId);
 
-                
                 if (usuario != null)
                 {
+                    perfil.id_User = usuario.id;
                     perfil.nombre = usuario.nombre;
                     perfil.email = usuario.email;
                     perfil.Cel = usuario.Cel;
                     perfil.Género = usuario.Género;
                     perfil.Estado = usuario.Estado;
+                    perfil.Foto_usuario = usuario.Foto_usuario;
+
                 }
                 else
                 {
@@ -51,7 +51,6 @@ namespace TAS360.Controllers
             PerfilusrViewModel perfil = new PerfilusrViewModel();
             using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
             {
-
                 int userId = ((User)Session["User"]).id;
 
                 // Buscar el perfil del usuario en la base de datos usando el ID del usuario
@@ -64,6 +63,8 @@ namespace TAS360.Controllers
                     perfil.Cel = usuario.Cel;
                     perfil.Género = usuario.Género;
                     perfil.Estado = usuario.Estado;
+                    perfil.Foto_usuario = usuario.Foto_usuario;
+
                 }
                 else
                 {
@@ -71,11 +72,27 @@ namespace TAS360.Controllers
                 }
             }
 
+            // Llenar el ViewBag con las opciones para los campos desplegables de género y estado
+            ViewBag.GeneroOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Masculino", Value = "Masculino" },
+                new SelectListItem { Text = "Femenino", Value = "Femenino" },
+                new SelectListItem { Text = "Otro", Value = "Otro" }
+            };
+
+            ViewBag.EstadoOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Aguascalientes", Value = "Aguascalientes" },
+                new SelectListItem { Text = "Baja California", Value = "Baja California" },
+                // ... (otros estados) ...
+                new SelectListItem { Text = "Zacatecas", Value = "Zacatecas" }
+            };
+
             return View(perfil);
         }
 
         [HttpPost]
-        public ActionResult Guardar(PerfilusrViewModel perfil)
+        public ActionResult Guardar(PerfilusrViewModel perfil, HttpPostedFileBase Foto_usuario)
         {
             try
             {
@@ -99,6 +116,9 @@ namespace TAS360.Controllers
                         usuario.Cel = perfil.Cel;
                         usuario.Género = perfil.Género;
                         usuario.Estado = perfil.Estado;
+                        perfil.Foto_usuario = usuario.Foto_usuario;
+
+
 
                         // Guardar los cambios en la base de datos
                         db.SaveChanges();
@@ -109,6 +129,23 @@ namespace TAS360.Controllers
 
                 // Si el modelo no es válido, regresa la vista con el modelo para mostrar los errores
                 ViewBag.ErrorMessage = "Por favor, complete todos los campos requeridos.";
+
+                // Rellenar el ViewBag nuevamente con las opciones para evitar errores en la vista
+                ViewBag.GeneroOptions = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Masculino", Value = "Masculino" },
+                    new SelectListItem { Text = "Femenino", Value = "Femenino" },
+                    new SelectListItem { Text = "Otro", Value = "Otro" }
+                };
+
+                ViewBag.EstadoOptions = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Aguascalientes", Value = "Aguascalientes" },
+                    new SelectListItem { Text = "Baja California", Value = "Baja California" },
+                    // ... (otros estados) ...
+                    new SelectListItem { Text = "Zacatecas", Value = "Zacatecas" }
+                };
+
                 return View(perfil);
             }
             catch (Exception ex)
@@ -119,10 +156,30 @@ namespace TAS360.Controllers
                 // Mostrar un mensaje genérico al usuario
                 ViewBag.ErrorMessage = "Ocurrió un error inesperado. Por favor, inténtelo de nuevo más tarde.";
 
+                // Rellenar el ViewBag nuevamente con las opciones para evitar errores en la vista
+                ViewBag.GeneroOptions = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Masculino", Value = "Masculino" },
+                    new SelectListItem { Text = "Femenino", Value = "Femenino" },
+                    new SelectListItem { Text = "Otro", Value = "Otro" }
+                };
+
+                ViewBag.EstadoOptions = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Aguascalientes", Value = "Aguascalientes" },
+                    new SelectListItem { Text = "Baja California", Value = "Baja California" },
+                    // ... (otros estados) ...
+                    new SelectListItem { Text = "Zacatecas", Value = "Zacatecas" }
+                };
+
                 // Devolver la vista con el modelo
                 return View(perfil);
             }
         }
+
+       
+      
+
 
 
 

@@ -1,6 +1,4 @@
 ﻿
-@using System.Collections.Generic;
-@using TAS360.Models.ViewModel;
 @model TAS360.Models.ViewModel.PerfilusrViewModel
 @{
     ViewBag.Title = "Perfil del usuario";
@@ -8,16 +6,26 @@
 
 <div class="jumbotron text-center">
     <h1>Mi Perfil</h1>
-    
 </div>
 
 <div class="row">
-    <!-- Sección para la foto del usuario -->
+
     <div class="col-md-3 text-center">
         <div class="profile-photo-container">
-            <img src="~/images/default-user.png" alt="Foto de perfil" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+            @if (Model.Foto_usuario != null && Model.Foto_usuario.Length > 0) // Validar que la imagen no sea nula
+            {
+                string base64String = Convert.ToBase64String(Model.Foto_usuario);
+                string imageDataURL = $"data:image/png;base64,{base64String}"; // Asegúrate de usar el tipo de imagen correcto
+                <img src="@imageDataURL" alt="Foto de perfil" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />
+            }
+            else
+            {
+                <img src="~/images/default-user.png" alt="Foto de perfil" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />
+            }
         </div>
     </div>
+
+
 
     <!-- Sección para la información del perfil del usuario -->
     <div class="col-md-9">
