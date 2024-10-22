@@ -26,10 +26,16 @@
                 @using TAS360.Models;
                 @{
                     User usuario = (User)HttpContext.Current.Session["user"];
+
+
+
                 }
+
+          
+
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("SLA", "Index", "LSA")</li>
-                    <li>@Html.ActionLink("Tickets", "Index", "Tickets")</li>                    
+                    <li>@Html.ActionLink("Tickets", "Index", "Tickets")</li>
                     <li>@Html.ActionLink("Cálculo FCV", "Index", "Calculo_FCV")</li>
                     <li>@Html.ActionLink("Conv.Tabla de Cubicación", "Index", "TablaCub")</li>
                     <li class="dropdown">
@@ -42,29 +48,31 @@
                             <li>@Html.ActionLink("HMI de Aditivación", "Index", "Aditivo")</li>
                             <li role="separator" class="divider"></li>
                             <li>@Html.ActionLink("Usuarios", "Index", "User")</li>
-                            
-                            
+
+
                             @*<li role="separator" class="divider"></li>
-        <li>@Html.ActionLink("Danload 6000", "Index", "Danload")</li>
-        <li role="separator" class="divider"></li>
-        <li>@Html.ActionLink("Accuload III", "Index", "Accuload")</li>
-        <li role="separator" class="divider"></li>
-        <li><a href="#">Reportes</a></li>
-        <li>@Html.ActionLink("Carga", "Index", "Home")</li>
-        <li>@Html.ActionLink("Tanques", "About", "Home")</li>
-        <li role="separator" class="divider"></li>
-        <li>@Html.ActionLink("Crear Reporte", "Create", "Reports")</li>
-        <li>@Html.ActionLink("abrir conexion", "Index", "Reports")</li>
-        <li role="separator" class="divider"></li>
-        <li><a href="#">SIIC</a></li>
-        <li>@Html.ActionLink("Entradas", "Index", "Home")</li>
-        <li>@Html.ActionLink("Salidas", "About", "Home")</li>
-        <li>@Html.ActionLink("Auditoria", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Danload 6000", "Index", "Danload")</li>
+                    <li role="separator" class="divider"></li>
+                    <li>@Html.ActionLink("Accuload III", "Index", "Accuload")</li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Reportes</a></li>
+                    <li>@Html.ActionLink("Carga", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Tanques", "About", "Home")</li>
+                    <li role="separator" class="divider"></li>
+                    <li>@Html.ActionLink("Crear Reporte", "Create", "Reports")</li>
+                    <li>@Html.ActionLink("abrir conexion", "Index", "Reports")</li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">SIIC</a></li>
+                    <li>@Html.ActionLink("Entradas", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Salidas", "About", "Home")</li>
+                    <li>@Html.ActionLink("Auditoria", "Contact", "Home")</li>
                             *@
                         </ul>
                     </li>
                     @if (usuario != null)
                     {
+
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@usuario.nombre <span class="caret"></span></a>
                             <ul class="dropdown-menu">

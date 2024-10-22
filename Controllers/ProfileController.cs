@@ -82,10 +82,37 @@ namespace TAS360.Controllers
 
             ViewBag.EstadoOptions = new List<SelectListItem>
             {
-                new SelectListItem { Text = "Aguascalientes", Value = "Aguascalientes" },
-                new SelectListItem { Text = "Baja California", Value = "Baja California" },
-                // ... (otros estados) ...
-                new SelectListItem { Text = "Zacatecas", Value = "Zacatecas" }
+               new SelectListItem { Text = "Aguascalientes", Value = "Aguascalientes" },
+    new SelectListItem { Text = "Baja California", Value = "Baja California" },
+    new SelectListItem { Text = "Baja California Sur", Value = "Baja California Sur" },
+    new SelectListItem { Text = "Campeche", Value = "Campeche" },
+    new SelectListItem { Text = "Chiapas", Value = "Chiapas" },
+    new SelectListItem { Text = "Chihuahua", Value = "Chihuahua" },
+    new SelectListItem { Text = "Coahuila", Value = "Coahuila" },
+    new SelectListItem { Text = "Colima", Value = "Colima" },
+    new SelectListItem { Text = "Durango", Value = "Durango" },
+    new SelectListItem { Text = "Guanajuato", Value = "Guanajuato" },
+    new SelectListItem { Text = "Guerrero", Value = "Guerrero" },
+    new SelectListItem { Text = "Hidalgo", Value = "Hidalgo" },
+    new SelectListItem { Text = "Jalisco", Value = "Jalisco" },
+    new SelectListItem { Text = "Mexico", Value = "Mexico" },
+    new SelectListItem { Text = "Michoacán", Value = "Michoacán" },
+    new SelectListItem { Text = "Morelos", Value = "Morelos" },
+    new SelectListItem { Text = "Nayarit", Value = "Nayarit" },
+    new SelectListItem { Text = "Nuevo León", Value = "Nuevo León" },
+    new SelectListItem { Text = "Oaxaca", Value = "Oaxaca" },
+    new SelectListItem { Text = "Puebla", Value = "Puebla" },
+    new SelectListItem { Text = "Querétaro", Value = "Querétaro" },
+    new SelectListItem { Text = "Quintana Roo", Value = "Quintana Roo" },
+    new SelectListItem { Text = "San Luis Potosí", Value = "San Luis Potosí" },
+    new SelectListItem { Text = "Sinaloa", Value = "Sinaloa" },
+    new SelectListItem { Text = "Sonora", Value = "Sonora" },
+    new SelectListItem { Text = "Tabasco", Value = "Tabasco" },
+    new SelectListItem { Text = "Tamaulipas", Value = "Tamaulipas" },
+    new SelectListItem { Text = "Tlaxcala", Value = "Tlaxcala" },
+    new SelectListItem { Text = "Veracruz", Value = "Veracruz" },
+    new SelectListItem { Text = "Yucatán", Value = "Yucatán" },
+    new SelectListItem { Text = "Zacatecas", Value = "Zacatecas" }
             };
 
             return View(perfil);
@@ -141,9 +168,36 @@ namespace TAS360.Controllers
                 ViewBag.EstadoOptions = new List<SelectListItem>
                 {
                     new SelectListItem { Text = "Aguascalientes", Value = "Aguascalientes" },
-                    new SelectListItem { Text = "Baja California", Value = "Baja California" },
-                    // ... (otros estados) ...
-                    new SelectListItem { Text = "Zacatecas", Value = "Zacatecas" }
+    new SelectListItem { Text = "Baja California", Value = "Baja California" },
+    new SelectListItem { Text = "Baja California Sur", Value = "Baja California Sur" },
+    new SelectListItem { Text = "Campeche", Value = "Campeche" },
+    new SelectListItem { Text = "Chiapas", Value = "Chiapas" },
+    new SelectListItem { Text = "Chihuahua", Value = "Chihuahua" },
+    new SelectListItem { Text = "Coahuila", Value = "Coahuila" },
+    new SelectListItem { Text = "Colima", Value = "Colima" },
+    new SelectListItem { Text = "Durango", Value = "Durango" },
+    new SelectListItem { Text = "Guanajuato", Value = "Guanajuato" },
+    new SelectListItem { Text = "Guerrero", Value = "Guerrero" },
+    new SelectListItem { Text = "Hidalgo", Value = "Hidalgo" },
+    new SelectListItem { Text = "Jalisco", Value = "Jalisco" },
+    new SelectListItem { Text = "Mexico", Value = "Mexico" },
+    new SelectListItem { Text = "Michoacán", Value = "Michoacán" },
+    new SelectListItem { Text = "Morelos", Value = "Morelos" },
+    new SelectListItem { Text = "Nayarit", Value = "Nayarit" },
+    new SelectListItem { Text = "Nuevo León", Value = "Nuevo León" },
+    new SelectListItem { Text = "Oaxaca", Value = "Oaxaca" },
+    new SelectListItem { Text = "Puebla", Value = "Puebla" },
+    new SelectListItem { Text = "Querétaro", Value = "Querétaro" },
+    new SelectListItem { Text = "Quintana Roo", Value = "Quintana Roo" },
+    new SelectListItem { Text = "San Luis Potosí", Value = "San Luis Potosí" },
+    new SelectListItem { Text = "Sinaloa", Value = "Sinaloa" },
+    new SelectListItem { Text = "Sonora", Value = "Sonora" },
+    new SelectListItem { Text = "Tabasco", Value = "Tabasco" },
+    new SelectListItem { Text = "Tamaulipas", Value = "Tamaulipas" },
+    new SelectListItem { Text = "Tlaxcala", Value = "Tlaxcala" },
+    new SelectListItem { Text = "Veracruz", Value = "Veracruz" },
+    new SelectListItem { Text = "Yucatán", Value = "Yucatán" },
+    new SelectListItem { Text = "Zacatecas", Value = "Zacatecas" }
                 };
 
                 return View(perfil);
@@ -166,10 +220,37 @@ namespace TAS360.Controllers
 
                 ViewBag.EstadoOptions = new List<SelectListItem>
                 {
-                    new SelectListItem { Text = "Aguascalientes", Value = "Aguascalientes" },
-                    new SelectListItem { Text = "Baja California", Value = "Baja California" },
-                    // ... (otros estados) ...
-                    new SelectListItem { Text = "Zacatecas", Value = "Zacatecas" }
+                   new SelectListItem { Text = "Aguascalientes", Value = "Aguascalientes" },
+    new SelectListItem { Text = "Baja California", Value = "Baja California" },
+    new SelectListItem { Text = "Baja California Sur", Value = "Baja California Sur" },
+    new SelectListItem { Text = "Campeche", Value = "Campeche" },
+    new SelectListItem { Text = "Chiapas", Value = "Chiapas" },
+    new SelectListItem { Text = "Chihuahua", Value = "Chihuahua" },
+    new SelectListItem { Text = "Coahuila", Value = "Coahuila" },
+    new SelectListItem { Text = "Colima", Value = "Colima" },
+    new SelectListItem { Text = "Durango", Value = "Durango" },
+    new SelectListItem { Text = "Guanajuato", Value = "Guanajuato" },
+    new SelectListItem { Text = "Guerrero", Value = "Guerrero" },
+    new SelectListItem { Text = "Hidalgo", Value = "Hidalgo" },
+    new SelectListItem { Text = "Jalisco", Value = "Jalisco" },
+    new SelectListItem { Text = "Mexico", Value = "Mexico" },
+    new SelectListItem { Text = "Michoacán", Value = "Michoacán" },
+    new SelectListItem { Text = "Morelos", Value = "Morelos" },
+    new SelectListItem { Text = "Nayarit", Value = "Nayarit" },
+    new SelectListItem { Text = "Nuevo León", Value = "Nuevo León" },
+    new SelectListItem { Text = "Oaxaca", Value = "Oaxaca" },
+    new SelectListItem { Text = "Puebla", Value = "Puebla" },
+    new SelectListItem { Text = "Querétaro", Value = "Querétaro" },
+    new SelectListItem { Text = "Quintana Roo", Value = "Quintana Roo" },
+    new SelectListItem { Text = "San Luis Potosí", Value = "San Luis Potosí" },
+    new SelectListItem { Text = "Sinaloa", Value = "Sinaloa" },
+    new SelectListItem { Text = "Sonora", Value = "Sonora" },
+    new SelectListItem { Text = "Tabasco", Value = "Tabasco" },
+    new SelectListItem { Text = "Tamaulipas", Value = "Tamaulipas" },
+    new SelectListItem { Text = "Tlaxcala", Value = "Tlaxcala" },
+    new SelectListItem { Text = "Veracruz", Value = "Veracruz" },
+    new SelectListItem { Text = "Yucatán", Value = "Yucatán" },
+    new SelectListItem { Text = "Zacatecas", Value = "Zacatecas" }
                 };
 
                 // Devolver la vista con el modelo

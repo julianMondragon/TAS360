@@ -1,4 +1,4 @@
-﻿@model TAS360.Models.ViewModel.Perfilusr
+﻿@model TAS360.Models.ViewModel.ListUsuarioViewModel
 @{
     ViewBag.Title = "Crear Usuario";
     string exception = ViewBag.ExceptionMessage;
@@ -65,14 +65,9 @@
                                     </div>
                                 }
 
-                                <div class="row" style="margin: 5px 0px 0px 0px; text-align:right">
-                                    <input type="submit" class="btn btn-lg btn-primary" value="Guardar" />
-                                </div>
+                                
 
-                                <!-- Botón para ir al perfil del usuario -->
-                                <div class="row" style="margin: 10px 0px 0px 0px; text-align:right">
-                                    @Html.ActionLink("Ir a Perfil", "Edit", "Profile", new { id = Model.id_User }, new { @class = "btn btn-lg btn-info" })
-                                </div>
+                               
 
 
 
