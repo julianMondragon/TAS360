@@ -3,8 +3,9 @@
     ViewBag.Title = "Crear Usuario";
     string exception = ViewBag.ExceptionMessage;
     string Info = ViewBag.InfoMessage;
-    
+    List<SelectListItem> Roles = (List<SelectListItem>)ViewBag.Roles;
 }
+
 <br />
 <div class="jumbotron">
     <h1 class="section-heading mb-4">
@@ -50,21 +51,44 @@
                                             </div>
                                             <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(model => model.password)
-                                                @Html.PasswordFor(model => model.password, new { @class = "form-control", @placeholder = "Contraseña",  @value = "Alfer3z" })
+                                                @Html.PasswordFor(model => model.password, new { @class = "form-control", @placeholder = "Contraseña", @value = "Alfer3z" })
                                                 @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
                                             </div>
-                                            <div class="col-lg-4" style="margin: 10px 0px 0px 0px;">
+
+
+                                        </div>
+                                    </div>
+                                    <div name="row3" class="row" style="margin:0 0 0px 10px">
+
+                                            <div class="col-lg-4"  style="margin: 10px 0px 0px 0px;">
                                                 @Html.LabelFor(model => model.confirmPassword)
                                                 @Html.PasswordFor(model => model.confirmPassword, new { @class = "form-control", @placeholder = "Confirmar Contraseña", @value = "Alfer3z" })
                                                 @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @class = "text-danger" })
                                             </div>
-                                        </div>
+
+                                            <div class="form-group col-lg-4" style="margin: 10px 0px 0px 0px ; ">
+                                                @Html.LabelFor(model => model.Rolid)
+
+                                                @if (Roles != null && Roles.Any())
+                                                {
+                                                    @Html.DropDownListFor(model => model.Rolid, Roles, "Seleccione un rol", new { @class = "form-control" })
+                                                }
+                                                else
+                                                {
+                                                    <p class="text-danger">No se ha seleccionado un Rol</p>
+
+                                                }
+
+                                                @Html.ValidationMessageFor(model => model.Rolid, "", new { @class = "text-danger" })
+                                            </div>
+
                                     </div>
+                                    
                                     <div class="row" style="margin: 5px 0px 0px 0px; text-align:right">
                                         <input type="submit" class="btn btn-lg btn-primary" value="Guardar" />
                                     </div>
                                 }
-                            </div>
+                           </div>
                         </div>
                     </div>
                 </div>
@@ -74,7 +98,7 @@
 </section>
 <script type="text/javascript">
     // Mostrar un alert con la contraseña cuando se carga la página
-    window.onload = function() {
+    window.onload = function () {
         alert("La contraseña defaul es: Alfer3z");
     };
 </script>

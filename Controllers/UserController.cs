@@ -78,7 +78,10 @@ namespace TAS360.Controllers
         [HttpGet]
         [AuthorizeUser(idOperacion: 18)]
         public ActionResult Edit(int id)
+
+
         {
+
             ListUsuarioViewModel model = new ListUsuarioViewModel();
             using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
             {
@@ -88,8 +91,10 @@ namespace TAS360.Controllers
                     model.id = userToEdit.id;
                     model.nombre = userToEdit.nombre;
                     model.email = userToEdit.email;
-                }
+                    model.Rolid = (int)userToEdit.id_Roll;
+                }                
             }
+            GetRoles();
             return View(model);
         }
 
@@ -108,6 +113,7 @@ namespace TAS360.Controllers
                     if (usr != null)
                     {
                         ModelState.AddModelError("email", "Este correo ya exite !!!");
+                        GetRoles();
                         return View(model);
                     }
                     string passencripted = ComputeSha256Hash(model.password);
@@ -119,12 +125,14 @@ namespace TAS360.Controllers
                         oLog.Add($"Email anterior: {userToEdit.email}");
                         userToEdit.nombre = model.nombre;
                         userToEdit.email = model.email;
+                        userToEdit.id_Roll = model.Rolid;
 
 
                         if (model.password != confirmPassword)
                         {
                             ModelState.AddModelError("confirmPassword", "Las contraseñas no coinciden");
                             ModelState.AddModelError("Password", "Las contraseñas no coinciden");
+                            GetRoles();
                             return View(model);
                         }
                         userToEdit.password = passencripted;
@@ -134,11 +142,13 @@ namespace TAS360.Controllers
                         oLog.Add($"Nuevo email: {userToEdit.email}");
                         oLog.Add($"Nuevo passencripted: {passencripted}");
                         oLog.Add($"Nuevo password: {model.password}");
+                        oLog.Add($"Nuevo Rol: {model.Rolid} "); 
                         oLog.Add($"--------------------------------");
                     }
                     else
                     {
                         ViewBag.ExceptionMessage = "ID no encontrado";
+                        GetRoles();
                         return View(model);
                     }
 
@@ -151,6 +161,7 @@ namespace TAS360.Controllers
             catch (Exception ex)
             {
                 ViewBag.ExceptionMessage = ex.Message;
+                GetRoles();
                 return View(model);
             }
         }
@@ -160,7 +171,35 @@ namespace TAS360.Controllers
         public ActionResult Create()
         {
             ListUsuarioViewModel usuario = new ListUsuarioViewModel();
+            GetRoles();
             return View(usuario);
+
+        }
+
+        /// <summary>
+        /// Devuelve a la vista una lista de los Roles del sistema 
+        /// </summary>
+        private void GetRoles()
+        {
+
+            List<SelectListItem> Roles = new List<SelectListItem>();
+            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+            {
+                var aux = (from s in db.Roll select s);
+                if (aux != null && aux.Any())
+                {
+                    foreach (var a in aux)
+                    {
+                        Roles.Add(new SelectListItem
+                        {
+                            Text = a.nombre,
+                            Value = a.id.ToString()
+
+                        });
+                    }
+                }
+            }
+            ViewBag.Roles = Roles;
         }
 
         // POST: User/Create
@@ -170,6 +209,7 @@ namespace TAS360.Controllers
         {
             try
             {
+                
                 if (ModelState.IsValid)
                 {
                     // Obtener el usuario actual
@@ -177,6 +217,7 @@ namespace TAS360.Controllers
                     if (user == null)
                     {
                         ViewBag.InfoMessage = "Inicia sesión para crear un usuario";
+                        GetRoles();
                         return View(model);
                     }
 
@@ -184,8 +225,12 @@ namespace TAS360.Controllers
                     {
                         ModelState.AddModelError("confirmPassword", "Las contraseñas no coinciden");
                         ModelState.AddModelError("Password", "Las contraseñas no coinciden");
+                        GetRoles();
                         return View(model);
                     }
+
+
+                    
 
                     string passencripted = ComputeSha256Hash(model.password);
                     using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
@@ -194,18 +239,32 @@ namespace TAS360.Controllers
                         if (usr != null)
                         {
                             ModelState.AddModelError("email", "Este correo ya exite !!!");
+                            GetRoles();
                             return View(model);
                         }
+                        //if (model.Rolid == 0)
+                        //{
+                        //    ModelState.AddModelError("Rolid", "Seleccione un Rol");
+                        //    //return View(model);
+                        //}
+                        //if (!ModelState.IsValid)
+                        //{
+                          
+                        //}GetRoles();
+
+
                         User newUser = new User
                         {
                             createdAt = DateTime.Now,
                             nombre = model.nombre,
                             email = model.email,
                             password = passencripted,
-                            id_Roll = 3
+                            id_Roll = model. Rolid,
+
                         };
 
-                        db.User.Add(newUser);
+
+                            db.User.Add(newUser);
                         db.SaveChanges();
 
                         User newUserAdded = db.User.FirstOrDefault(u => u.email == model.email);
@@ -219,19 +278,23 @@ namespace TAS360.Controllers
                         oLog.Add($"Se agrega nuevo usuario por id user: {user.id} con nombre: {user.nombre}");
                         oLog.Add($"Nombre: {model.nombre}");
                         oLog.Add($"Email: {model.email}");
+                        oLog.Add($"Roll: {model.Rolid}");
                     }
+
 
 
                     return RedirectToAction("Index");
                 }
                 else
                 {
+                    GetRoles();
                     return View(model);
                 }
             }
             catch (Exception ex)
             {
                 ViewBag.ExceptionMessage = ex.Message;
+                GetRoles(); 
                 return View(model);
             }
         }
