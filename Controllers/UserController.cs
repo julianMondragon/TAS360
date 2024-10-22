@@ -125,6 +125,7 @@ namespace TAS360.Controllers
                         oLog.Add($"Email anterior: {userToEdit.email}");
                         userToEdit.nombre = model.nombre;
                         userToEdit.email = model.email;
+                        userToEdit.id_Roll = model.Rolid;
 
 
                         if (model.password != confirmPassword)
@@ -141,6 +142,7 @@ namespace TAS360.Controllers
                         oLog.Add($"Nuevo email: {userToEdit.email}");
                         oLog.Add($"Nuevo passencripted: {passencripted}");
                         oLog.Add($"Nuevo password: {model.password}");
+                        oLog.Add($"Nuevo Rol: {model.Rolid} "); 
                         oLog.Add($"--------------------------------");
                     }
                     else
