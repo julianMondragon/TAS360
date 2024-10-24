@@ -21,7 +21,7 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 using System.Web.Services.Description;
 using System.EnterpriseServices.Internal;
 
-
+ 
 
 namespace TAS360.Controllers
 {
@@ -557,15 +557,15 @@ namespace TAS360.Controllers
         public ActionResult AddCommentTicket(TicketViewModel ticket , Comentarios Comentario)
         {
             try
-            {                
+            {
                 string path = Server.MapPath("~/Logs/Tickets/");
                 Log oLog = new Log(path);
                 oLog.Add("Agrega comentario a Ticket: " + ticket.id);
                 bool StatusChanged = false;
                 using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
                 {
-                    var t = db.Ticket.Find(ticket.id);  
-                    oLog.Add("Status actual del Ticket: " + t.status );
+                    var t = db.Ticket.Find(ticket.id);
+                    oLog.Add("Status actual del Ticket: " + t.status);
                     oLog.Add("Nuevo Status para el Ticket: " + ticket.Status);
                     oLog.Add("Valida status");
                     if (t.status != ticket.Status)
@@ -582,23 +582,22 @@ namespace TAS360.Controllers
                         oLog.Add("Status: " + New_ticket_Record.id_Status);
                     }
                     if (StatusChanged)
-                    {                        
+                    {
                         db.Comentario.Add(new Comentario()
                         {
                             Comentario1 = (GetTemplateStatus((int)ticket.Status) + Comentario.Comentario1),
                             id_User = ((User)Session["User"]).id,
                             CreatedAt = DateTime.Now
                         });
-                        
+
                         db.SaveChanges();
                         oLog.Add("Guardo comentario: " + Comentario.Comentario1);
                         oLog.Add("Usuario asociado: " + ((User)Session["User"]).nombre);
-                    }                
+                    }
                     else
                     {
                         db.Comentario.Add(new Comentario()
                         {
-
                             Comentario1 = Comentario.Comentario1,
                             id_User = ((User)Session["User"]).id,
                             CreatedAt = DateTime.Now
@@ -607,7 +606,7 @@ namespace TAS360.Controllers
                         oLog.Add("Guardo comentario: " + Comentario.Comentario1);
                         oLog.Add("Usuario asociado: " + ((User)Session["User"]).nombre);
                     }
-                          
+
                     var idComentario = db.Comentario.FirstOrDefault(c => c.Comentario1.Contains(Comentario.Comentario1)).id;
                     if (idComentario != 0)
                     {
@@ -619,36 +618,31 @@ namespace TAS360.Controllers
                         db.SaveChanges();
                         oLog.Add("Guardo una relacion entre el ticket y el comentario");
                     }
-
                     var lastTicketUser = db.Ticket_User.Where(x => x.id_Ticket == ticket.id).OrderByDescending(a => a.CreatedAt).FirstOrDefault();
+
                     if (lastTicketUser == null || ticket.id_Usuario != lastTicketUser.id_User)
                     {
-                        if (lastTicketUser == null || ticket.id_Usuario != lastTicketUser.id_User)
+                        Ticket_User ticket_User = new Ticket_User
                         {
-                            Ticket_User ticket_User = new Ticket_User
-                            {
-                                id_Ticket = ticket.id,
-                                id_User = (int)ticket.id_Usuario,
-                                CreatedAt = DateTime.Now
-                            };
-
-                            db.Ticket_User.Add(ticket_User);
-                            db.SaveChanges();
-
-                            t.id_User = ticket_User.id_User; // Asignar nuevo responsable
-                            db.Entry(t).State = System.Data.Entity.EntityState.Modified;
-                            db.SaveChanges();
-
+                            id_Ticket = ticket.id,
+                            id_User = (int)ticket.id_Usuario,
+                            CreatedAt = DateTime.Now
+                        };
+                        db.Ticket_User.Add(ticket_User);
+                        db.SaveChanges();
+                        t.id_User = ticket_User.id_User; // Asignar nuevo responsable
+                        db.Entry(t).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
                         //Logs
                         oLog.Add("actual Responsable user id : " + db.Ticket_User.OrderByDescending(a => a.CreatedAt).FirstOrDefault().id_User);
-                        oLog.Add("Se agrega una relacion entre usuario responsable y ticket");                                             
+                        oLog.Add("Se agrega una relacion entre usuario responsable y ticket");
                         oLog.Add("Nuevo id User: " + ticket_User.id_User);
-                        }
-
-                    sendEmailUpdateTK(ticket.id, (int)ticket.id_Usuario, ((User)Session["User"]).id);
                     }
-                }
+                            //Agrego comentario y funcionamiento correcto 
+                            sendEmailUpdateTKAC(ticket.id, (int)ticket.id_Usuario, ((User)Session["User"]).id);
+                 }
             }
+            
             catch (Exception ex)
             {
                 Comentarios comentario = new Comentarios();
@@ -1387,68 +1381,166 @@ namespace TAS360.Controllers
         /// <param name="id"></param>
         /// <param name="id_subjet"></param>
         /// <param name="id_from"></param>
-        public void sendEmailUpdateTK(int idtk , int id_subjet , int id_from)
+        public void sendEmailUpdateTKAC(int idtk, int id_subjet, int id_from)
         {
             try
             {
                 //logs
                 string path = Server.MapPath("~/Logs/Emails/");
-            Log oLog = new Log(path);
-            TicketViewModel ticket = new TicketViewModel();
-            string origen, destinatario;
-            using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
-            {
-                var subjet = (from u in db.User where u.id == id_subjet select u).FirstOrDefault();
-                destinatario = subjet.email;
-                var from = (from u in db.User where u.id == id_from select u).FirstOrDefault();
-                origen = from.email;
-                var tk = db.Ticket.Find(idtk);
-                ticket.titulo = tk.titulo;
+                Log oLog = new Log(path);
+                TicketViewModel ticket = new TicketViewModel();
+                string origen, destinatario;
+                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                {
+                    var subjet = (from u in db.User where u.id == id_subjet select u).FirstOrDefault();
+                    destinatario = subjet.email;
+                    var from = (from u in db.User where u.id == id_from select u).FirstOrDefault();
+                    origen = from.email;
+                    var tk = db.Ticket.Find(idtk);
+                    ticket.titulo = tk.titulo;
                     // Obtener el último comentario del ticket
+                    // aqui tienes que revisar este codigo para la correcta funcionamiento.
                     var lastComment = db.Ticket_Comentario
-                                        .Where(x => x.id_Ticket == tk.id)
-                                        .OrderByDescending(x => x.id)
-                                        .FirstOrDefault();
+                         .Where(x => x.id_Ticket == tk.id)
+                         .OrderByDescending(x => x.id) // Asegurarse de que el id refleje el orden cronológico
+                         .FirstOrDefault();
+                    var estado = (from u in db.Status where u.Status1 == tk.status select u).FirstOrDefault();
 
                     // Asignar el mensaje del ticket basado en la existencia del último comentario
                     ticket.mensaje = lastComment?.Comentario.Comentario1 ?? tk.mensaje;
+                    int indice = ticket.mensaje.IndexOf("->Fecha:");
+                    if (indice != -1)
+                    {
+                        ticket.mensaje = ticket.mensaje.Substring(indice).Trim();
+                    }
+                    else
+                    {
+                        ticket.mensaje = ticket.mensaje;
+                    }
+
+
+
                     //Remplaza el contenido del mensaje. 
                     contenidoHtml = contenidoHtml.Replace("{usuarioName}", subjet.nombre)
                              .Replace("{ticketId}", tk.id.ToString())
                              .Replace("{titulo}", tk.titulo.ToString())
-                             .Replace("{estado}", "Pendiente")
-                             .Replace("{ultimoComentario}", tk.mensaje)
-                             .Replace("{enlaceTicket}", "https://pts-tools.com.mx/Tickets/ShowTicket/" + tk.id);                
+                             .Replace("{estado}", estado.descripcion)
+                             .Replace("{ultimoComentario}", ticket.mensaje)
+                             .Replace("{enlaceTicket}", "https://pts-tools.com.mx/Tickets/ShowTicket/" + tk.id);
+                }
+
+                // Configuración del cliente SMTP
+                SmtpClient clienteSmtp = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    Credentials = new NetworkCredential("soporte.tas360@pts.mx", "03Jun#2024"),
+                    EnableSsl = true
+                };
+
+                // Crear el mensaje de correo
+                MailMessage mensaje = new MailMessage
+                {
+                    From = new MailAddress("soporte.tas360@pts.mx"),
+                    Subject = ticket.titulo,
+                    Body = contenidoHtml,
+                    IsBodyHtml = true // Si el cuerpo del correo es HTML
+                };
+
+                // Añadir destinatario
+                mensaje.To.Add(destinatario);
+                // Añadir en copia (CC)
+                mensaje.CC.Add(origen);
+                // Enviar el correo
+                clienteSmtp.Send(mensaje);
+                oLog.Add("---------------------------");
+                oLog.Add($"Correo enviado exitosamente a {destinatario} sobre actualización del ticket.");
+                oLog.Add($"Asunto: {ticket.titulo} ");
+                oLog.Add($"Cuerpo: {ticket.mensaje} ");
+                //Devuelve un mensaje exitoso a la vista 
+                ViewBag.InfoMessage = $"Correo enviado exitosamente a {destinatario} sobre actualización del ticket.";
+            }
+            catch (SmtpException smtpEx)
+            {
+                //logs
+                string path = Server.MapPath("~/Logs/Emails/");
+                Log oLog = new Log(path);
+                oLog.Add($"SMTP Error al enviar el correo: {smtpEx.Message}  Status Code: {smtpEx.StatusCode}");
+                ViewBag.ExceptionMessage = "SMTP Error al enviar el correo: " + smtpEx.Message + " Status Code: " + smtpEx.StatusCode;
+                if (smtpEx.InnerException != null)
+                {
+                    oLog.Add(" Inner Exception: " + smtpEx.InnerException.Message);
+                    ViewBag.ExceptionMessage += " Inner Exception: " + smtpEx.InnerException.Message;
+                }
+            }
+            catch (Exception ex)
+            {
+                //logs
+                string path = Server.MapPath("~/Logs/Emails/");
+                Log oLog = new Log(path);
+                oLog.Add($"Exception al enviar el correo: {ex.Message}");
+                ViewBag.ExceptionMessage = "Exception al enviar el correo: " + ex.Message;
             }
 
-            // Configuración del cliente SMTP
-            SmtpClient clienteSmtp = new SmtpClient("smtp.gmail.com", 587)
+        }
+        public void sendEmailUpdateTK(int idtk, int id_subjet, int id_from)
+        {
+            try
             {
-                Credentials = new NetworkCredential("soporte.tas360@pts.mx", "03Jun#2024"),
-                EnableSsl = true
-            };
+                //logs
+                string path = Server.MapPath("~/Logs/Emails/");
+                Log oLog = new Log(path);
+                TicketViewModel ticket = new TicketViewModel();
+                string origen, destinatario;
+                using (HelpDesk_Entities1 db = new HelpDesk_Entities1())
+                {
+                    var subjet = (from u in db.User where u.id == id_subjet select u).FirstOrDefault();
+                    destinatario = subjet.email;
+                    var from = (from u in db.User where u.id == id_from select u).FirstOrDefault();
+                    origen = from.email;
+                    var tk = db.Ticket.Find(idtk);
+                    ticket.titulo = tk.titulo;
+                    var estado = (from u in db.Status where u.Status1 == tk.status select u).FirstOrDefault();
 
-            // Crear el mensaje de correo
-            MailMessage mensaje = new MailMessage
-            {
-                From = new MailAddress("soporte.tas360@pts.mx"),
-                Subject = ticket.titulo,
-                Body = contenidoHtml,
-                IsBodyHtml = true // Si el cuerpo del correo es HTML
-            };
+                    // Asignar el mensaje del ticket directamente
+                    ticket.mensaje = tk.mensaje; // Aquí se toma el último "mensaje" del ticket
 
-            // Añadir destinatario
-            mensaje.To.Add(destinatario);
-            // Añadir en copia (CC)
-            mensaje.CC.Add(origen);
-            // Enviar el correo
-            clienteSmtp.Send(mensaje);
-            oLog.Add("---------------------------");
-            oLog.Add($"Correo enviado exitosamente a {destinatario} sobre actualización del ticket.");
-            oLog.Add($"Asunto: {ticket.titulo} ");
-            oLog.Add($"Cuerpo: {ticket.mensaje} ");
-            //Devuelve un mensaje exitoso a la vista 
-            ViewBag.InfoMessage = $"Correo enviado exitosamente a {destinatario} sobre actualización del ticket.";
+
+                    //Remplaza el contenido del mensaje. 
+                    contenidoHtml = contenidoHtml.Replace("{usuarioName}", subjet.nombre)
+                             .Replace("{ticketId}", tk.id.ToString())
+                             .Replace("{titulo}", tk.titulo.ToString())
+                             .Replace("{estado}", estado.descripcion)
+                             .Replace("{ultimoComentario}", ticket.mensaje) // Aquí se usa el campo "mensaje" en vez del último comentario
+                             .Replace("{enlaceTicket}", "https://pts-tools.com.mx/Tickets/ShowTicket/" + tk.id);
+                }
+
+                // Configuración del cliente SMTP
+                SmtpClient clienteSmtp = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    Credentials = new NetworkCredential("soporte.tas360@pts.mx", "03Jun#2024"),
+                    EnableSsl = true
+                };
+
+                // Crear el mensaje de correo
+                MailMessage mensaje = new MailMessage
+                {
+                    From = new MailAddress("soporte.tas360@pts.mx"),
+                    Subject = ticket.titulo,
+                    Body = contenidoHtml,
+                    IsBodyHtml = true // Si el cuerpo del correo es HTML
+                };
+
+                // Añadir destinatario
+                mensaje.To.Add(destinatario);
+                // Añadir en copia (CC)
+                mensaje.CC.Add(origen);
+                // Enviar el correo
+                clienteSmtp.Send(mensaje);
+                oLog.Add("---------------------------");
+                oLog.Add($"Correo enviado exitosamente a {destinatario} sobre actualización del ticket.");
+                oLog.Add($"Asunto: {ticket.titulo} ");
+                oLog.Add($"Cuerpo: {ticket.mensaje} ");
+                //Devuelve un mensaje exitoso a la vista 
+                ViewBag.InfoMessage = $"Correo enviado exitosamente a {destinatario} sobre actualización del ticket.";
             }
             catch (SmtpException smtpEx)
             {
@@ -1472,6 +1564,7 @@ namespace TAS360.Controllers
                 ViewBag.ExceptionMessage = "Exception al enviar el correo: " + ex.Message;
             }
         }
+
 
     }
 }
